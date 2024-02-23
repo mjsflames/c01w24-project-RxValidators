@@ -9,3 +9,8 @@ Joe:
 - Completed code to convert Excel file to a 2-D array
 - Completed dictionary that converts Licensing College to their respective websites
 - Planning to make a database equivalent of the function
+
+Michelle:
+- Completed the general web scraping script for PEI and Alberta
+- Used Scrapy and Selenium as both websites do not use HTML forms
+- Going to modify it to take in and output to a 2D array instead of an Excel sheet
