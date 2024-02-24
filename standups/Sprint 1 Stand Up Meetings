@@ -14,3 +14,8 @@ Michelle:
 - Completed the general web scraping script for PEI and Alberta
 - Used Scrapy and Selenium as both websites do not use HTML forms
 - Going to modify it to take in and output to a 2D array instead of an Excel sheet
+
+Emily:
+- Generated unique prescriber codes
+- Implemented the PDF generation function (in the format the company wants)
+- The created PDF contains the unique prescriber code generated for each prescriber that is verified
