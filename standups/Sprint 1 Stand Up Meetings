@@ -19,3 +19,8 @@ Emily:
 - Generated unique prescriber codes
 - Implemented the PDF generation function (in the format the company wants)
 - The created PDF contains the unique prescriber code generated for each prescriber that is verified
+
+Lance:
+- Completed the web scraping scripts for Saskatchewan and Manitoba.
+- Used Scrapy and directly found their required API calls.
+- Created a prototype spider-assignment distributor in `runner.py`. It takes a CSV file and determines which spider to use.
