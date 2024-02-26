@@ -24,3 +24,9 @@ Lance:
 - Completed the web scraping scripts for Saskatchewan and Manitoba.
 - Used Scrapy and directly found their required API calls.
 - Created a prototype spider-assignment distributor in `runner.py`. It takes a CSV file and determines which spider to use.
+
+# February 25th, 2024
+
+Danny:
+- Completed the general web scraping for Nova Scotia and Quebec
+- Used Selenium to complete forms and find statuses
