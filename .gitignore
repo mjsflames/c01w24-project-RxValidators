@@ -1,0 +1,5 @@
+# Ignore pycache
+backend/__pycache__
+
+# Ignore PDFs
+pdfs/*
