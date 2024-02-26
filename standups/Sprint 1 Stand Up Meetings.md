@@ -30,3 +30,7 @@ Emily:
 - Added a function that updates the CSV file to have the generated unique codes for each verified prescriber
 - Updated my code so that it generates a unique PDF for each verified prescriber (based on their unique codes)
 
+Michelle:
+- Updated scripts to take from 2D array
+- Currently implementing functionality for if there are 2 people with the same name
+
