@@ -1,8 +1,3 @@
-# February 15th, 2024
-
-
-
-
 # February 22th, 2024
 Joe:
 - Completed code to convert Excel file to a 2D array
