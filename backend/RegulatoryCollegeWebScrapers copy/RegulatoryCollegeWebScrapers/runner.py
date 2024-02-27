@@ -15,7 +15,7 @@ process = CrawlerProcess(
 
 distributor = {
     "College of Physicians and Surgeons of Saskatchewan": sask_spider.SaskSpider,
-    "College of Physicians and Surgeons of Manitoba": mtb_spider.MtbSpider
+    # "College of Physicians and Surgeons of Manitoba": mtb_spider.MtbSpider
 }
 
 spider_assignments = {key: [] for key in distributor.keys()}

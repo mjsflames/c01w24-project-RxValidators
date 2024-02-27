@@ -22,6 +22,10 @@ class BaseSpider(scrapy.Spider):
                 callback=self.parse,
                 meta=payload)
     
+    def on_error(self, failure):
+        print("Error: ", failure)
+        return self.send_item(failure.request.meta.get('userdata'), valid=False, error=True)
+    
     def parse(self, response):
         """Provides generic response handling.
         Requires func handle_result to be implemented
@@ -32,7 +36,7 @@ class BaseSpider(scrapy.Spider):
         # Exit on request failed
         if not response.status == 200:
             print("REQUEST FAILED.")
-            return self.send_item(userdata, valid=False)
+            return self.on_error(response)
         
         # Load the response data into a list
         content = self.get_content(response)

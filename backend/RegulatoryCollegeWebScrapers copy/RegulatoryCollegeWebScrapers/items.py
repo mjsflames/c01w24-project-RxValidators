@@ -9,3 +9,4 @@ import scrapy
 class ClientRegistryStatus(scrapy.Item):
     name = scrapy.Field()
     valid = scrapy.Field(default=False)
+    success = scrapy.Field(default=True)
