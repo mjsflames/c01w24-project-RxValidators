@@ -7,6 +7,7 @@ processor = Processor(settings={"LOG_ENABLED": False})
 
 class CPSMSpider(Spider):
     name = 'cpsm_spider'
+    base_url = 'https://member.cpsm.mb.ca/api/physicianprofile/'
 
     def __init__(self, last_name, first_name, *args, **kwargs):
         super(CPSMSpider, self).__init__(*args, **kwargs)
@@ -14,7 +15,7 @@ class CPSMSpider(Spider):
         self.first_name = first_name
 
     def start_requests(self):
-        url = f"https://member.cpsm.mb.ca/api/physicianprofile/searchresult?lastname={self.last_name}&firstname={self.first_name}"
+        url = base_url + f"searchresult?lastname={self.last_name}&firstname={self.first_name}"
         yield Request(url, callback=self.parse)
 
     def parse(self, response):
@@ -23,7 +24,7 @@ class CPSMSpider(Spider):
             yield {"status": "NOT FOUND"}
         else:
             id_no = data["items"][0]["links"][0]["parameters"]
-            url = f"https://member.cpsm.mb.ca/api/physicianprofile/practitionerinformation?id={id_no}"
+            url = base_url + f"practitionerinformation?id={id_no}"
             yield Request(url, callback=self.after_submit)
 
     def after_submit(self, response):
