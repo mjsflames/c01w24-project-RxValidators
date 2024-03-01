@@ -17,3 +17,9 @@ website_dictionary = \
     "Collège des médecins du Québec": "https://www.cmq.org/fr/bottin"
 }
 
+def excel_to_array(excel_file):
+    df = pd.read_excel(excel_file)
+    arr = df.to_numpy()
+    return arr
+
+
