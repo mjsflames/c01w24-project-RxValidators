@@ -22,6 +22,11 @@ Michelle:
 - Realized that both PEI and Alberta did not use any HTML or Javascript forms (unable to detect the input boxes)
 - Started researching other ways to input Physician names
 
+Danny:
+- Tried to use Scrapy using the tutorial
+- Started scraping Nova Scotia and faced a popup roadblock
+- Researched Selenium
+
 # February 23rd, 2024
 Michelle:
 - Found out that Selenium does an automated browser and can find elements/keys in an HTML to directly enter information
@@ -52,6 +57,11 @@ Lance:
 - Completed the web scraping scripts for Saskatchewan and Manitoba.
 - Used Scrapy and directly found their required API calls.
 - Created a prototype spider-assignment distributor in `runner.py`. It takes a CSV file and determines which spider to use.
+
+Danny:
+- Finished a basic script for scraping Nova Scotia
+- Used Selenium and set up the web driver to open the website
+- Filled out the HTML forms
   
 # February 26th, 2024
 
