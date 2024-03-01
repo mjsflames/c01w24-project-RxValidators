@@ -32,7 +32,7 @@ Lance:
 - Completed the web scraping scripts for Saskatchewan and Manitoba.
 - Used Scrapy and directly found their required API calls.
 - Created a prototype spider-assignment distributor in `runner.py`. It takes a CSV file and determines which spider to use.
-- 
+  
 # February 23rd, 2024
 
 # February 24th, 2024
