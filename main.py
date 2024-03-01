@@ -17,10 +17,12 @@ website_dictionary = \
     "Collège des médecins du Québec": "https://www.cmq.org/fr/bottin"
 }
 
+
 def excel_to_array(excel_file):
     df = pd.read_excel(excel_file)
     arr = df.to_numpy()
     return arr
+
 
 client = MongoClient("mongodb://localhost:27017")
 db_name = "test_db"
@@ -29,4 +31,43 @@ db = client[db_name]
 collection = db[collection_name]
 
 
+def database_exists(client, db_name):
+    db_list = client.list_database_names()
+    is_exists = db_name in db_list
+    return is_exists
 
+def excel_to_mongodb(db_name, collection, excel_file):
+    if(collection.count_documents({}) != 0):
+        return
+    df = pd.read_excel(excel_file)
+    collection.insert_many(df.to_dict(orient="records"))
+
+def get_all(collection):
+    return collection.find()
+
+def print_all(collection):
+    documents = get_all(collection)
+    for document in documents:
+        print(document)
+
+def delete_all(collection):
+    deleted_count = collection.delete_many({})
+    return deleted_count
+
+def add_code_column(collection):
+    collection.update_many({}, {"$set": {"Generated Code": None}})
+
+def clear_status_all(collection):
+    collection.update_many({}, {"$set": {"Status": None}})
+
+def remove_all_unverified(collection):
+    deleted_count = collection.delete_many({"Status": {"$ne": "VERIFIED"}})
+    return deleted_count
+
+
+excel_to_mongodb(db_name, collection, excel_file)
+# clear_status_all(collection)
+add_code_column(collection)
+remove_all_unverified(collection)
+print_all(collection)
+delete_all(collection)
