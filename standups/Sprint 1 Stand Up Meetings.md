@@ -11,9 +11,17 @@ Michelle:
 Michelle: 
 - Did not start yet
 
+Emily:
+- Generated unique prescriber codes
+- Challenge: I had trouble deciding how arguments are going to be passed into the function to generate the unique codes. (Would it take a dictionary, a 2D array, or multiple strings?)
+
 # February 21st, 2024
 Michelle: 
 - Started researching Scrapy, Selenium, Beautiful Soup and Spyder
+
+Emily:
+- Started researching how to generate PDFs in the format that the company wants
+- Challenge: I had a hard time deciding which method of generating PDFs would be the best and easiest way to do in Python
 
 # February 22nd, 2024
 Michelle: 
@@ -26,6 +34,12 @@ Danny:
 - Tried to use Scrapy using the tutorial
 - Started scraping Nova Scotia and faced a popup roadblock
 - Researched Selenium
+  
+Emily:
+- Created a function that generates a PDF (in the format the company wants)
+- Challenges:
+  - Generating the length of lines for a user to be able to write their name, date, etc., and choosing the right coordinates for each component/object in the PDF, took a while to make it look like what the company wants.
+  - Changing the font sizes in the PDF and saving the previous font size for use later took quite a bit of time to figure out. I had to read the PDF-generating documentation to understand how it worked.
 
 # February 23rd, 2024
 Michelle:
@@ -49,9 +63,7 @@ Michelle:
 - Going to modify it to take in and output to a 2D array instead of an Excel sheet
 
 Emily:
-- Generated unique prescriber codes
-- Created a function that generates a PDF (in the format the company wants)
-- The created PDF contains the unique prescriber code generated for each prescriber that is verified
+- I updated my PDF generator function. It adds the generated unique prescriber code in the PDF and as the PDF name
 
 Lance:
 - Completed the web scraping scripts for Saskatchewan and Manitoba.
@@ -83,8 +95,13 @@ Michelle:
 - Currently implementing functionality for if there are 2 people with the same name
 
 # February 29th, 2024
+Emily:
+- Started looking into Google Maps APIs for the "Green Resources" part of the project
+- Challenge: There are so many APIs for Google Maps that I am not sure which ones are suitable for this project
 
 # March 1st, 2024
+Emily:
+- Created a function that takes a user's location, and returns a Google Maps link with directions to that location
 
 # March 2nd, 2024
 
