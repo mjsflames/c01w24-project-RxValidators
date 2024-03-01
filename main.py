@@ -18,10 +18,16 @@ website_dictionary = \
 }
 
 
-def excel_to_array(excel_file):
+def excel_to_array(excel_file, new_column_name):
     df = pd.read_excel(excel_file)
+    if(new_column_name != ""):
+        new_dataframe_column(df, new_column_name)
     arr = df.to_numpy()
     return arr
+
+def new_dataframe_column(df, column_name):
+    df[column_name] = None
+    return df
 
 
 client = MongoClient("mongodb://localhost:27017")
