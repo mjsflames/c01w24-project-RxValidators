@@ -51,7 +51,9 @@ class QuotesSpider(scrapy.Spider):
                 EC.visibility_of_element_located((By.ID, 'MainContent_frmlicencetype'))
             )
 
-            status = licenseStatus.get_property("value")
+            lStatus = licenseStatus.get_property("value")
+            status = "Valid" if lStatus == "Full Licence" else "INVALID"
+            print("Status:", status)
 
         finally:
             return status

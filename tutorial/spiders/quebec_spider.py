@@ -47,6 +47,10 @@ class QuotesSpider(scrapy.Spider):
             popupElement = WebDriverWait(driver, 10).until(
                 EC.visibility_of_element_located((By.XPATH, '/html/body/div[3]/div/div/div/div[2]/ul/li[4]'))
             )
-            popup_text = popupElement.text
+            popup_text = popupElement.text.strip()
+            if "Inscrit - Actif" in popup_text:
+              status = "VALID"
+            else:
+              status = "INVALID"
         finally:
             return status
