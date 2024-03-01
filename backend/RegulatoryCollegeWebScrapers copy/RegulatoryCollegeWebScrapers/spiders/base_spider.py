@@ -3,6 +3,7 @@ import scrapy
 import json
 from items import ClientRegistryStatus
 
+
 class BaseSpider(scrapy.Spider):
     API_URL: str
     user_info: list
@@ -15,77 +16,60 @@ class BaseSpider(scrapy.Spider):
         for userdata in self.user_info:
             payload = {"userdata": userdata}
             req = self.build_query(payload)
+            yield scrapy.Request(url=req, callback=self.parse, meta=payload)
 
-            # Send request, store the full name in metadata for verification process.
-            yield scrapy.Request(
-                url=req,
-                callback=self.parse,
-                meta=payload)
-    
     def on_error(self, failure):
         print("Error: ", failure)
         return self.send_item(failure.request.meta.get('userdata'), valid=False, error=True)
-    
+
     def parse(self, response):
         """Provides generic response handling.
-        Requires func handle_result to be implemented
-        Requires func get_content to be implemented
-        Requires func get_verification_filter to be implemented"""
+        Requires funcs: handle_result, get_content, get_verification_filter
+        to be implemented"""
 
         userdata = response.meta.get('userdata')
+
         # Exit on request failed
         if not response.status == 200:
             print("REQUEST FAILED.")
             return self.on_error(response)
-        
-        # Load the response data into a list
-        content = self.get_content(response)
 
         # Filter to specified person
-        result = list(filter(
-            self.get_verification_filter(userdata),
-            content
-        ))
+        result = list(filter(self.get_verification_filter(userdata),
+                             self.get_content(response)))
 
-        # Case: No results
-        if len(result) == 0:
-            print("Invalid or name not in registry.")
-            return self.send_item(userdata, valid=False)
-        
-        # Case: Multiple results
-        if len(result) > 1:
-            print("Duplicate or several results found.")
-            # ! TODO: Implement some form of response
+        match len(result):
+            case 0:  # Case: One Result
+                print("Invalid or name not in registry.")
+                return self.send_item(userdata, valid=False)
+            case 1:  # Case: One result
+                print(f"Result for {userdata}")
+            case _:  # Case: Multiple results (IGNORE AND CONTINUE)
+                print("Duplicate or several results found.")
+                # ! TODO: Implement some form of response
 
-        # Case: One result
         return self.handle_result(response, result)
-    
+
     def get_content(self, response) -> dict:
-        """Returns a dictionary from the response body
-        """
+        """Returns a dictionary from the response body"""
         return json.loads(response.body)
-    
+
+    def send_item(self, userdata, valid):
+        first_name, last_name = userdata
+        yield ClientRegistryStatus(name=f"{first_name} {last_name}", valid=valid)
+
     @abstractmethod
-    def handle_result(self, response, result): 
+    def handle_result(self, response, result):
         """Returns None or object depending on if validation is successful."""
         pass
-    
+
     @abstractmethod
-    def get_verification_filter(self, content): 
-        """Returns lambda function to be passed into result filter for validating
-        person"""
+    def get_verification_filter(self, content):
+        """Returns lambda function to be passed into result filter for validating person"""
         pass
-        
+
     @abstractmethod
-    def build_query(self, data: dict[str, str]) -> str: 
+    def build_query(self, data: dict[str, str]) -> str:
         """Returns URL containing filled params from 'data' which will be passed
         into Scrapy.Request"""
         pass
-
-    
-    def send_item(self, userdata, valid):
-        first_name, last_name = userdata
-        yield ClientRegistryStatus(
-            name=f"{first_name} {last_name}",
-            valid=valid
-        )
