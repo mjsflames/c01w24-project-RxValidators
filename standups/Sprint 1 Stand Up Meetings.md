@@ -1,18 +1,35 @@
-# February 15th, 2024
-
-# February 16th, 2024
-
-# February 17th, 2024
-
 # February 18th, 2024
+Team: 
+- Gave tasks out to each member
+- Sprint 1 to end on March 3rd
 
 # February 19th, 2024
-
+Michelle: 
+- Did not start yet
+  
 # February 20th, 2024
+Michelle: 
+- Did not start yet
 
 # February 21st, 2024
+Michelle: 
+- Started researching Scrapy, Selenium, Beautiful Soup and Spyder
 
 # February 22nd, 2024
+Michelle: 
+- Decided to try Scrapy
+- Started to write a script to web scrape PEI's website
+- Realized that both PEI and Alberta did not use any HTML or Javascript forms (unable to detect the input boxes)
+- Started researching other ways to input Physician names
+
+# February 23rd, 2024
+Michelle:
+- Found out that Selenium supports 
+
+  
+# February 24th, 2024
+
+# February 25th, 2024
 Joe:
 - Completed code to convert Excel file to a 2D array
 - Completed dictionary that converts Licensing College to their respective websites
@@ -33,11 +50,11 @@ Lance:
 - Used Scrapy and directly found their required API calls.
 - Created a prototype spider-assignment distributor in `runner.py`. It takes a CSV file and determines which spider to use.
   
-# February 23rd, 2024
+# February 26th, 2024
 
-# February 24th, 2024
+# February 27th, 2024
 
-# February 25th, 2024
+# February 28th, 2024
 Danny:
 - Completed the general web scraping for Nova Scotia and Quebec
 - Used Selenium to complete forms and find statuses
@@ -52,11 +69,11 @@ Michelle:
 - Updated scripts to take from 2D array
 - Currently implementing functionality for if there are 2 people with the same name
 
-# February 26th, 2024
-
-# February 27th, 2024
-
-# February 28th, 2024
-
 # February 29th, 2024
+
+# March 1st, 2024
+
+# March 2nd, 2024
+
+# March 3rd, 2024
 
