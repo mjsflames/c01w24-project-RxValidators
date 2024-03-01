@@ -22,4 +22,11 @@ def excel_to_array(excel_file):
     arr = df.to_numpy()
     return arr
 
+client = MongoClient("mongodb://localhost:27017")
+db_name = "test_db"
+collection_name = "test_collection"
+db = client[db_name]
+collection = db[collection_name]
+
+
 
