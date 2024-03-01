@@ -24,10 +24,13 @@ Michelle:
 
 # February 23rd, 2024
 Michelle:
-- Found out that Selenium supports 
+- Found out that Selenium does an automated browser and can find elements/keys in an HTML to directly enter information
+- Used Pandas to read in the CSV file
+- Had trouble figuring out how to rewrite the CSV file to output the correct status 
 
-  
 # February 24th, 2024
+Michelle:
+- 
 
 # February 25th, 2024
 Joe:
