@@ -1,4 +1,18 @@
-# February 22th, 2024
+# February 15th, 2024
+
+# February 16th, 2024
+
+# February 17th, 2024
+
+# February 18th, 2024
+
+# February 19th, 2024
+
+# February 20th, 2024
+
+# February 21st, 2024
+
+# February 22nd, 2024
 Joe:
 - Completed code to convert Excel file to a 2D array
 - Completed dictionary that converts Licensing College to their respective websites
@@ -18,6 +32,10 @@ Lance:
 - Completed the web scraping scripts for Saskatchewan and Manitoba.
 - Used Scrapy and directly found their required API calls.
 - Created a prototype spider-assignment distributor in `runner.py`. It takes a CSV file and determines which spider to use.
+- 
+# February 23rd, 2024
+
+# February 24th, 2024
 
 # February 25th, 2024
 Danny:
@@ -33,4 +51,12 @@ Emily:
 Michelle:
 - Updated scripts to take from 2D array
 - Currently implementing functionality for if there are 2 people with the same name
+
+# February 26th, 2024
+
+# February 27th, 2024
+
+# February 28th, 2024
+
+# February 29th, 2024
 
