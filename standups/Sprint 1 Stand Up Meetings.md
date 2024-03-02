@@ -95,6 +95,9 @@ Emily:
   - Added a function that converts a 2D array into a list of dictionaries. Each dictionary in the list is a prescriber.
 - Added a function that updates the CSV file to have the generated unique codes for each verified prescriber
 - Updated my code so that it generates a unique PDF for each verified prescriber (based on their unique codes)
+- Challenges:
+  - Figuring out what data (2D array or dictionary) will I get to generate the unique prescriber codes
+  - How I can update the CSV file to have unique codes for only the verified people
 
 Michelle:
 - Currently implementing functionality for if there are 2 people with the same name for Alberta
@@ -111,7 +114,7 @@ Michelle:
 
 # March 1st, 2024
 Emily:
-- Created a function that takes a user's location, and returns a Google Maps link with directions to that location
+- Created a function that takes a location and calls the Google Maps API. It then returns a Google Maps link with directions to that location
 
 Michelle:
 - No updates
