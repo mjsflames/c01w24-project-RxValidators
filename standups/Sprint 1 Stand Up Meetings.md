@@ -5,11 +5,11 @@ Team:
 
 # February 19th, 2024
 Michelle: 
-- Did not start yet
+- No updates
   
 # February 20th, 2024
 Michelle: 
-- Did not start yet
+- No updates
 
 Emily:
 - Generated unique prescriber codes
@@ -17,7 +17,7 @@ Emily:
 
 # February 21st, 2024
 Michelle: 
-- Started researching Scrapy, Selenium, Beautiful Soup and Spyder
+- Started researching Scrapy, Selenium, Splash, Beautiful Soup and Spyder
 
 Emily:
 - Started researching how to generate PDFs in the format that the company wants
@@ -25,7 +25,7 @@ Emily:
 
 # February 22nd, 2024
 Michelle: 
-- Decided to try Scrapy
+- Decided to use Scrapy
 - Started to write a script to web scrape PEI's website
 - Realized that both PEI and Alberta did not use any HTML or Javascript forms (unable to detect the input boxes)
 - Started researching other ways to input Physician names
@@ -49,7 +49,8 @@ Michelle:
 
 # February 24th, 2024
 Michelle:
-- 
+- Managed to write the new status into the CSV column but it did not loop the CSV properly
+- Researching more on how to loop the CSV in the script
 
 # February 25th, 2024
 Joe:
@@ -60,7 +61,8 @@ Joe:
 Michelle:
 - Completed the general web scraping script for PEI and Alberta
 - Used Scrapy and Selenium as both websites do not use HTML forms
-- Going to modify it to take in and output to a 2D array instead of an Excel sheet
+- Confirmed that we are going to have a general script that calls each individual script so no need for looping
+- Going to modify it to take in and output to a 2D array instead of a CSV file
 
 Emily:
 - I updated my PDF generator function. It adds the generated unique prescriber code in the PDF and as the PDF name
@@ -76,9 +78,13 @@ Danny:
 - Filled out the HTML forms
   
 # February 26th, 2024
-
+Michelle:
+- No updates
+  
 # February 27th, 2024
-
+Michelle:
+- Updated the scripts to take from a 2D array and output to the 5th entry in that array
+  
 # February 28th, 2024
 Danny:
 - Completed the general web scraping for Nova Scotia and Quebec
@@ -91,17 +97,24 @@ Emily:
 - Updated my code so that it generates a unique PDF for each verified prescriber (based on their unique codes)
 
 Michelle:
-- Updated scripts to take from 2D array
-- Currently implementing functionality for if there are 2 people with the same name
+- Currently implementing functionality for if there are 2 people with the same name for Alberta
+- Having trouble figuring out how to have the script click each same name physician's link to match the license number and also backtrack if no match
 
 # February 29th, 2024
 Emily:
 - Started looking into Google Maps APIs for the "Green Resources" part of the project
 - Challenge: There are so many APIs for Google Maps that I am not sure which ones are suitable for this project
 
+Michelle:
+- Researching ways to loop through same-name physicians but does not seem plausible with Selenium
+- Looking to see if can change the scripts from Selenium to only Scrapy
+
 # March 1st, 2024
 Emily:
 - Created a function that takes a user's location, and returns a Google Maps link with directions to that location
+
+Michelle:
+- No updates
 
 # March 2nd, 2024
 
