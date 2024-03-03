@@ -3,3 +3,8 @@ backend/__pycache__
 
 # Ignore PDFs
 pdfs/*
+
+venv/
+__pycache__/
+results.html
+.~lock.sample_data.csv#
