@@ -37,7 +37,6 @@ def cpsns_spider(last_name, first_name, liscence_no):
 
 if __name__ == "__main__":
     print(cpsns_spider('Martin', 'Louis', '18808'))
-    print(cpsns_spider('Martin', 'Louis', '18808'))
 
 """
 import requests
