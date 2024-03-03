@@ -1,8 +1,5 @@
 from scrapy import Spider, Request, FormRequest
-from scrapyscript import Job, Processor
 from bs4 import BeautifulSoup
-
-processor = Processor(settings={"LOG_ENABLED": False})
 
 class CPSBCSpider(Spider):
     name = 'cpsbc_spider'
@@ -74,24 +71,3 @@ class CPSBCSpider(Spider):
             else:
                 return {"status": "INACTIVE"}
         return {"status": "NOT FOUND"}
-
-def cpsbc_spider(last_name, first_name):
-    job = Job(CPSBCSpider, last_name, first_name)
-    return processor.run(job)[0]["status"]
-
-if __name__ == "__main__":
-    print("Fake person test case:")
-    print("Last Name: \"Keen\", First Name: \"Anthony\"")
-    print(cpsbc_spider("Keen", "Anthony"))
-
-    print("Real person (active) test case:")
-    print("Last Name: \"Gill\", First Name: \"Amanpreet\"")
-    print(cpsbc_spider("Gill", "Amanpreet"))
-
-    print("Real person (expired) test case:")
-    print("Last Name: \"Aalto\", First Name: \"Anu\"")
-    print(cpsbc_spider("Aalto", "Anu"))
-
-    print("Multiple real people with matchin name test case:")
-    print("Last Name: \"Zhou\", First Name: \"Jian\"")
-    print(cpsbc_spider("Zhou", "Jian"))

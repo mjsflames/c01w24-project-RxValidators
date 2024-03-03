@@ -8,13 +8,13 @@ import time
 
 import scrapy
 
-
-class QuotesSpider(scrapy.Spider):
+class CMQSpider(scrapy.Spider):
     name = "Quebec"
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.user_info = kwargs.get('user_info')
+    def __init__(self, last_name, license_no, *args, **kwargs):
+        super(CMQSpider, self).__init__(*args, **kwargs)
+        self.last_name = last_name
+        self.lisence_no = license_no
 
     def start_requests(self):
         status = "NOT FOUND"
@@ -24,7 +24,7 @@ class QuotesSpider(scrapy.Spider):
         # Create a new instance of the Chrome driver
         driver = webdriver.Chrome()
 
-        driver.get(f"https://www.cmq.org/fr/bottin/medecins?number={number}&lastname={name}&firstname=&specialty=0&city=&unlisted=false")
+        driver.get(f"https://www.cmq.org/fr/bottin/medecins?number={self.lisence_no}&lastname={self.last_name}&firstname=&specialty=0&city=&unlisted=false")
 
         try:
             cookiesElement = WebDriverWait(driver, 10).until(
@@ -39,7 +39,7 @@ class QuotesSpider(scrapy.Spider):
               )
               element.click()
             except TimeoutException:
-              status = "NOT FOUND"
+              status = {"status": "NOT FOUND"}
               return status
 
             element.click()
@@ -49,8 +49,8 @@ class QuotesSpider(scrapy.Spider):
             )
             popup_text = popupElement.text.strip()
             if "Inscrit - Actif" in popup_text:
-              status = "VALID"
+              status = {"status": "VERIFIED"}
             else:
-              status = "INVALID"
+              status = {"status": "INACTIVE"}
         finally:
             return status

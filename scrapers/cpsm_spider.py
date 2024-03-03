@@ -1,9 +1,6 @@
 from scrapy import Spider, Request, FormRequest
-from scrapyscript import Job, Processor
 from bs4 import BeautifulSoup
 import json
-
-processor = Processor(settings={"LOG_ENABLED": False})
 
 class CPSMSpider(Spider):
     name = 'cpsm_spider'
@@ -34,20 +31,3 @@ class CPSMSpider(Spider):
             yield {"status": "VERIFIED"}
         else:
             yield {"status": "INACTIVE"}
-
-def cpsm_spider(last_name, first_name):
-    job = Job(CPSMSpider, last_name, first_name)
-    return processor.run(job)[0]["status"]
-
-if __name__ == "__main__":
-    print("Fake person test case:")
-    print("Last Name: \"Willie\", First Name: \"Wonka\"")
-    print(cpsm_spider("Willie", "Wonka"))
-
-    print("Real person (active) test case:")
-    print("Last Name: \"Roy\", First Name: \"Danielle\"")
-    print(cpsm_spider("Roy", "Danielle"))
-
-    print("Real person (inactive) test case:")
-    print("Last Name: \"Adediji\", First Name: \"Uchechukwu Okwudili\"")
-    print(cpsm_spider("Adediji", "Uchechukwu Okwudili"))

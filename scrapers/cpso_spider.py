@@ -1,7 +1,4 @@
 from scrapy import Spider, FormRequest
-from scrapyscript import Job, Processor
-
-processor = Processor(settings={"LOG_ENABLED": False})
 
 class CPSOSpider(Spider):
     name = "cpso_spider"
@@ -44,24 +41,3 @@ class CPSOSpider(Spider):
             else:
                 return {"status": "INACTIVE"}
         return {"status": "NOT FOUND"}
-
-def cpso_spider(last_name, first_name, cpso_number):
-    job = Job(CPSOSpider, last_name, first_name, cpso_number)
-    return processor.run(job)[0]["status"]
-
-if __name__ == "__main__":
-    print("Fake person test case:")
-    print("Last Name: \"Willie\", First Name: \"Wonka\", CPSO #: 694201")
-    print(cpso_spider("Willie", "Wonka", "694201"))
-
-    print("Fake person, real id test case:")
-    print("Last Name: \"Pins\", First Name: \"Gregory\", CPSO #: 54111")
-    print(cpso_spider("Pins", "Gregory", "54111"))
-
-    print("Real person (active) test case:")
-    print("Last Name: \"Edwards\", First Name: \"Bonnie\", CPSO #: 30722")
-    print(cpso_spider("Edwards", "Bonnie", "30722"))
-
-    print("Real person (expired) test case:")
-    print("Last Name: \"Fraser\", First Name: \"Robert\", CPSO #: 25614")
-    print(cpso_spider("Fraser", "Robert", "25614"))
