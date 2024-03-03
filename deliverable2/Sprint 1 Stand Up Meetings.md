@@ -106,7 +106,7 @@ Emily:
 - Added a function that updates the CSV file to have the generated unique codes for each verified prescriber
 - Updated my code so that it generates a unique PDF for each verified prescriber (based on their unique codes)
 - Challenges:
-  - Figuring out what data (2D array or dictionary) will I get to generate the unique prescriber codes
+  - Figuring out what data (2D array or dictionary) I will get to generate the unique prescriber codes
   - How I can update the CSV file to have unique codes for only the verified people
 
 Michelle:
@@ -123,7 +123,7 @@ Emily:
 
 Michelle:
 - Researching ways to loop through same-name physicians but does not seem plausible with Selenium
-- Looking to see if can change the scripts from Selenium to only Scrapy
+- Looking to see if I can change the scripts from Selenium to only Scrapy
 
 Joe:
 - Completed setting up MongoDB locally and included some basic functions for the database
@@ -131,7 +131,7 @@ Joe:
 - Planning on including error handling for the functions
 
 Danny:
-- Recreated the Nova Scotia webscraper using only Scrapy
+- Recreated the Nova Scotia web scraper using only Scrapy
 
 Lance:
 - Removed unnecessary files and shortened code in scrapy project
@@ -145,4 +145,6 @@ Lance:
 - Rewrote scrapers to not inherit from my `BaseSpider` superclass
  
 # March 3rd, 2024
-
+Emily:
+- Merged MongoDB Database with unique prescriber code/PDF generation
+- Created test cases for Code/PDF generation
