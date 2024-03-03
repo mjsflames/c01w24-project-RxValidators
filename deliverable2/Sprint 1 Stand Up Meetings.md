@@ -4,13 +4,8 @@ Team:
 - Sprint 1 to end on March 3rd
 
 # February 19th, 2024
-Michelle: 
-- No updates
   
 # February 20th, 2024
-Michelle: 
-- No updates
-
 Emily:
 - Generated unique prescriber codes
 - Challenge: I had trouble deciding how arguments are going to be passed into the function to generate the unique codes. (Would it take a dictionary, a 2D array, or multiple strings?)
@@ -86,8 +81,6 @@ Danny:
 - Filled out the HTML forms
   
 # February 26th, 2024
-Michelle:
-- No updates
   
 # February 27th, 2024
 Michelle:
@@ -131,9 +124,6 @@ Danny:
 # March 1st, 2024
 Emily:
 - Created a function that takes a location and calls the Google Maps API. It then returns a Google Maps link with directions to that location
-
-Michelle:
-- No updates
 
 # March 2nd, 2024
 
