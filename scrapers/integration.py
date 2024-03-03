@@ -2,7 +2,7 @@ from scrapyscript import Job, Processor
 
 from cpsbc_spider import CPSBCSpider
 from cpso_spider import CPSOSpider
-from cmq_spider import CMQSpider
+from cmq_spider import cmq_spider
 from cpsm_spider import CPSMSpider
 from cpsns_spider import CPSNSSpider
 from cpspei_spider import CPSPEISpider
@@ -18,10 +18,6 @@ def cpsbc_spider(last_name, first_name):
 
 def cpso_spider(last_name, first_name, cpso_number):
     job = Job(CPSOSpider, last_name, first_name, cpso_number)
-    return processor.run(job)[0]["status"]
-
-def cmq_spider(last_name, license_no):
-    job = Job(CMQSpider, last_name, license_no)
     return processor.run(job)[0]["status"]
 
 def cpsm_spider(last_name, first_name):
@@ -47,10 +43,14 @@ def cpsnl_spider(last_name, first_name):
 if __name__ == "__main__":
     print("Testing ...")
 
-    # print(cpsnl_spider("Wonka", "Willie"))
-    # print(cpsnl_spider("Pieroway", "Amy"))
-    # print(cpsnl_spider("Singleton-Polster", "Amy"))
+    print(cmq_spider("Wonka", "15332"))
+    print(cmq_spider("Lam", "96332"))
+    print(cmq_spider("Li", "15332"))
 
+    # # College of Physicians and Surgeons of Newfoundland and Labrador
+    # print(cpsnl_spider("Wonka", "Willie")) # NOT FOUND
+    # print(cpsnl_spider("Pieroway", "Amy")) # VERIFIED
+    # print(cpsnl_spider("Singleton-Polster", "Amy")) # INACTIVE
 
     # print(cpsa_spider("Chivers-Wilson", "Kaitlin"))
 
@@ -60,8 +60,6 @@ if __name__ == "__main__":
     # print(cpsnb_spider("Stone", "Christopher", "7563"))
 
     # print(cpsns_spider('Martin', 'Louis', '18808'))
-
-    # print(cmq_spider("Li", "15332"))
 
     # print("Fake person test case:")
     # print("Last Name: \"Keen\", First Name: \"Anthony\"")

@@ -1,5 +1,4 @@
-from scrapy import Spider, Request, FormRequest
-import webbrowser
+from scrapy import Spider, FormRequest
 
 form_last = "ctl00$TemplateBody$WebPartManager1$gwpciNewQueryMenuCommon$" + \
             "ciNewQueryMenuCommon$ResultsGrid$Sheet0$Input1$TextBox1"
