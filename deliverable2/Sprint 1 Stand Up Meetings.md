@@ -15,6 +15,10 @@ Emily:
 - Generated unique prescriber codes
 - Challenge: I had trouble deciding how arguments are going to be passed into the function to generate the unique codes. (Would it take a dictionary, a 2D array, or multiple strings?)
 
+Joe:
+- Started researching different databases for storing the user information
+- Challenge: Some trouble deciding whether to use MongoDB, Firebase, or SQL
+
 # February 21st, 2024
 Michelle: 
 - Started researching Scrapy, Selenium, Splash, Beautiful Soup and Spyder
@@ -22,6 +26,10 @@ Michelle:
 Emily:
 - Started researching how to generate PDFs in the format that the company wants
 - Challenge: I had a hard time deciding which method of generating PDFs would be the best and easiest way to do in Python
+
+Joe:
+- Started planning the demo and decided to use 2-D arrays and pandas Dataframes as a means to store and modify Excel file information
+- Tentatively decided to use MongoDB as the storage method
 
 # February 22nd, 2024
 Michelle: 
@@ -53,11 +61,6 @@ Michelle:
 - Researching more on how to loop the CSV in the script
 
 # February 25th, 2024
-Joe:
-- Completed code to convert Excel file to a 2D array
-- Completed dictionary that converts Licensing College to their respective websites
-- Planning to make a database equivalent of the function
-
 Michelle:
 - Completed the general web scraping script for PEI and Alberta
 - Used Scrapy and Selenium as both websites do not use HTML forms
@@ -66,6 +69,11 @@ Michelle:
 
 Emily:
 - I updated my PDF generator function. It adds the generated unique prescriber code in the PDF and as the PDF name
+
+Joe:
+- Completed code to convert Excel file to a 2D array
+- Completed dictionary that converts Licensing College to their respective websites
+- Planning to make a database equivalent of the function
 
 Lance:
 - Completed the web scraping scripts for Saskatchewan and Manitoba.
@@ -111,6 +119,11 @@ Emily:
 Michelle:
 - Researching ways to loop through same-name physicians but does not seem plausible with Selenium
 - Looking to see if can change the scripts from Selenium to only Scrapy
+
+Joe:
+- Completed setting up MongoDB locally and included some basic functions for the database
+- Challenge: Deciding which function may be used for the database
+- Planning on including error handling for the functions
 
 # March 1st, 2024
 Emily:
