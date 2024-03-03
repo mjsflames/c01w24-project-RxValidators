@@ -1,4 +1,4 @@
-# Successes:
+# Successes
 - Getting web scrapers to work using Scrapy
 - Importing data into Pandas dataframes and testing the scrapers with it
 - Copying the cURL and testing in Postman
@@ -6,7 +6,7 @@
 - Managed to use pymongo to connect to the database
 - Managed to create the PDF in the format the company wants (including their unique prescriber codes)
 
-# Challenges:
+# Challenges
 - Finding time to work on this project  
 - Designing the functions’ input and output (2D array or dictionary)
 - Deciding on the database to use based on our needs (1 or 2 databases)
@@ -20,7 +20,7 @@
 - Figuring out a time to meet
 - Integrating all the web scrapers together
 
-# To Improve for the Next Sprint:
+# To Improve for the Next Sprint
 - Our pacing (story points per person per sprint, assigning each member with more tasks, making the work more equally spread out)
 - Better communication among team members
 - Those working on similar tasks, give frequent updates to each other so that code and implementation are consistent
