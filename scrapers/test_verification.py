@@ -1,16 +1,21 @@
 import pandas as pd
 from tqdm import tqdm
-from cpso_spider import cpso_spider
-from cpsbc_spider import cpsbc_spider
-from cpsm_spider import cpsm_spider
+from integration import *
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.width', None)
 
-CPSBC_str = "College of Physicians and Surgeons of British Columbia"
 CPSO_str = "College of Physicians and Surgeons of Ontario"
+CPSBC_str = "College of Physicians and Surgeons of British Columbia"
+CPSS_str = "College of Physicians and Surgeons of Saskatchewan"
 CPSM_str = "College of Physicians and Surgeons of Manitoba"
+CPSPEI_str = "College of Physicians and Surgeons of Prince Edward Island"
+CPSA_str = "College of Physicians and Surgeons of Alberta"
+CPSNB_str = "College of Physicians and Surgeons of New Brunswick"
+CPSNL_str = "College of Physicians and Surgeons of Newfoundland and Labrador"
+CPSNS_str = "College of Physicians and Surgeons of Nova Scotia"
+CMQ_str = "Collège des médecins du Québec"
 
 def main():
     df = pd.read_csv("sample_data.csv")
@@ -34,6 +39,8 @@ def main():
             df.at[index, 'Scraped Status'] = cpso_spider(row['Last Name'], row['First Name'], row['Licence #'])
         elif row['Licensing College'] == CPSM_str:
             df.at[index, 'Scraped Status'] = cpsm_spider(row['Last Name'], row['First Name'])
+        elif row['Licensing College'] == CPSNS_str:
+            df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
 
         # Update pass/fail
         if df.at[index, 'Scraped Status'] == df.at[index, 'Status']:

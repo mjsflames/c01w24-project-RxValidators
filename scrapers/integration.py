@@ -4,6 +4,7 @@ from cpsbc_spider import CPSBCSpider
 from cpso_spider import CPSOSpider
 from cmq_spider import CMQSpider
 from cpsm_spider import CPSMSpider
+from cpsns_spider import CPSNSSpider
 
 processor = Processor(settings={"LOG_ENABLED": False})
 
@@ -23,8 +24,14 @@ def cpsm_spider(last_name, first_name):
     job = Job(CPSMSpider, last_name, first_name)
     return processor.run(job)[0]["status"]
 
+def cpsns_spider(last_name, first_name, liscence_no):
+    job = Job(CPSNSSpider, last_name, first_name, liscence_no)
+    return processor.run(job)[0]["status"]
+
 if __name__ == "__main__":
     print("Testing ...")
+
+    # print(cpsns_spider('Martin', 'Louis', '18808'))
 
     # print(cmq_spider("Li", "15332"))
 
