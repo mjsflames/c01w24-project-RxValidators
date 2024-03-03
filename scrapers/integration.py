@@ -9,6 +9,7 @@ from cpspei_spider import CPSPEISpider
 from cpsnb_spider import cpsnb_spider
 from cpsa_spider import CPSASpider
 from cpsnl_spider import CPSNLSpider
+from cpss_spider import CPSSSpider
 
 processor = Processor(settings={"LOG_ENABLED": False})
 
@@ -38,6 +39,10 @@ def cpsa_spider(last_name, first_name):
 
 def cpsnl_spider(last_name, first_name):
     job = Job(CPSNLSpider, last_name, first_name)
+    return processor.run(job)[0]["status"]
+
+def cpss_spider(last_name, first_name):
+    job = Job(CPSSSpider, first_name, last_name)
     return processor.run(job)[0]["status"]
 
 if __name__ == "__main__":

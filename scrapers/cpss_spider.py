@@ -2,12 +2,12 @@ from scrapy import Spider, Request
 import json
 
 
-class SaskSpider(Spider):
+class CPSSSpider(Spider):
     name = "SaskRXValidator_Spider"
     API_URL = "https://www.cps.sk.ca/CPSSWebApi/api/Physicians/"
 
     def __init__(self, first_name, last_name, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(CPSSSpider, self).__init__(*args, **kwargs)
         self.first_name = first_name
         self.last_name = last_name
 
@@ -21,26 +21,16 @@ class SaskSpider(Spider):
             (item['LastName'] == self.last_name or self.last_name == None)
 
     def start_requests(self):
-        for userdata in self.user_info:
-            payload = {"userdata": userdata}
-            req = self.build_query(payload)
-            yield Request(url=req, callback=self.parse, meta=payload)
-
-    def on_error(self, failure):
-        # print("Error: ", failure)
-        yield {"status": "FAILED"}
+        yield Request(url=self.build_query(), callback=self.parse)
 
     def parse(self, response):
-        if not response.status == 200:
-            return self.on_error(response)
-        result = list(filter(self.get_verification_filter,
-                             json.loads(response.body)))
-
-        if len(result) == 0:
-            # print("Invalid or name not in registry.")
+        if response.status != 200:  
             yield {"status": "FAILED"}
-        # elif len(result) > 1:
-            # print("Duplicate or several results found.")
+        
+        result = list(filter(self.get_verification_filter(),
+                             json.loads(response.body)))
+        
+        if len(result) == 0:
+            yield {"status": "FAILED"}
 
-        # print(f"Result for {self.first_name} {self.last_name}")
         yield {"status": ["INACTIVE", "VERIFIED"][result[0]['Status'] == 'A']}
