@@ -1,53 +1,27 @@
-import scrapy
+import requests
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from scrapy.selector import Selector
-from time import sleep
+def cpsnb_spider(last_name, first_name, license_no):
+    url = "https://cpsnb.alinityapp.com/Client/PublicDirectory/Registrants"
 
-class NewBrunswickSpider(scrapy.Spider):
-    name = 'NewBrunswick'
-    start_urls = ['https://cpsnb.alinityapp.com/Client/PublicDirectory']
+    payload = f"queryParameters=%7B%22Parameter%22%3A%5B%7B%22ID%22%3A%22TextOptionA%22%2C%22Value%22%3A%22{first_name}%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22RegionSID%22%2C%22Value%22%3A%22-%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22graduationYear%22%2C%22Value%22%3A%22-%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22TextOptionB%22%2C%22Value%22%3A%22{last_name}%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22CitySID%22%2C%22Value%22%3A%22%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22IsCheckedOptionA%22%2C%22Value%22%3A%22%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22TextOptionC%22%2C%22Value%22%3A%22{license_no}%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%2C%7B%22ID%22%3A%22SpecializationSID%22%2C%22Value%22%3A%22-%22%2C%22ValueLabel%22%3A%22%5Bnot+entered%5D%22%7D%5D%7D&querySID=1000608"
+    headers = {
+        "Accept": "application/json",
+        "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+        "Connection": "keep-alive",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Cookie": "_als_culturechoice=EN-CA; _als_culturechoice=EN-CA",
+        "Origin": "https://cpsnb.alinityapp.com",
+    }
 
-    def __init__(self):
-        self.first = "Allison"
-        self.last = "Leonard"
-        self.lic = 8036
-        self.driver = webdriver.Chrome()
+    response = requests.request("POST", url, headers=headers, data=payload)
 
-        self.driver.get('https://cpsnb.alinityapp.com/Client/PublicDirectory')
-        
-        # Fill in the physician's information here
-        first_name = self.driver.find_element(By.XPATH, '//*[@id="parameterformcontainer"]/div/fieldset/div/div[1]/div[1]/input')
-        last_name = self.driver.find_element(By.XPATH, '//*[@id="parameterformcontainer"]/div/fieldset/div/div[2]/div[1]/input')
-        license_number = self.driver.find_element(By.XPATH, '//*[@id="parameterformcontainer"]/div/fieldset/div/div[4]/div[1]/input')
-        
-        first_name.send_keys(self.first)
-        last_name.send_keys(self.last)
-        license_number.send_keys(self.lic)
-        sleep(3)
-        license_number.send_keys(Keys.RETURN)
-        sleep(15)
+    data = response.json()
 
-    def parse(self, response):
-        
-        # Pass the page source to Scrapy for parsing
-        response = Selector(text=self.driver.page_source)
-        members_found = response.xpath('//*[@id="publicdirectorycontainer"]/div[6]/div[1]/div/section/div[2]/div/div/div/div/div/small/span[2]').get()
-        sel = Selector(text=members_found)
-        if (sel.xpath('//span/text()').get()):
-            number = int(sel.xpath('//span/text()').get())
-            if number > 0:
-                registration_status = response.xpath('//*[@id="Results"]/tbody/tr/td[2]/text()[1]').get().strip()
-                are_equal = registration_status == "Suspended"
-                if not are_equal:
-                    yield {'status': registration_status}
-                else:
-                    yield {'status': 'INACTIVE'}
-            else:
-                yield {'status': "NOT FOUND"}
+    if "Records" in data and len(data["Records"]) > 0:
+        record = data["Records"][0]
+        if "prl" in record and "Regular Licence" in record["prl"]:
+            return "VERIFIED"
         else:
-            yield {'status': "NOT FOUND"}
-
-        
+            return "INACTIVE"
+    else:
+        return "NOT FOUND"

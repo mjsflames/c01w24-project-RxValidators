@@ -26,11 +26,7 @@ class CPSBCSpider(Spider):
             "Host": "www.cpsbc.ca"
         }
         meta = {'dont_redirect': True,'handle_httpstatus_list': [302]}
-        cookies = {}
-        for cookie in response.headers.getlist('Set-Cookie'):
-            cookie_name, cookie_value = cookie.decode('utf-8').split(';')[0].split('=')
-            cookies[cookie_name] = cookie_value
-        yield Request(url, headers=headers, meta=meta, cookies=cookies, callback=self.after_submit)
+        yield Request(url, headers=headers, meta=meta, callback=self.after_submit)
 
     def after_submit(self, response):
         soup = BeautifulSoup(response.text, 'html.parser')

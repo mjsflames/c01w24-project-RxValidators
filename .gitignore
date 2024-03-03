@@ -1,4 +1,4 @@
 venv/
 __pycache__/
-results.html
+result.html
 .~lock.sample_data.csv#

@@ -5,6 +5,10 @@ from cpso_spider import CPSOSpider
 from cmq_spider import CMQSpider
 from cpsm_spider import CPSMSpider
 from cpsns_spider import CPSNSSpider
+from cpspei_spider import CPSPEISpider
+from cpsnb_spider import cpsnb_spider
+from cpsa_spider import CPSASpider
+from cpsnl_spider import CPSNLSpider
 
 processor = Processor(settings={"LOG_ENABLED": False})
 
@@ -24,12 +28,36 @@ def cpsm_spider(last_name, first_name):
     job = Job(CPSMSpider, last_name, first_name)
     return processor.run(job)[0]["status"]
 
-def cpsns_spider(last_name, first_name, liscence_no):
-    job = Job(CPSNSSpider, last_name, first_name, liscence_no)
+def cpsns_spider(last_name, first_name, license_no):
+    job = Job(CPSNSSpider, last_name, first_name, license_no)
     return processor.run(job)[0]["status"]
+
+def cpspei_spider(last_name, first_name, license_no):
+    job = Job(CPSPEISpider, last_name, first_name, license_no)
+    return processor.run(job)[0]["status"]
+
+def cpsa_spider(last_name, first_name):
+    job = Job(CPSASpider, last_name, first_name)
+    return processor.run(job)
+
+def cpsnl_spider(last_name, first_name):
+    job = Job(CPSNLSpider, last_name, first_name)
+    return processor.run(job)
 
 if __name__ == "__main__":
     print("Testing ...")
+
+    # print(cpsnl_spider("Wonka", "Willie"))
+    # print(cpsnl_spider("Pieroway", "Amy"))
+    # print(cpsnl_spider("Singleton-Polster", "Amy"))
+
+
+    # print(cpsa_spider("Chivers-Wilson", "Kaitlin"))
+
+    # print(cpsnb_spider("Taylor", "Kathleen", "7806"))
+    # print(cpsnb_spider("Wangui", "Linda", "10171"))
+
+    # print(cpsnb_spider("Stone", "Christopher", "7563"))
 
     # print(cpsns_spider('Martin', 'Louis', '18808'))
 
