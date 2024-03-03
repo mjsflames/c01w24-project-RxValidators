@@ -125,6 +125,9 @@ Joe:
 - Challenge: Deciding which function may be used for the database
 - Planning on including error handling for the functions
 
+Danny:
+- Recreated the Nova Scotia webscraper using only Scrapy
+
 # March 1st, 2024
 Emily:
 - Created a function that takes a location and calls the Google Maps API. It then returns a Google Maps link with directions to that location
