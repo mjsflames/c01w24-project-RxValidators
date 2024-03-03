@@ -1,5 +1,3 @@
-# sprint_retrospective
-
 # Successes:
 Getting web scrapers to work using Scrapy
 Importing data into Pandas dataframes and testing the scrapers with it
