@@ -20,18 +20,16 @@ def cmq_spider(last_name, license_no):
     response = requests.request("POST", url, headers=headers, data=payload)
     data = json.loads(response.text)
 
-    if len(rows) == 0:
+    if len(data) == 0:
         return "NOT FOUND"
 
-    if len(rows) == 1:
-        return get_physician_status(data[0]['physicianId'])
+    if len(data) == 1:
+        return get_physician_status(url, headers, data[0]['physicianId'])
 
-    if len(rows) > 1:
+    if len(data) > 1:
         return "NOT FOUND"
 
-    print(physician_data)
-
-def get_physician_status():
+def get_physician_status(url, headers, physician_id):
     payload = json.dumps({
         "language": "en",
         "method": "getPhysicianDetails",
@@ -40,6 +38,9 @@ def get_physician_status():
     response = requests.request("POST", url, headers=headers, data=payload)
 
     physician_details = json.loads(response.text)
-    status = physician_details['status']
+    status = physician_details['status'].lower()
 
-    print(status)
+    if 'active' in status:
+        return "VERIFIED"
+    else:
+        return "INACTIVE"

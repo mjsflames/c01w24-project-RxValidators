@@ -48,9 +48,9 @@ def cpss_spider(last_name, first_name):
 if __name__ == "__main__":
     print("Testing ...")
 
-    print(cmq_spider("Wonka", "15332"))
-    print(cmq_spider("Lam", "96332"))
-    print(cmq_spider("Li", "15332"))
+    # print(cmq_spider("Wonka", "15332"))
+    # print(cmq_spider("Lam", "96332"))
+    # print(cmq_spider("Li", "15332"))
 
     # # College of Physicians and Surgeons of Newfoundland and Labrador
     # print(cpsnl_spider("Wonka", "Willie")) # NOT FOUND
@@ -61,9 +61,7 @@ if __name__ == "__main__":
 
     # print(cpsnb_spider("Taylor", "Kathleen", "7806"))
     # print(cpsnb_spider("Wangui", "Linda", "10171"))
-
     # print(cpsnb_spider("Stone", "Christopher", "7563"))
-
     # print(cpsns_spider('Martin', 'Louis', '18808'))
 
     # print("Fake person test case:")

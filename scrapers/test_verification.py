@@ -44,6 +44,8 @@ def main():
                 df.at[index, 'Scraped Status'] = cpsnl_spider(row['Last Name'], row['First Name']) 
             elif row['Licensing College'] == CPSS_str:
                 df.at[index, 'Scraped Status'] = cpss_spider(row['Last Name'], row['First Name'])
+            elif row['Licensing College'] == CMQ_str:
+                df.at[index, 'Scraped Status'] = cmq_spider(row['Last Name'], row['Licence #'])
         except Exception as e:
             print(row['Last Name'], row['First Name'], row['Licence #'], "triggered exception, fix the code")
 
