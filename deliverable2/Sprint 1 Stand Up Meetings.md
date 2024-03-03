@@ -4,13 +4,8 @@ Team:
 - Sprint 1 to end on March 3rd
 
 # February 19th, 2024
-Michelle: 
-- No updates
   
 # February 20th, 2024
-Michelle: 
-- No updates
-
 Emily:
 - Generated unique prescriber codes
 - Challenge: I had trouble deciding how arguments are going to be passed into the function to generate the unique codes. (Would it take a dictionary, a 2D array, or multiple strings?)
@@ -31,6 +26,9 @@ Joe:
 - Started planning the demo and decided to use 2-D arrays and pandas Dataframes as a means to store and modify Excel file information
 - Tentatively decided to use MongoDB as the storage method
 
+Lance:
+- Looked through my websites to find the API calls.
+
 # February 22nd, 2024
 Michelle: 
 - Decided to use Scrapy
@@ -49,6 +47,9 @@ Emily:
   - Generating the length of lines for a user to be able to write their name, date, etc., and choosing the right coordinates for each component/object in the PDF, took a while to make it look like what the company wants.
   - Changing the font sizes in the PDF and saving the previous font size for use later took quite a bit of time to figure out. I had to read the PDF-generating documentation to understand how it worked.
 
+Lance:
+- Started research Scrapy.
+  
 # February 23rd, 2024
 Michelle:
 - Found out that Selenium does an automated browser and can find elements/keys in an HTML to directly enter information
@@ -86,12 +87,13 @@ Danny:
 - Filled out the HTML forms
   
 # February 26th, 2024
-Michelle:
-- No updates
   
 # February 27th, 2024
 Michelle:
 - Updated the scripts to take from a 2D array and output to the 5th entry in that array
+
+Lance:
+- Added error handling into scrapers
   
 # February 28th, 2024
 Danny:
@@ -111,6 +113,9 @@ Michelle:
 - Currently implementing functionality for if there are 2 people with the same name for Alberta
 - Having trouble figuring out how to have the script click each same name physician's link to match the license number and also backtrack if no match
 
+Lance:
+- Played around with React, Express, and other parts of a tech stack for the next sprint.
+
 # February 29th, 2024
 Emily:
 - Started looking into Google Maps APIs for the "Green Resources" part of the project
@@ -128,14 +133,16 @@ Joe:
 Danny:
 - Recreated the Nova Scotia webscraper using only Scrapy
 
+Lance:
+- Removed unnecessary files and shortened code in scrapy project
+  
 # March 1st, 2024
 Emily:
 - Created a function that takes a location and calls the Google Maps API. It then returns a Google Maps link with directions to that location
 
-Michelle:
-- No updates
-
 # March 2nd, 2024
-
+Lance:
+- Rewrote scrapers to not inherit from my `BaseSpider` superclass
+ 
 # March 3rd, 2024
 
