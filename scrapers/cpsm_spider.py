@@ -1,53 +1,32 @@
 from scrapy import Spider, Request
 import json
 
+class CPSMSpider(Spider):
+    name = 'cpsm_spider'
+    base_url = 'https://member.cpsm.mb.ca/api/physicianprofile'
 
-class MtbSpider(Spider):
-    name = "MtbRXValidator_Spider"
-    API_URL = "https://member.cpsm.mb.ca/api/physicianprofile/"
-
-    def __init__(self, first_name, last_name, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.first_name = first_name
+    def __init__(self, last_name, first_name, *args, **kwargs):
+        super(CPSMSpider, self).__init__(*args, **kwargs)
         self.last_name = last_name
+        self.first_name = first_name
 
     def start_requests(self):
-        first_name, last_name = [_.replace(" ", "+")
-                                 for _ in [self.first_name, self.last_name]]
-        query = f'{self.API_URL}searchresult?lastname={
-            last_name}&firstname={first_name}'
-
-        yield Request(url=query, callback=self.parse)
-
-    def on_error(self, failure):
-        # print("Error: ", failure)
-        yield {"status": "FAILED"}
-
-    def get_verification_filter(self, item):
-        return item['descriptions'][1] == self.first_name and \
-            (item['descriptions'][0] == self.last_name or self.last_name == None)
-
-    def parse_info(self, response):
-        if not response.status == 200:
-            yield {"status": "FAILED"}
-        content = json.loads(response.body)
-        valid = "Regulated Member" in content['membershipClass']
-
-        yield {"status": ["INACTIVE", "ACTIVE"][valid]}
+        url = f"{self.base_url}/searchresult?lastname={self.last_name}&firstname={self.first_name}"
+        yield Request(url, callback=self.parse)
 
     def parse(self, response):
-        if not response.status == 200:
-            return self.on_error(response)
-        result = list(filter(self.get_verification_filter,
-                      json.loads(response.body)['items']))
+        data = json.loads(response.text)
+        if not data["items"]:
+            yield {"status": "NOT FOUND"}
+        else:
+            id_no = data["items"][0]["links"][0]["parameters"]
+            url = f"{self.base_url}/practitionerinformation?id={id_no}"
+            yield Request(url, callback=self.after_submit)
 
-        if len(result) == 0:
-            # print("Invalid or name not in registry.")
-            return {"status": "INACTIVE"}
-        # elif len(result) > 1:  # Case: One result
-            # print("Duplicate or several results found.")
-        # print(f"Result for {self.first_name} {self.last_name}")
-
-        id = result[0]['links'][0]['parameters']
-        inforeq = f"{self.API_URL}practitionerinformation?id={id}"
-        yield Request(url=inforeq, callback=self.parse_info)
+    def after_submit(self, response):
+        data = json.loads(response.text)
+        status = data['membershipClass'].lower()
+        if "regulated member" in status:
+            yield {"status": "VERIFIED"}
+        else:
+            yield {"status": "INACTIVE"}

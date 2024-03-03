@@ -42,7 +42,7 @@ def cpsa_spider(last_name, first_name):
 
 def cpsnl_spider(last_name, first_name):
     job = Job(CPSNLSpider, last_name, first_name)
-    return processor.run(job)
+    return processor.run(job)[0]["status"]
 
 if __name__ == "__main__":
     print("Testing ...")
