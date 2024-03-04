@@ -6,7 +6,7 @@ from cmq_spider import cmq_spider
 from cpsm_spider import CPSMSpider
 from cpsns_spider import CPSNSSpider
 from cpspei_spider import CPSPEISpider
-from cpsnb_spider import cpsnb_spider
+from cpsnb_spider import CPSNBSpider
 from cpsa_spider import CPSASpider
 from cpsnl_spider import CPSNLSpider
 from cpss_spider import CPSSSpider
@@ -45,6 +45,10 @@ def cpss_spider(last_name, first_name):
     job = Job(CPSSSpider, first_name, last_name)
     return processor.run(job)[0]["status"]
 
+def cpsnb_spider(last_name, first_name, license_no):
+    job = Job(CPSNBSpider, first_name, last_name, license_no)
+    return processor.run(job)
+
 if __name__ == "__main__":
     print("Testing ...")
 
@@ -61,7 +65,7 @@ if __name__ == "__main__":
 
     # print(cpsnb_spider("Taylor", "Kathleen", "7806"))
     # print(cpsnb_spider("Wangui", "Linda", "10171"))
-    # print(cpsnb_spider("Stone", "Christopher", "7563"))
+    print(cpsnb_spider("Stone", "Christopher", "7563"))
     # print(cpsns_spider('Martin', 'Louis', '18808'))
 
     # print("Fake person test case:")
