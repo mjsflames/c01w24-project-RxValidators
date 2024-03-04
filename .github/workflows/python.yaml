@@ -22,5 +22,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install reportlab pymongo openpyxl pandas bs4 selenium
 
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+
       - name: Test unique codes and pdf generation
         run: python backend/code_pdf_tests.py
