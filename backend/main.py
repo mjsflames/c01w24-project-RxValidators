@@ -46,17 +46,17 @@ def generate_verified_pdfs(df):
             create_pdf(df['Code'][i], os.path.join(os.getcwd(), "pdfs"))
         
 # Making dataframe as sample data
-columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status"]
-data = [
-   ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
-    ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE"],
-    ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED"],
-    ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
-    ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
-    ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED"]
-]
+# columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status"]
+# data = [
+#    ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
+#     ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE"],
+#     ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED"],
+#     ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
+#     ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
+#     ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED"]
+# ]
         
         
-df = create_dataframe(data, columns)
-add_code_df(df)
-generate_verified_pdfs(df)
+# df = create_dataframe(data, columns)
+# add_code_df(df)
+# generate_verified_pdfs(df)
