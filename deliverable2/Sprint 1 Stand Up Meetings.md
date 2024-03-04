@@ -29,6 +29,10 @@ Joe:
 Lance:
 - Looked through my websites to find the API calls.
 
+Kenny:
+- Started Learning Flask, which seem to be a better choice for our scrapers implemented at the backend.
+- Challenge: Having little knowledge of scraper and don't have a integrated scraper to call for now.
+
 # February 22nd, 2024
 Michelle: 
 - Decided to use Scrapy
@@ -49,7 +53,7 @@ Emily:
 
 Lance:
 - Started research Scrapy.
-  
+
 # February 23rd, 2024
 Michelle:
 - Found out that Selenium does an automated browser and can find elements/keys in an HTML to directly enter information
@@ -60,6 +64,10 @@ Michelle:
 Michelle:
 - Managed to write the new status into the CSV column but it did not loop the CSV properly
 - Researching more on how to loop the CSV in the script
+
+Kenny:
+- Finished the Flask setup.
+- Started to learn how to use scrapy.
 
 # February 25th, 2024
 Michelle:
@@ -94,6 +102,10 @@ Michelle:
 
 Lance:
 - Added error handling into scrapers
+
+Kenny:
+- Implemented first version of scraper for New Brunswick using selenium.
+- Having troubles of using selector and sending request effectively.
   
 # February 28th, 2024
 Danny:
@@ -129,6 +141,11 @@ Joe:
 - Completed setting up MongoDB locally and included some basic functions for the database
 - Challenge: Deciding which function may be used for the database
 - Planning on including error handling for the functions
+
+Kenny:
+- Impemented the first version scraper for Newfoundland website using selemiun.
+- Challenge: Realized selenium might not be the best choice but run out of time to learn during sprint_1
+- Uploaded two scrapers.
 
 Danny:
 - Recreated the Nova Scotia web scraper using only Scrapy
