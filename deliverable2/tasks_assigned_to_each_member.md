@@ -9,6 +9,7 @@
 - Develop script to check and parse scraped data
   - Subtask 1: Implement parsing logic
   - Subtask 2: Edit CSV file with verification status
+- Edited spiders to merge successfully
 
 # Lance: 
 - Develop web scraping scripts for the following websites:
@@ -19,11 +20,13 @@
 - Develop web scraping scripts for the following websites:
   - College of Physicians & Surgeons of Prince Edward Island
   - College of Physicians and Surgeons of Alberta
+- Edited spiders to merge successfully
 
 # Kangjie: 
 - Develop web scraping scripts for the following websites:
   - College of Physicians and Surgeons of Newfoundland and Labrador
   - College of Physicians and Surgeons of New Brunswick
+- Edited spiders to merge successfully
 
 # Danny: 
 - Develop web scraping scripts for the following websites:
