@@ -1,4 +1,8 @@
 from scrapyscript import Job, Processor
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import time
 
 from cpsbc_spider import CPSBCSpider
 from cpso_spider import CPSOSpider
@@ -21,12 +25,12 @@ def cpso_spider(last_name, first_name, cpso_number):
     job = Job(CPSOSpider, last_name, first_name, cpso_number)
     return processor.run(job)[0]["status"]
 
-def cpsm_spider(last_name, first_name):
-    job = Job(CPSMSpider, last_name, first_name)
+def cpss_spider(last_name, first_name):
+    job = Job(CPSSSpider, first_name, last_name)
     return processor.run(job)[0]["status"]
 
-def cpsns_spider(last_name, first_name, license_no):
-    job = Job(CPSNSSpider, last_name, first_name, license_no)
+def cpsm_spider(last_name, first_name):
+    job = Job(CPSMSpider, last_name, first_name)
     return processor.run(job)[0]["status"]
 
 def cpspei_spider(last_name, first_name, license_no):
@@ -34,19 +38,45 @@ def cpspei_spider(last_name, first_name, license_no):
     return processor.run(job)[0]["status"]
 
 def cpsa_spider(last_name, first_name):
-    job = Job(CPSASpider, last_name, first_name)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(options=chrome_options)
+    url = "https://search.cpsa.ca/"
+    driver.get(url)
+    form_first = "MainContent_physicianSearchView_txtFirstName"
+    form_last = "MainContent_physicianSearchView_txtLastName"
+    form_submit = "MainContent_physicianSearchView_btnSearch"
+    driver.find_element(by=By.ID, value=form_first).send_keys(first_name)
+    driver.find_element(by=By.ID, value=form_last).send_keys(last_name)
+    driver.find_element(by=By.ID, value=form_submit).click()
+    time.sleep(1)
+    number_sel = "#MainContent_physicianSearchView_ResultsPanel > " + \
+                 "div.row.resultsHeader > div > h2"
+    number_tag = driver.find_element(by=By.CSS_SELECTOR, value=number_sel).text
+    no_of_results = int(number_tag.split()[1])
+
+    if no_of_results == 0:
+        return "NOT FOUND"
+    elif no_of_results == 1:
+        url_sel = "#MainContent_physicianSearchView_gvResults > tbody > " + \
+                  "tr:nth-child(2) > td.status4 > a"
+        url_tag = driver.find_element(by=By.CSS_SELECTOR, value=url_sel)
+        url = url_tag.get_attribute("href")
+        job = Job(CPSASpider, last_name, first_name, url)
+        return processor.run(job)[0]["status"]
+    elif no_of_results > 1:
+        return "NOT FOUND"
+
+def cpsnb_spider(last_name, first_name, license_no):
+    job = Job(CPSNBSpider, last_name, first_name, license_no)
     return processor.run(job)[0]["status"]
 
 def cpsnl_spider(last_name, first_name):
     job = Job(CPSNLSpider, last_name, first_name)
     return processor.run(job)[0]["status"]
 
-def cpss_spider(last_name, first_name):
-    job = Job(CPSSSpider, first_name, last_name)
-    return processor.run(job)[0]["status"]
-
-def cpsnb_spider(last_name, first_name, license_no):
-    job = Job(CPSNBSpider, last_name, first_name, license_no)
+def cpsns_spider(last_name, first_name, license_no):
+    job = Job(CPSNSSpider, last_name, first_name, license_no)
     return processor.run(job)[0]["status"]
 
 if __name__ == "__main__":
@@ -67,6 +97,7 @@ if __name__ == "__main__":
     # print(cpsa_spider("Chivers-Wilson", "Kaitlin"))
     # print(cpsa_spider("Chiu", "Anthony"))
     print(cpsa_spider("Chiu", "Anthony"))
+    print(cpsa_spider("Cote", "Anne-Josee"))
 
     # print(cpsnb_spider("Taylor", "Kathleen", "7806"))
     # print(cpsnb_spider("Wangui", "Linda", "10171"))
