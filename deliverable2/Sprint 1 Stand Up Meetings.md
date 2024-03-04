@@ -95,6 +95,9 @@ Danny:
 - Filled out the HTML forms
   
 # February 26th, 2024
+
+Renat:
+- Started researching how to web scrape using scrapy, learnt how to write the spider class, the init, parse, methods, and the Request and FormRequest functions.
   
 # February 27th, 2024
 Michelle:
@@ -106,6 +109,9 @@ Lance:
 Kenny:
 - Implemented first version of scraper for New Brunswick using selenium.
 - Having troubles of using selector and sending request effectively.
+
+Renat:
+- Addded working Ontario and British Columbia scrapers that used scrapy and beautiful soup.
   
 # February 28th, 2024
 Danny:
@@ -120,6 +126,9 @@ Emily:
 - Challenges:
   - Figuring out what data (2D array or dictionary) I will get to generate the unique prescriber codes
   - How I can update the CSV file to have unique codes for only the verified people
+  
+Renat:
+- Added a working CPSM scraper and a working tester that parses the data .csv into a dataframe, selects which spider to run, and verifies whether the scraper returns the correct result.
 
 Michelle:
 - Currently implementing functionality for if there are 2 people with the same name for Alberta
@@ -153,6 +162,9 @@ Danny:
 Lance:
 - Removed unnecessary files and shortened code in scrapy project
   
+Renat:
+- Added the beginnings of the nova scotia scraper.
+
 # March 1st, 2024
 Emily:
 - Created a function that takes a location and calls the Google Maps API. It then returns a Google Maps link with directions to that location
@@ -160,6 +172,9 @@ Emily:
 # March 2nd, 2024
 Lance:
 - Rewrote scrapers to not inherit from my `BaseSpider` superclass
+
+Renat:
+- Developed working nova scotia scraper and started work on integrating all of the web scrapers - 47 passed 60 failed.
  
 # March 3rd, 2024
 Emily:
@@ -171,3 +186,8 @@ Renat, Michelle & Kangjie:
 
 Team:
 - Edited and added assigned tasks and sprint retrospective to GitHub
+
+Renat:
+- Created functioning newfoundland and labrador scraper and continued work on integrating the web scrapers together. Collaborated with Michelle on developing the new brunswick and pei scrapers which are similar.
+- Challenge: Alberta scraper still does not work, struggling to obtain a cookie.
+- Now 74 are passing and 34 are failing only.
