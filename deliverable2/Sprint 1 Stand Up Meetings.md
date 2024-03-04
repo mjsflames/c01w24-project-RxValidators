@@ -166,7 +166,7 @@ Emily:
 - Merged MongoDB Database with unique prescriber code/PDF generation
 - Created test cases for Code/PDF generation
 - Created GitHub Workflow `python.yaml` for continuous testing
-  - Currently only downloads dependencies and runs test cases (for code/PDF generation) every time a file in the backend folder is modified
+  - Currently only downloads dependencies and runs unit test cases (for code/PDF generation) only when a file in the backend folder is modified
 
 Renat, Michelle & Kangjie:
 - Edited and merged scrapers together
