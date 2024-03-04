@@ -8,6 +8,11 @@ full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "Li
 
 class TestCases(unittest.TestCase):
     
+    def test_create_code(self):
+        result = code_generator("Lisa", "Turner", "NB", "001")
+        self.assertEqual(result, "NB-LT001")
+    
+    
     def test_add_empty_data_codes(self):
         data = []
         expected_data = [] 
