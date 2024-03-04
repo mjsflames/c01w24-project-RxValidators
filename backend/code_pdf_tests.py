@@ -12,7 +12,6 @@ class TestCases(unittest.TestCase):
         result = code_generator("Lisa", "Turner", "NB", "001")
         self.assertEqual(result, "NB-LT001")
     
-    
     def test_add_empty_data_codes(self):
         data = []
         expected_data = [] 
@@ -22,7 +21,6 @@ class TestCases(unittest.TestCase):
         result = add_code_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
-        
     
     def test_add_codes(self):
         data = [
@@ -41,7 +39,6 @@ class TestCases(unittest.TestCase):
         result = add_code_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
-        
         
     def test_add_duplicate_codes(self):
         data = [
@@ -67,6 +64,7 @@ class TestCases(unittest.TestCase):
         result = add_code_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
+       
        
 if __name__ == '__main__':
     unittest.main()
