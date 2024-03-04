@@ -28,8 +28,8 @@ VERIFIED, INACTIVE, NOT_FOUND = "VERIFIED", "INACTIVE", "NOT FOUND"
     ("Singleton-Polste", "Amy", "", "NL", INACTIVE),
 
     # Prince Edward Island
-    ("Wonka", "Willie", "7646", "NL", NOT_FOUND),
-    ("Muttart", "Rebecca", "7646", "NL", VERIFIED),
+    ("Wonka", "Willie", "7646", "PE", NOT_FOUND),
+    ("Muttart", "Rebecca", "7646", "PE", VERIFIED),
 ])
 def test_verify(last_name, first_name, license_no, province, expected_result):
     assert verify(last_name, first_name, license_no, province) == expected_result
