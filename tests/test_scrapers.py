@@ -1,4 +1,5 @@
 import unittest
+
 from scrapers.verify import verify
 
 VERIFIED, INACTIVE, NOT_FOUND = "VERIFIED", "INACTIVE", "NOT FOUND"
