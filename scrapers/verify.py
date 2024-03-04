@@ -13,7 +13,7 @@ from .cpss_spider import CPSSSpider
 
 processor = Processor(settings={"LOG_ENABLED": False})
 
-def verify(last_name, first_name, license_no, province):
+def verify(last_name="", first_name="", license_no="", province=""):
     if province == "BC":
         job = Job(CPSBCSpider, last_name, first_name)
         return processor.run(job)[0]["status"]
