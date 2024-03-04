@@ -52,8 +52,8 @@ def cpsnb_spider(last_name, first_name, license_no):
 if __name__ == "__main__":
     print("Testing ...")
 
-    print(cpspei_spider("Wonka", "Willie", "7646"))
-    print(cpspei_spider("Muttart", "Rebecca", "7646"))
+    # print(cpspei_spider("Wonka", "Willie", "7646"))
+    # print(cpspei_spider("Muttart", "Rebecca", "7646"))
 
     # print(cmq_spider("Wonka", "15332"))
     # print(cmq_spider("Lam", "96332"))
@@ -65,6 +65,7 @@ if __name__ == "__main__":
     # print(cpsnl_spider("Singleton-Polster", "Amy")) # INACTIVE
 
     # print(cpsa_spider("Chivers-Wilson", "Kaitlin"))
+    print(cpsa_spider("Chiu", "Anthony"))
 
     # print(cpsnb_spider("Taylor", "Kathleen", "7806"))
     # print(cpsnb_spider("Wangui", "Linda", "10171"))
