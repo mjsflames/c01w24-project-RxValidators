@@ -30,6 +30,9 @@ VERIFIED, INACTIVE, NOT_FOUND = "VERIFIED", "INACTIVE", "NOT FOUND"
     # Prince Edward Island
     ("Wonka", "Willie", "7646", "PE", NOT_FOUND),
     ("Muttart", "Rebecca", "7646", "PE", VERIFIED),
+
+    # Québec
+    ("Li", "", "15332", "QC", VERIFIED),
 ])
 def test_verify(last_name, first_name, license_no, province, expected_result):
     assert verify(last_name, first_name, license_no, province) == expected_result
