@@ -1,7 +1,6 @@
 from scrapy import Spider, Request
 import json
 
-
 class CPSSSpider(Spider):
     name = "SaskRXValidator_Spider"
     API_URL = "https://www.cps.sk.ca/CPSSWebApi/api/Physicians/"

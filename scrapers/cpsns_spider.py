@@ -1,5 +1,4 @@
 from scrapy import Spider, FormRequest
-import webbrowser
 
 class CPSNSSpider(Spider):
     name = 'cpsns_spider'
@@ -24,9 +23,7 @@ class CPSNSSpider(Spider):
 
     def save_results(self, response):
         xpath_expression = '//*[@id="grid-basic"]/tbody/tr[1]/td[2]/span/text()'
-
         extracted_text = response.xpath(xpath_expression).get()
-
         if extracted_text == None:
           return {"status": "VERIFIED"}
         else:

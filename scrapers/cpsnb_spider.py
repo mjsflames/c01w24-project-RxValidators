@@ -1,8 +1,5 @@
 from scrapy import Spider, Request, FormRequest
 import json
-import webbrowser
-
-import json
 
 def query_parameters(last_name, first_name, license_no):
     parameters = [
@@ -39,10 +36,6 @@ class CPSNBSpider(Spider):
         )
 
     def parse(self, response):
-        with open('result.html', 'wb') as f:
-            f.write(response.body)
-        webbrowser.open('result.html')
-
         rows = json.loads(response.body)["Records"]
         if len(rows) == 0:
             return {"status": "NOT FOUND"}
