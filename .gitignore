@@ -8,3 +8,4 @@ venv/
 __pycache__/
 result.html
 .~lock.sample_data.csv#
+chromedriver

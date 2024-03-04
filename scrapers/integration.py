@@ -7,7 +7,7 @@ from cpsm_spider import CPSMSpider
 from cpsns_spider import CPSNSSpider
 from cpspei_spider import CPSPEISpider
 from cpsnb_spider import CPSNBSpider
-from cpsa_spider import CPSASpider
+from cpsa_spider import cpsa_spider
 from cpsnl_spider import CPSNLSpider
 from cpss_spider import CPSSSpider
 
@@ -33,9 +33,9 @@ def cpspei_spider(last_name, first_name, license_no):
     job = Job(CPSPEISpider, last_name, first_name, license_no)
     return processor.run(job)[0]["status"]
 
-def cpsa_spider(last_name, first_name):
-    job = Job(CPSASpider, last_name, first_name)
-    return processor.run(job)
+# def cpsa_spider(last_name, first_name):
+#     job = Job(CPSASpider, last_name, first_name)
+#     return processor.run(job)
 
 def cpsnl_spider(last_name, first_name):
     job = Job(CPSNLSpider, last_name, first_name)
