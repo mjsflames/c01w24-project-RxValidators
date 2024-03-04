@@ -1,22 +1,28 @@
-from scrapy import Spider, FormRequest
+from scrapy import Spider, FormRequest, Request
 import webbrowser
 
 class CPSASpider(Spider):
     name = "cpsa_spider"
-    start_urls = ["https://search.cpsa.ca/"]
 
     def __init__(self, last_name, first_name, *args, **kwargs):
         super(CPSASpider, self).__init__(*args, **kwargs)
         self.last_name = last_name
         self.first_name = first_name
 
+    def start_requests(self):
+        url = "https://search.cpsa.ca/"
+        yield Request(
+            url, callback=self.parse
+        )
+
     def parse(self, response):
         cookies = {
-            "ASP.NET_SessionId": "fuvjvy22iexxxolyn303bpze"
+            "ASP.NET_SessionId": "tu41v1bckwlhxoib0ysp4pa3"
         }
         formdata = {
-            "ctl00$MainContent$physicianSearchView$txtFirstName": "Anthony",
-            "ctl00$MainContent$physicianSearchView$txtLastName": "Chiu"
+            "ctl00$ctl16": "ctl00$ctl16|ctl00$MainContent$physicianSearchView$btnSearch",
+            "ctl00$MainContent$physicianSearchView$txtFirstName": "Anne-Josee",
+            "ctl00$MainContent$physicianSearchView$txtLastName": "Cote",
         }
         yield FormRequest(
             url=response.url,
