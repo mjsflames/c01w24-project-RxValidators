@@ -148,3 +148,6 @@ Lance:
 Emily:
 - Merged MongoDB Database with unique prescriber code/PDF generation
 - Created test cases for Code/PDF generation
+
+Team:
+- Edited and added assigned tasks and sprint retrospective to GitHub
