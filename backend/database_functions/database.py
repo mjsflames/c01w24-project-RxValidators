@@ -70,10 +70,17 @@ def remove_all_unverified(collection):
     deleted_count = collection.delete_many({"Status": {"$ne": "VERIFIED"}})
     return deleted_count
 
+def insert_verified_persons(df):
+    """accepts a pandas dataframe, loads the rows into a table"""
+    pass
 
-excel_to_mongodb(db_name, collection, excel_file)
-# clear_status_all(collection)
-add_code_column(collection)
-remove_all_unverified(collection)
-print_all(collection)
-delete_all(collection)
+def get_collection(name):
+    return db[name]
+
+if __name__ == "__main__":
+    excel_to_mongodb(db_name, collection, excel_file)
+    # clear_status_all(collection)
+    add_code_column(collection)
+    remove_all_unverified(collection)
+    print_all(collection)
+    delete_all(collection)

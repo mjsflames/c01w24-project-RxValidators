@@ -2,7 +2,7 @@
 backend/__pycache__
 
 # Ignore PDFs
-pdfs/*
+# pdfs/
 
 venv/
 __pycache__/
