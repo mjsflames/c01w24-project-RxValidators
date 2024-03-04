@@ -1,9 +1,11 @@
-name: python - on Push to main
+name: backend - on Push to main
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "backend/"
 
 jobs:
   python:

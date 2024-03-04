@@ -84,4 +84,3 @@ if __name__ == "__main__":
     remove_all_unverified(collection)
     print_all(collection)
     delete_all(collection)
-    client.close()
