@@ -18,10 +18,10 @@ CPSNS_str = "College of Physicians and Surgeons of Nova Scotia"
 CMQ_str = "Collège des médecins du Québec"
 
 def main():
+    # Initialize dataframe
     df = pd.read_csv("sample_data.csv")
     df['Scraped Status'] = None
-    passed_count = 0
-    failed_count = 0
+    passed_count,failed_count = 0, 0
 
     # Iterate over each row and update the "Scraped Status" column accordingly
     pbar = tqdm(total=len(df), desc="Scraping in Progress", position=0)
@@ -32,22 +32,22 @@ def main():
                 df.at[index, 'Scraped Status'] = cpsbc_spider(row['Last Name'], row['First Name'])
             elif row['Licensing College'] == CPSO_str:
                 df.at[index, 'Scraped Status'] = cpso_spider(row['Last Name'], row['First Name'], row['Licence #'])
+            elif row['Licensing College'] == CPSS_str:
+                df.at[index, 'Scraped Status'] = cpss_spider(row['Last Name'], row['First Name'])
             elif row['Licensing College'] == CPSM_str:
                 df.at[index, 'Scraped Status'] = cpsm_spider(row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSNS_str:
-                df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
             elif row['Licensing College'] == CPSPEI_str:
-                df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
+                df.at[index, 'Scraped Status'] = cpspei_spider(row['Last Name'], row['First Name'], row['Licence #'])
+            elif row['Licensing College'] == CPSA_str:
+                df.at[index, 'Scraped Status'] = cpsa_spider(row['Last Name'], row['First Name'])
             elif row['Licensing College'] == CPSNB_str:
                 df.at[index, 'Scraped Status'] = cpsnb_spider(row['Last Name'], row['First Name'], row['Licence #'])
             elif row['Licensing College'] == CPSNL_str:
                 df.at[index, 'Scraped Status'] = cpsnl_spider(row['Last Name'], row['First Name']) 
-            elif row['Licensing College'] == CPSS_str:
-                df.at[index, 'Scraped Status'] = cpss_spider(row['Last Name'], row['First Name'])
+            elif row['Licensing College'] == CPSNS_str:
+                df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
             elif row['Licensing College'] == CMQ_str:
                 df.at[index, 'Scraped Status'] = cmq_spider(row['Last Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSPEI_str:
-                df.at[index, 'Scraped Status'] = cpspei_spider(row['Last Name'], row['First Name'], row['Licence #'])
         except Exception as e:
             print(row['Last Name'], row['First Name'], row['Licence #'], "triggered exception, fix the code")
 
@@ -57,6 +57,7 @@ def main():
         else:
             failed_count += 1
     
+        # Update progress bar
         pbar.set_description(f"Scraping in Progress: Passed - {passed_count}, Failed - {failed_count}")
         pbar.update(1)
     
