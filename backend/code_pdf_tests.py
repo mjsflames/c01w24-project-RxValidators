@@ -1,4 +1,3 @@
-import database_functions.database as db_func
 from main import *
 from prescriber_code import *
 import unittest
