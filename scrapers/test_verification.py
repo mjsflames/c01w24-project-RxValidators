@@ -1,21 +1,10 @@
 import pandas as pd
 from tqdm import tqdm
-from integration import *
+from integration import verify_any_physician
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.width', None)
-
-CPSO_str = "College of Physicians and Surgeons of Ontario"
-CPSBC_str = "College of Physicians and Surgeons of British Columbia"
-CPSS_str = "College of Physicians and Surgeons of Saskatchewan"
-CPSM_str = "College of Physicians and Surgeons of Manitoba"
-CPSPEI_str = "College of Physicians and Surgeons of Prince Edward Island"
-CPSA_str = "College of Physicians and Surgeons of Alberta"
-CPSNB_str = "College of Physicians and Surgeons of New Brunswick"
-CPSNL_str = "College of Physicians and Surgeons of Newfoundland and Labrador"
-CPSNS_str = "College of Physicians and Surgeons of Nova Scotia"
-CMQ_str = "Collège des médecins du Québec"
 
 def main():
     # Initialize dataframe
@@ -28,28 +17,19 @@ def main():
     for index, row in df.iterrows():
         # Scrape the data
         try:
-            if row['Licensing College'] == CPSBC_str:
-                df.at[index, 'Scraped Status'] = cpsbc_spider(row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSO_str:
-                df.at[index, 'Scraped Status'] = cpso_spider(row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSS_str:
-                df.at[index, 'Scraped Status'] = cpss_spider(row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSM_str:
-                df.at[index, 'Scraped Status'] = cpsm_spider(row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSPEI_str:
-                df.at[index, 'Scraped Status'] = cpspei_spider(row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSA_str:
-                df.at[index, 'Scraped Status'] = cpsa_spider(row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSNB_str:
-                df.at[index, 'Scraped Status'] = cpsnb_spider(row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSNL_str:
-                df.at[index, 'Scraped Status'] = cpsnl_spider(row['Last Name'], row['First Name']) 
-            elif row['Licensing College'] == CPSNS_str:
-                df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CMQ_str:
-                df.at[index, 'Scraped Status'] = cmq_spider(row['Last Name'], row['Licence #'])
+            df.at[index, 'Scraped Status'] = verify_any_physician(
+                row['Last Name'],
+                row['First Name'],
+                row['Licence #'],
+                row['Province']
+            )
         except Exception as e:
-            print(row['Last Name'], row['First Name'], row['Licence #'], "triggered exception, fix the code")
+            print(
+                row['Last Name'],
+                row['First Name'],
+                row['Licence #'],
+                row['Province'],
+                "triggered exception, fix the code")
 
         # Update pass/fail
         if df.at[index, 'Scraped Status'] == df.at[index, 'Status']:

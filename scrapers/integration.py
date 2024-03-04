@@ -1,86 +1,58 @@
 from scrapyscript import Job, Processor
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-import time
 
 from cpsbc_spider import CPSBCSpider
 from cpso_spider import CPSOSpider
-from cmq_spider import cmq_spider
+from cmq_spider import cmq_helper
 from cpsm_spider import CPSMSpider
 from cpsns_spider import CPSNSSpider
 from cpspei_spider import CPSPEISpider
 from cpsnb_spider import CPSNBSpider
-from cpsa_spider import CPSASpider
+from cpsa_spider import CPSASpider, cpsa_helper
 from cpsnl_spider import CPSNLSpider
 from cpss_spider import CPSSSpider
 
 processor = Processor(settings={"LOG_ENABLED": False})
 
-def cpsbc_spider(last_name, first_name):
-    job = Job(CPSBCSpider, last_name, first_name)
-    return processor.run(job)[0]["status"]
-
-def cpso_spider(last_name, first_name, cpso_number):
-    job = Job(CPSOSpider, last_name, first_name, cpso_number)
-    return processor.run(job)[0]["status"]
-
-def cpss_spider(last_name, first_name):
-    job = Job(CPSSSpider, first_name, last_name)
-    return processor.run(job)[0]["status"]
-
-def cpsm_spider(last_name, first_name):
-    job = Job(CPSMSpider, last_name, first_name)
-    return processor.run(job)[0]["status"]
-
-def cpspei_spider(last_name, first_name, license_no):
-    job = Job(CPSPEISpider, last_name, first_name, license_no)
-    return processor.run(job)[0]["status"]
-
-def cpsa_spider(last_name, first_name):
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options)
-    url = "https://search.cpsa.ca/"
-    driver.get(url)
-    form_first = "MainContent_physicianSearchView_txtFirstName"
-    form_last = "MainContent_physicianSearchView_txtLastName"
-    form_submit = "MainContent_physicianSearchView_btnSearch"
-    driver.find_element(by=By.ID, value=form_first).send_keys(first_name)
-    driver.find_element(by=By.ID, value=form_last).send_keys(last_name)
-    driver.find_element(by=By.ID, value=form_submit).click()
-    time.sleep(1)
-    number_sel = "#MainContent_physicianSearchView_ResultsPanel > " + \
-                 "div.row.resultsHeader > div > h2"
-    number_tag = driver.find_element(by=By.CSS_SELECTOR, value=number_sel).text
-    no_of_results = int(number_tag.split()[1])
-
-    if no_of_results == 0:
-        return "NOT FOUND"
-    elif no_of_results == 1:
-        url_sel = "#MainContent_physicianSearchView_gvResults > tbody > " + \
-                  "tr:nth-child(2) > td.status4 > a"
-        url_tag = driver.find_element(by=By.CSS_SELECTOR, value=url_sel)
-        url = url_tag.get_attribute("href")
-        job = Job(CPSASpider, last_name, first_name, url)
+def verify_any_physician(last_name, first_name, license_no, province):
+    if province == "BC":
+        job = Job(CPSBCSpider, last_name, first_name)
         return processor.run(job)[0]["status"]
-    elif no_of_results > 1:
-        return "NOT FOUND"
-
-def cpsnb_spider(last_name, first_name, license_no):
-    job = Job(CPSNBSpider, last_name, first_name, license_no)
-    return processor.run(job)[0]["status"]
-
-def cpsnl_spider(last_name, first_name):
-    job = Job(CPSNLSpider, last_name, first_name)
-    return processor.run(job)[0]["status"]
-
-def cpsns_spider(last_name, first_name, license_no):
-    job = Job(CPSNSSpider, last_name, first_name, license_no)
-    return processor.run(job)[0]["status"]
+    elif province == "ON":
+        job = Job(CPSOSpider, last_name, first_name, license_no)
+        return processor.run(job)[0]["status"]
+    elif province == "SK":
+        job = Job(CPSSSpider, first_name, last_name)
+        return processor.run(job)[0]["status"]
+    elif province == "MB":
+        job = Job(CPSMSpider, last_name, first_name)
+        return processor.run(job)[0]["status"]
+    elif province == "PE":
+        job = Job(CPSPEISpider, last_name, first_name, license_no)
+        return processor.run(job)[0]["status"]
+    elif province == "AB":
+        url = cpsa_helper(last_name, first_name)
+        if url:
+            job = Job(CPSASpider, last_name, first_name, url)
+            return processor.run(job)[0]["status"]
+        else:
+            return "NOT FOUND"
+    elif province == "NB":
+        job = Job(CPSNBSpider, last_name, first_name, license_no)
+        return processor.run(job)[0]["status"]
+    elif province == "NL":
+        job = Job(CPSNLSpider, last_name, first_name)
+        return processor.run(job)[0]["status"]
+    elif province == "NS":
+        job = Job(CPSNSSpider, last_name, first_name, license_no)
+        return processor.run(job)[0]["status"]
+    elif province == "QC":
+        return cmq_helper(last_name, license_no)
+    else:
+        print("Invalid province provided")
 
 if __name__ == "__main__":
     print("Testing ...")
+    # print(cpsa_helper("Chiu", "Anthony"))
 
     # print(cpspei_spider("Wonka", "Willie", "7646"))
     # print(cpspei_spider("Muttart", "Rebecca", "7646"))
@@ -96,8 +68,8 @@ if __name__ == "__main__":
 
     # print(cpsa_spider("Chivers-Wilson", "Kaitlin"))
     # print(cpsa_spider("Chiu", "Anthony"))
-    print(cpsa_spider("Chiu", "Anthony"))
-    print(cpsa_spider("Cote", "Anne-Josee"))
+    # print(cpsa_spider("Chiu", "Anthony"))
+    # print(cpsa_spider("Cote", "Anne-Josee"))
 
     # print(cpsnb_spider("Taylor", "Kathleen", "7806"))
     # print(cpsnb_spider("Wangui", "Linda", "10171"))
