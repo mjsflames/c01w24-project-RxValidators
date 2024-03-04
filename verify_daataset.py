@@ -1,6 +1,6 @@
 import pandas as pd
 from tqdm import tqdm
-from integration import verify_any_physician
+import scrapers.verify
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -8,7 +8,7 @@ pd.set_option('display.width', None)
 
 def main():
     # Initialize dataframe
-    df = pd.read_csv("sample_data.csv")
+    df = pd.read_csv("physician_data.csv")
     df['Scraped Status'] = None
     passed_count,failed_count = 0, 0
 
@@ -17,7 +17,7 @@ def main():
     for index, row in df.iterrows():
         # Scrape the data
         try:
-            df.at[index, 'Scraped Status'] = verify_any_physician(
+            df.at[index, 'Scraped Status'] = scrapers.verify.verify(
                 row['Last Name'],
                 row['First Name'],
                 row['Licence #'],
