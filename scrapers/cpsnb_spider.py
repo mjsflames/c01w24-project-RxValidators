@@ -1,4 +1,5 @@
 from scrapy import Spider, Request, FormRequest
+import json
 import webbrowser
 
 class CPSNBSpider(Spider):
@@ -21,6 +22,18 @@ class CPSNBSpider(Spider):
         )
 
     def parse(self, response):
-        with open('result.html', 'wb') as f:
-            f.write(response.body)
-        webbrowser.open('result.html')
+        rows = json.loads(response.body)["Records"]
+        if len(rows) == 0:
+            return {"status": "NOT FOUND"}
+
+        if len(rows) == 1:
+            status = rows[0]["prl"].lower()
+            if "regular licence" in status:
+                return {"status": "VERIFIED"}
+            else:
+                return {"status": "INACTIVE"}
+
+        if len(rows) > 1:
+            return {"status": "NOT FOUND"}
+
+        return {"status": "NOT FOUND"}

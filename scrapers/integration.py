@@ -47,7 +47,7 @@ def cpss_spider(last_name, first_name):
 
 def cpsnb_spider(last_name, first_name, license_no):
     job = Job(CPSNBSpider, first_name, last_name, license_no)
-    return processor.run(job)
+    return processor.run(job)[0]["status"]
 
 if __name__ == "__main__":
     print("Testing ...")

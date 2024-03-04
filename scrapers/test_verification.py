@@ -38,8 +38,8 @@ def main():
                 df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
             elif row['Licensing College'] == CPSPEI_str:
                 df.at[index, 'Scraped Status'] = cpsns_spider(row['Last Name'], row['First Name'], row['Licence #'])
-            # elif row['Licensing College'] == CPSNB_str:
-            #     df.at[index, 'Scraped Status'] = cpsnb_spider(roThisw['Last Name'], row['First Name'], row['Licence #'])
+            elif row['Licensing College'] == CPSNB_str:
+                df.at[index, 'Scraped Status'] = cpsnb_spider(row['Last Name'], row['First Name'], row['Licence #'])
             elif row['Licensing College'] == CPSNL_str:
                 df.at[index, 'Scraped Status'] = cpsnl_spider(row['Last Name'], row['First Name']) 
             elif row['Licensing College'] == CPSS_str:
