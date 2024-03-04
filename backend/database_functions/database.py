@@ -30,7 +30,7 @@ def new_dataframe_column(df, column_name):
     return df
 
 
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient("mongodb://127.0.0.1:27017")
 db_name = "test_db"
 collection_name = "test_collection"
 db = client[db_name]
@@ -77,10 +77,11 @@ def insert_verified_persons(df):
 def get_collection(name):
     return db[name]
 
+# Testing the database
 if __name__ == "__main__":
     excel_to_mongodb(db_name, collection, excel_file)
-    # clear_status_all(collection)
     add_code_column(collection)
     remove_all_unverified(collection)
     print_all(collection)
     delete_all(collection)
+    client.close()
