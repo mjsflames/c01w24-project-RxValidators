@@ -30,6 +30,6 @@ class CPSSSpider(Spider):
                              json.loads(response.body)))
         
         if len(result) == 0:
-            yield {"status": "FAILED"}
+            yield {"status": "NOT FOUND"}
 
         yield {"status": ["INACTIVE", "VERIFIED"][result[0]['Status'] == 'A']}
