@@ -15,6 +15,7 @@ def print_message_after_tests(request):
     yield
     print("")
     print("")
+    print("Test cases which are failing:")
     global failures
     for failure in failures:
         print(failure)
