@@ -13,7 +13,7 @@ class CPSSSpider(Spider):
     def build_query(self) -> str:
         first_name, last_name = [_.replace(" ", "+")
                                  for _ in [self.first_name, self.last_name]]
-        return f'{self.API_URL}?name={first_name}+{last_name}'
+        return f'{self.API_URL}?name={last_name}'
 
     def get_verification_filter(self):
         return lambda item: item['FirstName'] == self.first_name and \
