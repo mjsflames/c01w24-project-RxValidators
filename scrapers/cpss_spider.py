@@ -23,9 +23,6 @@ class CPSSSpider(Spider):
         yield Request(url=self.build_query(), callback=self.parse)
 
     def parse(self, response):
-        if response.status != 200:  
-            yield {"status": "FAILED"}
-        
         result = list(filter(self.get_verification_filter(),
                              json.loads(response.body)))
         
