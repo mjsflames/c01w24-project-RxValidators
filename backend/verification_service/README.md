@@ -2,11 +2,23 @@
 
 If errors occur, either you are running OS specific lines or you are not running the lines within the `verification_service` directory
 
-### Automatic (Linux/MacOS Specific)
+### Automatic
 
 Run the following, it prepares a virtual environment, installs dependencies, and then starts the Flask server on `localhost:5000`:
 
+For Linux/MacOS:
 `bash setup_verification_service_env.sh`
+
+For Windows:
+You must manually run Flask on elevated permissions, I could not
+
+1. `.\setup_verification_service_env.bat`
+2. `flask --app ./src/main run` (\*)
+
+(\*) Run this in elevated permissions, I found most success using Administrator: Windows Powershell.
+
+After initial setup, you can use the arg: `--skip-dependencies` to stop checking for dependency updates.
+e.g `.\setup_verification_service_env.bat --skip-dependencies`
 
 ### Manual Setup (non-venv)
 
