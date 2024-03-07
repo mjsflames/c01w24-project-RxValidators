@@ -1,37 +1,52 @@
-from scrapy import Spider, FormRequest, Request
-import webbrowser
+from scrapy import Spider, Request
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import time
+
+
+def cpsa_helper(last_name, first_name):
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(options=chrome_options)
+    url = "https://search.cpsa.ca/"
+    driver.get(url)
+    form_first = "MainContent_physicianSearchView_txtFirstName"
+    form_last = "MainContent_physicianSearchView_txtLastName"
+    form_submit = "MainContent_physicianSearchView_btnSearch"
+    driver.find_element(by=By.ID, value=form_first).send_keys(first_name)
+    driver.find_element(by=By.ID, value=form_last).send_keys(last_name)
+    driver.find_element(by=By.ID, value=form_submit).click()
+    time.sleep(1)
+    number_sel = "#MainContent_physicianSearchView_ResultsPanel > " + \
+                 "div.row.resultsHeader > div > h2"
+    number_tag = driver.find_element(by=By.CSS_SELECTOR, value=number_sel).text
+    no_of_results = int(number_tag.split()[1])
+
+    if no_of_results == 0:
+        return ""
+    elif no_of_results == 1:
+        url_sel = "#MainContent_physicianSearchView_gvResults > tbody > " + \
+                  "tr:nth-child(2) > td.status4 > a"
+        url_tag = driver.find_element(by=By.CSS_SELECTOR, value=url_sel)
+        return url_tag.get_attribute("href")
+    elif no_of_results > 1:
+        return ""
+
 
 class CPSASpider(Spider):
     name = "cpsa_spider"
 
-    def __init__(self, last_name, first_name, *args, **kwargs):
+    def __init__(self, last_name, first_name, url, *args, **kwargs):
         super(CPSASpider, self).__init__(*args, **kwargs)
         self.last_name = last_name
         self.first_name = first_name
-
-    def start_requests(self):
-        url = "https://search.cpsa.ca/"
-        yield Request(
-            url, callback=self.parse
-        )
+        self.start_urls = [url]
 
     def parse(self, response):
-        cookies = {
-            "ASP.NET_SessionId": "tu41v1bckwlhxoib0ysp4pa3"
-        }
-        formdata = {
-            "ctl00$ctl16": "ctl00$ctl16|ctl00$MainContent$physicianSearchView$btnSearch",
-            "ctl00$MainContent$physicianSearchView$txtFirstName": "Anne-Josee",
-            "ctl00$MainContent$physicianSearchView$txtLastName": "Cote",
-        }
-        yield FormRequest(
-            url=response.url,
-            formdata=formdata,
-            cookies=cookies,
-            callback=self.after_submit
-        )
-
-    def after_submit(self, response):
-        with open('result.html', 'wb') as f:
-            f.write(response.body)
-        webbrowser.open('result.html')
+        status_xpath = '//*[@id="Tab1Content"]/div[7]/div[2]/p/text()'
+        status = response.xpath(status_xpath).get().strip().lower()
+        if "inactive" in status:
+            return {"status": "INACTIVE"}
+        else:
+            return {"status": "VERIFIED"}

@@ -4,15 +4,15 @@ class CPSOSpider(Spider):
     name = "cpso_spider"
     start_urls = ["https://doctors.cpso.on.ca/?search=general"]
 
-    def __init__(self, last_name, first_name, cpso_number, *args, **kwargs):
+    def __init__(self, last_name, first_name, license_no, *args, **kwargs):
         super(CPSOSpider, self).__init__(*args, **kwargs)
         self.last_name = last_name
         self.first_name = first_name
-        self.cpso_number = cpso_number
+        self.license_no = license_no
 
     def parse(self, response):
         formdata = {
-            "p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtCPSONumberGeneral": self.cpso_number,
+            "p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtCPSONumberGeneral": self.license_no,
             "p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtLastName": self.last_name,
             "p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtFirstName": self.first_name,
             "p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkActiveDoctors": "on",

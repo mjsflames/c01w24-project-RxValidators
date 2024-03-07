@@ -1,7 +1,7 @@
 import requests
 import json
 
-def cmq_spider(last_name, license_no):
+def cmq_helper(last_name, license_no):
     url = "https://www.cmq.org/api/directory"
     payload = json.dumps({
         "language": "en",

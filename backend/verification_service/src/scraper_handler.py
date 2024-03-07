@@ -1,6 +1,7 @@
 import pandas as pd
 from tqdm import tqdm
-from scrapers.integration import *
+# from scrapers.integration import *
+from scrapers.verify import verify
 import threading
 import asyncio
 from io import StringIO, BytesIO
@@ -45,36 +46,14 @@ def _process_request(file_data, id):
     for index, row in df.iterrows():
         # Scrape the data
         try:
-            if row['Licensing College'] == CPSBC_str:
-                df.at[index, 'Scraped Status'] = cpsbc_spider(
-                    row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSO_str:
-                df.at[index, 'Scraped Status'] = cpso_spider(
-                    row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSM_str:
-                df.at[index, 'Scraped Status'] = cpsm_spider(
-                    row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSNS_str:
-                df.at[index, 'Scraped Status'] = cpsns_spider(
-                    row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSPEI_str:
-                df.at[index, 'Scraped Status'] = cpsns_spider(
-                    row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSNB_str:
-                df.at[index, 'Scraped Status'] = cpsnb_spider(
-                    row['Last Name'], row['First Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSNL_str:
-                df.at[index, 'Scraped Status'] = cpsnl_spider(
-                    row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CPSS_str:
-                df.at[index, 'Scraped Status'] = cpss_spider(
-                    row['Last Name'], row['First Name'])
-            elif row['Licensing College'] == CMQ_str:
-                df.at[index, 'Scraped Status'] = cmq_spider(
-                    row['Last Name'], row['Licence #'])
-            elif row['Licensing College'] == CPSPEI_str:
-                df.at[index, 'Scraped Status'] = cpspei_spider(
-                    row['Last Name'], row['First Name'], row['Licence #'])
+
+            df.at[index, 'Scraped Status'] = verify(
+                last_name=row['Last Name'],
+                first_name=row['First Name'],
+                license_no=row['Licence #'],
+                province=row['Province']
+            )
+
         except Exception as e:
             print(row['Last Name'], row['First Name'],
                   row['Licence #'], "triggered exception, fix the code")
