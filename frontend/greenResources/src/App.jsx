@@ -1,13 +1,28 @@
-import { useState } from 'react'
-import './App.css'
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-import Searchbar from './Searchbar.jsx'
+import { useState } from "react";
+import "./App.css";
 
+import Searchbar from "./components/Searchbar.jsx";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NoPage from "./pages/NoPage.jsx";
+import Layout from "./pages/Layout.jsx";
+import Home from "./pages/Home.jsx";
+import Verification from "./pages/Verification.jsx";
 function App() {
-  return (
-     <div classname='App'>
-       <Searchbar/>
-     </div>
-)}
+	return (
+		<div className="App">
+			{/* <Searchbar/> */}
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Layout />}>
+						<Route index element={<Home />} />
+						<Route path="verify" element={<Verification />} />
+						<Route path="*" element={<NoPage />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</div>
+	);
+}
 
-export default App
+export default App;

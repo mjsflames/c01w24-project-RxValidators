@@ -1,3 +1,5 @@
+import time
+import requests
 import argparse
 
 server = "localhost:5000"
@@ -17,7 +19,6 @@ print(f"Uploading file: {file_path}")
 print(f"Upload URL: {upload_url}")
 
 # Upload the file
-import requests
 files = {'file': open(file_path, 'rb')}
 response = requests.post(upload_url, files=files)
 response_data = response.json()
@@ -25,7 +26,6 @@ id = response_data["id"]
 print(f"File uploaded, id: {id}")
 
 # Wait every three seconds
-import time
 status = None
 
 while True:

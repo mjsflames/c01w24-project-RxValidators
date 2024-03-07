@@ -85,8 +85,8 @@ def _process_request(file_data, id):
         else:
             failed_count += 1
 
-        processing[id] = f"Scraping in Progress: Passed - {
-            passed_count}, Failed - {failed_count}"
+        processing[id] = {"passed": passed_count,
+                          "failed": failed_count, "total": len(df)}
         pbar.set_description(
             f"Scraping in Progress: Passed - {passed_count}, Failed - {failed_count}")
         pbar.update(1)
