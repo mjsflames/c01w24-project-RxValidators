@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 def cmq_helper(last_name, license_no):
     url = "https://www.cmq.org/api/directory"
     payload = json.dumps({
@@ -28,6 +29,7 @@ def cmq_helper(last_name, license_no):
 
     if len(data) > 1:
         return "NOT FOUND"
+
 
 def get_physician_status(url, headers, physician_id):
     payload = json.dumps({
