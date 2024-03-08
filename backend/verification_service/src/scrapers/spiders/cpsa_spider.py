@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 
+
 def cpsa_helper(last_name, first_name):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -32,9 +33,10 @@ def cpsa_helper(last_name, first_name):
     elif no_of_results > 1:
         return ""
 
+
 class CPSASpider(Spider):
     name = "cpsa_spider"
-    
+
     def __init__(self, last_name, first_name, url, *args, **kwargs):
         super(CPSASpider, self).__init__(*args, **kwargs)
         self.last_name = last_name

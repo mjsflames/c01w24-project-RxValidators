@@ -1,6 +1,7 @@
 from scrapy import Spider, Request
 import json
 
+
 class CPSSSpider(Spider):
     name = "SaskRXValidator_Spider"
     API_URL = "https://www.cps.sk.ca/CPSSWebApi/api/Physicians/"
@@ -25,8 +26,6 @@ class CPSSSpider(Spider):
     def parse(self, response):
         result = list(filter(self.get_verification_filter(),
                              json.loads(response.body)))
-        
+
         if len(result) == 0:
             yield {"status": "NOT FOUND"}
-
-        yield {"status": ["INACTIVE", "VERIFIED"][result[0]['Status'] == 'A']}

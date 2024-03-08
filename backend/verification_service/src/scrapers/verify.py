@@ -1,17 +1,18 @@
 from scrapyscript import Job, Processor
 
-from .cpsbc_spider import CPSBCSpider
-from .cpso_spider import CPSOSpider
-from .cmq_spider import cmq_helper
-from .cpsm_spider import CPSMSpider
-from .cpsns_spider import CPSNSSpider
-from .cpspei_spider import CPSPEISpider
-from .cpsnb_spider import CPSNBSpider
-from .cpsa_spider import CPSASpider, cpsa_helper
-from .cpsnl_spider import CPSNLSpider
-from .cpss_spider import CPSSSpider
+from .spiders.cpsbc_spider import CPSBCSpider
+from .spiders.cpso_spider import CPSOSpider
+from .spiders.cmq_spider import cmq_helper
+from .spiders.cpsm_spider import CPSMSpider
+from .spiders.cpsns_spider import CPSNSSpider
+from .spiders.cpspei_spider import CPSPEISpider
+from .spiders.cpsnb_spider import CPSNBSpider
+from .spiders.cpsa_spider import CPSASpider, cpsa_helper
+from .spiders.cpsnl_spider import CPSNLSpider
+from .spiders.cpss_spider import CPSSSpider
 
 processor = Processor(settings={"LOG_ENABLED": False})
+
 
 def verify(last_name="", first_name="", license_no="", province=""):
     if province == "BC":

@@ -1,5 +1,6 @@
 from scrapy import Spider, FormRequest
 
+
 class CPSOSpider(Spider):
     name = "cpso_spider"
     start_urls = ["https://doctors.cpso.on.ca/?search=general"]
@@ -33,7 +34,8 @@ class CPSOSpider(Spider):
                 return {"status": "NOT FOUND"}
             if self.first_name not in scraped_first_name:
                 return {"status": "NOT FOUND"}
-        status = response.css('div.columns.medium-6.text-align--right strong::text').get()
+        status = response.css(
+            'div.columns.medium-6.text-align--right strong::text').get()
         if status:
             status = status.lower()
             if "active member" in status:
