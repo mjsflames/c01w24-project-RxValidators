@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
@@ -25,7 +24,6 @@ app.use(
 // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
 app.use(passport.session());
-// If app is served through a proxy, trust the proxy to allow HTTPS protocol to be detected
 
 // Connect to MongoDB
 mongoose
@@ -37,6 +35,10 @@ app.get("/", (req, res) => {
 	res.send("auth_service operational");
 });
 
+// Middleware
+import authorize from "./middleware/auth.js";
+
+// ROUTES
 import loginRoute from "./routes/login.js";
 import logoutRoute from "./routes/logout.js";
 import registerRoute from "./routes/register.js";
@@ -49,8 +51,19 @@ app.use("/api/", registerRoute);
 import test from "./routes/test.js";
 app.use("/api/", test);
 
+function registerService(serviceName, serviceUrl) {
+	return fetch("http://localhost:3130/service-registry/register", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ serviceName, serviceUrl }),
+	});
+}
+
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
+	registerService("auth-service", `http://localhost:${PORT}`);
 });
 
 export default app;

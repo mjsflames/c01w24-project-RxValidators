@@ -26,9 +26,9 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import Service from "../models/service.js";
+import Service from "./models/service.js";
 
-const PORT = 5151;
+const PORT = 3130;
 const app = express();
 
 app.use(cors());
@@ -45,24 +45,8 @@ app.get("/", (req, res) => {
 	res.send("api_gateway operational");
 });
 
-app.post("/service-registry/register", async (req, res) => {
-	try {
-		const { serviceName, serviceUrl } = req.body;
-		console.log(`Registering service ${serviceName} at ${serviceUrl}`);
-
-		// Check if service exists
-		const existingService = await Service.findOne({ serviceName });
-		if (existingService) return res.status(400).json({ message: "Service with given name already registered." });
-
-		const newService = new Service({ serviceName, serviceUrl });
-		await newService.save();
-
-		res.status(200).send("Service registered");
-	} catch (error) {
-		console.error("Error registering service:", error);
-		res.status(500).json({ message: "Server error" });
-	}
-});
+import serviceRegistryRoutes from "./routes/service_registry.js";
+app.use("/service-registry", serviceRegistryRoutes);
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
