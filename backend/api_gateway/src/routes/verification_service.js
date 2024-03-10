@@ -20,30 +20,11 @@ router.use(
 	"*",
 	logRequest,
 
-	proxy("http://127.0.0.1:3131", {
+	proxy("http://127.0.0.1:5000", {
 		limit: "1mb",
 		proxyReqPathResolver: function (req) {
-			return req.originalUrl;
-		},
-		proxyErrorHandler: function (err, res, next) {
-			console.error(err);
-			next(err);
-		},
-		https: false,
-		proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
-			console.log(srcReq.params);
-
-			// Keep only the Content-Type header
-			proxyReqOpts.headers = {
-				// "content-type": srcReq.headers["content-type"],
-				accept: srcReq.headers["accept"],
-				"content-length": srcReq.headers["content-length"],
-				connection: "keep-alive",
-				"accept-encoding": "gzip, deflate, br",
-			};
-
-			console.log(proxyReqOpts);
-			return proxyReqOpts;
+			const updatedPath = req.originalUrl.replace("/verification", "");
+			return updatedPath;
 		},
 	})
 );

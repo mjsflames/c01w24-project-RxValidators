@@ -10,7 +10,7 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["DEBUG"] = True  # Restart on changes
-PORT = 3131
+PORT = 5000
 reqs = {
 
 }
@@ -24,6 +24,12 @@ def generate_id():
 @app.route("/")
 def hello_world():
     return "<p>Verification Service Running</p>"
+
+
+@app.route("/*", methods=["POST", "GET", "PUT", "DELETE", "PATCH"])
+@cross_origin()
+def catch_all():
+    return {"message": "No such route"}, 404, {"Content-Type": "application/json"}
 
 
 @app.route("/api/upload", methods=["POST"])
