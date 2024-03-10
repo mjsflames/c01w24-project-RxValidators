@@ -1,6 +1,5 @@
 venv/
 __pycache__/
-*.html
 *.csv#
 result.html
 .~lock.sample_data.csv#
