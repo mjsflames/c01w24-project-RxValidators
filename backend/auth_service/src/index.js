@@ -3,14 +3,15 @@ import cors from "cors";
 import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
-
 import "./config/passport.js";
 const PORT = 3000;
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// Accept JSON and form data in requests
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 // Set up session middleware
 app.use(
