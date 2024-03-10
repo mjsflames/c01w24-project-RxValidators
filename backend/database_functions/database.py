@@ -1,4 +1,5 @@
 import pandas as pd
+import pymongo
 from pymongo import MongoClient
 
 
@@ -76,6 +77,24 @@ def insert_verified_persons(df):
 
 def get_collection(name):
     return db[name]
+
+
+# New Authentication Backend Functions for MongoDB (untested)
+def create_admin_account(username, password):
+    db.command("createUser", username, pwd=password, roles=["root"])
+
+def create_prescriber_account(username, password):
+    db.command("createUser", username, pwd=password, roles=["readWrite"])
+
+def create_patient_account(username, password):
+    db.command("createUser", username, pwd=password, roles=["read"])
+
+def authenticate_user(username, password):
+    try:
+        db.authenticate(username, password)
+    except pymongo.errors.OperationFailure:
+        print(f"Authentication failed")
+
 
 # Testing the database
 if __name__ == "__main__":
