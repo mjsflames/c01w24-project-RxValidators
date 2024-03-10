@@ -63,7 +63,7 @@ function registerService(serviceName, serviceUrl) {
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
-	registerService("auth-service", `http://localhost:${PORT}`);
+	registerService("auth-service", `http://127.0.0.1:${PORT}`);
 });
 
 export default app;

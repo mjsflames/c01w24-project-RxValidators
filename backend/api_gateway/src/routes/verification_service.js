@@ -4,28 +4,19 @@
 
 import express from "express";
 import proxy from "express-http-proxy";
+import getService from "../middleware/service.js";
 const router = express.Router();
-// Define a middleware function to log requests
-function logRequest(req, res, next) {
-	console.log("Request to:", req.url);
-	console.log("Request headers:", req.headers);
-	console.log("Request body:", req.body); // if you want to log request body
-	console.log("Request params:", req.params);
-
-	next(); // call next middleware in chain
-}
 
 // As of now, we will simply proxy the request to the verification service
-router.use(
-	"*",
-	logRequest,
-
-	proxy("http://127.0.0.1:5000", {
+router.use("*", getService("verification-service"), (req, res, next) => {
+	console.log("Proxying request to verification service at", req.service);
+	proxy(req.service, {
 		limit: "1mb",
 		proxyReqPathResolver: function (req) {
 			const updatedPath = req.originalUrl.replace("/verification", "");
+			console.log("Proxying request to:", req.service + updatedPath);
 			return updatedPath;
 		},
-	})
-);
+	})(req, res, next);
+});
 export default router;

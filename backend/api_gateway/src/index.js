@@ -15,6 +15,18 @@ mongoose
 	.then(() => console.log("MongoDB connected"))
 	.catch((err) => console.error("MongoDB connection error:", err));
 
+// Define a middleware function to log requests
+function logRequest(req, res, next) {
+	console.log("Request to:", req.url);
+	console.log("Request headers:", req.headers);
+	console.log("Request body:", req.body); // if you want to log request body
+	console.log("Request params:", req.params);
+
+	next(); // call next middleware in chain
+}
+
+app.use(logRequest);
+
 app.get("/", (req, res) => {
 	res.send("api_gateway operational");
 });

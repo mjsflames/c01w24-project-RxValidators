@@ -8,9 +8,10 @@ import requests
 
 app = Flask(__name__)
 cors = CORS(app)
+PORT = 5000
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["DEBUG"] = True  # Restart on changes
-PORT = 5000
+app.config["PORT"] = PORT
 reqs = {
 
 }
@@ -85,7 +86,9 @@ def register_service(service_name, service_url):
     return requests.post("http://localhost:3130/service-registry/register", json={"serviceName": service_name, "serviceUrl": service_url})
 
 
-print("Starting Verification Service on port", PORT)
-register_service("verification_service", f"http://localhost:{PORT}")
+print("Starting Verification Service on port", app.config["PORT"])
+register_service("verification-service",
+                 f"http://127.0.0.1:{app.config["PORT"]}")
+
 if __name__ == "__main__":
     app.run(port=PORT, debug=True)

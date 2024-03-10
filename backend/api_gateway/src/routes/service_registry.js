@@ -10,7 +10,12 @@ router.post("/register", async (req, res) => {
 
 		// Check if service exists
 		const existingService = await Service.findOne({ serviceName });
-		if (existingService) return res.status(400).json({ message: "Service with given name already registered." });
+		if (existingService) {
+			// Update service
+			existingService.serviceUrl = serviceUrl;
+			await existingService.save();
+			return res.status(200).send("Service updated");
+		}
 
 		const newService = new Service({ serviceName, serviceUrl });
 		await newService.save();
