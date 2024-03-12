@@ -85,8 +85,7 @@ def register_service(service_name, service_url):
 
 
 print("Starting Verification Service on port", app.config["PORT"])
-register_service("verification-service",
-                 f"http://127.0.0.1:{app.config["PORT"]}")
+register_service("verification-service", f"http://127.0.0.1:{app.config['PORT']}")
 
 if __name__ == "__main__":
     app.run(port=PORT, debug=True)
