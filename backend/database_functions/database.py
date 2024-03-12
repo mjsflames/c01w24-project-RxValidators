@@ -18,6 +18,12 @@ website_dictionary = \
     "Collège des médecins du Québec": "https://www.cmq.org/fr/bottin"
 }
 
+client = MongoClient("mongodb://127.0.0.1:27017")
+db_name = "test_db"
+collection_name = "test_collection"
+db = client[db_name]
+collection = db[collection_name]
+
 
 def excel_to_array(excel_file, new_column_name):
     df = pd.read_excel(excel_file)
@@ -29,14 +35,6 @@ def excel_to_array(excel_file, new_column_name):
 def new_dataframe_column(df, column_name):
     df[column_name] = None
     return df
-
-
-client = MongoClient("mongodb://127.0.0.1:27017")
-db_name = "test_db"
-collection_name = "test_collection"
-db = client[db_name]
-collection = db[collection_name]
-
 
 def database_exists(client, db_name):
     db_list = client.list_database_names()
@@ -51,6 +49,9 @@ def excel_to_mongodb(db_name, collection, excel_file):
 
 def get_all(collection):
     return collection.find()
+
+def get_all_as_dataframe(collection):
+    return pd.DataFrame(list(collection.find()))
 
 def print_all(collection):
     documents = get_all(collection)
@@ -81,25 +82,52 @@ def get_collection(name):
 
 # New Authentication Backend Functions for MongoDB (untested)
 def create_admin_account(username, password):
-    db.command("createUser", username, pwd=password, roles=["root"])
+    db = client[db_name]
+    db.command("createUser", str(username), pwd=str(password), roles=[{"role": "root", "db": db_name}])
 
 def create_prescriber_account(username, password):
-    db.command("createUser", username, pwd=password, roles=["readWrite"])
+    db = client[db_name]
+    db.command("createUser", str(username), pwd=str(password), roles=[{"role": "readWrite", "db": db_name}])
 
 def create_patient_account(username, password):
-    db.command("createUser", username, pwd=password, roles=["read"])
+    db = client[db_name]
+    db.command("createUser", str(username), pwd=str(password), roles=[{"role": "read", "db": db_name}])
 
 def authenticate_user(username, password):
     try:
-        db.authenticate(username, password)
+        db = client[db_name]
+        db.command("authenticate", str(username), pwd=str(password), mechanism='SCRAM-SHA-1')
+        print(f"Authentication successful for user: {username}")
     except pymongo.errors.OperationFailure:
-        print(f"Authentication failed")
+        print(f"Authentication failed for user: {username}")
 
+def user_exists(username):
+    db = client["admin"]
+    users = db.system.users.count_documents({"user": str(username)})
+    return users > 0
+
+def remove_all_users(database_name):
+    db = client[database_name]
+    db.command("dropAllUsersFromDatabase")
+    print(f"All users removed from the database: {database_name}")
 
 # Testing the database
 if __name__ == "__main__":
-    excel_to_mongodb(db_name, collection, excel_file)
-    add_code_column(collection)
-    remove_all_unverified(collection)
-    print_all(collection)
-    delete_all(collection)
+    # excel_to_mongodb(db_name, collection, excel_file)
+    # add_code_column(collection)
+    # remove_all_unverified(collection)
+    # print_all(collection)
+    # delete_all(collection)
+
+    remove_all_users(db_name)
+
+    if(not user_exists("test admin")):
+        create_admin_account("test admin", 1111)
+    if(not user_exists("test prescriber")):
+        create_prescriber_account("test prescriber", 2222)
+    if(not user_exists("test patient")):
+        create_patient_account("test patient", 3333)
+
+    authenticate_user("test admin", 1111)
+    authenticate_user("test prescriber", 2222)
+    authenticate_user("test patient", 3333)
