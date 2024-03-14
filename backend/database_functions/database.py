@@ -90,7 +90,7 @@ def get_collection(name):
 
 # New Authentication Backend Functions for MongoDB (tested)
 def create_admin_account(username, password):
-    db = client["admin"]
+    db = client[db_name]
     db.command("createUser", str(username), pwd=str(password), roles=[{"role": "userAdminAnyDatabase", "db": "admin"}, 
                                                                       {"role": "readWriteAnyDatabase", "db": "admin"}])
 
@@ -114,18 +114,6 @@ def authenticate_user(username, password):
     except BaseException as error:
         print(f"Authentication failed: {error}")
 
-def authenticate_admin(admin_username, admin_password):
-    try:
-        cur_client = MongoClient(f"mongodb://{admin_username}:{admin_password}@{server_IP}/admin")
-        cur_db = cur_client[db_name]
-        cur_collection = cur_db[collection_name]
-        dummy_database_operation(cur_collection)
-        print("Admin Authenticated")
-    except pymongo.errors.OperationFailure:
-        print(f"Authentication failed for admin: {admin_username}")
-    except BaseException as error:
-        print(f"Authentication failed: {error}")
-
 def user_exists(username):
     db = client["admin"]
     users = db.system.users.count_documents({"user": str(username)})
@@ -136,8 +124,8 @@ def remove_all_users(database_name):
     db.command("dropAllUsersFromDatabase")
     print(f"All users removed from the database: {database_name}")
 
-def list_all_users(admin_username, admin_password):
-    admin_client = MongoClient(f"mongodb://{server_IP}/admin", username=str(admin_username), password=str(admin_password))
+def list_all_users():
+    admin_client = MongoClient(f"mongodb://{server_IP}/admin")
     admin_db = admin_client["admin"]
     all_user_docs = admin_db.system.users.find()
     for user_doc in all_user_docs:
@@ -164,10 +152,10 @@ if __name__ == "__main__":
         create_prescriber_account("test prescriber", 2222)
     if(not user_exists("test patient")):
         create_patient_account("test patient", 3333)
-    list_all_users("test admin", 1111)
+    list_all_users()
 
     # test user authentication
-    authenticate_admin("test admin", 1111)
+    authenticate_user("test admin", 1111)
     authenticate_user("test prescriber", "fail")
     authenticate_user("test patient", 3333)
     authenticate_user("", "")
