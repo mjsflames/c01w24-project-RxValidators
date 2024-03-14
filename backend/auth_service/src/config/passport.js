@@ -7,22 +7,23 @@ console.log("passport.js loaded");
 
 passport.use(
 	new LocalStrategy(async (username, password, callback) => {
-		try {
-			const user = await User.findOne({ username });
+		// try {
+		// 	const user = await User.findOne({ username });
 
-			if (!user) {
-				return callback(null, false, { message: "Incorrect username" });
-			}
+		// 	if (!user) {
+		// 		return callback(null, false, { message: "Incorrect username" });
+		// 	}
 
-			const isPasswordValid = await bcrypt.compare(password, user.password);
-			if (!isPasswordValid) {
-				return callback(null, false, { message: "Incorrect password" });
-			}
+		// 	const isPasswordValid = await bcrypt.compare(password, user.password);
+		// 	if (!isPasswordValid) {
+		// 		return callback(null, false, { message: "Incorrect password" });
+		// 	}
 
-			return callback(null, user);
-		} catch (error) {
-			return callback(error);
-		}
+		// 	return callback(null, user);
+		// } catch (error) {
+		// 	return callback(error);
+		// }
+		return callback(null, false, { message: "Auth Strategy not Implemented." });
 	})
 );
 
