@@ -14,6 +14,7 @@
 - Finding the right API to use to grab images for the Green Resources map
 
 # To Improve for the Next Sprint
+- Ask any unclear processes earlier to ensure that we don't start un-needed tasks
 - Ensure that members are able to complete their tasks on time or if stories need to be pushed to the next sprint
 - Better communication among team members in regards to which tasks are assigned to whom and the status on how far along they are
 - Decide beforehand the way to implement prescription logs so that others don't need to wait for implementation to pull data
