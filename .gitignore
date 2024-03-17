@@ -4,3 +4,4 @@ __pycache__/
 result.html
 .~lock.sample_data.csv#
 .venv/
+node_modules
