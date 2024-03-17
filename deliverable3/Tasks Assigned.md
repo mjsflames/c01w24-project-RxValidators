@@ -9,6 +9,7 @@
 
 # Lance:
 - Create the API Gateway and Service Registry
+- Begin setting up authorization
 - Perform tests 
 
 # Michelle:
