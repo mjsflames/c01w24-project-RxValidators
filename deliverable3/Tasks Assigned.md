@@ -29,4 +29,6 @@
 
 # Emily:
 - Create the maps for the Green Resources
-- Connect the API's so that users can search for nearby resources
+- Get the user's live location
+- Connect APIs so that users can search for nearby opportunities
+- Connect to APIs to get the Google Maps Link, the Image, and the Description from the nearby opportunities
