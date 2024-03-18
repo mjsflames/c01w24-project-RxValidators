@@ -3,7 +3,7 @@
 - Finalized the database tables and API endpoints that will be used
 - Finished the Figma board of all web pages for the frontend
 - Completed flask server for the Verification Service
-- Completed and tested user creation and Authentication for the login
+- Completed and tested user creation and Authentication for the login for MongoDB
 - Completed Login, Patient, and Prescriber website frontend
 - Created the API gateway and Service Registry
 - Found an API to get nearby "Green Resources"
@@ -17,6 +17,7 @@
 - Learning how React works
 - Figuring out how to integrate the backend with the frontend 
 - Finding the right APIs (that are free) to use to grab images and nearby locations/opportunities for the Green Resources map
+- Learning and testing MongoDB authentication methods
 
 # To Improve for the Next Sprint
 - Ask any unclear processes earlier to ensure that we don't start un-needed tasks
