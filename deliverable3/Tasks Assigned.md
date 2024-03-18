@@ -19,7 +19,6 @@
 - Start integration of backend with frontend
 
 # Kangjie:
-- Create the frontend website for all users and the login pages
 - Prescriber: Create the form to log prescriptions
 - Patient: Create the form to log prescriptions
 
