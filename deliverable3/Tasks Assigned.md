@@ -1,6 +1,6 @@
 # Joe:
-- Create the Authentication and User creation for the login system
-- Conduct tests for the login
+- Create the Authentication and User creation for the Admin, Prescriber, and Patient login for MongoDB
+- Create tests for the Admin, Prescriber, and Patient database authentication
 
 # Renat:
 - Admin: Display all patient and prescriber profiles
