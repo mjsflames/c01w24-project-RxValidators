@@ -94,18 +94,16 @@ Joe:
 # March 14th, 2024
 Michelle:
 - Realized missing user story for a patient logging a prescription
-- Added it to the jira, assigned it to myself
+	- Added it to the Jira as a new user story
 - Still working on pulling prescription logs for prescribers
   
 Kenny & Michelle:
-- Look into what to use to create the frontend
-- Either react.js or html/css
 - Worked on prescriber frontend
 
 # March 16th, 2024
 Michelle:
-- Edited figma for the updated prescriber login process
-- Started working on creating patient prescription form
+- Edited Figma for the updated prescriber login process
+- Started working on creating the patient prescription form
   
 Kenny:
 - Started creating the endpoints for prescribers and patients to log prescriptions.
@@ -114,12 +112,11 @@ Joe:
 - Started implementing authorization for database functions to make Admin-only functions
 
 # March 17th, 2024
-Kenny & Michelle:
-- Worked on the login, and patient models for the frontend
-- Add in links and work on integration
-  
 Michelle:
-- Created the sprint Retrospective and task document
+- Created the deliverable 3's sprint Retrospective and tasks document, uploaded to the repo
+- Fixed up prescriber frontend to integrate with current React components
+	- Challenge: Old draft relied too heavily on HTML elements, needed it to work with components to be consistent throughout
+- Completed Login and Patient frontend 
   
 Emily:
 - Made a button that gets user’s live location
