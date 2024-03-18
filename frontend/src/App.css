@@ -1,29 +1,35 @@
-#root {
-	/* max-width: 1280px; */
-	text-align: center;
-	font-family: "Libre Franklin", "sans-serif";
+@import url("https://js.arcgis.com/4.24/esri/themes/light/main.css");
 
-	--black: black;
-	--deep-green: #767a4c;
-	--medium-sea-green: #5ab963;
-	--dark-grey: #b3b3b3;
-	--white: white;
-	--lichen: #9b9a30;
-	--dark-navy: #0a0e1a;
-	--bg-grey: #fafafa;
-	--dark-grey-2: #999;
-	--conifer: #404726;
-	--separator-colour: #fafafa;
-	--hbn-dark-teal: #507f70;
-	--blue: #0385ff;
-	--hbn-teal: #9ab8ad;
-	--moss: #49773a;
-	--bark-normal: #682f24;
-	--bottom-banner-navy: #0a0e1a;
-	--burnt-orange: #b95136;
-	--fungi-more-orange: #cd7755;
-	--fungi-normal: #cc6c4e;
-	--bark-real: #2b150d;
+#root {
+  /* max-width: 1280px; */
+  /* text-align: center; */
+  font-family: "Libre Franklin", "sans-serif";
+
+  --black: black;
+  --deep-green: #767a4c;
+  --medium-sea-green: #5ab963;
+  --dark-grey: #b3b3b3;
+  --white: white;
+  --lichen: #9b9a30;
+  --dark-navy: #0a0e1a;
+  --bg-grey: #fafafa;
+  --dark-grey-2: #999;
+  --conifer: #404726;
+  --separator-colour: #fafafa;
+  --hbn-dark-teal: #507f70;
+  --blue: #0385ff;
+  --hbn-teal: #9ab8ad;
+  --moss: #49773a;
+  --bark-normal: #682f24;
+  --bottom-banner-navy: #0a0e1a;
+  --burnt-orange: #b95136;
+  --fungi-more-orange: #cd7755;
+  --fungi-normal: #cc6c4e;
+  --bark-real: #2b150d;
 }
 
+a:visited {
+  text-decoration: none;
+}
 /* Obtain Free SVG Graphics from undraw.co */
+
