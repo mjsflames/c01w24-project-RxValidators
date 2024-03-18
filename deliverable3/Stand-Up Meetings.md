@@ -59,6 +59,9 @@ Kenny:
 - Started researching how to build the frontend for prescriber using React based on the figma design.
 - Created the prescription instance in MongoDB.
 - Designed the endpoints for prescriber service.
+
+Danny:
+- Started to create the main pages for the patient using React
 	
 # March 11th, 2024
 Emily:
@@ -75,6 +78,10 @@ Joe:
 - Refactored code to make the code more modifiable and easier to change the implementation for testing purposes
 - Challenge: The authentication methods in the pymongo documentation continued to fail when the original username and password were inputted
 - I will attempt to test authentication directly in Mongo Shell
+
+Danny:
+- Started to display the perscriptions for the user
+- Created a basic template for the table
 
 # March 12th, 2024
 Emily:
@@ -110,6 +117,11 @@ Kenny:
   
 Joe:
 - Started implementing authorization for database functions to make Admin-only functions
+
+Danny:
+- Finished displaying perscriptions for the patient
+- Working on displaying individual perscriptions
+- Working on connecting the backend to the frontend
 
 # March 17th, 2024
 Michelle:
