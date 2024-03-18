@@ -10,10 +10,12 @@ import Verification from "./pages/Verification.jsx";
 import GreenResources from "./pages/GreenResources.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ServiceRegistryInfo from "./components/ServiceRegistryInfo.jsx";
+import Login from "./pages/Placeholders/Login.jsx";
+import Landing from "./pages/Landing.jsx";
 
 const UserContext = createContext({
 	user: null,
-	handleLogin: (user) => {},
+	handleLogin: (username, password) => {},
 	handleLogout: () => {},
 });
 
@@ -21,19 +23,23 @@ function App() {
 	// TODO: Separate to AuthHandler.jsx
 	const [user, setUser] = useState(null);
 
-	const handleLogin = (user) => {
+	const handleLogin = (username, password) => {
+		console.log("Logging in with", username, password);
+		// !!! Top tier security
+		if (username !== "oogla" || password !== "boogla") {
+			return false;
+		}
+
+		console.log("Logged in");
 		setUser({
 			id: "1",
-			name: "oogly boogly man",
+			name: "oogly boogly mans",
 			role: "admin",
 		});
+		return true;
 	};
 
 	const handleLogout = () => setUser(null);
-
-	useEffect(() => {
-		handleLogin();
-	}, []);
 
 	return (
 		<div className="App">
@@ -43,15 +49,20 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Layout />}>
 							<Route index element={<Home />} />
+							<Route path="login" element={<Login />} />
+
+							{/* PRESCRIBER RESTRICTED */}
 							<Route
 								path="verify"
 								element={
-									<ProtectedRoute redirectTo={"/"} permitted={["admin"]}>
+									<ProtectedRoute redirectTo={"/login"} permitted={["admin"]}>
 										<Verification />
 									</ProtectedRoute>
 								}
 							/>
 							<Route path="green-resources" element={<GreenResources />} />
+
+							{/* CATCH ALL */}
 							<Route path="*" element={<NoPage />} />
 						</Route>
 					</Routes>
