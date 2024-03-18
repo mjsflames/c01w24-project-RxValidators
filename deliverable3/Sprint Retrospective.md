@@ -9,6 +9,7 @@
 - Found an API to get nearby "Green Resources"
 - Displayed map and Google Maps link in Green Resources frontend
 - Retrieved user's live location or user can enter an address/location
+- Completed logging and displaying prescriptions for Patients and Prescribers
 
 # Challenges
 - Finding time to work on this project (due to Midterms)
