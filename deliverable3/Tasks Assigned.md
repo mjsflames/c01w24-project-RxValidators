@@ -1,5 +1,5 @@
 # Joe:
-- Create the Authentication and User creation for the login system
+- Create the Authentication and User creation for the login system for Admin, Prescriber, and Patient
 - Conduct tests for the login
 
 # Renat:
