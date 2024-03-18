@@ -16,12 +16,12 @@
 - Create the Figma board for the prototype frontend
 - Create the frontend website for all users and the login pages
 - Prescriber: Ability to see all prescription logs for a prescriber in one place
-- Patient: Create the form to log prescriptions
 - Start integration of backend with frontend
 
 # Kangjie:
 - Create the frontend website for all users and the login pages
 - Prescriber: Create the form to log prescriptions
+- Patient: Create the form to log prescriptions
 
 # Danny:
 - Create the Figma board for the prototype frontend
