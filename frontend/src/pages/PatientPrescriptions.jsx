@@ -5,7 +5,6 @@ const PatientPrescriptions = () => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-
     const sampleData = [
       {
         "Date": "2024-03-12",
@@ -29,35 +28,37 @@ const PatientPrescriptions = () => {
         "Body": "Details for item 3"
       }
     ];
-    // const username = "testUser"
-    // const res = await fetch(`http://localhost:5000//api/getPrescriptions/${username}`, {
-		// 	method: "POST",
-		// });
-		// const pData = await res.json();
-    // setData(pData);
-    // console.log(pData);
     setData(sampleData)
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      const username = "testUser";
+      try {
+        const res = await fetch(`http://localhost:5000/api/getPrescriptions/${username}`, {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const pData = await res.json();
+
+        setData(pData);
+        console.log(pData);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    }
+    fetchData();
+  }, []);
 
 	return (
 		<>
       <PageHeader
-        title="Patient Prescriptions"
-        desc="here is my stuff"
-        rightDiv="ADD anything on the right of the header. This part is optional and don't need to even add rightDiv to this if not needed"
+        title="My Prescriptions"
+        desc="Check the statuses of your prescriptions and find out if you are eligible for the Discovery Pass."
+        rightDiv=""
       />
-      <div className="flex bg-PaRxDGrenn py-8 text-left text-white border-t border-neutral-800">
-        <div className="flex-initial" style={{ width: '10%' }}></div>
-        <div>
-          <div className="text-2xl font-bold">
-            My Prescriptions
-          </div>
-          <div className="w-2/3">
-            Check the statuses of your prescriptions and find out if you are eligible for the Discovery Pass.
-          </div>
-        </div>
-      </div>
       <div className="h-10"></div>
 			<div className="w-full flex justify-center">
         <table id="patientPrescriptionTable" className="w-4/5 rounded-lg bg-PaRxGreen">
