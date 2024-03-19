@@ -5,6 +5,7 @@ import uuid
 import scraper_handler
 import threading
 from pandas import DataFrame
+from ...database_functions import database
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -78,6 +79,16 @@ def download(id):
     del processing[id]
     return result_data.to_json(index=False, orient="records"), 200, {"Content-Type": "text/csv"}
 
+#############################################
+# Prescriptions
+
+@app.route("/api/getPrescriptions/<username>", methods=["GET"])
+@cross_origin()
+def getPrescriptions(username):
+  prescriptions = database.getAllPrescriptions(username)
+  return prescriptions
+
+##############################################
 
 def register_service(service_name, service_url):
     print(f"Sending register request | {service_name} at {service_url}")

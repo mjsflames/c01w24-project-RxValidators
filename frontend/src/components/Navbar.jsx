@@ -6,6 +6,10 @@ const Navbar = () => {
 		<div className="w-1/3 flex gap-4">
 			<Link to="/" className=" text-gray-800">
 				Home
+    </Link>
+		<div className="mr-4 flex gap-4">
+			<Link to="#" className=" text-gray-800">
+				HELP
 			</Link>
 			<Link to="patient" className=" text-gray-800">
 				My Prescriptions

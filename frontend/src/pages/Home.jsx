@@ -28,6 +28,22 @@ const Home = () => {
 						<Link to="prescriber" class ="rounded-md bg-grey-400 py-4 px-10 text-black">Access Your Prescriptions</Link>
 					</div>
 				</div>
+
+				<ul>
+					<li>
+						<Link to="/verify">Verify</Link>
+					</li>
+					<li>
+						<Link to="/search">Search</Link>
+					</li>
+					<li>
+						<Link to="/green-resources">Green Resources</Link>
+					</li>
+          <li>
+            <Link to="/patientPrescriptions">Patient Prescriptions</Link>
+          </li>
+				</ul>
+
 			</ContentContainer>
 		</>
 	);
