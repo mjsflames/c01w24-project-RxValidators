@@ -4,6 +4,7 @@ import VerificationList from "../components/VerificationList.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import ContentContainer from "../components/ContentContainer.jsx";
+import api from "../axiosConfig";
 
 const Verification = () => {
 	const [file, setFile] = useState(null);
@@ -15,10 +16,12 @@ const Verification = () => {
 		if (!file) return;
 		const formData = new FormData();
 		formData.append("file", file);
-		const res = await fetch("http://localhost:5000/api/upload", {
-			method: "POST",
-			body: formData,
-		});
+		// const res = await fetch("http://localhost:5000/api/upload", {
+		// 	method: "POST",
+		// 	body: formData,
+		// });
+
+		const res = await api.post("/verification/upload", formData);
 		const data = await res.json();
 		setId(data.id);
 	};
@@ -32,14 +35,23 @@ const Verification = () => {
 			}
 
 			if (id) {
-				fetch(`http://localhost:5000/api/status/${id}`)
-					.then((res) => {
-						if (res.status == 400) clearInterval(interval);
-						return res.json();
-					})
-					.then((data) => {
-						setStatus(data.status);
-					});
+				// fetch(`http://localhost:5000/api/status/${id}`)
+				// 	.then((res) => {
+				// 		if (res.status == 400) clearInterval(interval);
+				// 		return res.json();
+				// 	})
+				// 	.then((data) => {
+				// 		setStatus(data.status);
+				// 	});
+
+				api.get(`/verification/status/${id}`).then((response) => {
+					if (response.status !== 200) {
+						console.log("Error retrieving status");
+						return;
+					}
+
+					setStatus(response.data.status);
+				});
 			}
 		}, 2000);
 
@@ -49,14 +61,22 @@ const Verification = () => {
 	useEffect(() => {
 		if (status != "completed") return;
 		// Retrieve the data
-		fetch(`http://localhost:5000/api/download/${id}`, {
-			method: "GET",
-			headers: { "Content-Type": "application/json" },
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setData(data);
-			});
+		// fetch(`http://localhost:5000/api/download/${id}`, {
+		// 	method: "GET",
+		// 	headers: { "Content-Type": "application/json" },
+		// })
+		// 	.then((res) => res.json())
+		// 	.then((data) => {
+		// 		setData(data);
+		// 	});
+		api.get(`/verification/download/${id}`).then((response) => {
+			if (response.status !== 200) {
+				console.log("Error retrieving data");
+				return;
+			}
+
+			setData(response.data);
+		});
 	}, [status]);
 
 	let percent = 0;

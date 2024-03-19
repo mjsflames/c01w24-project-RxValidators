@@ -1,5 +1,27 @@
 # c01w24-project-RxValidators
 
+To launch the Frontend, API Gateway, and Microservices in development mode:
+
+Windows: `./startup.bat dev`
+
+# API Gateway | Service Registry
+
+(Assuming API Gateway is located at **localhost:3130**)
+
+On microservice startup:
+
+```
+POST http://localhost:3130/service-registry/register
+DATA: {serviceName, serviceUrl}
+```
+
+Each microservice must have:
+
+```
+GET {SERVICE_URL}/service/health
+RESPONSE 200 OK
+```
+
 # Verification Service
 
 If errors occur, either you are running OS specific lines or you are not running the lines within the `verification_service` directory
