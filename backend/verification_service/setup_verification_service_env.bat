@@ -1,16 +1,16 @@
 @echo off
 @REM Created for Windows
 
-REM Check if running with administrative privileges
-net session >nul 2>&1
-if %errorLevel% == 0 (
-    echo Running with administrative privileges...
-) else (
-    echo Running without administrative privileges...
-    echo Requesting elevation...
-    runas /user:Administrator "%~dpnx0"
-    exit /b
-)
+@REM REM Check if running with administrative privileges
+@REM net session >nul 2>&1
+@REM if %errorLevel% == 0 (
+@REM     echo Running with administrative privileges...
+@REM ) else (
+@REM     echo Running without administrative privileges...
+@REM     echo Requesting elevation...
+@REM     runas /user:Administrator "%~dpnx0"
+@REM     exit /b
+@REM )
 
 cd /d "%~dp0"
 python -m venv ./.venv

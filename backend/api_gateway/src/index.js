@@ -27,7 +27,7 @@ function logRequest(req, res, next) {
 
 app.use(logRequest);
 
-app.get("/", (req, res) => {
+app.get("/ping", (req, res) => {
 	res.send("api_gateway operational");
 });
 
