@@ -111,6 +111,17 @@ def remove_all_users(database_name):
     db.command("dropAllUsersFromDatabase")
     print(f"All users removed from the database: {database_name}")
 
+################################
+# Prescription Backend
+
+def getAllPrescriptions(username):
+  preScriptColl = get_collection("Prescriptions")
+  prescriptions = preScriptColl.find({'PatientId': username})
+  return prescriptions
+
+
+###############################
+
 # Testing the database
 if __name__ == "__main__":
     # excel_to_mongodb(db_name, collection, excel_file)

@@ -13,6 +13,9 @@ const Home = () => {
 				<li>
 					<Link to="/search">Search</Link>
 				</li>
+        <li>
+					<Link to="/patientPrescriptions">Patient Prescriptions</Link>
+				</li>
 			</ul>
 		</div>
 	);

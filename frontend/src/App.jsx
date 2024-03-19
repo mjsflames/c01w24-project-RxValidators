@@ -8,6 +8,7 @@ import NoPage from "./pages/NoPage.jsx";
 import Layout from "./pages/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import Verification from "./pages/Verification.jsx";
+import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
 function App() {
 	return (
 		<div className="App">
@@ -17,6 +18,7 @@ function App() {
 					<Route path="/" element={<Layout />}>
 						<Route index element={<Home />} />
 						<Route path="verify" element={<Verification />} />
+            <Route path="patientPrescriptions" element={<PatientPrescriptions />} />
 						<Route path="*" element={<NoPage />} />
 					</Route>
 				</Routes>
