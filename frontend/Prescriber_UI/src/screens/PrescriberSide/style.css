@@ -1,0 +1,320 @@
+.prescriber-side {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.prescriber-side .div {
+  background-color: #ffffff;
+  height: 1024px;
+  position: relative;
+  width: 1440px;
+}
+
+.prescriber-side .header-model {
+  background-color: #f8f8f8;
+  height: 170px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.prescriber-side .overlap-group {
+  background-color: #ffffff;
+  height: 135px;
+  position: relative;
+  top: 35px;
+}
+
+.prescriber-side .image {
+  height: 106px;
+  left: 53px;
+  object-fit: cover;
+  position: absolute;
+  top: 14px;
+  width: 158px;
+}
+
+.prescriber-side .text-wrapper {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  left: 1100px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 55px;
+  white-space: nowrap;
+}
+
+.prescriber-side .text-wrapper-2 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  left: 688px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 55px;
+  white-space: nowrap;
+  border-bottom: 2px solid #000000;
+}
+
+.prescriber-side .text-wrapper-3 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  left: 939px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 55px;
+  white-space: nowrap;
+}
+
+.prescriber-side .about {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  left: 773px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 55px;
+  white-space: nowrap;
+}
+
+.prescriber-side .overlap {
+  border: 2px solid;
+  border-color: #000000;
+  border-radius: 5px;
+  height: 47px;
+  left: 1241px;
+  position: absolute;
+  top: 44px;
+  width: 140px;
+}
+
+.prescriber-side .text-wrapper-4 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  left: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 11px;
+  white-space: nowrap;
+}
+
+.prescriber-side .line {
+  height: 30px;
+  left: 1180px;
+  position: absolute;
+  top: 50px;
+  width: 2px;
+}
+
+.prescriber-side .content {
+  height: 800px;
+  left: 53px;
+  overflow: hidden;
+  position: absolute;
+  top: 170px;
+  width: 1328px;
+}
+
+.prescriber-side .overlap-2 {
+  height: 200px;
+  left: 0;
+  position: absolute;
+  top: 60px;
+  width: 1442px;
+}
+
+.prescriber-side .group {
+  height: 200px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1442px;
+}
+
+.prescriber-side .overlap-group-2 {
+  background-image: url(../../../static/img/rectangle-5-1.svg);
+  background-size: 100% 100%;
+  height: 200px;
+  position: relative;
+  width: 1328px;
+}
+
+.prescriber-side .div-wrapper {
+  height: 30px;
+  left: 41px;
+  position: absolute;
+  top: 13px;
+  width: 281px;
+}
+
+.prescriber-side .text-wrapper-5 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  white-space: nowrap;
+}
+
+.prescriber-side .text-wrapper-6 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 700;
+  left: 41px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 147px;
+  white-space: nowrap;
+}
+
+.prescriber-side .group-2 {
+  height: 30px;
+  left: 41px;
+  position: absolute;
+  top: 100px;
+  width: 390px;
+}
+
+.prescriber-side .group-3 {
+  height: 165px;
+  left: 885px;
+  position: absolute;
+  top: 13px;
+  width: 412px;
+}
+
+.prescriber-side .overlap-group-wrapper {
+  height: 48px;
+  left: 4px;
+  position: absolute;
+  top: 117px;
+  width: 179px;
+}
+
+.prescriber-side .asdf-wrapper {
+  background-color: #5c6428;
+  border-radius: 6px;
+  height: 48px;
+  position: relative;
+  width: 177px;
+}
+
+.prescriber-side .asdf {
+  color: #ffffff;
+  font-family: "Inter", Helvetica;
+  font-size: 17px;
+  font-weight: 700;
+  left: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 14px;
+  width: 138px;
+}
+
+.prescriber-side .p {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 17px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 42px;
+  width: 408px;
+}
+
+.prescriber-side .overlap-3 {
+  background-color: #77996c;
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.prescriber-side .text-wrapper-7 {
+  color: #ffffff;
+  font-family: "Inter", Helvetica;
+  font-size: 20px;
+  font-weight: 700;
+  left: 41px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 10px;
+  white-space: nowrap;
+}
+
+.prescriber-side .overlap-4 {
+  background-image: url(../../../static/img/rectangle-4.svg);
+  background-size: 100% 100%;
+  height: 300px;
+  left: 245px;
+  position: absolute;
+  top: 339px;
+  width: 400px;
+}
+
+.prescriber-side .text-wrapper-8 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 700;
+  left: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 134px;
+  white-space: nowrap;
+}
+
+.prescriber-side .overlap-5 {
+  background-image: url(../../../static/img/rectangle-4.svg);
+  background-size: 100% 100%;
+  height: 300px;
+  left: 778px;
+  position: absolute;
+  top: 339px;
+  width: 400px;
+}
+
+.prescriber-side .text-wrapper-9 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 700;
+  left: 38px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 134px;
+  white-space: nowrap;
+}

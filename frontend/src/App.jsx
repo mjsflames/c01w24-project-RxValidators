@@ -6,6 +6,11 @@ import NoPage from "./pages/NoPage.jsx";
 import Layout from "./pages/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import Verification from "./pages/Verification.jsx";
+import Prescriber from "./pages/PresPrescription.jsx";
+import Account from "./pages/AccountDetails.jsx";
+import LogRX from "./pages/LogRx.jsx";
+import LoginForm from "./pages/Login.jsx";
+import Patient from "./pages/PatPrescription.jsx";
 import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
 import GreenResources from "./pages/GreenResources.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
@@ -65,6 +70,7 @@ function App() {
 	return (
 		<div className="App">
 			{/* <Alert /> */}
+
 			<ServiceRegistryInfo />
 			<UserContext.Provider value={{ user, handleLogin, handleLogout }}>
 				<BrowserRouter>
@@ -94,6 +100,12 @@ function App() {
 							/>
 							<Route path="green-resources" element={<GreenResources />} />
 
+							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
+              <Route path="patient" element={<Patient />} />
+              <Route path="prescriber" element={<Prescriber />} />
+              <Route path="account" element={<Account />} />
+              <Route path="log" element={<LogRX />} />
+              <Route path="loginF" element={<LoginForm />} />
 							{/* CATCH ALL */}
 							<Route path="*" element={<NoPage />} />
 						</Route>
