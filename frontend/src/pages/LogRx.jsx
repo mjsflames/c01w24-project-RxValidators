@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Datepicker from "react-tailwindcss-datepicker"; 
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 

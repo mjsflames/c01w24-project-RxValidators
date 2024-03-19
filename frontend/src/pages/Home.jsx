@@ -17,7 +17,7 @@ const Home = () => {
 				<h2>Code here</h2>
 				<div class = "text-right" >
 					<h2>Logging a Patient Prescription?</h2>
-					<Link to="log">Log Here</Link>
+					<Link to="login">Log Here</Link>
 				</div>
 			</div>
 				<div class = "grid grid-cols-2" >
