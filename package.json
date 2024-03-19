@@ -1,5 +1,19 @@
 {
   "dependencies": {
-    "axios": "^0.24.0"
-  }
+  },
+  "name": "c01w24-project-rxvalidators",
+  "description": "***By: Emily Ho, Lance Talban, Michelle Zhu, Danny Yang, Renat Hossain, Xing Yu Zhou, Kangjie Wu***",
+  "version": "1.0.0",
+  "directories": {
+    "test": "tests"
+  },
+
+  "scripts": {
+    "postinstall": "cd ./backend/api_gateway && npm install cd ../auth_service && npm install && cd ../../frontend && npm install --force",
+    "windows": "startup.bat",
+    "linux": "./startup.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
