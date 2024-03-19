@@ -3,7 +3,7 @@ import { sysInstance } from "../axiosConfig";
 
 const ServiceRegistryInfo = () => {
 	// Allow the user to drag the service registry info
-	const [position, setPosition] = React.useState({ x: 0, y: 300 });
+	const [position, setPosition] = React.useState({ x: 0, y: 700 });
 	const [isDragging, setIsDragging] = React.useState(false);
 	const [draggingPosition, setDraggingPosition] = React.useState({ x: 0, y: 0 });
 

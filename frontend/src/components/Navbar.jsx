@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
 	return (
-		<div className="w-1/3 flex gap-4">
+		<div className="mr-4 flex gap-4">
+			<Link to="/temp-links" className=" text-gray-800">
+				DEV
+   			</Link>
 			<Link to="/" className=" text-gray-800">
 				Home
-    </Link>
-		<div className="mr-4 flex gap-4">
+   			</Link>
 			<Link to="#" className=" text-gray-800">
 				HELP
 			</Link>

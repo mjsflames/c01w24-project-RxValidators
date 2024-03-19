@@ -18,6 +18,8 @@ import ServiceRegistryInfo from "./components/ServiceRegistryInfo.jsx";
 import Login from "./pages/Login.jsx";
 import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
+import TempLinks from "./pages/Placeholders/TempLinks.jsx";
+import PrescriberHome from "./pages/PrescriberHome.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -65,6 +67,10 @@ function App() {
 		return false;
 	};
 
+	useEffect(() => {
+		console.log("User is", user);
+	}, [user]);
+
 	const handleLogout = () => setUser(null);
 
 	return (
@@ -77,7 +83,20 @@ function App() {
 					<Routes>
 						<Route path="login" element={<Login />} />
 						<Route path="/" element={<Layout />}>
-							<Route index element={<Home />} />
+							<Route
+								index
+								element={
+									user && user.role === "admin" ? (
+										<TempLinks />
+									) : user && user.role === "prescriber" ? (
+										<PrescriberHome />
+									) : user && user.role === "patient" ? (
+										<PatientPrescriptions />
+									) : (
+										<Home	 />
+									)
+								}
+							/>
 
 							{/* PRESCRIBER RESTRICTED */}
 							<Route
@@ -101,11 +120,12 @@ function App() {
 							<Route path="green-resources" element={<GreenResources />} />
 
 							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
-              <Route path="patient" element={<Patient />} />
-              <Route path="prescriber" element={<Prescriber />} />
-              <Route path="account" element={<Account />} />
-              <Route path="log" element={<LogRX />} />
-              <Route path="loginF" element={<LoginForm />} />
+							<Route path="patient" element={<Patient />} />
+							<Route path="prescriber" element={<Prescriber />} />
+							<Route path="account" element={<Account />} />
+							<Route path="log" element={<LogRX />} />
+							<Route path="loginF" element={<LoginForm />} />
+							<Route path="temp-links" element={<TempLinks />} />
 							{/* CATCH ALL */}
 							<Route path="*" element={<NoPage />} />
 						</Route>
