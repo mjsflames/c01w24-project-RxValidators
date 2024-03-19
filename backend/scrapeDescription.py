@@ -29,6 +29,11 @@ def call_python_function():
         
     return {"text": text}, 200, {"Content-Type": "application/json"}
 
+@app.route("/health")
+@cross_origin()
+def health_check(): # ? API Gateway health check
+    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
+
 def register_service(service_name, service_url):
     print(f"Sending register request | {service_name} at {service_url}")
     return requestsLib.post("http://localhost:3130/service-registry/register", json={"serviceName": service_name, "serviceUrl": service_url})

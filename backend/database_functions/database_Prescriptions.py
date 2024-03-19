@@ -167,6 +167,10 @@ def delete_all_prescriptions():
     
     return jsonify({"message": "All prescriptions deleted successfully", "deleted_count": result.deleted_count}), 200
 
+@app.route("/health")
+@cross_origin()
+def health_check(): # ? API Gateway health check
+    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
 
 def register_service(service_name, service_url):
     print(f"Sending register request | {service_name} at {service_url}")

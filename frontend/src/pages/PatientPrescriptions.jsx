@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
-
+import api from "../axiosConfig.js";
 const PatientPrescriptions = () => {
 	const [data, setData] = useState(null);
 
@@ -34,20 +34,28 @@ const PatientPrescriptions = () => {
   useEffect(() => {
     async function fetchData() {
       const username = "testUser";
-      try {
-        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
-          method: "GET",
-        });
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const pData = await res.json();
+      // try {
+      //   const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+      //     method: "GET",
+      //   });
+      //   if (!res.ok) {
+      //     throw new Error('Network response was not ok');
+      //   }
+      //   const pData = await res.json();
 
-        setData(pData);
-        console.log(pData);
+      //   setData(pData);
+      //   console.log(pData);
+      // } catch (error) {
+      //   console.error('There was a problem with the fetch operation:', error);
+      // }
+
+      try {
+        const pData = await api.get(`prescription/getPrescriptions/${username}`);
+        setData(pData.data);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
+
     }
     fetchData();
   }, []);

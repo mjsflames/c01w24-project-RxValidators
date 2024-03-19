@@ -20,6 +20,7 @@ import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import PrescriberHome from "./pages/PrescriberHome.jsx";
+import Logout from "./pages/Logout.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -71,7 +72,7 @@ function App() {
 		console.log("User is", user);
 	}, [user]);
 
-	const handleLogout = () => setUser(null);
+	const handleLogout = () => {setUser(null); return true;}
 
 	return (
 		<div className="App">
@@ -82,6 +83,7 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="login" element={<Login />} />
+						<Route path="logout" element={<Logout />} />
 						<Route path="/" element={<Layout />}>
 							<Route
 								index
@@ -107,7 +109,14 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
-
+							<Route
+								path="prescriber"
+								element={
+									<ProtectedRoute redirectTo={"/login"} permitted={["prescriber", "admin"]}>
+										<Prescriber />
+									</ProtectedRoute>
+								}
+							/>
 							{/* PATIENT RESTRICTED */}
 							<Route
 								path="patientPrescriptions"
@@ -117,11 +126,11 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
+
 							<Route path="green-resources" element={<GreenResources />} />
 
 							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
 							<Route path="patient" element={<Patient />} />
-							<Route path="prescriber" element={<Prescriber />} />
 							<Route path="account" element={<Account />} />
 							<Route path="log" element={<LogRX />} />
 							<Route path="loginF" element={<LoginForm />} />

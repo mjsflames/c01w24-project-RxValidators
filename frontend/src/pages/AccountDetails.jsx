@@ -34,7 +34,7 @@ const AccountSettings = () => {
                             <br />
                             Phone:
                         </li>
-                        <Link to="login" class ="rounded-md bg-grey-400 py-4 px-10 text-black">Log Out</Link>
+                        <Link to="/logout" className="rounded-md bg-grey-400 py-4 px-10 text-black">Log Out</Link>
                     </ul>
 			</ContentContainer>
 		</>

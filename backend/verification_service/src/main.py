@@ -23,9 +23,6 @@ def generate_id():
     return str(uuid.uuid4())
 
 
-@app.route("/service/health")
-def hello_world():
-    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
 
 
 @app.route("/api/upload", methods=["POST"])
@@ -79,6 +76,11 @@ def download(id):
     del processing[id]
     return result_data.to_json(index=False, orient="records"), 200, {"Content-Type": "text/csv"}
 
+@app.route("/health")
+@cross_origin()
+def health_check(): # ? API Gateway health check
+    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
+
 #############################################
 # Prescriptions
 
@@ -93,6 +95,7 @@ def download(id):
 def register_service(service_name, service_url):
     print(f"Sending register request | {service_name} at {service_url}")
     return requestsLib.post("http://localhost:3130/service-registry/register", json={"serviceName": service_name, "serviceUrl": service_url})
+
 
 
 print("Starting Verification Service on port", app.config["PORT"])
