@@ -4,14 +4,39 @@ import PageHeader from "../components/PageHeader";
 const PatientPrescriptions = () => {
 	const [data, setData] = useState(null);
 
-	useEffect( async() => {
-    const username = "testUser"
-    const res = await fetch(`http://localhost:5000//api/getPrescriptions/${username}`, {
-			method: "POST",
-		});
-		const pData = await res.json();
-    setData(pData);
-    console.log(pData);
+	useEffect(() => {
+
+    const sampleData = [
+      {
+        "Date": "2024-03-12",
+        "Initials": "AB",
+        "Code": "001",
+        "Prescription_status": "Pending",
+        "Body": "Details for item 1"
+      },
+      {
+        "Date": "2024-03-12",
+        "Initials": "CD",
+        "Code": "002",
+        "Prescription_status": "Completed",
+        "Body": "Details for item 2"
+      },
+      {
+        "Date": "2024-03-12",
+        "Initials": "EF",
+        "Code": "003",
+        "Prescription_status": "Pending",
+        "Body": "Details for item 3"
+      }
+    ];
+    // const username = "testUser"
+    // const res = await fetch(`http://localhost:5000//api/getPrescriptions/${username}`, {
+		// 	method: "POST",
+		// });
+		// const pData = await res.json();
+    // setData(pData);
+    // console.log(pData);
+    setData(sampleData)
   }, []);
 
 

@@ -4,7 +4,7 @@ import uuid
 import scraper_handler
 import threading
 from pandas import DataFrame
-from ...database_functions import database.py
+from ...database_functions import database
 
 app = Flask(__name__)
 cors = CORS(app)
