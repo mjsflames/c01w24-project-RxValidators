@@ -118,6 +118,7 @@ python -m venv venv
 ```bash
 source venv/bin/activate
 ```
+-   Activate the virtual environment (On Windows):
 
 ```Windows
 venv\Scripts\activate
