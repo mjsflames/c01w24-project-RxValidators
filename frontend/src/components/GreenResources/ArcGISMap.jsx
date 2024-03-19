@@ -204,6 +204,7 @@ const ArcGISMap = (category) => {
   }, [location]);
 
   useEffect(() => {
+    setSite("")
     if (!location) return;
     // Check if the location name exists in placesList and set setSite
     setGoogleMapsDirections(getDirections(names));
@@ -254,38 +255,6 @@ const ArcGISMap = (category) => {
     ));
   };
 
-  const handleLocateButtonClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-          fetchLocation(position.coords.latitude, position.coords.longitude);
-
-          mapView.goTo({
-            target: [position.coords.longitude, position.coords.latitude],
-            zoom: 12,
-          });
-          const pinGraphic = new Graphic({
-            geometry: selectedPoint,
-            symbol: currentPinSymbol,
-          });
-
-          const graphicsLayer = new GraphicsLayer();
-          graphicsLayer.removeAll();
-          graphicsLayer.add(pinGraphic);
-
-          map.add(graphicsLayer);
-        },
-        (error) => {
-          console.error("Error getting user location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
-
   return (
     <>
       <div className="flex gap-6 pb-10 pt-4">
@@ -293,7 +262,7 @@ const ArcGISMap = (category) => {
           <div ref={mapRef} style={{ width: "100%", height: "100%" }}></div>
           <h3 className="font-bold text-lg pt-5">Selected Location:</h3>
           <h3 className="text-m">{names}</h3>
-          <h3 className="font-bold text-lg pt-4">Google Maps Link:</h3>
+          {googleMapsDirections && <h3 className="font-bold text-lg pt-4">Directions:</h3>}
           <Link
             to={googleMapsDirections}
             target="_blank"
@@ -309,7 +278,7 @@ const ArcGISMap = (category) => {
 
         <div className="bg-[#bbbbbb] px-10 w-[30vw]">
           <h3 className="font-bold text-xl pt-6">List of Nearby Places:</h3>
-          <ol>{formatList(placesList)}</ol>
+          <ol className="pb-6">{formatList(placesList)}</ol>
         </div>
       </div>
     </>

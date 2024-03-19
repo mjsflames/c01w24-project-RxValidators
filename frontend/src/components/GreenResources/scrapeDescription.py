@@ -23,7 +23,7 @@ def call_python_function():
     if paragraph:
         text = paragraph.get_text()
     else:
-        text = "Paragraph not found."
+        text = "No description found, but you can visit this website for more information:"
         
     return {"text": text}, 200, {"Content-Type": "application/json"}
 
