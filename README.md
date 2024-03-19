@@ -84,8 +84,6 @@ Then run: `npm run dev`
 
 # Physician Verification Process
 
-_By Renat Hossain_
-
 It utilizes web scraping techniques to gather information from official websites of medical boards and verify the licensing status of physicians. Currently, it supports the following websites:
 
 -   [College of Physicians and Surgeons of British Columbia](https://www.cpsbc.ca/public/registrant-directory)
