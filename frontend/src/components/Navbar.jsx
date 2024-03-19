@@ -7,7 +7,7 @@ const Navbar = () => {
 			<Link to="/" className=" text-gray-800">
 				Home
 			</Link>
-			<Link to="prescriber" className=" text-gray-800">
+			<Link to="patient" className=" text-gray-800">
 				My Prescriptions
 			</Link>
 			<Link to="#" className=" text-gray-800">

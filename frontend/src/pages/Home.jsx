@@ -21,10 +21,10 @@ const Home = () => {
 				</div>
 			</div>
 				<div class = "grid grid-cols-2" >
-					<div class = "box-border p-14 max-w-sm mx-96 my-40 mr-auto bg-gray-400 flex-row items-center justify-center" >
+					<div class = "box-border p-14 mx-96 my-40 mr-auto bg-gray-400 flex-row items-center justify-center" >
 						<button class ="rounded-md bg-grey-400 py-4 px-10 text-black">Your Unique Prescription PDF</button>
 					</div>
-					<div class = "box-border p-10 max-w-sm mx-72 my-40 mr-auto bg-gray-400 flex-row items-center justify-center" >
+					<div class = "box-border p-10 mx-72 my-40 mr-auto bg-gray-400 flex-row items-center justify-center" >
 						<Link to="prescriber" class ="rounded-md bg-grey-400 py-4 px-10 text-black">Access Your Prescriptions</Link>
 					</div>
 				</div>
