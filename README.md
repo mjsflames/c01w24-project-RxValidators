@@ -76,8 +76,8 @@ The program will perform the following:
 
 # Run with Frontend
 
-Go into `frontend/greenResources` folder and run the following:
-(Only once) install the dependencies
+Go into the `frontend` folder and run the following:
+(Only once) to install the dependencies
 `npm i`
 
 Then run: `npm run dev`
@@ -102,10 +102,14 @@ It utilizes web scraping techniques to gather information from official websites
 Follow these steps to set up the environment and test the webscrapers:
 
 ### 1. Python Virtual Environment
+Install pip and the virtual environment first with
+
+`install python-pip
+`pip install virtualenv
 
 -   Create a Python virtual environment named 'venv':
 
-```bash
+```bash/Windows
 python -m venv venv
 ```
 
@@ -113,6 +117,10 @@ python -m venv venv
 
 ```bash
 source venv/bin/activate
+```
+
+```Windows
+venv\Scripts\activate
 ```
 
 ### 2. Install Required Packages
