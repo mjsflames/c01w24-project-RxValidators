@@ -5,4 +5,10 @@ const instance = axios.create({
 	timeout: 1000,
 });
 
+const sysInstance = axios.create({
+	baseURL: "http://localhost:3130/",
+	timeout: 1000,
+});
+
+export { sysInstance };
 export default instance;

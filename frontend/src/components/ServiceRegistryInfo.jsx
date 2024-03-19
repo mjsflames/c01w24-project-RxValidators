@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { sysInstance } from "../axiosConfig";
 
 const ServiceRegistryInfo = () => {
 	// Allow the user to drag the service registry info
 	const [position, setPosition] = React.useState({ x: 0, y: 300 });
 	const [isDragging, setIsDragging] = React.useState(false);
 	const [draggingPosition, setDraggingPosition] = React.useState({ x: 0, y: 0 });
+
+	const [services, setServices] = React.useState([]);
+	useEffect(() => {
+		// Get services from localhost:3130/service-registry/services
+		sysInstance.get("/service-registry/services").then((response) => {
+			setServices(response.data);
+		});
+	}, []);
 
 	React.useEffect(() => {
 		if (isDragging) {
@@ -44,17 +53,15 @@ const ServiceRegistryInfo = () => {
 			<p>For development.</p>
 			<br />
 			<ol className="flex flex-col gap-4 mt-2">
-				<li className="flex gap-4 items-center">
-					<div className={goodCSS} />
-					Service 1
-				</li>
-				<li className="flex gap-4 items-center">
-					<div className={badCSS} /> Service 2
-				</li>
-				<li className="flex gap-4 items-center">
-					<div className={goodCSS} />
-					Service 3
-				</li>
+				{services.map((service) => (
+					<li key={service.serviceName} className="flex gap-4 items-center capitalize">
+						<div className={goodCSS} />
+						<div className="flex flex-col">
+							{service.serviceName}
+							<p className="text-gray-400 text-sm lowercase">@ {service.serviceUrl}</p>
+						</div>
+					</li>
+				))}
 			</ol>
 		</div>
 	);
