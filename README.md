@@ -1,5 +1,5 @@
 # c01w24-project-RxValidators
-***By: Emily Ho, Lance Talban, Michelle Zhu, Danny Ho, Renat Hossain, Xing Yu Zhou, Kangjie Wu***
+***By: Emily Ho, Lance Talban, Michelle Zhu, Danny Yang, Renat Hossain, Xing Yu Zhou, Kangjie Wu***
 
 To launch the Frontend, API Gateway, and Microservices in development mode:
 
