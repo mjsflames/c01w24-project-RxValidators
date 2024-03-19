@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, Link } from "react-router-dom";
 
 const BreadCrumb = () => {
+
 	const location = useLocation();
 	const { hash, pathname, search } = location;
 

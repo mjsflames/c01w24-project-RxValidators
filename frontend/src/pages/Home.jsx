@@ -21,6 +21,9 @@ const Home = () => {
 					<li>
 						<Link to="/green-resources">Green Resources</Link>
 					</li>
+          <li>
+            <Link to="/patientPrescriptions">Patient Prescriptions</Link>
+          </li>
 				</ul>
 			</ContentContainer>
 		</>

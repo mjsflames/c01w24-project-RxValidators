@@ -6,6 +6,7 @@ import NoPage from "./pages/NoPage.jsx";
 import Layout from "./pages/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import Verification from "./pages/Verification.jsx";
+import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
 import GreenResources from "./pages/GreenResources.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ServiceRegistryInfo from "./components/ServiceRegistryInfo.jsx";
@@ -80,6 +81,7 @@ function App() {
 								}
 							/>
 							<Route path="green-resources" element={<GreenResources />} />
+              <Route path="patientPrescriptions" element={<PatientPrescriptions />} />
 
 							{/* CATCH ALL */}
 							<Route path="*" element={<NoPage />} />
