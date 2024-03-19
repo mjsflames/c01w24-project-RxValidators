@@ -1,14 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import uuid
-from ...database_functions import database as dbf
+
+import database_functions.database as dbfunc
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-app.config["DEBUG"] = True  # Restart on changes
+app.config["DEBUG"] = True
 PORT = 5000
-
 
 requests = {
 
@@ -22,7 +22,9 @@ def generate_id():
 @app.route("/api/getPrescriptions/<username>", methods=["GET"])
 @cross_origin()
 def getPrescriptions(username):
-  prescriptions = dbf.getAllPrescriptions(username)
+  prescriptions = dbfunc.getAllPrescriptions(username)
+  print("sending...")
+  print(prescriptions)
   return prescriptions
 
 if __name__ == "__main__":

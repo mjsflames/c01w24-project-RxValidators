@@ -5,7 +5,6 @@ const PatientPrescriptions = () => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-
     const sampleData = [
       {
         "Date": "2024-03-12",
@@ -29,16 +28,29 @@ const PatientPrescriptions = () => {
         "Body": "Details for item 3"
       }
     ];
-    // const username = "testUser"
-    // const res = await fetch(`http://localhost:5000//api/getPrescriptions/${username}`, {
-		// 	method: "POST",
-		// });
-		// const pData = await res.json();
-    // setData(pData);
-    // console.log(pData);
     setData(sampleData)
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      const username = "testUser";
+      try {
+        const res = await fetch(`http://localhost:5000/api/getPrescriptions/${username}`, {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const pData = await res.json();
+
+        setData(pData);
+        console.log(pData);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    }
+    fetchData();
+  }, []);
 
 	return (
 		<>

@@ -2,7 +2,6 @@ import pandas as pd
 import pymongo
 from pymongo import MongoClient
 
-
 excel_file = 'PaRx Sample Data.xlsx'
 website_dictionary = \
 {
@@ -130,7 +129,11 @@ def remove_all_users(database_name):
 def getAllPrescriptions(username):
   preScriptColl = get_collection("Prescriptions")
   prescriptions = preScriptColl.find({'PatientId': username})
-  return prescriptions
+  res = []
+  for p in prescriptions:
+      p['_id'] = str(p['_id'])
+      res.append(p)
+  return res
 
 
 ###############################
