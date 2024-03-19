@@ -10,7 +10,7 @@ import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
 import GreenResources from "./pages/GreenResources.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ServiceRegistryInfo from "./components/ServiceRegistryInfo.jsx";
-import Login from "./pages/Placeholders/Login.jsx";
+import Login from "./pages/Login.jsx";
 import Landing from "./pages/Landing.jsx";
 
 const UserContext = createContext({
@@ -67,9 +67,9 @@ function App() {
 			<UserContext.Provider value={{ user, handleLogin, handleLogout }}>
 				<BrowserRouter>
 					<Routes>
+						<Route path="login" element={<Login />} />
 						<Route path="/" element={<Layout />}>
 							<Route index element={<Home />} />
-							<Route path="login" element={<Login />} />
 
 							{/* PRESCRIBER RESTRICTED */}
 							<Route
@@ -81,7 +81,7 @@ function App() {
 								}
 							/>
 							<Route path="green-resources" element={<GreenResources />} />
-              <Route path="patientPrescriptions" element={<PatientPrescriptions />} />
+							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
 
 							{/* CATCH ALL */}
 							<Route path="*" element={<NoPage />} />
