@@ -11,7 +11,7 @@ import requests as requestsLib
 import uuid
 
 app = Flask(__name__)
-client = MongoClient('mongodb://localhost:27017/')  # Connect to your MongoDB
+client = MongoClient('mongodb://127.0.0.1:27017/')  # Connect to your MongoDB
 db_name = "test_db"
 db = client[db_name]
 collection_name = "prescription" #add a component called prescription

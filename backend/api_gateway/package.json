@@ -12,7 +12,9 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"auth_service": "file:../auth_service",
 		"axios": "^1.6.7",
+		"cd": "^0.3.3",
 		"cors": "^2.8.5",
 		"express": "^4.18.3",
 		"express-http-proxy": "^2.0.0",
