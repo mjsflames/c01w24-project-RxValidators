@@ -104,8 +104,8 @@ Follow these steps to set up the environment and test the webscrapers:
 ### 1. Python Virtual Environment
 Install pip and the virtual environment first with
 
-`install python-pip
-`pip install virtualenv
+```install python-pip```
+```pip install virtualenv```
 
 -   Create a Python virtual environment named 'venv':
 
