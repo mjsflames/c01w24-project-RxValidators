@@ -10,9 +10,15 @@ const ServiceRegistryInfo = () => {
 	const [services, setServices] = React.useState([]);
 	useEffect(() => {
 		// Get services from localhost:3130/service-registry/services
-		sysInstance.get("/service-registry/services").then((response) => {
-			setServices(response.data);
-		});
+		sysInstance
+			.get("/service-registry/services")
+			.then((response) => {
+				setServices(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+				setServices([{ serviceName: "CONNECT FAIL", serviceUrl: "api-gateway" }]);
+			});
 	}, []);
 
 	React.useEffect(() => {
@@ -47,7 +53,7 @@ const ServiceRegistryInfo = () => {
 			style={{
 				transform: `translate(${position.x}px, ${position.y}px)`,
 			}}
-			className="absolute bg-white px-8 rounded-lg py-8 shadow-md"
+			className="absolute bg-white px-8 rounded-lg py-8 shadow-md z-[100]"
 		>
 			<h1 className="text-sm select-none">Service Registry Monitor</h1>
 			<p>For development.</p>
