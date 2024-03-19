@@ -5,6 +5,12 @@ const ScrapedData = (websiteURL) => {
     const [data, setData] = useState('');
     // console.log("HMMMM: ", websiteURL)
     const { websiteUrl } = JSON.parse(JSON.stringify(websiteURL));
+    console.log("WEBBBB:", websiteURL);
+    if (websiteURL === "") {
+        setData("No Description Found")
+        console.log("TRUEEEEEEEEEEEEEEEEEE")
+        return
+    }
     
     const get_api = `http://127.0.0.1:5000/call-python-function?websiteURL=${websiteUrl}`;
 
@@ -19,6 +25,11 @@ const ScrapedData = (websiteURL) => {
         };
 
         fetchData();
+    }, [websiteURL]);
+
+    console.log("DATAAAA:", data)
+    useEffect(() => {
+        setData('No Description Found');
     }, [websiteURL]);
 
     return (

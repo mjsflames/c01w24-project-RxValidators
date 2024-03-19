@@ -15,8 +15,12 @@ const ArcGISMap = (category) => {
   const [placesList, setPlaceList] = useState([]);
   const [site, setSite] = useState("");
   const [names, setNames] = useState("");
+  const [updatingCategory, setUpdatingCategory] = useState(false);
 
-  const [pinAtPointRef, setPinAtPointRef] = useState(null);
+  const [pinAtPointRef, setPinAtPointRef] = useState(
+    (longitude, latitude, currentPinSymbol = null, useCurrentPin = false) => {}
+  );
+  const [clearPinsRef, setClearPinsRef] = useState(null);
   // Load ESRI Module
   useEffect(() => {
     loadModules([
@@ -62,20 +66,31 @@ const ArcGISMap = (category) => {
 
         const searchWidget = new Search({ view: view, popupEnabled: false });
 
-        const pinAtPoint = (longitude, latitude, symbol = pinSymbol) => {
+        const pinAtPoint = (
+          longitude,
+          latitude,
+          symbol = pinSymbol,
+          useCurrentPin = false
+        ) => {
           const geometry = new Point({
             longitude: longitude,
             latitude: latitude,
           });
 
-          const pinGraphic = new Graphic({ geometry, symbol });
+          const chosenSymbol = useCurrentPin ? currentPinSymbol : symbol;
+          const pinGraphic = new Graphic({ geometry, symbol: chosenSymbol });
 
           graphicsLayer.add(pinGraphic);
           return geometry;
         };
 
+        const clearPins = () => {
+          graphicsLayer.removeAll();
+        };
+
         // Make function accessible outside of this block.
         setPinAtPointRef(() => pinAtPoint);
+        setClearPinsRef(() => clearPins);
 
         const graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
@@ -102,8 +117,7 @@ const ArcGISMap = (category) => {
 
         view.on("click", function (event) {
           // Clear existing pins on click
-          graphicsLayer.removeAll();
-
+          clearPins();
           const { longitude, latitude } = event.mapPoint;
 
           const point = pinAtPoint(longitude, latitude, currentPinSymbol);
@@ -164,6 +178,7 @@ const ArcGISMap = (category) => {
       .then((response) => response.json())
       .then((result) => {
         console.log("BOOOO: ", result);
+        setUpdatingCategory(false);
         setPlaceList(
           result["features"].map((place) => {
             const simpleAddress = place.properties.address_line1;
@@ -175,57 +190,63 @@ const ArcGISMap = (category) => {
             return { simpleAddress, partialAddress, lat, lon, website };
           })
         );
-        // setLatitudeList(
-        //   result["features"].map((place) => { return place.properties.lat })
-        // );
-        // setLongitudeList(
-        //   result["features"].map((place) => { return place.properties.lon })
-        // );
       })
       .catch((error) => console.log("error", error));
   };
 
   useEffect(() => {
     setPlaceList([]);
-    if (location) {
-      setNames(location.features[0].properties.address_line1);
-      setGoogleMapsDirections(getDirections(names));
-      getNearbyPlaces(Number(latitude), Number(longitude));
-    }
+    if (!location) return setNames("No Location Selected");
+
+    setNames(location.features[0].properties.address_line1);
+    setGoogleMapsDirections(getDirections(names));
+    getNearbyPlaces(Number(latitude), Number(longitude));
   }, [location]);
 
   useEffect(() => {
     if (!location) return;
     // Check if the location name exists in placesList and set setSite
+    setGoogleMapsDirections(getDirections(names));
     const foundPlace = placesList.find((place) => {
-      console.log(place, names);
       return place.simpleAddress === names;
     });
     console.log("PARTIAL ADDRESS FOUND: ", foundPlace);
-    if (foundPlace) {
-      setSite(foundPlace.website | "");
+    if (foundPlace && foundPlace.website !== null) {
+      setSite(foundPlace.website);
       console.log("WEBSITE FOUND: ", foundPlace.website);
     }
   }, [names, placesList]);
 
   useEffect(() => {
+    if (!category.category) return;
+    setUpdatingCategory(true);
+    // Remove previous category pins
+    clearPinsRef();
+    // Return the pointer pin
+    pinAtPointRef(longitude, latitude, null, true); //? Uhh... so anyways
     setPlaceList([]);
     getNearbyPlaces(Number(latitude), Number(longitude));
   }, [category]);
 
   useEffect(() => {
     if (placesList.length === 0) return;
-    placesList.forEach(({ partialAddress, lat, lon, website }) => {
+    placesList.forEach(({ lat, lon }) => {
       pinAtPointRef(lon, lat);
-      // if (names === partialAddress) {
-      //   console.log("PARTIAL ADDRESS FOUND: ", partialAddress);
-      //   console.log("WEBSITE FOUND: ", website);
-      //   setSite(website)
-      // }
     });
   }, [placesList]);
 
   const formatList = (list) => {
+    if (!location || !category.category) {
+      return (
+        <li>No nearby places. Please select a location and a category.</li>
+      );
+    }
+    if (updatingCategory) return <li>Loading...</li>;
+
+    if (list.length === 0 && category) {
+      return <li>No nearby places. Please select a different category.</li>;
+    }
+
     return list.map(({ partialAddress }) => (
       <li key={partialAddress}>
         <span>&#8226;</span> {partialAddress}
@@ -267,34 +288,30 @@ const ArcGISMap = (category) => {
 
   return (
     <>
-      <button
-        onClick={handleLocateButtonClick}
-        className="mt-4 bg-[#77996C] hover:bg-[#95a98f] text-black py-1 px-4 rounded"
-      >
-        Use My Location
-      </button>
       <div className="flex gap-6 pb-10 pt-4">
-        <div className="w-[60vw] h-[70vh]">
+        <div className="w-[60vw] h-[70vh] flex-row">
           <div ref={mapRef} style={{ width: "100%", height: "100%" }}></div>
-        </div>
-
-        <div className="bg-[#bbbbbb] py-5 px-10 w-[30vw]">
-          <h3 className="font-bold text-xl">Clicked Location:</h3>
-          <h3 className="text-lg">{names}</h3>
-          <h3 className="font-bold text-xl pt-6">List of Nearby Places:</h3>
-          <ol>{formatList(placesList)}</ol>
-          <h3 className="font-bold text-xl pt-6">Google Maps Link:</h3>
+          <h3 className="font-bold text-lg pt-5">Selected Location:</h3>
+          <h3 className="text-m">{names}</h3>
+          <h3 className="font-bold text-lg pt-4">Google Maps Link:</h3>
           <Link
             to={googleMapsDirections}
             target="_blank"
             className="text-blue-600 hover:underline"
           >
-            <h3 className="text-lg break-words">{googleMapsDirections}</h3>
+            <h3 className="text-m break-words">{googleMapsDirections}</h3>
           </Link>
+
+          {/* <ScrapedData websiteUrl="https://www.toronto.ca/data/parks/prd/facilities/complex/93/index.html" /> */}
+          <h3 className="font-bold text-lg pt-4">Description:</h3>
+          <ScrapedData websiteUrl={site} />
+        </div>
+
+        <div className="bg-[#bbbbbb] px-10 w-[30vw]">
+          <h3 className="font-bold text-xl pt-6">List of Nearby Places:</h3>
+          <ol>{formatList(placesList)}</ol>
         </div>
       </div>
-      {/* <ScrapedData websiteUrl="https://www.toronto.ca/data/parks/prd/facilities/complex/93/index.html" /> */}
-      <ScrapedData websiteUrl={site} />
     </>
   );
 };
