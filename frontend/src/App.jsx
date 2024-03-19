@@ -25,17 +25,37 @@ function App() {
 	const handleLogin = (username, password) => {
 		console.log("Logging in with", username, password);
 		// !!! Top tier security
-		if (username !== "oogla" || password !== "boogla") {
-			return false;
+		// Administrator Access
+		if (username === "admin" && password === "admin") {
+			console.log("Logged in as admin");
+			setUser({
+				id: "1",
+				name: "admin",
+				role: "admin",
+			});
+			return true;
 		}
-
-		console.log("Logged in");
-		setUser({
-			id: "1",
-			name: "oogly boogly mans",
-			role: "admin",
-		});
-		return true;
+		// Prescriber Access
+		if (username === "prescriber" && password === "prescriber") {
+			console.log("Logged in as prescriber");
+			setUser({
+				id: "2",
+				name: "prescriber",
+				role: "prescriber",
+			});
+			return true;
+		}
+		// Patient Access
+		if (username === "patient" && password === "patient") {
+			console.log("Logged in as patient");
+			setUser({
+				id: "3",
+				name: "patient",
+				role: "patient",
+			});
+			return true;
+		}
+		return false;
 	};
 
 	const handleLogout = () => setUser(null);

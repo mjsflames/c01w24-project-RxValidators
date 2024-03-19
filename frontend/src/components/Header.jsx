@@ -11,7 +11,12 @@ const Header = () => {
 				<Link to="">
 					<img src={logo} className="h-32 w-32" />
 				</Link>
-				<Navbar />
+				<div className="flex-1 flex justify-end items-center">
+					<Navbar />
+					<div className="border-black border-l-2 px-12 ">
+						<div className="border-2 border-black h-full py-2 px-8 rounded-md">SOME WORD</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
