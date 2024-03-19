@@ -35,7 +35,7 @@ const PatientPrescriptions = () => {
     async function fetchData() {
       const username = "testUser";
       try {
-        const res = await fetch(`http://localhost:5000/api/getPrescriptions/${username}`, {
+        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -75,11 +75,11 @@ const PatientPrescriptions = () => {
             {data &&
               data.map((item, index) => (
                 <tr key={index} className="text-left border-t border-white">
-                  <td className="p-2">{item.Date}</td>
-                  <td>{item.Initials}</td>
-                  <td>{item.Code}</td>
-                  <td>{item.Prescription_status}</td>
-                  <td className="truncate px-2">{item.Body}</td>
+                  <td className="p-2">{item.date}</td>
+                  <td>{item.patient_initials}</td>
+                  <td>{item.prescriber_code}</td>
+                  <td>{item.status}</td>
+                  <td className="truncate px-2">{item.comments}</td>
                 </tr>
               ))}
           </tbody>

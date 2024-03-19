@@ -5,7 +5,7 @@ import uuid
 import scraper_handler
 import threading
 from pandas import DataFrame
-from ...database_functions import database as db
+# from ...database_functions import database as db
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -82,11 +82,11 @@ def download(id):
 #############################################
 # Prescriptions
 
-@app.route("/api/getPrescriptions/<username>", methods=["GET"])
-@cross_origin()
-def getPrescriptions(username):
-  prescriptions = database.getAllPrescriptions(username)
-  return prescriptions
+# @app.route("/api/getPrescriptions/<username>", methods=["GET"])
+# @cross_origin()
+# def getPrescriptions(username):
+#   prescriptions = database.getAllPrescriptions(username)
+#   return prescriptions
 
 ##############################################
 

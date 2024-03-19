@@ -16,7 +16,7 @@ const Navbar = () => {
 			<Link to="patient" className=" text-gray-800">
 				My Prescriptions
 			</Link>
-			<Link to="#" className=" text-gray-800">
+			<Link to="/green-resources" className=" text-gray-800">
 				Green Resources
 			</Link>
 			<Link to="account" className=" text-gray-800">

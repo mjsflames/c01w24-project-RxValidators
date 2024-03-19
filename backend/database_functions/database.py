@@ -128,8 +128,8 @@ def remove_all_users(database_name):
 # Prescription Backend
 
 def getAllPrescriptions(username):
-  preScriptColl = get_collection("Prescriptions")
-  prescriptions = preScriptColl.find({'PatientId': username})
+  preScriptColl = get_collection("prescription")
+  prescriptions = preScriptColl.find({})#({'PatientId': username})
   res = []
   for p in prescriptions:
       p['_id'] = str(p['_id'])

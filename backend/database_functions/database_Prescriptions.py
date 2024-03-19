@@ -5,6 +5,10 @@ import pandas as pd
 from bson.json_util import dumps, loads
 from bson import ObjectId
 from pymongo import MongoClient
+import database as dbfunc
+from flask_cors import CORS, cross_origin
+import requests as requestsLib
+import uuid
 
 app = Flask(__name__)
 client = MongoClient('mongodb://localhost:27017/')  # Connect to your MongoDB
@@ -12,6 +16,12 @@ db_name = "test_db"
 db = client[db_name]
 collection_name = "prescription" #add a component called prescription
 collection = db[collection_name]
+
+PORT = 5001
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+app.config["DEBUG"] = True
+app.config['PORT'] = PORT
 
 required_prescription_fields = [
     "date", 
@@ -23,6 +33,21 @@ required_prescription_fields = [
     "pdf_link"
 ]
 
+
+
+# https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
+
+
+def generate_id():
+    return str(uuid.uuid4())
+
+@app.route("/api/getPrescriptions/<username>", methods=["GET"])
+@cross_origin()
+def getPrescriptions(username):
+  prescriptions = dbfunc.getAllPrescriptions(username)
+  print("sending...")
+  print(prescriptions)
+  return prescriptions
 
 @app.route('/submit-form', methods=['POST'])
 def submit_form():
@@ -143,5 +168,13 @@ def delete_all_prescriptions():
     return jsonify({"message": "All prescriptions deleted successfully", "deleted_count": result.deleted_count}), 200
 
 
+def register_service(service_name, service_url):
+    print(f"Sending register request | {service_name} at {service_url}")
+    return requestsLib.post("http://localhost:3130/service-registry/register", json={"serviceName": service_name, "serviceUrl": service_url})
+
+
+print("Starting Prescription Service on port", app.config["PORT"])
+register_service("prescription-service", f"http://127.0.0.1:{app.config['PORT']}")
+
 if __name__ == '__main__':
-    app.run(debug=True) #Tested manually using Postman
+    app.run(debug=True, port=PORT) #Tested manually using Postman
