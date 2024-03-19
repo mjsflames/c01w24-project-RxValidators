@@ -1,3 +1,4 @@
+# pylint: disable=all
 import pandas as pd
 import pymongo
 from pymongo import MongoClient
