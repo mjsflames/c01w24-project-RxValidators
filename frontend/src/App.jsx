@@ -12,6 +12,7 @@ import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ServiceRegistryInfo from "./components/ServiceRegistryInfo.jsx";
 import Login from "./pages/Login.jsx";
 import Landing from "./pages/Landing.jsx";
+import Alert from "./components/Alert.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -63,6 +64,7 @@ function App() {
 
 	return (
 		<div className="App">
+			{/* <Alert /> */}
 			<ServiceRegistryInfo />
 			<UserContext.Provider value={{ user, handleLogin, handleLogout }}>
 				<BrowserRouter>
@@ -80,8 +82,17 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
+
+							{/* PATIENT RESTRICTED */}
+							<Route
+								path="patientPrescriptions"
+								element={
+									<ProtectedRoute redirectTo={"/login"} permitted={["patient"]}>
+										<PatientPrescriptions />
+									</ProtectedRoute>
+								}
+							/>
 							<Route path="green-resources" element={<GreenResources />} />
-							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
 
 							{/* CATCH ALL */}
 							<Route path="*" element={<NoPage />} />

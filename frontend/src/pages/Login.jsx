@@ -35,10 +35,14 @@ const UserLogin = () => {
 
 	return (
 		<div className="flex h-screen w-screen items-center justify-between bg-white">
-			<Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 ">
-				<img src={logo} className="h-32 w-32" />
+			<Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
+				<img src={logo} className="h-32 w-32 unselectable" />
 			</Link>
-			<img src={image} alt="logo" className="blur-[2px] opacity-70 z-10 h-screen object-cover  md:w-1/2" />
+			<img
+				src={image}
+				alt="logo"
+				className="blur-[2px] opacity-70 z-10 h-screen object-cover  md:w-1/2 pointer-events-none"
+			/>
 			<div className="w-screen lg:w-1/2 h-screen bg-white z-20 flex items-center absolute lg:relative justify-center">
 				<form className=":w-1/2 mx-auto z-50 " onSubmit={handleSubmit}>
 					<div className="flex flex-col items-center [&>*]:text-gray-500 mb-12">
