@@ -1,1 +1,0 @@
-export { PrescriberGreen } from "./PrescriberGreen";

@@ -20,6 +20,7 @@ import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import PrescriberHome from "./pages/PrescriberHome.jsx";
+import UserType from "./pages/ChooseUser.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -82,6 +83,7 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="login" element={<Login />} />
+						<Route path="chooseuser" element={<UserType />} />
 						<Route path="/" element={<Layout />}>
 							<Route
 								index

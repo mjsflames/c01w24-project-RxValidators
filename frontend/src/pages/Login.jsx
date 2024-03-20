@@ -84,7 +84,7 @@ const UserLogin = () => {
 					</div>
 					{error && <p className="text-red-500">{error}</p>}
 					<div className="flex flex-row justify-between gap-8 mt-16">
-						<Link className="text-black underline" to="/signup">
+						<Link className="text-black underline" to="/chooseuser">
 							New User? Sign up here.
 						</Link>
 						{loading ? (
