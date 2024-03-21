@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import ContentContainer from "../components/ContentContainer";
 import image from "../assets/background-image-1.jpeg";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";

@@ -22,7 +22,7 @@ const LogPrescription = () => {
 			/>
 			<ContentContainer>
             <form>
-                <div class="relative max-w-sm">
+                <div class="absolute start-1/3 right-1/3">
                     <div class="relative z-0 w-full mb-5 group">
                         <input type ="date" id="date" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" required />
                         <label for="rx_date" class="absolute text-black transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]">Prescription Date</label>
@@ -40,9 +40,9 @@ const LogPrescription = () => {
                             <option>Yes</option>
                             <option>No</option>
                         </select>
+                        <br />
+                <button type="submit" class="text-white bg-[#5C6528] hover:bg-green-1000 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
                 </div>
-                <br />
-                <button type="submit" class="text-white bg-green-700 hover:bg-green-1000 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
             </form>
 			</ContentContainer>
 		</>

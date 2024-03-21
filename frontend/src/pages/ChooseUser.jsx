@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import image from "../assets/background-image-1.jpeg";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
@@ -17,11 +17,11 @@ const ChooseUserType = () => {
 			/>
             <div className="w-screen lg:w-1/2 h-screen bg-white z-20 flex items-center absolute lg:relative justify-center flex-col">
                 <h1 className="text-3xl font-bold !text-gray-900 mb-16">Sign-up as a:</h1>
-                <div className = "grid grid-cols-2 gap-x-10" >
-                    <Link to="prescribersignup" className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-2.5 text-center">Patient</Link>
-                    <Link to="patientsignup" className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-2.5 text-center">Prescriber</Link>
+                <div className = "grid grid-cols-2 gap-x-6" >
+                    <Link to="/patientacc" className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-2.5 text-center">Patient</Link>
+                    <Link to="/prescriberacc" className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-2.5 text-center">Prescriber</Link>
                 </div>
-                <div className="justify-between gap-8 mt-16">
+                <div className="justify-between gap-8 mt-24">
 					<Link className="text-black underline" to="/login">
 						Already have an account? Login here.
 					</Link>

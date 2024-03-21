@@ -21,6 +21,8 @@ import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import PrescriberHome from "./pages/PrescriberHome.jsx";
 import UserType from "./pages/ChooseUser.jsx";
+import PatientAccount from "./pages/PatSignUp.jsx";
+import PrescriberAccount from "./pages/PresSignUp.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -84,6 +86,8 @@ function App() {
 					<Routes>
 						<Route path="login" element={<Login />} />
 						<Route path="chooseuser" element={<UserType />} />
+						<Route path="patientacc" element={<PatientAccount />} />
+						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
 							<Route
 								index
