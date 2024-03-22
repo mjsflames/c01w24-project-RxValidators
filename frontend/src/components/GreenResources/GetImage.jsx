@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const GetImage = ({ selectedImage }) => {
+const GetImage = ({ selectedImage, className="" }) => {
   const [imageURL, setImageURL] = useState('');
   const [error, setError] = useState('');
 
@@ -29,24 +29,22 @@ const GetImage = ({ selectedImage }) => {
       }
     };
 
-    if (selectedImage) {
+    // if (selectedImage) {
       searchImage();
-    }
+    // }
   }, [selectedImage]);
 
   return (
-    <div className="container mx-auto py-4">
+    <>
       {error && <p className="text-red-500 mt-2">{error}</p>}
-      {imageURL && (
-        <div className="mt-4">
-          <img
-            src={imageURL}
-            alt="Search Result"
-            className="w-65 h-auto"
-          />
-        </div>
-      )}
+    <div className={`container bg-gray-200 ${className}`}>
+        <img
+          src={imageURL}
+          alt="Image..."
+          className="w-full h-full object-cover"
+        />
     </div>
+    </>
   );
 };
 
