@@ -23,6 +23,10 @@ import PrescriberHome from "./pages/PrescriberHome.jsx";
 import UserType from "./pages/ChooseUser.jsx";
 import PatientAccount from "./pages/PatSignUp.jsx";
 import PrescriberAccount from "./pages/PresSignUp.jsx";
+import AdminHome from "./pages/AdminHome.jsx";
+import LayoutAdmin from "./pages/LayoutAdmin.jsx";
+import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
+import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -88,12 +92,14 @@ function App() {
 						<Route path="chooseuser" element={<UserType />} />
 						<Route path="patientacc" element={<PatientAccount />} />
 						<Route path="prescriberacc" element={<PrescriberAccount />} />
-						<Route path="/" element={<Layout />}>
+						<Route path="/" element={
+							user && user.role === "admin" ? (
+								<LayoutAdmin />) : (<Layout />)}>
 							<Route
 								index
 								element={
 									user && user.role === "admin" ? (
-										<TempLinks />
+										<AdminHome />
 									) : user && user.role === "prescriber" ? (
 										<PrescriberHome />
 									) : user && user.role === "patient" ? (
@@ -123,8 +129,12 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
-							<Route path="green-resources" element={<GreenResources />} />
+							{/* Admin Route*/}
+							<Route path="adminPatientProfile" element={<AdminPatientProfile />} />
+							<Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
 
+							<Route path="green-resources" element={<GreenResources />} />
+							
 							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
 							<Route path="patient" element={<Patient />} />
 							<Route path="prescriber" element={<Prescriber />} />
