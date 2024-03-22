@@ -4,7 +4,7 @@ import pinIcon from "../../assets/location_pin.png";
 import currentPinIcon from "../../assets/current_loc_pin.png";
 import { Link } from "react-router-dom";
 import ScrapedData from "./ScrapedData";
-import GetImages from "./GetImages";
+import GetImage from "./GetImage";
 
 const ArcGISMap = (category) => {
   const mapRef = useRef(null);
@@ -274,6 +274,7 @@ const ArcGISMap = (category) => {
           {/* <ScrapedData websiteUrl="https://www.toronto.ca/data/parks/prd/facilities/complex/93/index.html" /> */}
           <h3 className="font-bold text-lg pt-4">Description:</h3>
           <ScrapedData websiteUrl={site} />
+          {googleMapsDirections && <GetImage selectedImage={names}/>}
         </div>
 
         <div className="bg-[#bbbbbb] px-10 w-[30vw]">
