@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import Navbar from "./Navbar";
+import { UserContext } from "../App";
 
 const Header = () => {
+	const userContext = useContext(UserContext);
 	return (
 		<div className="header w-screen min-h-[120px] ">
 			<div className="h-[30px] bg-gray-300"></div>
@@ -14,7 +16,18 @@ const Header = () => {
 				<div className="flex-1 flex justify-end items-center">
 					<Navbar />
 					<div className="border-black border-l-2 px-12 ">
-						<div className="border-2 border-black h-full py-2 px-8 rounded-md">SOME WORD</div>
+						<div className="border-2 border-black h-full py-2 px-8 rounded-md">
+							{userContext.user ? (
+								<Link to="/account" className="text-black">
+									Account
+								</Link>
+							) : (
+								<Link to="/login" className="text-black">
+									Login
+								</Link>
+							)
+							}
+						</div>
 					</div>
 				</div>
 			</div>

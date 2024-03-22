@@ -37,6 +37,24 @@ app.use("/service-registry", serviceRegistryRoutes);
 import verificationServiceRoutes from "./routes/verification_service.js";
 app.use("/api/verification", verificationServiceRoutes);
 
+import prescriptionServiceRoutes from "./routes/prescription_service.js";
+app.use("/api/prescription", prescriptionServiceRoutes);
+
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
+
+// Health Check
+app.get("/health", (req, res) => {
+	res.send("api_gateway operational");
+});
+
+import { doHealthCheck } from "./routes/service_registry.js";
+var minutes = 0.25;
+var interval = minutes * 60 * 1000;
+
+// ? Check the status of the services every 30 seconds
+setInterval(() => {
+	console.log("Checking the status of the services");
+	doHealthCheck();
+}, interval);
