@@ -23,8 +23,6 @@ def generate_id():
     return str(uuid.uuid4())
 
 
-
-
 @app.route("/api/upload", methods=["POST"])
 @cross_origin()
 def verify():

@@ -27,10 +27,15 @@ const Verification = () => {
 		if (!id || status == "completed") return;
 		const interval = setInterval(() => {
 			if (data && status == "completed") {
+				console.log("COMPLETED.")
 				setId(null);
 				clearInterval(interval);
 			}
 
+			if (id && data) {
+				clearInterval(interval);
+				return;
+			}
 			if (id && !status) {
 				api.get(`/verification/status/${id}`).then((response) => {
 					if (response.status !== 200) {
