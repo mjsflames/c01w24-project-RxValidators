@@ -16,18 +16,20 @@ const Header = () => {
 				<div className="flex-1 flex justify-end items-center">
 					<Navbar />
 					<div className="border-black border-l-2 px-12 ">
-						<div className="border-2 border-black h-full py-2 px-8 rounded-md">
-							{userContext.user ? (
-								<Link to="/account" className="text-black">
-									Account
-								</Link>
+						{userContext.user ? (
+						<Link to={"/account"} className="text-black">
+							<div className="border-2 border-black h-full py-2 px-8 rounded-md">
+								Account
+							</div>
+						</Link>
 							) : (
-								<Link to="/login" className="text-black">
-									Login
-								</Link>
+						<Link to={"/login"} className="text-black">
+							<div className="border-2 border-black h-full py-2 px-8 rounded-md">
+								Login
+							</div>
+						</Link>
 							)
-							}
-						</div>
+						}
 					</div>
 				</div>
 			</div>
