@@ -98,9 +98,9 @@ const GreenResources = () => {
             setUpdatingCategory={setUpdatingCategory}
           />
           <div className="w-[30vw] flex flex-col">
-            <div className="flex flex-col">
-              <h3 className="font-bold text-xl">Nearby Resources</h3>
-              <span className="text-sm font-normal">({placesList.length} Results)</span>
+            <div className="flex flex-col bg-[#77996C]">
+              <h3 className="font-bold text-xl m-4">Nearby Resources <span className="text-sm font-normal">({placesList.length} Results)</span></h3>
+              
             </div>
 
             {selectedResource &&
@@ -115,7 +115,7 @@ const GreenResources = () => {
                 /> 
               }
 
-            <ul className="pb-6 flex-1 overflow-scroll">
+            <ul className="pb-6 flex-1 overflow-scroll w-[30vw] bg-[#b8b8b8] text-lg">
               <NearbyResources 
                 category={category} 
                 location={location}

@@ -8,14 +8,14 @@ const NearbyResources = ({
     setSelectedResource}) => {
     if (!location || !category) {
         return (
-        <li>No nearby places. Please select a location and a category.</li>
+        <li className='m-4'>No nearby places. Please select a location and a category.</li>
         );
     }
 
-    if (updatingCategory) return <li>Loading...</li>;
+    if (updatingCategory) return <li className='m-4'>Loading...</li>;
 
     if (list.length === 0 && category) {
-        return <li>No nearby places. Please select a different category.</li>;
+        return <li className='m-4'>No nearby places. Please select a different category.</li>;
     }
 
     return list.map((data) => {
