@@ -4,7 +4,7 @@ import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 
-const PrescriberSettings = () => {
+const PatientSettings = () => {
 	return (
 		<>
 			<PageHeader
@@ -13,8 +13,8 @@ const PrescriberSettings = () => {
 			/>
 			<ContentContainer>
                 <div className="absolute start-1/4 end-1/2 mb-2 text-lg font-semibold text-gray-600">Account Details
-                    <div class = "max-w-md font-bold space-y-2 text-gray-600 mt-2">
-                        <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
+                    <div class = "max-w-md font-bold space-y-3.5 text-gray-600 mt-3">
+                        <div className="flex flex-col items-center mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                             <div className="w-full">
                                 <label for="first_name" className="block mb-2 text-sm font-medium text-indigo-900">First Name</label>
                                 <div type="text" id="first_name" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
@@ -24,19 +24,17 @@ const PrescriberSettings = () => {
                             <div className="w-full">
                                 <label for="last_name" className="block mb-2 text-sm font-medium text-indigo-900">Last Name</label>
                                 <div type="text" id="last_name" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                                    Lopez Sarmiento     
+                                    Lopez    
+                                </div>
+                            </div>
+                            <div>
+                                <label for="province" className="block mb-2 text-sm font-medium text-indigo-900">Initials</label>
+                                <div type="text" id="province" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
+                                    BL     
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full space-x-0 mb-3 space-y-2 sm:space-x-4">
-                            <div className="w-full">
-                                <label for="profession" className="block mb-2 text-sm font-medium text-indigo-900">Profession</label>
-                                <div type="text" id="profession" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
-                                    Attending Physician
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full space-x-0 mb-3 space-y-2 sm:space-x-4">
+                        <div className="w-full space-x-0 mb-3 space-y-2 sm:space-x-4 sm:space-y-0">
                             <div className="w-full">
                                 <label for="email" className="block mb-2 text-sm font-medium text-indigo-900">Email Address</label>
                                 <div type="text" id="email" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
@@ -71,38 +69,16 @@ const PrescriberSettings = () => {
                                     English    
                                 </div>
                             </div>
-                        </div>  
-                        <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0">
-                            <div className="w-full">
-                                <label for="college" className="block mb-2 text-sm font-medium text-indigo-900">Licensing College</label>
-                                <div type="text" id="college" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
-                                    College of Physicians and Surgeons of Newfoundland and Labrador 
-                                </div>
-                            </div>
                         </div>
-                        <div className="flex flex-cols w-full sm:space-x-4 sm:space-y-0">
-                            <div className="col-span-2">
-                                <label for="license#" className="block mb-2 text-sm font-medium text-indigo-900">License #</label>
-                                <div type="text" id="license#" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
-                                    7463425  
-                                </div>
-                            </div>
+                        <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                             <div className="w-full">
-                                <label for="parx" className="block mb-2 text-sm font-medium text-indigo-900">PaRx Code</label>
-                                <div type="text" id="parx" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                                    ON-AA000   
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-col items-center w-full mb-2 sm:flex-row sm:space-x-4">
-                            <div className="w-full">
-                                <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Account Type</label>
+                                <label for="accounttype" className="block mb-2 text-sm text-nowrap font-medium text-indigo-900">Account Type</label>
                                 <div id="accounttype" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                                    PRESCRIBER     
+                                    PATIENT     
                                 </div>
                             </div>
                             <div className="w-full">
-                                <label for="status" className="block mb-2 text-sm font-medium text-indigo-900">Account Status</label>
+                                <label for="status" className="block mb-2 text-sm text-nowrap font-medium text-indigo-900">Account Status</label>
                                 <div type="text" id="status" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                                     ACTIVE     
                                 </div>
@@ -110,7 +86,6 @@ const PrescriberSettings = () => {
                         </div>
                     </div>
                 </div>
-                
                 <div className="absolute start-1/2 ml-24 mb-2 text-lg font-semibold text-gray-600">Contact Us
                     <div class = "max-w-md font-bold space-y-1 text-gray-600 mt-2">
                         <div className="block mb-2 text-sm font-medium text-indigo-900 mb-4">
@@ -134,7 +109,7 @@ const PrescriberSettings = () => {
                         </div>
                         <div className="w-full">
                             <div className="mt-96">
-                                <button id="deactivate" className="bg-red-600 text-white hover:bg-red-200 text-sm rounded-full p-2.5">
+                                <button id="deactivate" data-modal-target="deletepopup" data-modal-toggle="deletepopup" className="bg-red-600 text-white hover:bg-red-600/90 text-sm rounded-full p-2.5">
                                     DEACTIVATE ACCOUNT    
                                 </button>
                             </div>
@@ -147,4 +122,4 @@ const PrescriberSettings = () => {
 	);
 };
 
-export default PrescriberSettings;
+export default PatientSettings;

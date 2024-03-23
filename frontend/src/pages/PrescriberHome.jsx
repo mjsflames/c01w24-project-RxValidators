@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 import nature from "../assets/nature.jpg";
@@ -21,10 +20,14 @@ const PrescriberHome = () => {
 						</div>
 						<div className="col-span-2 mt-32 text-center mb-8">
 							<h2 className="font-bold mb-2">Get Started</h2>
-							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Log a Patient Prescription</button>
+							<Link to="/PrescriberLogRX">
+								<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Log a Patient Prescription</button>
+							</Link>
 						</div>
-						<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Download your Prescription PDF</button>
-						<button href="#" className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Your Prescriptions</button>
+							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Download your Prescription PDF</button>
+						<Link to="/prescriberPrescriptions">
+							<button href="#" className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Your Prescriptions</button>
+						</Link>
 					</div>
 					<div>
 						<img src={nature} className="h-[650px] ml-auto w-full" />

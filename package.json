@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"flowbite": "^2.3.0",
 		"react-hook-form": "^7.51.1"
 	},
 	"name": "c01w24-project-rxvalidators",

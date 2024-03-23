@@ -4,7 +4,11 @@ import { Form, Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 
 const PatCreateAccount = () => {
-	//const { register, errors, handleSubmit } = useForm();
+	
+	function handleClick () {
+		//logic for checking if email already exists
+        alert('Patient Account Created!');
+    }
 
 	return (
 		<div className="flex h-screen w-screen items-center justify-between bg-white" >
@@ -17,7 +21,7 @@ const PatCreateAccount = () => {
 				className="blur-[2px] opacity-70 z-10 h-screen object-cover  md:w-1/2 pointer-events-none"
 			/>
             <div className="w-screen lg:w-1/2 h-screen bg-white z-20 flex items-center absolute lg:relative justify-center">
-				<form className=":w-1/2 mx-auto z-50 ">
+				<form onSubmit={handleClick} className=":w-1/2 mx-auto z-50 ">
 					<div className="flex flex-col items-center [&>*]:text-gray-500 mb-12">
 						<h1 className="text-3xl font-bold !text-gray-900  mb-5">Create a Patient Account</h1>
                         <p>Please fill out the form below with your information.</p>
@@ -39,7 +43,7 @@ const PatCreateAccount = () => {
 					</div>
 					<div className="mb-5">
 						<label className="block mb-2 text-sm font-medium text-gray-600 ">Email Address</label>
-						<input id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Email" required/>
+						<input id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Email" required/>
 					</div>
                     <div className="mb-5">
 						<label className="block mb-2 text-sm font-medium text-gray-600 ">Username</label>
