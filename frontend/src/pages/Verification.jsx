@@ -24,10 +24,9 @@ const Verification = () => {
 
 	// Check status every 5 seconds
 	useEffect(() => {
-		if (!id || status == "completed") return;
+		if (data || !id) return;
 		const interval = setInterval(() => {
 			if (data && status == "completed") {
-				console.log("COMPLETED.")
 				setId(null);
 				clearInterval(interval);
 			}
@@ -36,13 +35,18 @@ const Verification = () => {
 				clearInterval(interval);
 				return;
 			}
-			if (id && !status) {
+
+			if (!data) {
 				api.get(`/verification/status/${id}`).then((response) => {
 					if (response.status !== 200) {
 						console.log("Error retrieving status");
+						clearInterval(interval);
 						return;
 					}
 					setStatus(response.data.status);
+				}).catch((err) => {
+					console.log(err);
+					clearInterval(interval);
 				});
 			}
 		}, 2000);
@@ -69,35 +73,50 @@ const Verification = () => {
 		// console.log(percent);
 	}
 
+	const cancelJob = async () => {
+		if (!id) return;
+		const res = await api.post(`/verification/cancel/${id}`);
+		if (res.status === 200) {
+			setId(null);
+			setStatus(null);
+		}
+	};
+
 	var progress = <ProgressBar amount={percent} />;
 
 	return (
 		<>
 			<PageHeader title="Verification" desc="Upload a CSV file to verify all prescribers on the platform." />
-			<ContentContainer>
-				<div className=" items-center justify-center flex flex-row min-h-[50vh] gap-16">
-					<div className="w-1/3">
-						{id ? (
-							<>
-								<h1>Currently processing...</h1>
-								<h1 className="text-2xl font-semibold upper">Job ID:</h1>
-								<p>{id}</p>
-							</>
-						) : (
-							<div>
-								<h1 className="text-4xl font-semibold upper">Verification</h1>
-								<p>Upload a file to verify</p>
-								<br />
-								<Dropzone setFile={setFile} file={file} />
-								<hr className="mt-2" />
-								<button className="bg-gray-300 font-bold py-2 px-4 rounded" onClick={beginRequest}>
-									Verify
-								</button>
-							</div>
-						)}
-						{id && progress}
+			<ContentContainer className="flex justify-between  min-h-[50vh] w-1/2 ml-auto mr-auto">
+					<div className="w-full items-center justify-center flex flex-row gap-16">
+						{!data && <div className="w-full">
+							{id ? (
+								<>
+									<h1>Currently processing...</h1>
+									<h1 className="text-2xl font-semibold upper">Job ID:</h1>
+									<p>{id}</p>
+								</>
+							) : (
+								<div>
+									<h1 className="text-4xl font-semibold upper">Verification</h1>
+									<p>Upload a file to verify</p>
+									<br />
+									<Dropzone setFile={setFile} file={file} />
+									<hr className="mt-2" />
+									<button className="bg-gray-300 font-bold py-2 px-4 rounded" onClick={beginRequest}>
+										Verify
+									</button>
+								</div>
+							)}
+							{id && progress}
+							<button className="bg-red-500 text-white w-1/2 font-bold py-2 px-4 rounded ml-auto mr-auto mt-8"
+							onClick={cancelJob}>Cancel</button>
+						</div>
+						}
+						<VerificationList data={data} visible={data&&id}/>
 					</div>
-					{id && data && <VerificationList data={data} />}
+				<div className="">
+					<h1 className="text-2xl font-semibold upper">Prescriber Codes</h1>
 				</div>
 			</ContentContainer>
 		</>

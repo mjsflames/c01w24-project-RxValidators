@@ -12,7 +12,7 @@ const VerificationSlot = ({
 	const verified_symbol = status == "VERIFIED" ? "✅" : "❌";
 
 	return (
-		<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+		<tr className="bg-white border-b ">
 			<th scope="row" className="px-6 py-4">
 				{first_name}
 			</th>

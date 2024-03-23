@@ -22,7 +22,8 @@ user_collection = db["users"]
 
 # !!! TEMPORARY: Migrate to Auth Service or rename Auth Service to User Service.
 
-
+def format_codes(codes):
+    return [c["code"] for c in codes]
 
 @app.route("/api/save-prescriber-codes", methods=["POST"])
 @cross_origin()
@@ -36,34 +37,14 @@ def save_prescriber_codes():
     skipped = 0
     for code in codes: 
         # Check prescriber code exists
-        if prescriber_collection["unassigned"].find_one({"code": code}): 
+        if prescriber_collection.find_one({"code": code}): 
             print("Prescriber code already exists")
             skipped += 1
             continue
 
-        # Check if prescriber already registered by key
-        if prescriber_collection.find_one({"code": code}):
-            print("Prescriber already registered")
-            skipped += 1
-            continue
-
-        prescriber_collection["unassigned"].insert_one({"code": code})
+        prescriber_collection.insert_one({"code": code, "status": "NOT REGISTERED"})
 
     return {"message": f"Skipped {skipped} out of {len(codes)}"}, 200, {"Content-Type": "application/json"}
-
-@app.route("/api/unassigned-prescriber-codes", methods=["GET"])
-@cross_origin()
-def get_unnasigned_prescriber_codes():
-    # Get all or specific
-    data = request.args
-    codes = ["None"]
-    if data.get("code"):
-        code = data.get("code")
-        codes = prescriber_collection["unassigned"].find_one({"code": code})
-    else:
-        codes = prescriber_collection["unassigned"].find()
-
-    return {"codes": [c["code"] for c in codes]}, 200, {"Content-Type": "application/json"}
 
 @app.route("/api/prescriber-codes", methods=["GET"])
 @cross_origin()
@@ -71,13 +52,21 @@ def get_prescriber_codes():
     # Get all or specific
     data = request.args
     codes = ["None"]
-    if data.get("code"):
-        code = data.get("code")
-        codes = prescriber_collection.find_one({"code": code})
-    else:
-        codes = prescriber_collection.find()
+    code = data.get("code")
+    status = data.get("status", "all")
 
-    return {"codes":  dumps(codes)}, 200, {"Content-Type": "application/json"}
+    filter_dict = {}
+
+    if code: filter_dict["code"] = code
+    
+    match (status):
+        case "unassigned":
+            filter_dict["status"] = "NOT REGISTERED"
+        case "assigned":
+            filter_dict["status"] = "ACTIVE"
+    
+    codes = prescriber_collection.find(filter_dict)
+    return {"codes": format_codes(codes)}, 200, {"Content-Type": "application/json"}
 
 @app.route("/api/register-prescriber", methods=["POST"])
 @cross_origin()
@@ -98,10 +87,14 @@ def register_prescriber():
     if not prescriber_collection["unassigned"].find_one({"code": code}):
         return {"error": "Could not find open prescriber code: " + str(code)}, 400, {"Content-Type": "application/json"}
     
+    if prescriber_collection.find_one({"code": code}):
+        return {"error": "Prescriber already registered"}, 400, {"Content-Type": "application/json"}
+    
     prescriber_collection.insert_one(query)
 
     return {"message": "Prescriber registered"}, 200, {"Content-Type": "application/json"}
 
+# ? Register a user
 @app.route("/api/user", methods=["POST"])
 @cross_origin()
 def register_user():
@@ -123,6 +116,7 @@ def register_user():
 
     return {"message": "User registered"}, 200, {"Content-Type": "application/json"}
 
+# ? Get a/all user
 @app.route("/api/user", methods=["GET"])
 @cross_origin()
 def get_user():
