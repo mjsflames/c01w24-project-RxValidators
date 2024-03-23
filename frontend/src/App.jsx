@@ -7,7 +7,7 @@ import Layout from "./pages/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import Verification from "./pages/Verification.jsx";
 import Prescriber from "./pages/PresPrescription.jsx";
-import Account from "./pages/AccountDetails.jsx";
+import Account from "./pages/PrescriberSettings.jsx";
 import LogRX from "./pages/LogRx.jsx";
 import LoginForm from "./pages/Login.jsx";
 import Patient from "./pages/PatPrescription.jsx";

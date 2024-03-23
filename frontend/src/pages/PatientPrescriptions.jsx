@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
+import PageFooter from "../components/PageFooter";
+import AddressAlert from "../components/AddressAlert";
 
 const PatientPrescriptions = () => {
 	const [data, setData] = useState(null);
@@ -59,14 +61,15 @@ const PatientPrescriptions = () => {
         desc="Check the statuses of your prescriptions and find out if you are eligible for the Discovery Pass."
         rightDiv=""
       />
+      <AddressAlert></AddressAlert>
       <div className="h-10"></div>
 			<div className="w-full flex justify-center">
-        <table id="patientPrescriptionTable" className="w-4/5 rounded-lg bg-PaRxGreen">
-          <thead>
+        <table id="patientPrescriptionTable" className="w-4/5 rounded-lg">
+          <thead className="bg-PaRxGreen">
             <tr>
               <th className="text-left p-2">Date</th>
-              <th className="w-1/8 text-left">Initials</th>
-              <th className="w-1/8 text-left">Code</th>
+              <th className="w-1/8 text-left">Patient Initials</th>
+              <th className="w-1/8 text-left">Prescriber Code</th>
               <th className="w-1/5 text-left">Status</th>
               <th className="w-1/2 text-left px-2">Details</th>
             </tr>
@@ -74,7 +77,7 @@ const PatientPrescriptions = () => {
           <tbody>
             {data &&
               data.map((item, index) => (
-                <tr key={index} className="text-left border-t border-white">
+                <tr key={index} className="text-left border-t border-white even:bg-gray-200 odd:bg-gray-300">
                   <td className="p-2">{item.date}</td>
                   <td>{item.patient_initials}</td>
                   <td>{item.prescriber_code}</td>
@@ -85,6 +88,7 @@ const PatientPrescriptions = () => {
           </tbody>
         </table>
       </div>
+      <PageFooter></PageFooter>
 		</>
 	);
 };

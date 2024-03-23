@@ -1,5 +1,7 @@
 {
-	"dependencies": {},
+	"dependencies": {
+		"react-hook-form": "^7.51.1"
+	},
 	"name": "c01w24-project-rxvalidators",
 	"description": "***By: Emily Ho, Lance Talban, Michelle Zhu, Danny Yang, Renat Hossain, Xing Yu Zhou, Kangjie Wu***",
 	"version": "1.0.0",

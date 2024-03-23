@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
+import PageFooter from "../components/PageFooter";
 
 const PrescriberRX = () => {
 
@@ -44,6 +45,7 @@ const PrescriberRX = () => {
                 </thead>
             </table>
 			</ContentContainer>
+            <PageFooter></PageFooter>
 		</>
 	);
 };

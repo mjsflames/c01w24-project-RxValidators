@@ -2,6 +2,7 @@ import React, { useTable } from "react";
 import { Link } from "react-router-dom";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
+import PageFooter from "../components/PageFooter";
 
 const PatientRX = () => {
 
@@ -23,8 +24,8 @@ const PatientRX = () => {
 				desc="Check the status of your prescriptions all in one place!"
 			/>
 			<ContentContainer>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Date
@@ -48,6 +49,7 @@ const PatientRX = () => {
                 </thead>
             </table>
 			</ContentContainer>
+            <PageFooter></PageFooter>
 		</>
 	);
 };
