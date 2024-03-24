@@ -3,27 +3,27 @@ from reportlab.lib.pagesizes import letter
 from prescriber_code import *
 import os
 # This function creates a pdf file (formatted the way the company wants it) based on the prescriber's code
-def create_pdf(code, output_path):
-    page = canvas.Canvas(os.path.join(output_path, f"PaRx-{code}.pdf"), pagesize=letter)
-    page.setTitle(f"PaRx-{code}")
-    page.setFont("Helvetica", 12)
-    page.drawString(80, 700, "Name _______________________________________")
-    page.drawString(80, 660, "Date ________________________________________")
-    page.drawString(80, 610, "My Outdoor Activity Plan:")
-    page.saveState()
+# def create_pdf(code, output_path):
+#     page = canvas.Canvas(os.path.join(output_path, f"PaRx-{code}.pdf"), pagesize=letter)
+#     page.setTitle(f"PaRx-{code}")
+#     page.setFont("Helvetica", 12)
+#     page.drawString(80, 700, "Name _______________________________________")
+#     page.drawString(80, 660, "Date ________________________________________")
+#     page.drawString(80, 610, "My Outdoor Activity Plan:")
+#     page.saveState()
 
-    page.drawString(80, 200, "____________________________________")
-    page.setFont("Helvetica", 9)
-    page.drawString(80, 185, "Health Professional's Signature")
+#     page.drawString(80, 200, "____________________________________")
+#     page.setFont("Helvetica", 9)
+#     page.drawString(80, 185, "Health Professional's Signature")
 
-    page.restoreState() 
-    page.drawString(80, 130, f"Prescription #: {code}   --  ___________________  --  ___________________")
+#     page.restoreState() 
+#     page.drawString(80, 130, f"Prescription #: {code}   --  ___________________  --  ___________________")
     
-    page.setFont("Helvetica", 9)
-    page.drawString(280, 115, "(YYMMDD)")
-    page.drawString(415, 115, "(Patient's Initials)")
+#     page.setFont("Helvetica", 9)
+#     page.drawString(280, 115, "(YYMMDD)")
+#     page.drawString(415, 115, "(Patient's Initials)")
 
-    page.save()
+#     page.save()
 
 # --------------------------------------------------------------------------------------------------------
 # Example usage:

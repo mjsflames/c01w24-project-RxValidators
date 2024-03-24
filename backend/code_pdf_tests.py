@@ -1,5 +1,4 @@
-from main import *
-from prescriber_code import *
+from code_pdf_server import *
 import unittest
 import pandas as pd
 
@@ -14,7 +13,7 @@ class TestCases(unittest.TestCase):
     
     def test_add_empty_data_codes(self):
         data = []
-        expected_data = [] 
+        expected_data = []
         expected_df = pd.DataFrame(expected_data, columns=full_columns)
         test_df = pd.DataFrame(data, columns=columns)
         
