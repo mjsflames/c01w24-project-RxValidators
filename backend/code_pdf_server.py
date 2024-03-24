@@ -2,20 +2,25 @@ import os
 from prescriber_code import *
 from pdf_generator import *
 import pandas as pd
-from flask import Flask, request, jsonify
-import csv
+from flask import Flask, request
 
 import database_functions.database as db_func
 
 app = Flask(__name__)
 PORT = 5000
 
-# 1. clear out database
+# Clear out database
 collection = db_func.get_collection("prescribers")
 db_func.delete_all(collection)
 
-def create_dataframe(arr, column_list):
-    df = pd.DataFrame(arr, columns=column_list)
+# Create a dataframe from a CSV file.
+def dataframe_from_csv(file_path):
+    df = pd.read_csv(file_path)
+    return df
+
+# Create a dataframe from a list of dictionaries.
+def create_dataframe_from_list(data, column_list):
+    df = pd.DataFrame(data, columns=column_list)
     return df
 
 def add_code_df(df):
@@ -58,21 +63,28 @@ def modify_csv_with_new_data(file_name, df):
             
             
 # API endpoint to generate prescriber codes
-@app.route('/prescribers/codeGenerator', methods=['POST'])
+@app.route('/generate/code/export', methods=['POST'])
 def generate_prescriber_codes():
-    data = request.json.get('data')
-    columns = request.json.get('columns')
+    # data = request.json.get('data')
+    # columns = request.json.get('columns')
+    file_data = request.files
+    if not file_data:
+        return {"message": "No file uploaded"}, 400, {"Content-Type": "application/json"}
+
+    file_data = file_data["file"]
     
-    if not data or not columns:
-        return jsonify({'error': 'Invalid data or columns'}), 400
+    # if not data or not columns:
+    #     return jsonify({'error': 'Invalid data or columns'}), 400
     
-    df = create_dataframe(data, columns)
+    df = dataframe_from_csv('PaRx data.csv')
+    # df = create_dataframe_from_list(data, columns)
     df = add_code_df(df)
     # generate_verified_pdfs(df)
-    result = df.to_json(orient='records') 
     modify_csv_with_new_data('PaRx_results.csv', df)
+    result = df.to_json(orient='records') 
     
     return result, 200, {"Content-Type": "application/json"}
+
 
 if __name__ == '__main__':
     app.run(port=PORT)
