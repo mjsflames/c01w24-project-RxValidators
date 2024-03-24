@@ -3,6 +3,7 @@ from prescriber_code import *
 from pdf_generator import *
 import pandas as pd
 from flask import Flask, request, jsonify
+import csv
 
 import database_functions.database as db_func
 
@@ -50,9 +51,14 @@ def generate_verified_pdfs(df):
         if df['Status'][i] == "VERIFIED":
             create_pdf(df['Code'][i], os.path.join(os.getcwd(), "pdfs"))
             
+# This function creates a CSV file to have the new data (statuses and prescriber codes)
+def modify_csv_with_new_data(file_name, df):
+    # Convert the dataframe to CSV
+    df.to_csv(file_name, index=False)
+            
             
 # API endpoint to generate prescriber codes
-@app.route('/prescribers/codePdfGenerator', methods=['POST'])
+@app.route('/prescribers/codeGenerator', methods=['POST'])
 def generate_prescriber_codes():
     data = request.json.get('data')
     columns = request.json.get('columns')
@@ -62,9 +68,11 @@ def generate_prescriber_codes():
     
     df = create_dataframe(data, columns)
     df = add_code_df(df)
-    generate_verified_pdfs(df)
+    # generate_verified_pdfs(df)
+    result = df.to_json(orient='records') 
+    modify_csv_with_new_data('PaRx_results.csv', df)
     
-    return jsonify({'message': 'Prescriber codes generated successfully'}), 200
+    return result, 200, {"Content-Type": "application/json"}
 
 if __name__ == '__main__':
     app.run(port=PORT)

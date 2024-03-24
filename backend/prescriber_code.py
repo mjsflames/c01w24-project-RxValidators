@@ -25,7 +25,7 @@ def get_index(counter):
 
 
 # This function modifies the CSV file to have the generated unique codes for each verified prescriber
-def modify_csv_with_new_data(file_name, dict_person_list):
+def modify_csv_with_code(file_name, dict_person_list):
     # dict_person_list is a list of dictionaries (with the 'Code' already generated for only the verified prescribers)
     # Create a temporary file to write the modified CSV
     temp_file = file_name + '.temp'
