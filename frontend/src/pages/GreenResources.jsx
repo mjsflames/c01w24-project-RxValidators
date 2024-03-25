@@ -1,14 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom";
 import ArcGISMap from "../components/GreenResources/ArcGISMap";
 import PageHeader from "../components/PageHeader";
 import ContentContainer from "../components/ContentContainer";
+import NearbyResources from "../components/GreenResources/NearbyResources";
+
+import GreenResourceView from "../components/GreenResources/GreenResourceView";
+
+export const getDirections = (location) => {
+  if (!location) return;
+  const encodedLocation = encodeURIComponent(location);
+  const apiEndpoint = `https://www.google.com/maps/dir/?api=1&destination=${encodedLocation}`;
+  return apiEndpoint;
+};
 
 const GreenResources = () => {
-  const [address, setAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [category, setCategory] = useState("");
-  const [clicked, setClicked] = useState(false);
+  const [updatingCategory, setUpdatingCategory] = useState(false);
+  const [clicked, setClicked] = useState(true);
+  const placeListState = useState([]);
+  const categoryState = useState("");
+  const locationState = useState("")
+  const googleMapsState = useState("");
+  const nameState = useState("");
+  
+  const [names, setNames] = nameState;
+  const [googleMapsDirections, setGoogleMapsDirections] = googleMapsState;
+  const [site, setSite] = useState("");
+  const [location, setLocation] = locationState;
+  const [category, setCategory] = categoryState;
+  const [placesList, setPlaceList] = placeListState;
+  const [selectedResource, setSelectedResource] = useState(null);
+
   const categories = {
     "Free Parks": "leisure.playground,leisure.park",
     "National Parks": "national_park",
@@ -26,22 +48,18 @@ const GreenResources = () => {
     "Public Transport": "public_transport",
   };
 
-  const buttonCategories = (value) => {
-    console.log(value);
-    setCategory(value);
-    setClicked(true);
-  };
 
-  const handleAddress = (value) => {
-    setAddress(value);
-  };
-  const handlePostalCode = (value) => {
-    setPostalCode(value);
-  };
-  const handleSubmit = () => {
-    console.log("Address:", address);
-    console.log("Postal Code:", postalCode);
-  };
+
+  // TODO: REFACTOR INTO GREENRESOURCEVIEW
+  // ? Get site information
+  useEffect(() => {
+    setSite("")
+    if (!location) return;
+    // Check if the location name exists in placesList and set setSite
+    setGoogleMapsDirections(getDirections(names));
+    const foundPlace = placesList.find((place) => place.simpleAddress === names);
+    if (foundPlace && foundPlace.website !== null) setSite(foundPlace.website);
+  }, [names, placesList]);
 
   return (
     <>
@@ -50,28 +68,8 @@ const GreenResources = () => {
         desc="To look at resources near you, please enter an address or a city to start your search, or allow this site to access your current location."
       />
       <ContentContainer>
-        {/* <form onSubmit={handleSubmit} className="flex">
-          <div>
-            <label htmlFor="address">Address:</label>
-            <input
-              type="text"
-              id="address"
-              value={address}
-              onChange={(e) => handleAddress(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="postalCode">Postal Code:</label>
-            <input
-              type="text"
-              id="postalCode"
-              value={postalCode}
-              onChange={(e) => handlePostalCode(e.target.value)}
-            />
-          </div>
-          <button type="submit">Submit</button>
-        </form> */}
 
+        {/* List the categories */}
         <div className="mt-4 flex flex-wrap gap-2">
           {Object.keys(categories).map((key) => (
             <button
@@ -79,14 +77,54 @@ const GreenResources = () => {
               className={`p-0.5 pl-1 pr-1 rounded-md text-center border border-black hover:bg-[#A2BE99] transition-all ${
                 category == categories[key] && "!bg-[#A2BE99]"
               }`}
-              onClick={() => buttonCategories(categories[key])}
+              onClick={() => {
+                setCategory(categories[key]);
+                setClicked(true);
+              }}
             >
               {key}
             </button>
           ))}
         </div>
 
-        <ArcGISMap category={category} />
+      <div className="flex h-[50vh] mt-4 gap-6 relative">
+          <ArcGISMap
+            className={"w-2/3 h-full flex"} 
+            categoryState={categoryState}
+            placeListState={placeListState}
+            locationState={locationState}
+            googleMapsState={googleMapsState}
+            nameState={["", () => {}]}
+            setUpdatingCategory={setUpdatingCategory}
+          />
+          <div className="w-[30vw] flex flex-col">
+            <div className="flex flex-col bg-[#77996C]">
+              <h3 className="font-bold text-xl m-4">Nearby Resources <span className="text-sm font-normal">({placesList.length} Results)</span></h3>
+              
+            </div>
+
+            {selectedResource &&
+              <GreenResourceView data={
+                {
+                  ...selectedResource,
+                  direction: googleMapsDirections,
+                  names:names,
+                  site: site
+                }}
+                close={() => setSelectedResource(null)}
+                /> 
+              }
+
+            <ul className="pb-6 flex-1 overflow-scroll w-[30vw] bg-[#b8b8b8] text-lg">
+              <NearbyResources 
+                category={category} 
+                location={location}
+                updatingCategory={updatingCategory}
+                list={placesList}
+                setSelectedResource={setSelectedResource}
+              /></ul>
+          </div>
+      </div>
       </ContentContainer>
     </>
   );

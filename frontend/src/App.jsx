@@ -27,8 +27,8 @@ import GreenResources from "./pages/GreenResources.jsx";
 import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
-import Home from "./pages/Home.jsx";
-
+import PrescriberHome from "./pages/PrescriberHome.jsx";
+import Logout from "./pages/Logout.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -80,7 +80,7 @@ function App() {
 		console.log("User is", user);
 	}, [user]);
 
-	const handleLogout = () => setUser(null);
+	const handleLogout = () => {setUser(null); return true;}
 
 	return (
 		<div className="App">
@@ -91,9 +91,7 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="login" element={<Login />} />
-						<Route path="chooseuser" element={<UserType />} />
-						<Route path="patientacc" element={<PatientAccount />} />
-						<Route path="prescriberacc" element={<PrescriberAccount />} />
+						<Route path="logout" element={<Logout />} />
 						<Route path="/" element={<Layout />}>
 							<Route
 								index
@@ -119,7 +117,14 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
-
+							<Route
+								path="prescriber"
+								element={
+									<ProtectedRoute redirectTo={"/login"} permitted={["prescriber", "admin"]}>
+										<Prescriber />
+									</ProtectedRoute>
+								}
+							/>
 							{/* PATIENT RESTRICTED */}
 							<Route
 								path="patientPrescriptions"
@@ -129,18 +134,20 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
-							{/* Admin Route*/}
-							<Route path="adminPatientProfile" element={<AdminPatientProfile />} />
-							<Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
 
 							<Route path="green-resources" element={<GreenResources />} />
-							
+
+							<Route path="green-resources" element={<GreenResources />} />
+
 							<Route path="prescriberPrescriptions" element={<PrescriberPrescriptions />} />
 							<Route path="prescriberSettings" element={<PrescriberSettings />} />
 							<Route path="PrescriberLogRX" element={<PrescriberLogRX />} />
 							<Route path="PatientLogRX" element={<PatientLogRX />} />
 							<Route path="patientSettings" element={<PatientSettings />} />
 							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
+							<Route path="patient" element={<Patient />} />
+							<Route path="account" element={<Account />} />
+							<Route path="log" element={<LogRX />} />
 							<Route path="loginF" element={<LoginForm />} />
 							<Route path="temp-links" element={<TempLinks />} />
 							{/* CATCH ALL */}
