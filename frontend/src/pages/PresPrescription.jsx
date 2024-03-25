@@ -4,7 +4,7 @@ import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 
-const PrescriberRX = () => {
+const PrescriberPrescriptions = () => {
   const [data, setData] = useState(null);
   const [myItem, setItem] = useState(null);
 

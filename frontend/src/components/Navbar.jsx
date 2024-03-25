@@ -32,7 +32,7 @@ const Navbar = () => {
 			{ to: "/", text: "Home" },
 			{ to: "#", text: "FAQ" },
 			{ to: "/login", text: "Login" },
-			{ to: "/", text: "Register" },
+			{ to: "/register", text: "Register" },
 		],
 	};
 
