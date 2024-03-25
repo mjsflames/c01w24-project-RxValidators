@@ -22,11 +22,9 @@ const PrescriberPrescriptions = () => {
 				title="My Prescriptions"
 				desc="Check the status of your prescriptions all in one place!"
 			/>
-			<div className="h-10"></div>
-			<div className="w-full flex justify-center">
+			
        
-            </div>
-            <PageFooter></PageFooter>
+           
 		</>
 	);
 };

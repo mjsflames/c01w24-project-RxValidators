@@ -88,7 +88,7 @@ const PatientPrescriptions = () => {
           </tbody>
         </table>
       </div>
-      <PageFooter></PageFooter>
+      
 		</>
 	);
 };

@@ -108,9 +108,14 @@ const PatCreateAccount = () => {
 							</select>
 						</div>
 					</div>
-                    <div className="flex flex-row justify-between mt-10">
-						<button className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-6 py-2.5 text-center" to="/login">Create Prescriber Account</button>
-                	</div>
+                    <div className="flex mr-36 justify-between mt-12">
+						<button className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center" to="/login">Create Prescriber Account</button>
+						<div className="mt-4">
+							<Link className="text-black underline" to="/login">
+								Created an account? Login here.
+							</Link>
+                		</div>
+					</div>
                 </form>
             </div>
         </div>

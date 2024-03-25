@@ -8,7 +8,7 @@ import twitter from "../assets/twitter.png"
 const testFooter = () => {
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col">
             <footer className="mt-auto bg-[#bbbbbb]">
                 <div className="mx-auto max-w-screen-xl">
                     <div className="md:flex md:justify-between">

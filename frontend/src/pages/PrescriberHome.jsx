@@ -33,7 +33,6 @@ const PrescriberHome = () => {
 						<img src={nature} className="h-[650px] ml-auto w-full" />
 					</div>
 				</div>
-			<PageFooter></PageFooter>
 		</>
 	);
 };
