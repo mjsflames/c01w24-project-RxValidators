@@ -94,8 +94,8 @@ const Verification = () => {
 				title="Verification"
 				desc="Upload a CSV file to verify all prescribers on the platform."
 			/>
-			<ContentContainer className="flex flex-col justify-between min-h-[50vh] ml-auto mr-auto gap-16 lg:flex-row lg:gap-32">
-				<div className="lg:w-1/2 items-center justify-center flex flex-row">
+			<ContentContainer className="flex w-2/3 flex-col !ml-auto !mr-auto justify-center min-h-[50vh] w gap-16 lg:flex-row lg:gap-32">
+				<div className="lg:w-1/2 flex flex-col">
 					{!data && (
 						<div className="w-full">
 							{id ? (
@@ -138,26 +138,31 @@ const Verification = () => {
 							)}
 						</div>
 					)}
-					<div>
-						<VerificationList data={data} visible={data && id} />
-						<div className="flex mt-8 items-center gap-4 justify-end">
-							<p className="font-bold">Download</p>
-							<button className="bg-PaRxDGrenn text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded">
-								<FontAwesomeIcon
-									icon={faDownload}
-									className="mr-2"
-								/>
-								PDFs
-							</button>
-							<button className="bg-PaRxDGrenn text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded">
-								<FontAwesomeIcon
-									icon={faDownload}
-									className="mr-2"
-								/>
-								Results
-							</button>
-						</div>
-					</div>
+					{data && (
+						<>
+							<VerificationList
+								data={data}
+								visible={data && id}
+							/>
+							<div className="flex mt-8 items-center gap-4 justify-end w-full">
+								<p className="font-bold">Download</p>
+								<button className="bg-PaRxDGrenn text-white font-bold py-4 px-4 lg:rounded">
+									<FontAwesomeIcon
+										icon={faDownload}
+										className="mr-2"
+									/>
+									PDFs
+								</button>
+								<button className="bg-PaRxDGrenn text-white font-bold py-4 px-4 lg:rounded">
+									<FontAwesomeIcon
+										icon={faDownload}
+										className="mr-2"
+									/>
+									Results
+								</button>
+							</div>
+						</>
+					)}
 				</div>
 				<PrescriptionCodeList className="lg:w-1/2 h-[50vh] relative" />
 			</ContentContainer>

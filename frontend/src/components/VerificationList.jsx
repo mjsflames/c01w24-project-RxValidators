@@ -22,7 +22,7 @@ const VerificationList = ({ data, visible }) => {
 	});
 
 	return (
-		<div>
+		<div className="w-full">
 			<h1 className="text-lg mb-2">Verification Results</h1>
 			<div className="relative overflow-x-auto  rounded-lg">
 				<table className="w-full text-sm text-left rtl:text-right text-gray-500">

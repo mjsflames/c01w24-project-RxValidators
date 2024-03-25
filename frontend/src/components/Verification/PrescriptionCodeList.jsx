@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
+import Dropdown from "../Dropdown";
+
 const PrescriptionCodeList = ({ className }) => {
 	// inter {code: "AB-LT100", status: "active"/"unassigned"}
 	const data = [
 		{ code: "AB-LT100", status: "active" },
-		{ code: "SK-AC201", status: "active" },
+		{ code: "SK-AC201", status: "inactive" },
 		{ code: "ON-AC202", status: "unassigned" },
-		{ code: "NB-AC203", status: "active" },
+		{ code: "NB-AC203", status: "not_found" },
 		{ code: "NS-AC204", status: "active" },
 		{ code: "AB-AC205", status: "unassigned" },
 		{ code: "BC-AC206", status: "unassigned" },
@@ -17,10 +19,26 @@ const PrescriptionCodeList = ({ className }) => {
 		{ code: "QC-AC209", status: "active" },
 		{ code: "NL-AC210", status: "active" },
 	];
-
+	const items = [
+		[
+			{
+				value: "Verified",
+				callback: () => {},
+			},
+			{ value: "Inactive", callback: () => {} },
+			{ value: "Expired", callback: () => {} },
+		],
+		[{ value: "Remove", callback: () => {} }],
+	];
+	const statusColors = {
+		active: "border-green-600",
+		inactive: "border-red-400",
+		unassigned: "border-gray-400",
+		not_found: "border-gray-400",
+	};
 	const [filter, setFilter] = useState("");
 	const [filteredData, setFilteredData] = useState(data);
-
+	const [editObject, setEditObject] = useState("");
 	useEffect(() => {
 		setFilteredData(
 			data.filter(({ code }) =>
@@ -52,13 +70,30 @@ const PrescriptionCodeList = ({ className }) => {
 			<ul className="flex flex-col gap-1 max-w-full overflow-y-scroll flex-1">
 				{filteredData.map(({ code, status }) => (
 					<li
-						className={`bg-gray-300 py-4 px-4 rounded-sm border-l-8 ${
-							status == "unassigned"
-								? "border-gray-400"
-								: "border-green-600"
-						}`}
+						key={"pc" + code}
+						className={`bg-gray-300 py-4 px-4 rounded-sm border-l-8 flex justify-between ${statusColors[status]} relative`}
 					>
 						<p>{code}</p>
+						<FontAwesomeIcon
+							icon={faEdit}
+							onClick={() => setEditObject(code)}
+							className="hover:text-gray-500"
+						/>
+						{editObject == code && (
+							<Dropdown
+								close={() => {
+									setEditObject(null);
+								}}
+								items={items}
+								selected={
+									status == "active"
+										? "Verified"
+										: status == "inactive"
+										? "Inactive"
+										: "Expired"
+								}
+							/>
+						)}
 					</li>
 				))}
 			</ul>
