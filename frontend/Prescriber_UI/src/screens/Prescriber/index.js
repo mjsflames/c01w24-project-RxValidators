@@ -1,1 +1,0 @@
-export { Prescriber } from "./Prescriber";

@@ -1,35 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
+import PageFooter from "../components/PageFooter";
+import nature from "../assets/nature.jpg";
 
 const PrescriberHome = () => {
 	return (
 		<>
 			<PageHeader
 				title="Home"
-				desc="Welcome Doctor PaRx!"
+				desc="Welcome to your Parks Prescriptions account!"
 			/>
-			<ContentContainer>
-			<div className = "grid grid-cols-2" >
-				<h2>Below is your unique Prescriber Code: </h2>
-				<br />
-				<h2>Code here</h2>
-				<div className = "text-right" >
-					<h2>Logging a Patient Prescription?</h2>
-					<Link to="login">Log Here</Link>
-				</div>
-			</div>
-				<div className = "grid grid-cols-2" >
-					<div className = "box-border p-14 mx-96 my-40 mr-auto bg-gray-400 flex-row items-center justify-center" >
-						<button className ="rounded-md bg-grey-400 py-4 px-10 text-black">Your Unique Prescription PDF</button>
+				<div className="flex w-screen h-[650px] bg-white">
+					<div className = "grid grid-cols-2 gap-y-0 w-screen-1/3 h-1/3 items-end" >
+						<div className="col-span-2 ml-5 mt-10 font-bold">
+							<h1>Connect to the evidence. <br /> Connect nature.</h1>
+							<h2 className="text-green-700">Prescribe nature.</h2>
+							<p className="font-bold"><br />Your PaRx Code: {}</p>
+						</div>
+						<div className="col-span-2 mt-32 text-center mb-8">
+							<h2 className="font-bold mb-2">Get Started</h2>
+							<Link to="/PrescriberLogRX">
+								<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Log a Patient Prescription</button>
+							</Link>
+						</div>
+							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Download your Prescription PDF</button>
+						<Link to="/prescriberPrescriptions">
+							<button href="#" className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Your Prescriptions</button>
+						</Link>
 					</div>
-					<div className = "box-border p-10 mx-72 my-40 mr-auto bg-gray-400 flex-row items-center justify-center" >
-						<Link to="prescriber" className ="rounded-md bg-grey-400 py-4 px-10 text-black">Access Your Prescriptions</Link>
+					<div>
+						<img src={nature} className="h-[650px] ml-auto w-full" />
 					</div>
 				</div>
-
-			</ContentContainer>
 		</>
 	);
 };

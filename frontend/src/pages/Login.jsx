@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import ContentContainer from "../components/ContentContainer";
 import image from "../assets/background-image-1.jpeg";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
@@ -34,7 +33,7 @@ const UserLogin = () => {
 	};
 
 	return (
-		<div className="flex h-screen w-screen items-center justify-between bg-white">
+		<div className="flex h-screen w-full items-center justify-between bg-white">
 			<Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
 				<img src={logo} className="h-32 w-32 unselectable" />
 			</Link>
@@ -84,7 +83,7 @@ const UserLogin = () => {
 					</div>
 					{error && <p className="text-red-500">{error}</p>}
 					<div className="flex flex-row justify-between gap-8 mt-16">
-						<Link className="text-black underline" to="/signup">
+						<Link className="text-black underline" to="/chooseuser">
 							New User? Sign up here.
 						</Link>
 						{loading ? (

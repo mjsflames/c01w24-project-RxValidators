@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Prescription from "../components/Prescription";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
+import PageFooter from "../components/PageFooter";
 
 const PrescriberRX = () => {
   const [data, setData] = useState(null);
@@ -98,4 +99,4 @@ const PrescriberRX = () => {
   );
 };
 
-export default PrescriberRX;
+export default PrescriberPrescriptions;

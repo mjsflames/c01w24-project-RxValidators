@@ -1,1 +1,0 @@
-export { PrescriberAccount } from "./PrescriberAccount";
