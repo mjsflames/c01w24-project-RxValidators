@@ -4,23 +4,31 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from "./pages/NoPage.jsx";
 import Layout from "./pages/Layout.jsx";
-import Home from "./pages/Home.jsx";
-import Verification from "./pages/Verification.jsx";
-import Prescriber from "./pages/PresPrescription.jsx";
-import Account from "./pages/AccountDetails.jsx";
-import LogRX from "./pages/LogRx.jsx";
-import LoginForm from "./pages/Login.jsx";
-import Patient from "./pages/PatPrescription.jsx";
-import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
-import GreenResources from "./pages/GreenResources.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ServiceRegistryInfo from "./components/ServiceRegistryInfo.jsx";
 import Login from "./pages/Login.jsx";
+import LoginForm from "./pages/Login.jsx";
+import UserType from "./pages/ChooseUser.jsx";
+import PatientAccount from "./pages/PatSignUp.jsx";
+import PrescriberAccount from "./pages/PresSignUp.jsx";
+import AdminHome from "./pages/AdminHome.jsx";
+import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
+import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
+import Verification from "./pages/Verification.jsx";
+import PrescriberHome from "./pages/PrescriberHome.jsx";
+import PrescriberPrescriptions from "./pages/PresPrescription.jsx";
+import PrescriberSettings from "./pages/PrescriberSettings.jsx";
+import PrescriberLogRX from "./pages/PresLogRX.jsx";
+import PatientHome from "./pages/PatientHome.jsx";
+import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
+import PatientLogRX from "./pages/PatLogRX.jsx";
+import PatientSettings from "./pages/PatientSettings.jsx";
+import GreenResources from "./pages/GreenResources.jsx";
 import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
-import PrescriberHome from "./pages/PrescriberHome.jsx";
-import Logout from "./pages/Logout.jsx";
+import Home from "./pages/Home.jsx";
+
 
 const UserContext = createContext({
 	user: null,
@@ -72,7 +80,7 @@ function App() {
 		console.log("User is", user);
 	}, [user]);
 
-	const handleLogout = () => {setUser(null); return true;}
+	const handleLogout = () => setUser(null);
 
 	return (
 		<div className="App">
@@ -83,17 +91,19 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="login" element={<Login />} />
-						<Route path="logout" element={<Logout />} />
+						<Route path="chooseuser" element={<UserType />} />
+						<Route path="patientacc" element={<PatientAccount />} />
+						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
 							<Route
 								index
 								element={
 									user && user.role === "admin" ? (
-										<TempLinks />
+										<AdminHome />
 									) : user && user.role === "prescriber" ? (
 										<PrescriberHome />
 									) : user && user.role === "patient" ? (
-										<PatientPrescriptions />
+										<PatientHome />
 									) : (
 										<Home	 />
 									)
@@ -109,14 +119,7 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
-							<Route
-								path="prescriber"
-								element={
-									<ProtectedRoute redirectTo={"/login"} permitted={["prescriber", "admin"]}>
-										<Prescriber />
-									</ProtectedRoute>
-								}
-							/>
+
 							{/* PATIENT RESTRICTED */}
 							<Route
 								path="patientPrescriptions"
@@ -126,13 +129,18 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
+							{/* Admin Route*/}
+							<Route path="adminPatientProfile" element={<AdminPatientProfile />} />
+							<Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
 
 							<Route path="green-resources" element={<GreenResources />} />
 
+							<Route path="prescriberPrescriptions" element={<PrescriberPrescriptions />} />
+							<Route path="prescriberSettings" element={<PrescriberSettings />} />
+							<Route path="PrescriberLogRX" element={<PrescriberLogRX />} />
+							<Route path="PatientLogRX" element={<PatientLogRX />} />
+							<Route path="patientSettings" element={<PatientSettings />} />
 							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
-							<Route path="patient" element={<Patient />} />
-							<Route path="account" element={<Account />} />
-							<Route path="log" element={<LogRX />} />
 							<Route path="loginF" element={<LoginForm />} />
 							<Route path="temp-links" element={<TempLinks />} />
 							{/* CATCH ALL */}
