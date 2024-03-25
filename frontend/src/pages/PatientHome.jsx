@@ -29,7 +29,7 @@ const PrescriberHome = () => {
 						</Link>
 					</div>
 					<div>
-						<img src={nature} className="h-[650px] w-[1600px] ml-auto" />
+						<img src={nature} className="h-[650px] w-screen-2/3 ml-auto" />
 					</div>
 				</div>
 
