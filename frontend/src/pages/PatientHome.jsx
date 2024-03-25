@@ -11,7 +11,7 @@ const PrescriberHome = () => {
 				title="Home"
 				desc="Welcome to your Parks Prescriptions account!"
 			/>
-				<div className="flex w-screen h-[650px] bg-white">
+				<div className="flex w-full h-[650px] bg-white">
 					<div className = "grid grid-cols-2 gap-y-0 w-screen-1/3 h-1/3 items-end" >
 						<div className="col-span-2 ml-5 mt-10 font-bold">
 							<h1>Connect to the evidence. <br /> Your best health,</h1>
@@ -32,7 +32,7 @@ const PrescriberHome = () => {
 						<img src={nature} className="h-[650px] w-[1600px] ml-auto" />
 					</div>
 				</div>
-			
+
 		</>
 	);
 };

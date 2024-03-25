@@ -33,7 +33,7 @@ const UserLogin = () => {
 	};
 
 	return (
-		<div className="flex h-screen w-screen items-center justify-between bg-white">
+		<div className="flex h-screen w-full items-center justify-between bg-white">
 			<Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
 				<img src={logo} className="h-32 w-32 unselectable" />
 			</Link>

@@ -7,7 +7,7 @@ import { UserContext } from "../App";
 const Header = () => {
 	const userContext = useContext(UserContext);
 	return (
-		<div className="header w-screen min-h-[120px] ">
+		<div className="header w-full min-h-[120px] ">
 			<div className="h-[30px] bg-gray-300"></div>
 			<div className="flex items-center px-24 justify-between">
 				<Link to="">
