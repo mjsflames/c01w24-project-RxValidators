@@ -140,7 +140,9 @@ const PrescriberSettings = () => {
                                 </div>
                             </div>
                             <div className="w-full">
-                                
+                                <div className="mt-56">
+                                    <Modal />
+                                </div>
                             </div>
                         </div>
                     </div>
