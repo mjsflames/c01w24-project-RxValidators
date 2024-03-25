@@ -27,7 +27,6 @@ import GreenResources from "./pages/GreenResources.jsx";
 import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
-import PrescriberHome from "./pages/PrescriberHome.jsx";
 import Logout from "./pages/Logout.jsx";
 
 const UserContext = createContext({
@@ -93,6 +92,9 @@ function App() {
 						<Route path="login" element={<Login />} />
 						<Route path="logout" element={<Logout />} />
 						<Route path="/" element={<Layout />}>
+						<Route path="chooseuser" element={<UserType />} />
+						<Route path="patientacc" element={<PatientAccount />} />
+						<Route path="prescriberacc" element={<PrescriberAccount />} />
 							<Route
 								index
 								element={
@@ -145,9 +147,6 @@ function App() {
 							<Route path="PatientLogRX" element={<PatientLogRX />} />
 							<Route path="patientSettings" element={<PatientSettings />} />
 							<Route path="patientPrescriptions" element={<PatientPrescriptions />} />
-							<Route path="patient" element={<Patient />} />
-							<Route path="account" element={<Account />} />
-							<Route path="log" element={<LogRX />} />
 							<Route path="loginF" element={<LoginForm />} />
 							<Route path="temp-links" element={<TempLinks />} />
 							{/* CATCH ALL */}
