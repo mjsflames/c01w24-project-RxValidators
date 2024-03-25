@@ -94,7 +94,7 @@ function App() {
 						<Route path="login" element={<Login />} />
 						<Route path="chooseuser" element={<UserType />} />
 						<Route path="patientacc" element={<PatientAccount />} />
-						<Route path="prescriberacc" element={<PrescriberAccount />} />						
+						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
 							<Route
 								index
@@ -125,7 +125,7 @@ function App() {
 							<Route
 								path="patientPrescriptions"
 								element={
-									<ProtectedRoute redirectTo={"/login"} permitted={["patient"]}>
+									<ProtectedRoute redirectTo={"/patientPrescriptions"} permitted={["patient"]}>
 										<PatientPrescriptions />
 									</ProtectedRoute>
 								}

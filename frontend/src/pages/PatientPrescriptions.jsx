@@ -75,9 +75,8 @@ const PatientPrescriptions = () => {
         desc="Check the statuses of your prescriptions and find out if you are eligible for the Discovery Pass."
         rightDiv=""
       />
-      <AddressAlert></AddressAlert>
       <div className="h-10"></div>
-			<div className="w-full flex justify-center">
+      <div className="w-full flex justify-center">
         <table id="patientPrescriptionTable" className="w-4/5 rounded-lg">
           <thead className="bg-PaRxGreen">
             <tr>
@@ -91,17 +90,17 @@ const PatientPrescriptions = () => {
           <tbody>
             {data && data.map((item) => (
               <>
-                <tr className="text-left border-t border-white" onClick={() => itemClick(item)}>
+                <tr className="text-left border-t border-white even:bg-gray-200 odd:bg-gray-300" onClick={() => itemClick(item)}>
                   <td className="p-2 w-1/8">{item.date}</td>
                   <td className="w-1/8">{item.prescriber_code}</td>
                   <td className="w-1/8">{item.status}</td>
                   <td className="w-1/8"><input type="checkbox" checked={item.discovery} disabled /></td>
                   <td className="px-2 w-1/2 truncate max-w-md">{item.comments}</td>
                 </tr>{myItem === item && (<tr>
-                    <td colSpan="5">
-                      <Prescription item={item} />
-                    </td>
-                  </tr>
+                  <td colSpan="5">
+                    <Prescription item={item} />
+                  </td>
+                </tr>
                 )}
               </>
             ))}
