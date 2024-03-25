@@ -3,9 +3,17 @@ import { sysInstance } from "../axiosConfig";
 
 const ServiceRegistryInfo = () => {
 	// Allow the user to drag the service registry info
-	const [position, setPosition] = React.useState(JSON.parse(localStorage.getItem("service-registry-info-position") || "{x:0, y:700}"));
+	const [position, setPosition] = React.useState(
+		JSON.parse(
+			localStorage.getItem("service-registry-info-position") ||
+				'{"x":0, "y":700}'
+		)
+	);
 	const [isDragging, setIsDragging] = React.useState(false);
-	const [draggingPosition, setDraggingPosition] = React.useState({ x: 0, y: 0 });
+	const [draggingPosition, setDraggingPosition] = React.useState({
+		x: 0,
+		y: 0,
+	});
 
 	const [services, setServices] = React.useState([]);
 	useEffect(() => {
@@ -17,16 +25,23 @@ const ServiceRegistryInfo = () => {
 			})
 			.catch((error) => {
 				console.log(error);
-				setServices([{ serviceName: "CONNECT FAIL", serviceUrl: "api-gateway", status: "down"}]);
+				setServices([
+					{
+						serviceName: "CONNECT FAIL",
+						serviceUrl: "api-gateway",
+						status: "down",
+					},
+				]);
 			});
 	}, []);
 
 	// Save position to localstorage
 	React.useEffect(() => {
-		localStorage.setItem("service-registry-info-position", JSON.stringify(position));
+		localStorage.setItem(
+			"service-registry-info-position",
+			JSON.stringify(position)
+		);
 	}, [position]);
-
-
 
 	React.useEffect(() => {
 		if (isDragging) {
@@ -34,9 +49,17 @@ const ServiceRegistryInfo = () => {
 				// Bind within the screen
 				if (event.clientX - draggingPosition.x < 0) return;
 				if (event.clientY - draggingPosition.y < 0) return;
-				if (event.clientX - draggingPosition.x > window.innerWidth - 300) return;
-				if (event.clientY - draggingPosition.y > window.innerHeight - 300) return;
-				
+				if (
+					event.clientX - draggingPosition.x >
+					window.innerWidth - 300
+				)
+					return;
+				if (
+					event.clientY - draggingPosition.y >
+					window.innerHeight - 300
+				)
+					return;
+
 				setPosition({
 					x: event.clientX - draggingPosition.x,
 					y: event.clientY - draggingPosition.y,
@@ -63,7 +86,7 @@ const ServiceRegistryInfo = () => {
 					y: event.clientY - position.y,
 				});
 			}}
-			style={{transform: `translate(${position.x}px, ${position.y}px)`}}
+			style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
 			className="absolute bg-white px-8 rounded-lg py-8 shadow-md z-[100]"
 		>
 			<h1 className="text-sm select-none">Service Registry Monitor</h1>
@@ -71,11 +94,22 @@ const ServiceRegistryInfo = () => {
 			<br />
 			<ol className="flex flex-col gap-4 mt-2">
 				{services.map((service) => (
-					<li key={service.serviceName} className="flex gap-4 items-center capitalize select-none">
-						<div className={service.status == "operational" ? goodCSS : badCSS} />
+					<li
+						key={service.serviceName}
+						className="flex gap-4 items-center capitalize select-none"
+					>
+						<div
+							className={
+								service.status == "operational"
+									? goodCSS
+									: badCSS
+							}
+						/>
 						<div className="flex flex-col">
 							{service.serviceName}
-							<p className="text-gray-400 text-sm lowercase">@ {service.serviceUrl}</p>
+							<p className="text-gray-400 text-sm lowercase">
+								@ {service.serviceUrl}
+							</p>
 						</div>
 					</li>
 				))}
