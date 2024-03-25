@@ -24,11 +24,29 @@ import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
 import PatientLogRX from "./pages/PatLogRX.jsx";
 import PatientSettings from "./pages/PatientSettings.jsx";
 import GreenResources from "./pages/GreenResources.jsx";
+import LoginForm from "./pages/Login.jsx";
+import UserType from "./pages/ChooseUser.jsx";
+import PatientAccount from "./pages/PatSignUp.jsx";
+import PrescriberAccount from "./pages/PresSignUp.jsx";
+import AdminHome from "./pages/AdminHome.jsx";
+import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
+import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
+import Verification from "./pages/Verification.jsx";
+import PrescriberHome from "./pages/PrescriberHome.jsx";
+import PrescriberPrescriptions from "./pages/PresPrescription.jsx";
+import PrescriberSettings from "./pages/PrescriberSettings.jsx";
+import PrescriberLogRX from "./pages/PresLogRX.jsx";
+import PatientHome from "./pages/PatientHome.jsx";
+import PatientPrescriptions from "./pages/PatientPrescriptions.jsx";
+import PatientLogRX from "./pages/PatLogRX.jsx";
+import PatientSettings from "./pages/PatientSettings.jsx";
+import GreenResources from "./pages/GreenResources.jsx";
 import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import Home from "./pages/Home.jsx";
 
+import Logout from "./pages/Logout.jsx";
 
 const UserContext = createContext({
 	user: null,
@@ -95,6 +113,9 @@ function App() {
 						<Route path="patientacc" element={<PatientAccount />} />
 						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
+						<Route path="chooseuser" element={<UserType />} />
+						<Route path="patientacc" element={<PatientAccount />} />
+						<Route path="prescriberacc" element={<PrescriberAccount />} />
 							<Route
 								index
 								element={

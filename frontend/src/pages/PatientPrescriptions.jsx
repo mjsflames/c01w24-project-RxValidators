@@ -75,10 +75,11 @@ const PatientPrescriptions = () => {
         desc="Check the statuses of your prescriptions and find out if you are eligible for the Discovery Pass."
         rightDiv=""
       />
+      <AddressAlert></AddressAlert>
       <div className="h-10"></div>
-      <div className="w-full flex justify-center">
-        <table id="patientPrescriptionTable" className="w-5/6 rounded-lg bg-PaRxGreen content-normal">
-          <thead>
+			<div className="w-full flex justify-center">
+        <table id="patientPrescriptionTable" className="w-4/5 rounded-lg">
+          <thead className="bg-PaRxGreen">
             <tr>
               <th className="text-left p-2 w-1/8">Date</th>
               <th className="text-left w-1/8">Prescriber Code</th>
