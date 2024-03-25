@@ -3,6 +3,38 @@ import Service from "../models/service.js";
 
 const router = express.Router();
 
+const getServices = async () => {
+	try {
+		const services = await Service.find();
+		return services;
+	} catch (error) {
+		console.error("Error fetching services:", error);
+		return [];
+	}
+};
+
+const doHealthCheck = async () => {
+	(await getServices()).forEach((service) => {
+		console.log(`Checking ${service.serviceName} at ${service.serviceUrl}`);
+		fetch(`${service.serviceUrl}/health`)
+			.then((res) => {
+				if (res.ok) {
+					console.log(`${service.serviceName} is operational`);
+					service.status = "operational";
+				} else {
+					console.log(`${service.serviceName} is down`);
+					service.status = "down";
+				}
+				service.save();
+			})
+			.catch((error) => {
+				console.error(`${service.serviceName} is down`);
+				service.status = "down";
+				service.save();
+			});
+	});
+};
+
 router.post("/register", async (req, res) => {
 	try {
 		const { serviceName, serviceUrl } = req.body;
@@ -13,11 +45,12 @@ router.post("/register", async (req, res) => {
 		if (existingService) {
 			// Update service
 			existingService.serviceUrl = serviceUrl;
+			existingService.status = "operational";
 			await existingService.save();
 			return res.status(200).send("Service updated");
 		}
 
-		const newService = new Service({ serviceName, serviceUrl });
+		const newService = new Service({ serviceName, serviceUrl, status: "operational"});
 		await newService.save();
 
 		res.status(200).send("Service registered");
@@ -63,4 +96,5 @@ router.delete("/services/:serviceName", async (req, res) => {
 	}
 });
 
+export { doHealthCheck };
 export default router;

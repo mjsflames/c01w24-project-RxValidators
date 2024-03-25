@@ -54,6 +54,7 @@ const PatientPrescriptions = () => {
       } catch (error) {
         console.error('No fetch:', error);
       }
+
     }
     fetchData();
   }, []);

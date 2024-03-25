@@ -17,7 +17,7 @@ const ServiceRegistryInfo = () => {
 			})
 			.catch((error) => {
 				console.log(error);
-				setServices([{ serviceName: "CONNECT FAIL", serviceUrl: "api-gateway" }]);
+				setServices([{ serviceName: "CONNECT FAIL", serviceUrl: "api-gateway", status: "down"}]);
 			});
 	}, []);
 
@@ -61,7 +61,7 @@ const ServiceRegistryInfo = () => {
 			<ol className="flex flex-col gap-4 mt-2">
 				{services.map((service) => (
 					<li key={service.serviceName} className="flex gap-4 items-center capitalize">
-						<div className={goodCSS} />
+						<div className={service.status == "operational" ? goodCSS : badCSS} />
 						<div className="flex flex-col">
 							{service.serviceName}
 							<p className="text-gray-400 text-sm lowercase">@ {service.serviceUrl}</p>
