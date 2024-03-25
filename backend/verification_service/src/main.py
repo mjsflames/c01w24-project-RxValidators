@@ -74,7 +74,7 @@ def download(id):
     del processing[id]
     return result_data.to_json(index=False, orient="records"), 200, {"Content-Type": "text/csv"}
 
-@app.route("/api/cancel/<id>", methods=["GET"])
+@app.route("/api/cancel/<id>", methods=["POST"])
 @cross_origin()
 def cancel(id):
     if id not in processing:

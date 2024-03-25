@@ -46,6 +46,7 @@ def _process_request(file_data, id):
     for index, row in df.iterrows():
         # Check if request has been cancelled
         if id not in processing:
+            print(f"Detected Request({id}) cancelled")
             return "Request cancelled"
         
         # Scrape the data
@@ -64,6 +65,7 @@ def _process_request(file_data, id):
             
         # Check if request has been cancelled
         if id not in processing:
+            print(f"Detected Request({id}) cancelled")
             return "Request cancelled"
         
         # Update pass/fail

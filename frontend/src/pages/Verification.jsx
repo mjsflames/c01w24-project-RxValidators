@@ -5,6 +5,9 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import ContentContainer from "../components/ContentContainer.jsx";
 import api from "../axiosConfig";
+import PrescriptionCodeList from "../components/Verification/PrescriptionCodeList.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCancel, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const Verification = () => {
 	const [file, setFile] = useState(null);
@@ -37,17 +40,19 @@ const Verification = () => {
 			}
 
 			if (!data) {
-				api.get(`/verification/status/${id}`).then((response) => {
-					if (response.status !== 200) {
-						console.log("Error retrieving status");
+				api.get(`/verification/status/${id}`)
+					.then((response) => {
+						if (response.status !== 200) {
+							console.log("Error retrieving status");
+							clearInterval(interval);
+							return;
+						}
+						setStatus(response.data.status);
+					})
+					.catch((err) => {
+						console.log(err);
 						clearInterval(interval);
-						return;
-					}
-					setStatus(response.data.status);
-				}).catch((err) => {
-					console.log(err);
-					clearInterval(interval);
-				});
+					});
 			}
 		}, 2000);
 
@@ -70,7 +75,6 @@ const Verification = () => {
 	if (status && status != "completed") {
 		const { passed, failed, total } = status;
 		percent = (passed + failed) / total;
-		// console.log(percent);
 	}
 
 	const cancelJob = async () => {
@@ -86,38 +90,76 @@ const Verification = () => {
 
 	return (
 		<>
-			<PageHeader title="Verification" desc="Upload a CSV file to verify all prescribers on the platform." />
-			<ContentContainer className="flex justify-between  min-h-[50vh] w-1/2 ml-auto mr-auto">
-					<div className="w-full items-center justify-center flex flex-row gap-16">
-						{!data && <div className="w-full">
+			<PageHeader
+				title="Verification"
+				desc="Upload a CSV file to verify all prescribers on the platform."
+			/>
+			<ContentContainer className="flex flex-col justify-between min-h-[50vh] ml-auto mr-auto gap-16 lg:flex-row lg:gap-32">
+				<div className="lg:w-1/2 items-center justify-center flex flex-row">
+					{!data && (
+						<div className="w-full">
 							{id ? (
 								<>
 									<h1>Currently processing...</h1>
-									<h1 className="text-2xl font-semibold upper">Job ID:</h1>
+									<h1 className="text-2xl font-semibold upper">
+										Job ID:
+									</h1>
 									<p>{id}</p>
 								</>
 							) : (
 								<div>
-									<h1 className="text-4xl font-semibold upper">Verification</h1>
-									<p>Upload a file to verify</p>
-									<br />
+									<h1 className="text-lg font-semibold upper">
+										{file
+											? `File "${file.name}" Loaded`
+											: "Upload a file to verify"}
+									</h1>
 									<Dropzone setFile={setFile} file={file} />
 									<hr className="mt-2" />
-									<button className="bg-gray-300 font-bold py-2 px-4 rounded" onClick={beginRequest}>
+									<button
+										className="w-full py-4 bg-PaRxDBlue text-white font-bold lg:px-4 lg:rounded"
+										onClick={beginRequest}
+									>
 										Verify
 									</button>
 								</div>
 							)}
 							{id && progress}
-							<button className="bg-red-500 text-white w-1/2 font-bold py-2 px-4 rounded ml-auto mr-auto mt-8"
-							onClick={cancelJob}>Cancel</button>
+							{id && (
+								<button
+									className="bg-red-500 text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded ml-auto mr-auto mt-8"
+									onClick={cancelJob}
+								>
+									<FontAwesomeIcon
+										icon={faCancel}
+										className="mr-2"
+									/>
+									Cancel
+								</button>
+							)}
 						</div>
-						}
-						<VerificationList data={data} visible={data&&id}/>
+					)}
+					<div>
+						<VerificationList data={data} visible={data && id} />
+						<div className="flex mt-8 items-center gap-4 justify-end">
+							<p className="font-bold">Download</p>
+							<button className="bg-PaRxDGrenn text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded">
+								<FontAwesomeIcon
+									icon={faDownload}
+									className="mr-2"
+								/>
+								PDFs
+							</button>
+							<button className="bg-PaRxDGrenn text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded">
+								<FontAwesomeIcon
+									icon={faDownload}
+									className="mr-2"
+								/>
+								Results
+							</button>
+						</div>
 					</div>
-				<div className="">
-					<h1 className="text-2xl font-semibold upper">Prescriber Codes</h1>
 				</div>
+				<PrescriptionCodeList className="lg:w-1/2 h-[50vh] relative" />
 			</ContentContainer>
 		</>
 	);

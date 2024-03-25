@@ -21,10 +21,9 @@ const VerificationList = ({ data, visible }) => {
 		);
 	});
 
-
 	return (
 		<div>
-			<p>Verification Status</p>
+			<h1 className="text-lg mb-2">Verification Results</h1>
 			<div className="relative overflow-x-auto  rounded-lg">
 				<table className="w-full text-sm text-left rtl:text-right text-gray-500">
 					<thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -43,7 +42,9 @@ const VerificationList = ({ data, visible }) => {
 							</th>
 						</tr>
 					</thead>
-					<tbody className=" max-h-24 overflow-scroll">{data && verification_data}</tbody>
+					<tbody className=" max-h-24 overflow-scroll">
+						{data && verification_data}
+					</tbody>
 				</table>
 			</div>
 		</div>
