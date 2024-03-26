@@ -55,13 +55,13 @@ const UserLogin = () => {
 
 					<div className="mb-5">
 						<label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-600 ">
-							Username/Provider ID
+							Email/Prescriber ID
 						</label>
 						<input
 							type="username"
 							id="username"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-							placeholder="Username"
+							placeholder="Email"
 							onChange={(e) => setUsername(e.target.value)}
 							value={username}
 							required

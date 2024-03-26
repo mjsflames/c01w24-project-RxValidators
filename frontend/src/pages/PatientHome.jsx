@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
-import PageFooter from "../components/PageFooter";
 import nature from "../assets/wallf.jpg";
 
 const PrescriberHome = () => {
@@ -11,7 +10,7 @@ const PrescriberHome = () => {
 				title="Home"
 				desc="Welcome to your Parks Prescriptions account!"
 			/>
-				<div className="flex w-full h-[650px] bg-white">
+				<div className="flex w-full h-full bg-white">
 					<div className = "grid grid-cols-2 gap-y-0 w-screen-1/3 h-1/3 items-end" >
 						<div className="col-span-2 ml-5 mt-10 font-bold">
 							<h1>Connect to the evidence. <br /> Your best health,</h1>
@@ -22,7 +21,7 @@ const PrescriberHome = () => {
 							<button onClick={()=> window.open("https://www.parkprescriptions.ca/", "_blank")} className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-64 text-center">Learn More About PaRx</button>
 						</div>
 						<Link to="/PatientLogRX">
-							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-16 h-12 w-64 text-center">Log a Prescription</button>
+							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-16 h-12 w-64 text-center">Log Prescriptions</button>
 						</Link>
 						<Link to="/patientPrescriptions">
 							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Your Prescriptions</button>

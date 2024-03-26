@@ -15,8 +15,8 @@ const AdminHome = () => {
       <div className="w-full h-[650px] bg-white flex">
         <div className="grid grid-cols-2 gap-y-0 w-1/3 items-center" >
           <div className="col-span-2 ml-5 font-bold">
-            <h1>Connect to the evidence. <br /> Your best health,</h1>
-            <h2 className="text-green-700">naturally.</h2>
+            <h1>See all accounts in one place. <br /> Verify providers,</h1>
+            <h2 className="text-green-700">in one click.</h2>
           </div>
 
           <Link to="/addPrescriber">
@@ -33,7 +33,7 @@ const AdminHome = () => {
           </Link>
         </div>
         <div className="w-2/3">
-          <img src={nature} className="h-[650px] ml-auto" />
+          <img src={nature} className="h-[650px] w-full ml-auto" />
         </div>
       </div>
     </>
