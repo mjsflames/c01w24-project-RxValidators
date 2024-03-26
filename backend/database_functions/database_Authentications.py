@@ -33,8 +33,6 @@ required_authentication_fields = [
 
 connections = []
 
-# salt = bcrypt.gensalt()
-
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
 
 
@@ -56,10 +54,10 @@ def create_user_account():
         password = data.get("password")
         role = data.get("role")
 
-        # # Encrypting Password
-        # bytes = password.encode('utf-8') 
-        # hashed_password = bcrypt.hashpw(bytes, salt)
-        # data["password"] = hashed_password
+        # Encrypting Password
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password.encode(), salt)
+        data["password"] = hashed_password
 
         if(user_exists(username) != 0):
             return jsonify({"error": f"A user with username:{username} already exists"}), 409
@@ -93,19 +91,18 @@ def authenticate_user():
         username = data.get("username")
         password = data.get("password")
         role = data.get("role")
-
-        # # Encrypting Password
-        # bytes = password.encode('utf-8') 
-        # hashed_password = bcrypt.hashpw(bytes, salt)
         
-        is_user = collection.find_one({"username": username, "password": password, "role": role})
-        if not is_user:
-            return jsonify({"message": f"Incorrect username: {username}, password: {password}, or role: {role}"}), 404
+        user = collection.find_one({"username": username, "role": role})
+        if not user:
+            return jsonify({"message": f" User: {username} with role: {role} does not exist"}), 404
+        
+        if not bcrypt.hashpw(password.encode(), user["password"]) == user["password"]:
+            return jsonify({"message": f"Unauthorized: password incorrect"}), 401
 
         cur_db_name = "test_db"
         cur_collection_name = "prescription"
-        # cur_client = MongoClient(server_IP, username=username, password=password, authSource=cur_db_name, authMechanism='SCRAM-SHA-256')
-        cur_client = MongoClient(f"mongodb://{username}:{password}@{server_IP}/{db_name}")
+        cur_client = MongoClient(server_IP, username=username, password=password, authSource=cur_db_name, authMechanism='SCRAM-SHA-256')
+        # cur_client = MongoClient(f"mongodb://{username}:{password}@{server_IP}/{db_name}")
         cur_db = cur_client[cur_db_name]
         cur_collection = cur_db[cur_collection_name]
         test_database_operation(cur_collection)
