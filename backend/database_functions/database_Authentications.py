@@ -5,6 +5,7 @@ import pymongo
 from pymongo import MongoClient
 import database as dbfunc
 from flask_cors import CORS, cross_origin
+from flask_pymongo import PyMongo
 import requests as requestsLib
 import uuid
 import bcrypt
@@ -30,6 +31,10 @@ required_authentication_fields = [
     "role"
 ]
 
+connections = []
+
+# salt = bcrypt.gensalt()
+
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
 
 
@@ -40,7 +45,7 @@ def user_exists(username):
     return collection.count_documents({"username": username}) > 0
 
 @app.route('/register', methods=['POST'])
-def create_user_account(username, password):
+def create_user_account():
     try:
         data = request.json
         if not all(field in data for field in required_authentication_fields):
@@ -51,11 +56,10 @@ def create_user_account(username, password):
         password = data.get("password")
         role = data.get("role")
 
-        # Encrypting Password
-        bytes = password.encode('utf-8') 
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(bytes, salt)
-        data["password"] = hashed_password
+        # # Encrypting Password
+        # bytes = password.encode('utf-8') 
+        # hashed_password = bcrypt.hashpw(bytes, salt)
+        # data["password"] = hashed_password
 
         if(user_exists(username) != 0):
             return jsonify({"error": f"A user with username:{username} already exists"}), 409
@@ -90,23 +94,23 @@ def authenticate_user():
         password = data.get("password")
         role = data.get("role")
 
-        # Encrypting Password
-        bytes = password.encode('utf-8') 
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(bytes, salt)
+        # # Encrypting Password
+        # bytes = password.encode('utf-8') 
+        # hashed_password = bcrypt.hashpw(bytes, salt)
         
-        is_user = collection.find_one({"username": username, "password": hashed_password, "role": role})
+        is_user = collection.find_one({"username": username, "password": password, "role": role})
         if not is_user:
-            return jsonify({"message": "Incorrect username, password, or role"}), 404
+            return jsonify({"message": f"Incorrect username: {username}, password: {password}, or role: {role}"}), 404
 
         cur_db_name = "test_db"
         cur_collection_name = "prescription"
-        cur_client = MongoClient(server_IP, username=username, password=password, authSource=cur_db_name, authMechanism='SCRAM-SHA-256')
+        # cur_client = MongoClient(server_IP, username=username, password=password, authSource=cur_db_name, authMechanism='SCRAM-SHA-256')
+        cur_client = MongoClient(f"mongodb://{username}:{password}@{server_IP}/{db_name}")
         cur_db = cur_client[cur_db_name]
         cur_collection = cur_db[cur_collection_name]
         test_database_operation(cur_collection)
-
-        return jsonify({"message": "Authentication Success", "MongoClient": cur_client, "role": role}), 200
+        connections.append(cur_client)
+        return jsonify({"message": "Authentication Success", "role": role}), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -114,13 +118,14 @@ def authenticate_user():
 @app.route('/logout', methods=['GET'])
 def close_client_connection(mongoClient):
     try:
-        client.close()
+        mongoClient.close()
+        connections.remove(mongoClient)
         return jsonify({"message": "Logout Success"})
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/list_users', methods=['GET'])
+@app.route('/listUsers', methods=['GET'])
 def list_all_users():
     # This function should only be accessible by admins
     try:
@@ -140,7 +145,7 @@ def get_role(username):
     user = collection.find_one({"username": username})
     return user["role"]
 
-@app.route('/remove_user/username', methods=['DELETE'])
+@app.route('/removeUser/<username>', methods=['DELETE'])
 def remove_user(username):
     # This function should only be accessible by admins
     try:
