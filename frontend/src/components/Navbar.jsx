@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { UserContext } from "../App";
 
 const Navbar = () => {
@@ -11,6 +11,12 @@ const Navbar = () => {
 			{ to: "/", text: "Home" },
 			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
 			{ to: "/adminPatientProfile", text: "Patient Profiles" },
+			{ to: "/verify", text: "Verification Platform" },
+		],
+		assistant: [
+			{ to: "/temp-links", text: "ADMIN - Assistant" },
+			{ to: "/", text: "Home" },
+			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
 			{ to: "/verify", text: "Verification Platform" },
 		],
 		prescriber: [
@@ -42,9 +48,13 @@ const Navbar = () => {
 	return (
 		<div className="mr-4 flex gap-4">
 			{myLinks.map((link, index) => (
-				<Link key={index} to={link.to} className=" text-gray-800 hover:text-[#556e4d]">
+				<NavLink key={index} to={link.to} style={{ color: 'darkgreen' }}className={({ isActive }) =>
+				[
+				  	isActive ? "active" : "font-bold", 
+				].join(" ")
+			  	}>
 					{link.text}
-				</Link>
+				</NavLink>
 
 			))}
 		</div>

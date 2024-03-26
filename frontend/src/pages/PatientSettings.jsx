@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
-import PageFooter from "../components/PageFooter";
+import Modal from "../components/modal";
 
 const PatientSettings = () => {
 	return (
@@ -13,7 +13,7 @@ const PatientSettings = () => {
 			/>
 			<ContentContainer>
                 <div className="mr-auto ml-auto w-1/2 flex flex-cols-2 mb-8 text-lg font-semibold text-gray-600">
-                    <div class = "max-w-md font-semibold space-y-3.5 text-gray-600 mt-3">Account Details
+                    <div class = "w-1/2 font-semibold space-y-3.5 text-gray-600 mt-2">Account Details
                         <div className="flex flex-col items-center mb-2 mt-3 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                             <div className="w-full">
                                 <label for="first_name" className="block mb-2 text-sm font-medium text-indigo-900">First Name</label>
@@ -108,9 +108,7 @@ const PatientSettings = () => {
                             </div>
                             <div className="w-full">
                                 <div className="mt-44">
-                                    <button id="deactivate" data-modal-target="deletepopup" data-modal-toggle="deletepopup" className="bg-red-600 text-white hover:bg-red-600/90 text-sm rounded-full p-2.5">
-                                        DEACTIVATE ACCOUNT    
-                                    </button>
+                                    <Modal />
                                 </div>
                             </div>
                         </div>
