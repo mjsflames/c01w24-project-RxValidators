@@ -12,7 +12,7 @@ import bcrypt
 
 server_IP = "127.0.0.1:27017"
 client = MongoClient(f"mongodb://{server_IP}")
-db_name = "authentication_db"
+db_name = "test_db"
 collection_name = "authentication"
 db = client[db_name]
 collection = db[collection_name]
