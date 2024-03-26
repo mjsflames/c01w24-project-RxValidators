@@ -20,16 +20,15 @@ const UserLogin = () => {
 		e.preventDefault();
 		setError("");
 		setLoading(true);
-		// Wait like 5 seconds or sum
-		setTimeout(() => {
-			if (!handleLogin(username, password)) {
-				setError("Invalid username or password");
-				setLoading(false);
-				return;
-			}
-			navigate("/");
+		const success = await handleLogin(username, password)
+
+		if (!success) {
+			setError("Invalid username or password");
 			setLoading(false);
-		}, 1000);
+			return;
+		}
+		navigate("/");
+		setLoading(false);
 	};
 
 	return (

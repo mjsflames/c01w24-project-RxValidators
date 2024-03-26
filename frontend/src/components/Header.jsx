@@ -18,7 +18,7 @@ const Header = () => {
 					<div className="border-black border-l-2 px-12 ">
 						<p className="mb-3 font-semibold text-">Hello, First Name</p>
 						{userContext.user ? (
-						<Link to={"/login"} className="text-black">
+						<Link to={"/logout"} className="text-black">
 							<div className="border-2 border-black h-full py-2 px-8 rounded-md">
 								Sign Out
 							</div>

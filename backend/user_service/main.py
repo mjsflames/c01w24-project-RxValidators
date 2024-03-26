@@ -9,7 +9,7 @@ client = MongoClient('mongodb://127.0.0.1:27017/')  # Connect to your MongoDB
 
 app = Flask(__name__)
 cors = CORS(app)
-PORT = 5003
+PORT = 5004
 app.config["CORS_HEADERS"] = "Content-Type"
 app.config["DEBUG"] = True  # Restart on changes
 app.config["PORT"] = PORT

@@ -1,11 +1,7 @@
-from flask import Flask, request, jsonify, Response, abort
+from flask import Flask, request, jsonify, abort, make_response
 from bson.json_util import dumps, loads
-from bson import ObjectId
-import pymongo
 from pymongo import MongoClient
-import database as dbfunc
 from flask_cors import CORS, cross_origin
-from flask_pymongo import PyMongo
 import requests as requestsLib
 import uuid
 import bcrypt
@@ -18,8 +14,8 @@ collection_name = "authentication"
 db = client[db_name]
 collection = db[collection_name]
 
+PORT = 5005
 app = Flask(__name__)
-PORT = 5003
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["DEBUG"] = True
@@ -28,12 +24,18 @@ app.config['PORT'] = PORT
 required_authentication_fields = [
     "username",
     "password",
-    "role"
+    # "role"
 ]
 
 connections = []
 
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
+
+# Routes
+# /register - POST (username, password, role)
+# /login - GET (username, password, role)
+# /logout - GET (username, password)
+
 
 
 def generate_id():
@@ -42,21 +44,33 @@ def generate_id():
 def user_exists(username):
     return collection.count_documents({"username": username}) > 0
 
-@app.route('/register', methods=['POST'])
-def create_user_account():
-    try:
+def validate_inputs(func):
+    def wrapper(*args, **kwargs):
         data = request.json
         if not all(field in data for field in required_authentication_fields):
             missing_fields = [field for field in required_authentication_fields if field not in data]
             return jsonify({"error": "Missing required fields", "missing": missing_fields}), 400
+        return func(*args, **kwargs)
+    wrapper.__name__ = func.__name__ # HOTFIX: Map overwriting fix
+    return wrapper
 
+@app.route('/register', methods=['POST'])
+@cross_origin()
+@validate_inputs
+def create_user_account():
+    try:
+        data = request.get_json()
         username = data.get("username")
         password = data.get("password")
         role = data.get("role")
 
+        # Additional Fields
+        print(data)
+
         # Encrypting Password
         salt = bcrypt.gensalt()
         hashed_password = bcrypt.hashpw(password.encode(), salt)
+        
         data["password"] = hashed_password
 
         if(user_exists(username) != 0):
@@ -80,21 +94,22 @@ def create_user_account():
 def test_database_operation(collection):
     collection.find_one()
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
+@validate_inputs
+@cross_origin()
 def authenticate_user():
     try:
         data = request.json
-        if not all(field in data for field in required_authentication_fields):
-            missing_fields = [field for field in required_authentication_fields if field not in data]
-            return jsonify({"error": "Missing required fields", "missing": missing_fields}), 400
 
         username = data.get("username")
         password = data.get("password")
-        role = data.get("role")
+        # role = data.get("role")
         
-        user = collection.find_one({"username": username, "role": role})
+        # user = collection.find_one({"username": username, "role": role})
+        # username should be unique.
+        user = collection.find_one({"username": username})
         if not user:
-            return jsonify({"message": f" User: {username} with role: {role} does not exist"}), 404
+            return jsonify({"message": f" User: {username} with role: {user["role"]} does not exist"}), 404
         
         if not bcrypt.hashpw(password.encode(), user["password"]) == user["password"]:
             return jsonify({"message": f"Unauthorized: password incorrect"}), 401
@@ -107,22 +122,34 @@ def authenticate_user():
         cur_collection = cur_db[cur_collection_name]
         test_database_operation(cur_collection)
         connections.append(cur_client)
-        return jsonify({"message": "Authentication Success", "role": role}), 200
+        print(">>USER", user)
+        
+        # Strip password
+        user.pop("password")
+        # Store token as cookie
+        token = generate_id()
+        res = make_response(jsonify({"message": "Authentication Success", "data": dumps(user)}), 200)
+        res.set_cookie('rxa-token', token)
+        return res
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/logout', methods=['GET'])
+@cross_origin()
 def close_client_connection(mongoClient):
     try:
         mongoClient.close()
         connections.remove(mongoClient)
-        return jsonify({"message": "Logout Success"})
+        res = make_response(jsonify({"message": "Logout Success"}), 200)
+        res.set_cookie('rxa-token', '', expires=0)
+        return res
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/listUsers', methods=['GET'])
+@cross_origin()
 def list_all_users():
     # This function should only be accessible by admins
     try:
@@ -143,6 +170,7 @@ def get_role(username):
     return user["role"]
 
 @app.route('/removeUser/<username>', methods=['DELETE'])
+@cross_origin()
 def remove_user(username):
     # This function should only be accessible by admins
     try:
@@ -158,6 +186,11 @@ def remove_user(username):
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/health")
+@cross_origin()
+def health_check(): # ? API Gateway health check
+    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
 
 
 def register_service(service_name, service_url):
