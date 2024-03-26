@@ -83,7 +83,7 @@ function App() {
 				console.log("Login failed");
 				return false;
 			}
-			setUser(res.data.data);
+			setUser(JSON.parse(res.data.data));
 			return true;
 		}).catch((err) => {
 			console.error("Login failed", err);
