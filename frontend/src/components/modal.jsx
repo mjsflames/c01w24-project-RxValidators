@@ -21,8 +21,8 @@ const Modal = () => {
                                     <p>Are you sure you want to send a deactivation request?</p>
                                 </div>
                                 <div className="flex flex-row justify-center mb-5">
-                                    <button id="deleteaccount" className="bg-green text-black mr-10" onClick={() => setShowModal(false)}>Yes, proceed</button>
-                                    <button className="bg-red text-black" onClick={() => setShowModal(false)}>No, cancel</button>
+                                    <button id="deleteaccount" className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10" onClick={() => setShowModal(false)}>Yes, proceed</button>
+                                    <button className="bg-red-200 hover:bg-red-200/40 text-black border rounded-full p-2.5" onClick={() => setShowModal(false)}>No, cancel</button>
                                 </div>
                             </div>
                             

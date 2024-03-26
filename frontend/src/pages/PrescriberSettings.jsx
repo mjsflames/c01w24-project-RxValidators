@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import ContentContainer from "../components/ContentContainer";
 import Modal from "../components/modal";
 import PageHeader from "../components/PageHeader";
-import PageFooter from "../components/PageFooter";
 
 const PrescriberSettings = () => {
 

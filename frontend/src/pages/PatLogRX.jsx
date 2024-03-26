@@ -26,7 +26,7 @@ const LogPatPrescription = () => {
 			/>
 			<ContentContainer>
                 <form onSubmit={handleClick} className="ml-auto mr-auto w-1/3">
-                    <h2 className="mb-8 font-bold">Patient Prescription Form</h2>
+                    <h2 className="mb-8 font-bold underline">Patient Prescription Form</h2>
                     <div className="relative z-0 w-full mb-8 group">
                         <input type ="date" id="date" className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none" placeholder="" required />
                         <label for="rx_date" className="absolute font-semibold text-black -translate-y-6 top-1">Prescription Date</label>

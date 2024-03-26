@@ -34,7 +34,7 @@ const UserLogin = () => {
 
 	return (
 		<div className="flex h-screen w-full items-center justify-between bg-white">
-			<Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
+			<Link to="/login" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
 				<img src={logo} className="h-32 w-32 unselectable" />
 			</Link>
 			<img
@@ -49,13 +49,13 @@ const UserLogin = () => {
 						<p>Access your prescriptions.</p>
 						<p className="text-center">
 							If you are a prescriber, please enter your <br />
-							Prescriber ID
+							Provider ID
 						</p>
 					</div>
 
 					<div className="mb-5">
 						<label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-600 ">
-							Username/Prescriber ID
+							Username/Provider ID
 						</label>
 						<input
 							type="username"
@@ -91,7 +91,7 @@ const UserLogin = () => {
 						) : (
 							<button
 								type="submit"
-								className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-2.5 text-center"
+								className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-2.5 text-center"
 							>
 								Submit
 							</button>

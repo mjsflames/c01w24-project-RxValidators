@@ -8,7 +8,7 @@ const Header = () => {
 	const userContext = useContext(UserContext);
 	return (
 		<div className="header w-full min-h-[120px] ">
-			<div className="h-[30px] bg-gray-300"></div>
+			<div className="h-[30px] bg-gray-50"></div>
 			<div className="flex items-center px-24 justify-between">
 				<Link to="">
 					<img src={logo} className="h-32 w-32" />
@@ -16,10 +16,11 @@ const Header = () => {
 				<div className="flex-1 flex justify-end items-center">
 					<Navbar />
 					<div className="border-black border-l-2 px-12 ">
+						<p className="mb-3 font-semibold text-">Hello, First Name</p>
 						{userContext.user ? (
 						<Link to={"/login"} className="text-black">
 							<div className="border-2 border-black h-full py-2 px-8 rounded-md">
-								Account
+								Sign Out
 							</div>
 						</Link>
 							) : (

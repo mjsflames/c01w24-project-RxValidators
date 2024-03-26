@@ -22,7 +22,7 @@ const PrescriberHome = () => {
 							<button onClick={()=> window.open("https://www.parkprescriptions.ca/", "_blank")} className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-64 text-center">Learn More About PaRx</button>
 						</div>
 						<Link to="/PatientLogRX">
-							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Log a Prescription</button>
+							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-16 h-12 w-64 text-center">Log a Prescription</button>
 						</Link>
 						<Link to="/patientPrescriptions">
 							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Your Prescriptions</button>

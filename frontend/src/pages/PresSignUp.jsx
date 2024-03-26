@@ -11,7 +11,7 @@ const PatCreateAccount = () => {
     }
 	return (
 		<div className="flex h-screen w-screen items-center justify-between bg-white" >
-            <Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
+            <Link to="/login" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
 				<img src={logo} className="h-32 w-32 unselectable" />
 			</Link>
             <img
@@ -37,7 +37,7 @@ const PatCreateAccount = () => {
 						</div>
 						<div className="w-full">
 							<label className="block mb-2 text-sm font-medium text-gray-600 ">Provider Code</label>
-							<input id="parx_code" type="text" maxlength="2" oninput="this.value = this.value.toUpperCase()" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ie. BC-AA001" required/>
+							<input id="parx_code" type="text" maxlength="8" oninput="this.value = this.value.toUpperCase()" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ie. BC-AA001" required/>
 						</div>
 					</div>
                     <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -53,16 +53,16 @@ const PatCreateAccount = () => {
 						<label for="college" className="block mb-2 text-sm font-medium text-gray-900">Licensing College Province</label>
 						<select required id="college" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5">
 							<option disabled selected value="" defaultValue="">College</option>
-							<option value="AB">Alberta</option>
-							<option value="BC">British Columbia</option>
-							<option value="MB">Manitoba</option>
-							<option value="NB">New Brunswick</option>
-							<option value="NL">Newfoundland & Labrador</option>
-							<option value="NS">Nova Scotia</option>
-							<option value="ON">Ontario</option>
-							<option value="PEI">Prince Edward Island</option>
-							<option value="QC">Quebec</option>
-							<option value="SK">Saskatchewan</option>
+							<option value="College of Physicians and Surgeons of Alberta">Alberta</option>
+							<option value="College of Physicians and Surgeons of British Columbia">British Columbia</option>
+							<option value="College of Physicians and Surgeons of Manitoba">Manitoba</option>
+							<option value="College of Physicians and Surgeons of New Brunswick">New Brunswick</option>
+							<option value="College of Physicians and Surgeons of Newfoundland and Labrador">Newfoundland & Labrador</option>
+							<option value="College of Physicians and Surgeons of Nova Scotia">Nova Scotia</option>
+							<option value="College of Physicians and Surgeons of Ontario">Ontario</option>
+							<option value="College of Physicians and Surgeons of Prince Edward Island">Prince Edward Island</option>
+							<option value="Collège des médecins du Québec">Quebec</option>
+							<option value="College of Physicians and Surgeons of Saskatchewan">Saskatchewan</option>
 						</select>
 					</div>
 					</div>
@@ -109,7 +109,7 @@ const PatCreateAccount = () => {
 						</div>
 					</div>
                     <div className="flex mr-36 justify-between mt-12">
-						<button className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center" to="/login">Create Prescriber Account</button>
+						<button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center" to="/login">Create Provider Account</button>
 						<div className="mt-4">
 							<Link className="text-black underline" to="/login">
 								Created an account? Login here.

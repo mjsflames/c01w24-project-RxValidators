@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import image from "../assets/background-image-1.jpeg";
-import { Form, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 
 const PatCreateAccount = () => {
@@ -12,7 +12,7 @@ const PatCreateAccount = () => {
 
 	return (
 		<div className="flex h-screen w-screen items-center justify-between bg-white" >
-            <Link to="/" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
+            <Link to="/login" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
 				<img src={logo} className="h-32 w-32 unselectable" />
 			</Link>
             <img
@@ -90,7 +90,7 @@ const PatCreateAccount = () => {
 						</div>
 					</div>
                     <div className="flex mr-36 justify-between mt-12">
-						<button className="text-white bg-[#5C6528] font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center" to="/login">Create Prescriber Account</button>
+						<button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center" to="/login">Create Patient Account</button>
 						<div className="mt-4">
 							<Link className="text-black underline" to="/login">
 								Created an account? Login here.

@@ -9,7 +9,7 @@ const AdminHome = () => {
     <>
       <PageHeader
         title="Home"
-        desc="Welcome Admin PaRx!"
+        desc="Welcome to the Administrator Parks Prescriptions Account."
       />
 
       <div className="w-full h-[650px] bg-white flex">
@@ -33,7 +33,7 @@ const AdminHome = () => {
           </Link>
         </div>
         <div className="w-2/3">
-          <img src={nature} className="h-[650px]" />
+          <img src={nature} className="h-[650px] ml-auto" />
         </div>
       </div>
     </>
