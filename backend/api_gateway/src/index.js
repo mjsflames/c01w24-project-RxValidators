@@ -40,6 +40,9 @@ app.use("/api/verification", verificationServiceRoutes);
 import prescriptionServiceRoutes from "./routes/prescription_service.js";
 app.use("/api/prescription", prescriptionServiceRoutes);
 
+import authServiceRoutes from "./routes/auth_service.js";
+app.use("/api/auth", authServiceRoutes);
+
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });

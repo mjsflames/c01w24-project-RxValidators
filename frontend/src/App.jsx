@@ -30,6 +30,7 @@ import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import Home from "./pages/Home.jsx";
 
 import Logout from "./pages/Logout.jsx";
+import api from "./axiosConfig.js";
 
 const UserContext = createContext({
 	user: null,
@@ -41,7 +42,7 @@ function App() {
 	// TODO: Separate to AuthHandler.jsx
 	const [user, setUser] = useState(null);
 
-	const handleLogin = (username, password) => {
+	const handleLogin = async (username, password) => {
 		console.log("Logging in with", username, password);
 		// !!! Top tier security
 		// Administrator Access
@@ -74,7 +75,20 @@ function App() {
 			});
 			return true;
 		}
-		return false;
+
+		// Try actual login
+		return await api.post("/auth/login", { username, password }).then((res) => {
+			console.log("Login response", res.data);
+			if (res.status !== 200) { 
+				console.log("Login failed");
+				return false;
+			}
+			setUser(res.data.data);
+			return true;
+		}).catch((err) => {
+			console.error("Login failed", err);
+			return false;
+		});
 	};
 
 	useEffect(() => {
