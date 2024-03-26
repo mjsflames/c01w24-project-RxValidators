@@ -23,8 +23,6 @@ def generate_id():
     return str(uuid.uuid4())
 
 
-
-
 @app.route("/api/upload", methods=["POST"])
 @cross_origin()
 def verify():
@@ -76,6 +74,23 @@ def download(id):
     del processing[id]
     return result_data.to_json(index=False, orient="records"), 200, {"Content-Type": "text/csv"}
 
+@app.route("/api/cancel/<id>", methods=["POST"])
+@cross_origin()
+def cancel(id):
+    if id not in processing:
+        return {"message": "No such request"}, 400, {"Content-Type": "application/json"}
+    if processing[id]['status'] == "completed":
+        return {"message": "Request already completed"}, 400, {"Content-Type": "application/json"}
+    try:
+        # Close it in the scraper_handler
+        scraper_handler.close_request(id)
+
+        del processing[id]
+        return {"message": "Request cancelled"}, 200, {"Content-Type": "application/json"}
+    except Exception as e:
+        print(e)
+        return {"message": "Error cancelling request"}, 400, {"Content-Type": "application/json"}
+    
 @app.route("/health")
 @cross_origin()
 def health_check(): # ? API Gateway health check

@@ -44,6 +44,11 @@ def _process_request(file_data, id):
     # Iterate over each row and update the "Scraped Status" column accordingly
     pbar = tqdm(total=len(df), desc="Scraping in Progress", position=0)
     for index, row in df.iterrows():
+        # Check if request has been cancelled
+        if id not in processing:
+            print(f"Detected Request({id}) cancelled")
+            return "Request cancelled"
+        
         # Scrape the data
         try:
 
@@ -57,7 +62,12 @@ def _process_request(file_data, id):
         except Exception as e:
             print(row['Last Name'], row['First Name'],
                   row['Licence #'], "triggered exception, fix the code")
-
+            
+        # Check if request has been cancelled
+        if id not in processing:
+            print(f"Detected Request({id}) cancelled")
+            return "Request cancelled"
+        
         # Update pass/fail
         if df.at[index, 'Scraped Status'] == df.at[index, 'Status']:
             passed_count += 1

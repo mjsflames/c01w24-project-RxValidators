@@ -9,7 +9,10 @@ const BreadCrumb = () => {
 		<nav className="flex" aria-label="Breadcrumb">
 			<ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
 				<li className="inline-flex items-center">
-					<Link to="/" className="inline-flex items-center text-sm font-medium text-white hover:text-black ">
+					<Link
+						to="/"
+						className="inline-flex items-center text-sm font-medium text-white hover:text-black "
+					>
 						<svg
 							className="w-3 h-3 me-2.5"
 							aria-hidden="true"
@@ -43,16 +46,18 @@ const BreadCrumb = () => {
 									>
 										<path
 											stroke="currentColor"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="m1 9 4-4-4-4"
 										/>
 									</svg>
 									<Link
 										to={path}
 										className={`capitalize ms-1 text-sm font-medium text-white md:ms-2 ${
-											!lastRow ? "hover:text-black" : "pointer-events-none"
+											!lastRow
+												? "hover:text-black"
+												: "pointer-events-none"
 										} `}
 									>
 										{value.replace("-", " ")}
