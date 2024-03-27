@@ -80,10 +80,9 @@ function App() {
         lastName: "Doe",
         language: "English",
         license: "123456",
-        profession: "Software Engineer",
+        profession: "Pat",
         providerCode: "7890",
         province: "Anyprovince",
-        role: "Developer",
         username: "johndoe123"
       });
       return true;
