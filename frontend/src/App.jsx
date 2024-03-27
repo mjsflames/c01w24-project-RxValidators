@@ -73,13 +73,29 @@ function App() {
 				name: "patient",
 				role: "patient",
 			});
+      // DELETE LATER
+      setUser({
+        "address": "123 Main St",
+        "city": "Anytown",
+        "college": "University of Anywhere",
+        "email": "example@example.com",
+        "firstName": "John",
+        "lastName": "Doe",
+        "language": "English",
+        "license": "123456",
+        "profession": "Software Engineer",
+        "providerCode": "7890",
+        "province": "Anyprovince",
+        "role": "Developer",
+        "username": "johndoe123"
+      });
 			return true;
 		}
 
 		// Try actual login
 		return await api.post("/auth/login", { username, password }).then((res) => {
 			console.log("Login response", res.data);
-			if (res.status !== 200) { 
+			if (res.status !== 200) {
 				console.log("Login failed");
 				return false;
 			}
