@@ -164,7 +164,7 @@ def list_all_users():
 
 @app.route('/listPatients', methods=['GET'])
 @cross_origin()
-def list_all_users():
+def list_patients():
     # This function should only be accessible by admins
     try:
         all_users = collection.find({"role": "patient"})
@@ -179,7 +179,7 @@ def list_all_users():
 
 @app.route('/listPrescribers', methods=['GET'])
 @cross_origin()
-def list_all_users():
+def list_prescribers():
     # This function should only be accessible by admins
     try:
         all_users = collection.find({"role": "prescriber"})
