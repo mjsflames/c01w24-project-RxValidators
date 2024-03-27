@@ -70,15 +70,15 @@ def create_user_account():
         # Encrypting Password
         salt = bcrypt.gensalt()
         hashed_password = bcrypt.hashpw(password.encode(), salt)
-        
+
         data["password"] = hashed_password
 
         if(user_exists(username) != 0):
             return jsonify({"error": f"A user with username:{username} already exists"}), 409
-        
+
         collection.insert_one(data)
         if(role == "admin"):
-            db.command("createUser", username, pwd=password, roles=[{"role": "userAdminAnyDatabase", "db": "admin"}, 
+            db.command("createUser", username, pwd=password, roles=[{"role": "userAdminAnyDatabase", "db": "admin"},
                                                                     {"role": "readWriteAnyDatabase", "db": "admin"}])
         elif(role == "prescriber"):
             db.command("createUser", str(username), pwd=str(password), roles=[{"role": "readWrite", "db": "test_db"}])
@@ -104,14 +104,14 @@ def authenticate_user():
         username = data.get("username")
         password = data.get("password")
         # role = data.get("role")
-        
+
         # !! I do not understand why you don't just use the password field directly to authenticate the user
         # user = collection.find_one({"username": username, "role": role})
         # username should be unique.
         user = collection.find_one({"username": username})
         if not user:
             return jsonify({"message": f" User: {username} with role: {user["role"]} does not exist"}), 404
-        
+
         if not bcrypt.hashpw(password.encode(), user["password"]) == user["password"]:
             return jsonify({"message": f"Unauthorized: password incorrect"}), 401
 
@@ -124,12 +124,12 @@ def authenticate_user():
         test_database_operation(cur_collection)
         connections.append(cur_client)
         print(">>USER", user)
-        
+
         # Strip password
         user.pop("password")
 
         return jsonify({"message": "Authentication Success", "data": dumps(user)}), 200
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -140,7 +140,7 @@ def close_client_connection(mongoClient):
         mongoClient.close()
         connections.remove(mongoClient)
         return jsonify({"message": "Logout Success"})
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -155,10 +155,40 @@ def list_all_users():
         users_json = dumps(user_list)
 
         return users_json, 200, {'Content-Type': 'application/json'}
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
+@app.route('/listPatients', methods=['GET'])
+@cross_origin()
+def list_all_users():
+    # This function should only be accessible by admins
+    try:
+        all_users = collection.find({"role": "patient"})
+
+        user_list = list(all_users)
+        users_json = dumps(user_list)
+
+        return users_json, 200, {'Content-Type': 'application/json'}
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/listPrescribers', methods=['GET'])
+@cross_origin()
+def list_all_users():
+    # This function should only be accessible by admins
+    try:
+        all_users = collection.find({"role": "prescriber"})
+
+        user_list = list(all_users)
+        users_json = dumps(user_list)
+
+        return users_json, 200, {'Content-Type': 'application/json'}
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 def get_role(username):
     if not user_exists(username):
         return ""
@@ -174,15 +204,15 @@ def remove_user(username):
             return jsonify({"message": f"Unauthorized: cannot delete admin accounts"}), 401
 
         result = collection.delete_one({"username": username})
-        
+
         if result.deleted_count == 0:
             abort(404, description="User not found")
-        
+
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 @app.route("/health")
 @cross_origin()
 def health_check(): # ? API Gateway health check
