@@ -24,6 +24,8 @@ def create_pdf(code, output_path):
     page.drawString(415, 115, "(Patient's Initials)")
 
     page.save()
+    
+    return page
 
 # --------------------------------------------------------------------------------------------------------
 # Example usage:

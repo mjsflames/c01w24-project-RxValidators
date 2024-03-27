@@ -13,15 +13,15 @@ def get_index(counter):
 
 # This function adds the generated unique prescriber's code to the list of dictionaries
 # (only if the prescriber is verified)
-# def add_code_to_dict(dict_person_list):
-#     for person in dict_person_list:
-#         code = ""
-#         counter = 1
-#         num = get_index(counter)
-#         if person["Status"].upper() == "VERIFIED":
-#             code = code_generator(person["First Name"], person["Last Name"], person["Province"], num)
-#         person["Code"] = code
-#     return dict_person_list
+def add_code_to_dict(dict_person_list):
+    for person in dict_person_list:
+        code = ""
+        counter = 1
+        num = get_index(counter)
+        if person["Status"].upper() == "VERIFIED":
+            code = code_generator(person["First Name"], person["Last Name"], person["Province"], num)
+        person["Code"] = code
+    return dict_person_list
 
 
 # This function modifies the CSV file to have the generated unique codes for each verified prescriber
