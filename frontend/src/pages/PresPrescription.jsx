@@ -37,6 +37,30 @@ const PrescriberPrescriptions = () => {
     setData(sampleData)
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      const username = "testUser";
+      try {
+        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error('No response');
+        }
+        const pData = await res.json();
+        console.log(pData);
+
+        if (pData) {
+          setData(pData);
+        }
+      } catch (error) {
+        console.error('No fetch:', error);
+      }
+
+    }
+    fetchData();
+  }, []);
+
 
   const itemClick = (item) => {
     if (myItem !== item) {
@@ -54,8 +78,8 @@ const PrescriberPrescriptions = () => {
         title="My Prescriptions"
         desc="Check all of your prescriptions all in one place."
       />
-      <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}> 
-        
+      <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
+
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
         <div className="flex flex-col mx-auto mb-12 text-center">
           <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">First/Last Name's Logged Prescriptions</h1>
@@ -97,7 +121,7 @@ const PrescriberPrescriptions = () => {
             </tbody>
           </table>
           </div>
-        
+
       </div>
     </>
   );
