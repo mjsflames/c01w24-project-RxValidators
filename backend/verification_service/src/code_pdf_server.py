@@ -1,24 +1,11 @@
 import os
-# from prescriber_code import *
-from io import StringIO
 import pandas as pd
-from flask import Flask, request, jsonify
 
 #  ? PDF Generator Dependencies
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
-# import ..database_functions.database as db_func
 import database as db_func
-
-
-app = Flask(__name__)
-PORT = 5000
-
-
-# Clear out database
-collection = db_func.get_collection("prescribers")
-# db_func.delete_all(collection) # TEMP
 
 # Create a dataframe from a CSV file.
 def dataframe_from_csv(file_path):
@@ -38,7 +25,7 @@ def get_index(counter):
     number = str(counter).zfill(3)
     return number
 
-def add_code_df(df):
+def add_code_df(df, collection):
     df['Initials'] = df['First Name'].str[0] + df['Last Name'].str[0]
     df = df.sort_values(by=['Province', 'Initials'])
     db_func.new_dataframe_column(df, "Code")
@@ -123,50 +110,3 @@ def create_pdf(code, output_path):
 
     # page.save()
     return page
-
-@app.route('/generatePdf', methods=['POST'])
-def generate_pdf():
-    code = request.json.get('code')
-    output_path = request.json.get('output_path')
-
-    if not code or not output_path:
-        return jsonify({'error': 'Invalid code or output path'}), 400
-
-    page = create_pdf(code, output_path)
-    # Get page buffer
-    pdf = page.getpdfdata()
-
-    return pdf, 200, {"Content-Type": "application/pdf"}
-            
-            
-# API endpoint to generate prescriber codes
-@app.route('/generate/code/export', methods=['POST'])
-def generate_prescriber_codes():    
-    # data = request.json.get('data')
-    # columns = request.json.get('columns')
-    file_data = request.files
-    if not file_data:
-        return {"message": "No file uploaded"}, 400, {"Content-Type": "application/json"}
-
-    file_data = file_data["file"]
-    
-    # if not data or not columns:
-    #     return jsonify({'error': 'Invalid data or columns'}), 400
-    
-    df = dataframe_from_csv(file_data)
-    # df = create_dataframe_from_list(data, columns)
-    df = add_code_df(df)
-    # generate_verified_pdfs(df)
-    buffer = StringIO()
-    
-    modify_csv_with_new_data(buffer, df)
-    buffer.seek(0)
-    
-    result = df.to_dict(orient='records') 
-    db_func.insert_data(collection, result)
-    
-    return {"json": df.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
-
-
-if __name__ == '__main__':
-    app.run(port=PORT, debug=True)
