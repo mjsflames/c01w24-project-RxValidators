@@ -28,4 +28,4 @@ jobs:
         uses: supercharge/mongodb-github-action@1.10.0
 
       - name: Test unique codes and pdf generation
-        run: python backend/code_pdf_tests.py
+        run: python backend/verification_service/test/code_pdf_tests.py

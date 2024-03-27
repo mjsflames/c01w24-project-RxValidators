@@ -51,9 +51,6 @@ def excel_to_mongodb(db_name, collection, excel_file):
 def get_all(collection):
     return collection.find()
 
-def insert_data(collection, data):
-    collection.insert_many(data)
-
 def get_all_as_dataframe(collection):
     return pd.DataFrame(list(collection.find()))
 
@@ -89,6 +86,9 @@ def insert_verified_persons(df):
 
 def get_collection(name):
     return db[name]
+
+def insert_data(collection, data):
+    collection.insert_many(data)
 
 
 # New Authentication Backend Functions for MongoDB (tested)
@@ -141,6 +141,7 @@ def getAllPrescriptions(username):
 
 
 ###############################
+
 def list_all_users():
     admin_client = MongoClient(f"mongodb://{server_IP}/admin")
     admin_db = admin_client["admin"]
