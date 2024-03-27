@@ -12,13 +12,6 @@ from io import StringIO
 import database as db_func
 from code_pdf_server import *
 
-#########################################################
-# Collection of database is used for PDF and Code generation (not sure if we want to keep the following line)
-collection = db_func.get_collection("prescribers")
-# Clear out database 
-# db_func.delete_all(collection) # TEMP
-#########################################################
-
 app = Flask(__name__)
 cors = CORS(app)
 PORT = 5000
@@ -130,35 +123,52 @@ def generate_pdf():
     pdf = page.getpdfdata()
 
     return pdf, 200, {"Content-Type": "application/pdf"}
-            
-            
-# API endpoint to generate prescriber codes
-@app.route('/generate/code/export', methods=['POST'])
-def generate_prescriber_codes():    
-    # data = request.json.get('data')
-    # columns = request.json.get('columns')
-    file_data = request.files
-    if not file_data:
-        return {"message": "No file uploaded"}, 400, {"Content-Type": "application/json"}
 
-    file_data = file_data["file"]
+
+# API endpoint to export the csv file with the new data
+@app.route('/export/csv/<id>', methods=['POST'])
+def export_csv(id):    
     
-    # if not data or not columns:
-    #     return jsonify({'error': 'Invalid data or columns'}), 400
+    status = scraper_handler.check_status(id)
+    if type(status) is not DataFrame:
+        return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
     
-    df = dataframe_from_csv(file_data)
-    # df = create_dataframe_from_list(data, columns)
-    df = add_code_df(df, collection)
-    # generate_verified_pdfs(df)
     buffer = StringIO()
-    
-    modify_csv_with_new_data(buffer, df)
+    modify_csv_with_new_data(buffer, status)
     buffer.seek(0)
-    
-    result = df.to_dict(orient='records') 
+    result = status.to_dict(orient='records') 
     db_func.insert_data(collection, result)
     
-    return {"json": df.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
+    return {"json": status.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
+
+            
+# # API endpoint to generate prescriber codes
+# @app.route('/generate/code/export', methods=['POST'])
+# def generate_prescriber_codes():    
+#     # data = request.json.get('data')
+#     # columns = request.json.get('columns')
+#     file_data = request.files
+#     if not file_data:
+#         return {"message": "No file uploaded"}, 400, {"Content-Type": "application/json"}
+
+#     file_data = file_data["file"]
+    
+#     # if not data or not columns:
+#     #     return jsonify({'error': 'Invalid data or columns'}), 400
+    
+#     df = dataframe_from_csv(file_data)
+#     # df = create_dataframe_from_list(data, columns)
+#     df = add_code_df(df, collection())
+#     # generate_verified_pdfs(df)
+#     buffer = StringIO()
+    
+#     modify_csv_with_new_data(buffer, df)
+#     buffer.seek(0)
+    
+#     result = df.to_dict(orient='records') 
+#     db_func.insert_data(collection, result)
+    
+#     return {"json": df.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
 
 
 def register_service(service_name, service_url):

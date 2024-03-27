@@ -7,6 +7,14 @@ from reportlab.lib.pagesizes import letter
 
 import database as db_func
 
+#########################################################
+# Collection of database is used for PDF and Code generation
+def collection():
+    return db_func.get_collection("prescribers")
+# Clear out database 
+# db_func.delete_all(collection) # TEMP
+#########################################################
+
 # Create a dataframe from a CSV file.
 def dataframe_from_csv(file_path):
     df = pd.read_csv(file_path)
@@ -25,7 +33,7 @@ def get_index(counter):
     number = str(counter).zfill(3)
     return number
 
-def add_code_df(df, collection):
+def add_codes_to_df(df):
     df['Initials'] = df['First Name'].str[0] + df['Last Name'].str[0]
     df = df.sort_values(by=['Province', 'Initials'])
     db_func.new_dataframe_column(df, "Code")
