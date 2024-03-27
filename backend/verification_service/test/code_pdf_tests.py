@@ -1,4 +1,4 @@
-from code_pdf_server import *
+from backend.verification_service.src.code_pdf_server import *
 import unittest
 import pandas as pd
 
