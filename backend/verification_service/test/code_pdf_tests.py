@@ -17,7 +17,7 @@ class TestCases(unittest.TestCase):
         expected_df = pd.DataFrame(expected_data, columns=full_columns)
         test_df = pd.DataFrame(data, columns=columns)
         
-        result = add_code_df(test_df)
+        result = add_codes_to_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
     
@@ -35,7 +35,7 @@ class TestCases(unittest.TestCase):
         expected_df = pd.DataFrame(expected_data, columns=full_columns)
         test_df = pd.DataFrame(data, columns=columns)
         
-        result = add_code_df(test_df)
+        result = add_codes_to_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
         
@@ -60,7 +60,7 @@ class TestCases(unittest.TestCase):
         expected_df = pd.DataFrame(expected_data, columns=full_columns)
         test_df = pd.DataFrame(data, columns=columns)
         
-        result = add_code_df(test_df)
+        result = add_codes_to_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
        

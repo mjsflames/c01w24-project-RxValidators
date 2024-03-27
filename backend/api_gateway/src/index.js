@@ -13,7 +13,7 @@ let client;
 if (process.env.ENV === 'Docker') {
     client = 'mongodb://mongodb:27017/rx-validators';
 } else {
-    client = 'mongodb://localhost:27017/rx-validators';
+    client = 'mongodb://127.0.0.1:27017/rx-validators';;
 }
 
 // Connect to MongoDB
