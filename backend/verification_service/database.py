@@ -139,27 +139,6 @@ def getAllPrescriptions(username):
 
 ###############################
 
-# Testing the database
-# if __name__ == "__main__":
-#     # excel_to_mongodb(db_name, collection, excel_file)
-#     # add_code_column(collection)
-#     # remove_all_unverified(collection)
-#     # print_all(collection)
-#     # delete_all(collection)
-
-#     remove_all_users(db_name)
-
-#     if(not user_exists("test admin")):
-#         create_admin_account("test admin", 1111)
-#     if(not user_exists("test prescriber")):
-#         create_prescriber_account("test prescriber", 2222)
-#     if(not user_exists("test patient")):
-#         create_patient_account("test patient", 3333)
-
-#     authenticate_user("test admin", 1111)
-#     authenticate_user("test prescriber", 2222)
-#     authenticate_user("test patient", 3333)
-
 def list_all_users():
     admin_client = MongoClient(f"mongodb://{server_IP}/admin")
     admin_db = admin_client["admin"]

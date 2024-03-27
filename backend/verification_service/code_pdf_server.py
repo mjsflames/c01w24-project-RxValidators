@@ -8,7 +8,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
 # import ..database_functions.database as db_func
-import database_functions.database as db_func
+import database as db_func
 
 
 app = Flask(__name__)
