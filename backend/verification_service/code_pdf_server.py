@@ -14,9 +14,10 @@ import database as db_func
 app = Flask(__name__)
 PORT = 5000
 
+
 # Clear out database
 collection = db_func.get_collection("prescribers")
-db_func.delete_all(collection) # TEMP
+# db_func.delete_all(collection) # TEMP
 
 # Create a dataframe from a CSV file.
 def dataframe_from_csv(file_path):
@@ -29,7 +30,7 @@ def create_dataframe_from_list(data, column_list):
     return df
 # This function generates a unique prescriber code
 def code_generator(firstname, last_name, province, index):
-    return province + '-' + firstname[0] + last_name[0] + str(index)
+    return province + '-' + firstname[0] + last_name[0] + get_index(index)
 
 # This function will generate the index for the unique prescriber codes based on duplicate people
 def get_index(counter):
@@ -69,21 +70,25 @@ def add_code_df(df):
             if last_prefix != prefix:
                 last_prefix = prefix
                 # query using mongodb regex (province-initials) to get the last code and increment it by 1
-                last = collection.find({"Code": {"$regex": f"{last_prefix}[0-9]{3}"}}).sort("Code", -1).limit(1)[-3:]
-                if last.count() == 0: last = "000"
+                last = collection.find({"Code": {"$regex": f"{last_prefix}[0-9]{{3}}"}}).sort("Code", -1).limit(1)
+                # print(list(collection.find()))
+
+                # last = last
+                
+                last = list(last)
+                
+                if len(last) == 0: last = [[{"Code": f"000"}]]
+                last = last[0]['Code'][-3:]
                 # Convert last to integer
                 last = int(last)
             last = last + 1            
-            while True:
-                # num = get_index(counter)
-                num = last + 1
-                code = code_generator(first_name, last_name, province, num)
+            
+            # num = get_index(counter)
+            code = code_generator(first_name, last_name, province, last)
 
-                has_dupes = df.loc[df['Code'] == code]
-                if has_dupes.size > 0:
-                    counter += 1
-                    continue
-                break
+            has_dupes = df.loc[df['Code'] == code]
+            if has_dupes.size > 0:
+                counter += 1
             
             df.loc[i, 'Code'] = code
     # print(df)
@@ -166,9 +171,10 @@ def generate_prescriber_codes():
     modify_csv_with_new_data(buffer, df)
     buffer.seek(0)
     
-    result = df.to_json(orient='records') 
+    result = df.to_dict(orient='records') 
+    db_func.insert_data(collection, result)
     
-    return {"json": result, "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
+    return {"json": df.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
 
 
 if __name__ == '__main__':

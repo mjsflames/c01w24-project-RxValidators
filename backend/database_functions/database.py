@@ -51,6 +51,9 @@ def excel_to_mongodb(db_name, collection, excel_file):
 def get_all(collection):
     return collection.find()
 
+def insert_data(collection, data):
+    collection.insert_many(data)
+
 def get_all_as_dataframe(collection):
     return pd.DataFrame(list(collection.find()))
 

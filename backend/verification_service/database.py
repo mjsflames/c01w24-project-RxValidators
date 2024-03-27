@@ -87,6 +87,9 @@ def insert_verified_persons(df):
 def get_collection(name):
     return db[name]
 
+def insert_data(collection, data):
+    collection.insert_many(data)
+
 
 # New Authentication Backend Functions for MongoDB (tested)
 def create_admin_account(username, password):
