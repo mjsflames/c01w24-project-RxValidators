@@ -32,8 +32,21 @@ REQUEST_LIMIT = 10
 def _process_request(file_data, id):
     print("Processing request for id =", id)
     processing[id] = "Pending..."
-
-    df = pd.read_csv(BytesIO(file_data))
+    df = None # hotfix: try
+    try:
+        print("Trying to read CSV file")
+        df = pd.read_csv(BytesIO(file_data))
+    except Exception as e:
+        print(e)
+    
+    if type(df) == type(None):
+        try:
+            print("Trying to read Excel file")
+            df = pd.read_excel(BytesIO(file_data))
+        except Exception as e:
+            print(e)
+            return "Invalid file format, please upload a Excel file with the correct headers"
+    
     df['Scraped Status'] = None
     passed_count = 0
     failed_count = 0

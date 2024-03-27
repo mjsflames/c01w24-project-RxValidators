@@ -1,7 +1,5 @@
 # pylint: disable=all [for testers who installed pylint in their environment]
 from flask import Flask, request, jsonify, Response, abort
-import pymongo
-import pandas as pd
 from bson.json_util import dumps, loads
 from bson import ObjectId
 from pymongo import MongoClient

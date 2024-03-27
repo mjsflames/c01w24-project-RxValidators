@@ -22,13 +22,9 @@
     "flowbite": "^2.3.0",
 		"flowbite-react": "^0.7.3",
 
-		"react": "^18.2.0",
-
 		"react-dnd": "^16.0.1",
 
 		"react-dnd-html5-backend": "^16.0.1",
-
-		"react-dom": "^18.2.0",
 
 		"react-table": "^7.8.0"
   },
@@ -47,4 +43,3 @@
     "vite": "^5.1.4"
   }
 }
-
