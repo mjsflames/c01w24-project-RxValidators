@@ -83,7 +83,9 @@ const Dropzone = ({ file, setFile, className = "" }) => {
 							Click to upload or drag and drop
 						</span>
 					</p>
-					<p className="text-xs text-gray-500 ">XLSX (MAX. 1mb)</p>
+					<p className="text-xs text-gray-500 ">
+						XLSX, CSV (MAX. 1mb)
+					</p>
 				</div>
 				<p className="text-xs text-gray-500 ">
 					FILE: {file ? file.name : "NONE"}

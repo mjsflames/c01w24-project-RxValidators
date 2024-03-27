@@ -28,3 +28,4 @@ gnome-terminal --tab --title="Prescriber Service" --working-directory=$PWD/backe
 gnome-terminal --tab --title="ScrapeDescription Service" --working-directory=$PWD/backend -- /bin/bash -c "python scrapeDescription.py; exec bash" &
 gnome-terminal --tab --title="User Service" --working-directory=$PWD/backend/user_service -- /bin/bash -c "python main.py; exec bash" &
 gnome-terminal --tab --title="Frontend" --working-directory=$PWD/frontend -- /bin/bash -c "$command; exec bash" &
+gnome-terminal --tab --title="Authentication Service" --working-directory=$PWD/backend/database_functions -- /bin/bash -c "python database_Authentications.py; exec bash" &
