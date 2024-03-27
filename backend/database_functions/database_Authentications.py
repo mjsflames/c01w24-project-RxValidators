@@ -108,7 +108,7 @@ def authenticate_user():
         # username should be unique.
         user = collection.find_one({"username": username})
         if not user:
-            return jsonify({"message": f" User: {username} with role: {user["role"]} does not exist"}), 404
+            return jsonify({"message": f" User: {username} with role: {user['role']} does not exist"}), 404
 
         if not bcrypt.hashpw(password.encode(), user["password"]) == user["password"]:
             return jsonify({"message": f"Unauthorized: password incorrect"}), 401
