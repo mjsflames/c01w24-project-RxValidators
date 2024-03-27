@@ -1,17 +1,14 @@
 import React, { useContext, useState } from "react";
 import image from "../assets/background-image-1.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import Spinner from "../components/Spinner";
 import api from "../axiosConfig";
 
 const PatCreateAccount = () => {
+	const navigate = useNavigate();
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [providerCode, setProviderCode] = useState("");
-	const [license, setLicense] = useState("");
-	const [profession, setProfession] = useState("");
-	const [college, setCollege] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [address, setAddress] = useState("");
@@ -29,10 +26,6 @@ const PatCreateAccount = () => {
 		const data = {
 			firstName: firstName,
 			lastName: lastName,
-			providerCode: providerCode,
-			license: license,
-			profession: profession,
-			college: college,
 			email: email,
 			password: password,
 			address: address,
@@ -43,9 +36,14 @@ const PatCreateAccount = () => {
 		};
 		setLoading(true);
 		api.post("/auth/register", data).then((res) => {
-			setLoading(false);
 			console.log(res.data);
-		})
+			navigate("/login")
+		}).catch((err) => {
+			setError(err.response.data.message);
+			console.log(err.response)}
+		).finally(() => {
+			setLoading(false);
+		});
     }
 	
 	return (
@@ -61,9 +59,8 @@ const PatCreateAccount = () => {
             <div className="w-screen lg:w-1/2 h-screen bg-white z-20 flex items-center absolute lg:relative justify-center">
 				<form onSubmit={handleClick} className=":w-1/2 mx-auto z-50 ">
 					<div className="flex flex-col items-center [&>*]:text-gray-500 mb-12">
-						<h1 className="text-3xl font-bold !text-gray-900  mb-5">Create a Prescriber Account</h1>
-                        <p>Please fill out the htmlForm below with your inhtmlFormation and Provider code.</p>
-                        <p>If the Provider code is active, an account will be created.</p>
+						<h1 className="text-3xl font-bold !text-gray-900  mb-5">Create a Patient Account</h1>
+                        <p>Please fill out the form below with your information.</p>
                     </div>
 					<div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
 						<div className="w-full">
@@ -74,37 +71,7 @@ const PatCreateAccount = () => {
 							<label htmlFor="pres_last_name" className="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
 							<input value={lastName} onChange={(e) => setLastName(e.target.value)}  type="text" id="pres_last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Last Name"/>
 						</div>
-						<div className="w-full">
-							<label className="block mb-2 text-sm font-medium text-gray-600 ">Provider Code</label>
-							<input value={providerCode} onChange={(e) => setProviderCode(e.target.value)}  id="parx_code" type="text" maxLength={8} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ie. BC-AA001" required/>
-						</div>
-					</div>
-                    <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
-						<div className="w-full">
-							<label htmlFor="license" className="block mb-2 text-sm font-medium text-gray-900">License Number</label>
-							<input value={license} onChange={(e) => setLicense(e.target.value)}  name="license" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="License Number"/>
-						</div>
-						<div className="w-full">
-							<label htmlFor="profession" className="block mb-2 text-sm font-medium text-gray-900">Profession</label>
-							<input value={profession} onChange={(e) => setProfession(e.target.value)}  type="text" id="profession" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Profession"/>
-						</div>
-						<div className="w-full">
-						<label htmlFor="college" className="block mb-2 text-sm font-medium text-gray-900">Licensing College Province</label>
-						<select required id="college" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5"
-							onChange={(e) => setCollege(e.target.value)}>
-							<option disabled selected value="" defaultValue="">College</option>
-							<option value="College of Physicians and Surgeons of Alberta">Alberta</option>
-							<option value="College of Physicians and Surgeons of British Columbia">British Columbia</option>
-							<option value="College of Physicians and Surgeons of Manitoba">Manitoba</option>
-							<option value="College of Physicians and Surgeons of New Brunswick">New Brunswick</option>
-							<option value="College of Physicians and Surgeons of Newfoundland and Labrador">Newfoundland & Labrador</option>
-							<option value="College of Physicians and Surgeons of Nova Scotia">Nova Scotia</option>
-							<option value="College of Physicians and Surgeons of Ontario">Ontario</option>
-							<option value="College of Physicians and Surgeons of Prince Edward Island">Prince Edward Island</option>
-							<option value="Collège des médecins du Québec">Quebec</option>
-							<option value="College of Physicians and Surgeons of Saskatchewan">Saskatchewan</option>
-						</select>
-					</div>
+
 					</div>
 					<div className="mb-5">
 						<label className="block mb-2 text-sm font-medium text-gray-600 ">Email Address</label>
@@ -150,7 +117,7 @@ const PatCreateAccount = () => {
 					</div>
                     <div className="flex mr-36 justify-between mt-12">
 						{loading ? <Spinner/> :
-						<button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center">Create Provider Account</button>
+						<button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center">Create Patient Account</button>
 						}
 						<div className="mt-4">
 							<Link className="text-black underline" to="/login">
