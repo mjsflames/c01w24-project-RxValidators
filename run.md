@@ -58,6 +58,7 @@ npm run preview
 ```
 
 ```bash
-docker-compose up --remove-orphans
 docker-compose build
+docker-compose up --remove-orphans
+http://localhost:4173/
 ```
