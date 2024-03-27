@@ -7,17 +7,18 @@ const Navbar = () => {
 
 	const assignedLinks = {
 		admin: [
-			{ to: "/temp-links", text: "ADMIN" },
 			{ to: "/", text: "Home" },
 			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
 			{ to: "/adminPatientProfile", text: "Patient Profiles" },
 			{ to: "/verify", text: "Verification Platform" },
+			{ to: "/green-resources", text: "Green Resources" },
 		],
 		assistant: [
 			{ to: "/temp-links", text: "ADMIN - Assistant" },
 			{ to: "/", text: "Home" },
 			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
 			{ to: "/verify", text: "Verification Platform" },
+			{ to: "/green-resources", text: "Green Resources" },
 		],
 		prescriber: [
 			{ to: "/", text: "Home" },
