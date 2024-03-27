@@ -166,6 +166,7 @@ const Verification = () => {
 				</div>
 				<PrescriptionCodeList className="lg:w-1/2 h-[50vh] relative" />
 			</ContentContainer>
+			<br />
 		</>
 	);
 };

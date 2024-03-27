@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ContentContainer from "../components/ContentContainer";
+import PageHeader from "../components/PageHeader";
 
 const NoPage = () => {
-	return (
+	return (<>
+		<PageHeader title="404" desc="Page not found" />
 		<ContentContainer>
 			<div className="flex flex-col items-center">
 				<h1>UH OH...</h1>
@@ -11,7 +13,7 @@ const NoPage = () => {
 				<br />
 				<Link to="/">Go back to the home page</Link>
 			</div>
-		</ContentContainer>
+		</ContentContainer></>
 	);
 };
 
