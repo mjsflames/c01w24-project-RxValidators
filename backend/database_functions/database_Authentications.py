@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, make_response
 from bson.json_util import dumps, loads
 from pymongo import MongoClient
 from flask_cors import CORS, cross_origin
@@ -104,8 +104,6 @@ def authenticate_user():
         username = data.get("username")
         password = data.get("password")
         # role = data.get("role")
-
-        # !! I do not understand why you don't just use the password field directly to authenticate the user
         # user = collection.find_one({"username": username, "role": role})
         # username should be unique.
         user = collection.find_one({"username": username})
@@ -127,8 +125,11 @@ def authenticate_user():
 
         # Strip password
         user.pop("password")
-
-        return jsonify({"message": "Authentication Success", "data": dumps(user)}), 200
+        # Store token as cookie
+        token = generate_id()
+        res = make_response(jsonify({"message": "Authentication Success", "data": dumps(user)}), 200)
+        res.set_cookie('rxa-token', token)
+        return res
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -139,7 +140,9 @@ def close_client_connection(mongoClient):
     try:
         mongoClient.close()
         connections.remove(mongoClient)
-        return jsonify({"message": "Logout Success"})
+        res = make_response(jsonify({"message": "Logout Success"}), 200)
+        res.set_cookie('rxa-token', '', expires=0)
+        return res
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

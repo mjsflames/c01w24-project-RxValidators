@@ -39,8 +39,10 @@ const UserContext = createContext({
 });
 
 function App() {
-  // TODO: Separate to AuthHandler.jsx
-  const [user, setUser] = useState(null);
+	// TODO: Separate to AuthHandler.jsx
+	const [user, setUser] = useState(
+		JSON.parse(localStorage.getItem("user")) || null
+	);
 
   const handleLogin = async (username, password) => {
     console.log("Logging in with", username, password);
@@ -103,9 +105,15 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    console.log("User is", user);
-  }, [user]);
+	useEffect(() => {
+		console.log("User is", user);
+		// Save to local storage
+		if (user !== null) {
+			localStorage.setItem("user", JSON.stringify(user));
+		} else {
+			localStorage.removeItem("user");
+		}
+	}, [user]);
 
   const handleLogout = () => setUser(null);
 
@@ -113,30 +121,30 @@ function App() {
     <div className="App">
       {/* <Alert /> */}
 
-      <ServiceRegistryInfo />
-      <UserContext.Provider value={{ user, handleLogin, handleLogout }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="login" element={<Login />} />
-            <Route path="chooseuser" element={<UserType />} />
-            <Route path="patientacc" element={<PatientAccount />} />
-            <Route path="prescriberacc" element={<PrescriberAccount />} />
-            <Route path="/" element={<Layout />}>
-              <Route
-                index
-                element={
-                  user && user.role === "admin" ? (
-                    <AdminHome />
-                  ) : user && user.role === "prescriber" ? (
-                    <PrescriberHome />
-                  ) : user && user.role === "patient" ? (
-                    <PatientHome />
-                  ) : (
-                    <Home />
-                  )
-                }
-              />
-
+			<ServiceRegistryInfo />
+			<UserContext.Provider value={{ user, handleLogin, handleLogout }}>
+				<BrowserRouter>
+					<Routes>
+						<Route path="logout" element={<Logout />} />
+						<Route path="login" element={<Login />} />
+						<Route path="chooseuser" element={<UserType />} />
+						<Route path="patientacc" element={<PatientAccount />} />
+						<Route path="prescriberacc" element={<PrescriberAccount />} />
+						<Route path="/" element={<Layout />}>
+							<Route
+								index
+								element={
+									user && user.role === "admin" ? (
+										<AdminHome />
+									) : user && user.role === "prescriber" ? (
+										<PrescriberHome />
+									) : user && user.role === "patient" ? (
+										<PatientHome />
+									) : (
+										<Home	 />
+									)
+								}
+							/>
               {/* PRESCRIBER RESTRICTED */}
               <Route
                 path="verify"

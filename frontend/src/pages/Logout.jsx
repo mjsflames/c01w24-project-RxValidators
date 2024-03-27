@@ -10,10 +10,10 @@ const Logout = () => {
     // redirect to login page
     useEffect(() => {
 
+        // TODO: REMOVE LATER
         setTimeout(() => {
-            if (userContext.handleLogout()) {
-                navigate('/login');
-            }
+            userContext.handleLogout()
+            navigate('/login');
         }, 1000); // Remove interval in future. just to simulate logging out
 
         if (userContext.user === null) {
