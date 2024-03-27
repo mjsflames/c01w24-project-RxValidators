@@ -9,7 +9,6 @@ const Layout = () => {
 		<>
 			<Header />
 			<Outlet />
-			<br className="mb-12" />
 			<PageFooter />
 		</>
 	);
