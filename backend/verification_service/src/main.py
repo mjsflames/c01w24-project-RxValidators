@@ -13,9 +13,7 @@ PORT = 5000
 # app.config["CORS_HEADERS"] = "Content-Type"
 app.config["DEBUG"] = True  # Restart on changes
 app.config["PORT"] = PORT
-processing = {
-
-}
+processing = {}
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
 
 

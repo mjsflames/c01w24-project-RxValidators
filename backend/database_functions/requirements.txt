@@ -1,0 +1,7 @@
+# Authentications Dependencies
+# Prescriptions Dependencies
+flask
+pymongo
+flask_cors
+requests
+bcrypt
