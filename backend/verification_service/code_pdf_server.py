@@ -1,17 +1,22 @@
 import os
-from prescriber_code import *
-from pdf_generator import *
+# from prescriber_code import *
 import pandas as pd
 from flask import Flask, request, jsonify
 
+#  ? PDF Generator Dependencies
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+
+# import ..database_functions.database as db_func
 import database_functions.database as db_func
+
 
 app = Flask(__name__)
 PORT = 5000
 
 # Clear out database
 collection = db_func.get_collection("prescribers")
-db_func.delete_all(collection)
+db_func.delete_all(collection) # TEMP
 
 # Create a dataframe from a CSV file.
 def dataframe_from_csv(file_path):
@@ -22,7 +27,6 @@ def dataframe_from_csv(file_path):
 def create_dataframe_from_list(data, column_list):
     df = pd.DataFrame(data, columns=column_list)
     return df
-
 # This function generates a unique prescriber code
 def code_generator(firstname, last_name, province, index):
     return province + '-' + firstname[0] + last_name[0] + str(index)
@@ -32,20 +36,47 @@ def get_index(counter):
     number = str(counter).zfill(3)
     return number
 
-def add_code_df(df):
-    db_func.new_dataframe_column(df, "Code")
+# TOdo: On code generation, sort the dataframe by province and initials. Then query using regex (province-initials) to get the last code and increment it by 1
+# def get_index(counter, orginal_df):
+#     # sort df by province and initials
+#     orginal_df = orginal_df.sort_values(by=['Province', 'First Name', 'Last Name'])
     
+
+    # query using regex (province-initials) to get the last code
+
+    
+    # sort df back to original order (by its index)
+    
+    number = str(counter).zfill(3)
+    return number
+
+def add_code_df(df):
+    df['Initials'] = df['First Name'].str[0] + df['Last Name'].str[0]
+    df = df.sort_values(by=['Province', 'Initials'])
+    db_func.new_dataframe_column(df, "Code")
+    last_prefix = ""
     for i in df.index:
         first_name = df['First Name'][i]
         last_name = df['Last Name'][i]
+        initials = df['Initials'][i]
         province = df['Province'][i]
         status = df['Status'][i]
+        prefix = f"{province}-{initials}"
         
         counter = 1
         # Make the code better formatted later
         if status == "VERIFIED":
+            if last_prefix != prefix:
+                last_prefix = prefix
+                # query using mongodb regex (province-initials) to get the last code and increment it by 1
+                last = collection.find({"Code": {"$regex": f"{last_prefix}[0-9]{3}"}}).sort("Code", -1).limit(1)[-3:]
+                if last.count() == 0: last = "000"
+                # Convert last to integer
+                last = int(last)
+            last = last + 1            
             while True:
-                num = get_index(counter)
+                # num = get_index(counter)
+                num = last + 1
                 code = code_generator(first_name, last_name, province, num)
 
                 has_dupes = df.loc[df['Code'] == code]
@@ -91,8 +122,9 @@ def create_pdf(code, output_path):
     page.drawString(280, 115, "(YYMMDD)")
     page.drawString(415, 115, "(Patient's Initials)")
 
-    page.save()
+    # page.save() ? Wat happen if no save??
     
+    return page
 
 @app.route('/generatePdf', methods=['POST'])
 def generate_pdf():
@@ -102,13 +134,18 @@ def generate_pdf():
     if not code or not output_path:
         return jsonify({'error': 'Invalid code or output path'}), 400
 
-    create_pdf(code, output_path)
-    return jsonify({'message': 'PDF generated successfully'}), 200
+    page = create_pdf(code, output_path)
+    # Get page buffer
+    pdf = page.getpdfdata()
+
+    return pdf, 200, {"Content-Type": "application/pdf"}
             
+
+from io import StringIO
             
 # API endpoint to generate prescriber codes
 @app.route('/generate/code/export', methods=['POST'])
-def generate_prescriber_codes():
+def generate_prescriber_codes():    
     # data = request.json.get('data')
     # columns = request.json.get('columns')
     file_data = request.files
@@ -120,26 +157,19 @@ def generate_prescriber_codes():
     # if not data or not columns:
     #     return jsonify({'error': 'Invalid data or columns'}), 400
     
-    df = dataframe_from_csv('PaRx data.csv')
+    df = dataframe_from_csv(file_data)
     # df = create_dataframe_from_list(data, columns)
     df = add_code_df(df)
     # generate_verified_pdfs(df)
-    modify_csv_with_new_data('PaRx_results.csv', df)
+    buffer = StringIO()
+    
+    modify_csv_with_new_data(buffer, df)
+    buffer.seek(0)
+    
     result = df.to_json(orient='records') 
     
-    return result, 200, {"Content-Type": "application/json"}
+    return {"json": result, "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
 
 
 if __name__ == '__main__':
-    app.run(port=PORT)
-    
-    
-# columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status"]
-# data = [
-#    ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
-#     ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE"],
-#     ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED"],
-#     ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
-#     ["Emily","Ho","ON","Toronto Uni","232","VERIFIED"],
-#     ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED"]
-# ]
+    app.run(port=PORT, debug=True)
