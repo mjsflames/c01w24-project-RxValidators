@@ -21,6 +21,7 @@ const PatCreateAccount = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
+  
 	function handleClick (e) {
 		e.preventDefault();
 		//logic htmlFor checking active parx codes
@@ -52,7 +53,7 @@ const PatCreateAccount = () => {
 			setLoading(false);
 		});
     }
-	
+
 	return (
 		<div className="flex h-screen w-screen items-center justify-between bg-white" >
             <Link to="/login" className="absolute z-50 bg-white px-4 top-8 left-8 unselectable">
