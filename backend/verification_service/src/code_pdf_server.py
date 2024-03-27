@@ -91,9 +91,14 @@ def generate_verified_pdfs(df):
             create_pdf(df['Code'][i], os.path.join(os.getcwd(), "pdfs"))
             
 # This function creates a CSV file to have the new data (statuses and prescriber codes)
-def modify_csv_with_new_data(file_name, df):
+def new_data_to_csv(file_name, df):
     # Convert the dataframe to CSV
     df.to_csv(file_name, index=False)
+    
+def new_data_to_xlsx(file_name, df):
+    # Convert the dataframe to CSV
+    df.to_excel(file_name, index=False)
+    
     
 # This function creates a pdf file (formatted the way the company wants it) based on the prescriber's code
 def create_pdf(code, output_path):
