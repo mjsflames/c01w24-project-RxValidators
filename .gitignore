@@ -31,4 +31,4 @@ dist-ssr
 *.sln
 *.sw?
 
-data/db
+**/data/db

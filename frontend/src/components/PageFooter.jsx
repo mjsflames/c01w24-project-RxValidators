@@ -15,7 +15,10 @@ const testFooter = () => {
                         <div className="mb-6 md:mb-0">    
                             <a href="/" className="flex items-center">
                                 <img src={logo} className="h-32 w-32" alt="PaRx"/>
-                            </a> 
+                            </a>
+                            <p className="text-sm font-semibold">RxValidators <br />
+                                <Link to="https://bcparksfoundation.ca/">© BC Parks Foundation, All rights reserved.</Link> 
+                            </p>
                         </div> 
                         <div className="grid grid-cols-2 gap-4 px-4 py-6 lg:py-8 md:grid-cols-4 mr-0">
                             <div>
@@ -47,10 +50,10 @@ const testFooter = () => {
                                 </ul>
                             </div>
                             <div>
-                                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Legal</h2>
+                                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Extras</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="https://bcparksfoundation.ca/privacy-policy/" target="_blank" rel="noopener noreferrer" className="hover:underline">Privacy Policy</a>
+                                        <a href="https://bcparksfoundation.ca/privacy-policy/" target="_blank" rel="noopener noreferrer" className="hover:underline">Contact Form</a>
                                     </li>
                                     <li className="mb-4">
                                         <a href="https://www.parkprescriptions.ca/en/about#Acknowledgments" target="_blank" rel="noopener noreferrer" className="hover:underline">Acknowledgements</a>

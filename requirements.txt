@@ -1,0 +1,11 @@
+pytest
+pandas
+scrapy
+scrapyscript
+beautifulsoup4 
+selenium
+flask
+flask_cors
+tqdm
+asyncio
+pymongo

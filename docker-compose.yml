@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+  rxvalidator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4173:4173"
+      - "3130:3130"
+      - "3000:3000"
+      - "5000:5000"
+      - "5001:5001"
+      - "5002:5002"
+      - "5004:5004"
+      - "5005:5005"
+    environment:
+      - ENV=Docker

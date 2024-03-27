@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import nature from "../assets/adminNature.jpg";
 
@@ -20,10 +19,10 @@ const AdminHome = () => {
           </div>
 
           <Link to="/addPrescriber">
-            <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-5 mr-8 h-12 w-64 text-center">Verify new Prescriber</button>
+            <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-5 mr-8 h-12 w-64 text-center">Verify New Prescribers</button>
           </Link>
           <Link to="/addPatient">
-            <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Add a Patient</button>
+            <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Green Resources</button>
           </Link>
           <Link to="/accessPrescribers">
             <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-5 mr-8 h-12 w-64 text-center">Access Prescribers</button>

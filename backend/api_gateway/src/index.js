@@ -9,9 +9,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+let client;
+if (process.env.ENV === 'Docker') {
+    client = 'mongodb://mongodb:27017/rx-validators';
+} else {
+    client = 'mongodb://localhost:27017/rx-validators';
+}
+
 // Connect to MongoDB
 mongoose
-	.connect("mongodb://127.0.0.1:27017/rx-validators")
+	.connect(client)
 	.then(() => console.log("MongoDB connected"))
 	.catch((err) => console.error("MongoDB connection error:", err));
 
