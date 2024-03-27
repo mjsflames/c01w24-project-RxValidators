@@ -1,5 +1,6 @@
 import os
 # from prescriber_code import *
+from io import StringIO
 import pandas as pd
 from flask import Flask, request, jsonify
 
@@ -34,20 +35,6 @@ def code_generator(firstname, last_name, province, index):
 
 # This function will generate the index for the unique prescriber codes based on duplicate people
 def get_index(counter):
-    number = str(counter).zfill(3)
-    return number
-
-# TOdo: On code generation, sort the dataframe by province and initials. Then query using regex (province-initials) to get the last code and increment it by 1
-# def get_index(counter, orginal_df):
-#     # sort df by province and initials
-#     orginal_df = orginal_df.sort_values(by=['Province', 'First Name', 'Last Name'])
-    
-
-    # query using regex (province-initials) to get the last code
-
-    
-    # sort df back to original order (by its index)
-    
     number = str(counter).zfill(3)
     return number
 
@@ -94,6 +81,13 @@ def add_code_df(df):
     # print(df)
     return df
 
+# def get_license_number(df, license_number):
+#     license = collection.find({"License #": license_number})
+#     # Check if the license_number matches license, then remove that entry from the df
+#     if license == license_number:
+#         df = df[df['License #'] != license_number]
+#     return df
+
 # This function generates a pdf file for the verified prescribers
 def generate_verified_pdfs(df):
     # Create the PDFs
@@ -127,8 +121,7 @@ def create_pdf(code, output_path):
     page.drawString(280, 115, "(YYMMDD)")
     page.drawString(415, 115, "(Patient's Initials)")
 
-    # page.save() ? Wat happen if no save??
-    
+    # page.save()
     return page
 
 @app.route('/generatePdf', methods=['POST'])
@@ -145,8 +138,6 @@ def generate_pdf():
 
     return pdf, 200, {"Content-Type": "application/pdf"}
             
-
-from io import StringIO
             
 # API endpoint to generate prescriber codes
 @app.route('/generate/code/export', methods=['POST'])
