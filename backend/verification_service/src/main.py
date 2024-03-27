@@ -127,7 +127,7 @@ def generate_pdf():
 
 # API endpoint to export the csv file with the new data
 @app.route('/export/<id>', methods=['GET'])
-def export_csv(id):
+def export_file(id):
     file_type = request.args.get('file_type', 'csv')
     if file_type not in ['csv', 'xlsx']:
         return {"message": "Invalid file type. Please specify 'csv' or 'xlsx'."}, 400, {"Content-Type": "application/json"}
