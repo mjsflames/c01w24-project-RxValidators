@@ -19,6 +19,17 @@ const PrescriptionCodeList = ({ className }) => {
 		{ code: "QC-AC209", status: "active" },
 		{ code: "NL-AC210", status: "active" },
 	];
+
+	const deleteHandler = async () => {
+        try {
+            const res = await api.delete(`/auth/removeUser/${code}`)
+            console.log(res.data)
+        } catch (err) {
+            setError(err.response);
+            console.log(err.res)
+        }
+    }
+
 	const items = [
 		[
 			{
@@ -28,7 +39,7 @@ const PrescriptionCodeList = ({ className }) => {
 			{ value: "Inactive", callback: () => {} },
 			{ value: "Expired", callback: () => {} },
 		],
-		[{ value: "Remove", callback: () => {} }],
+		[{ value: "Remove", callback: () => {deleteHandler} }],
 	];
 	const statusColors = {
 		active: "border-green-600",
@@ -48,7 +59,7 @@ const PrescriptionCodeList = ({ className }) => {
 	}, [filter]);
 
 	return (
-		<div className={`flex flex-col ${className}`}>
+		<div className={`flex flex-col mb-10 ${className}`}>
 			<h1 className="text-lg	font-semibold upper">Prescriber Codes</h1>
 			<p>All of the prescriber codes recorded in the system.</p>
 			<br className="mt-4" />

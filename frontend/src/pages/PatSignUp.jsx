@@ -120,7 +120,7 @@ const PatCreateAccount = () => {
 						<button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center">Create Patient Account</button>
 						}
 						<div className="mt-4">
-							<Link className="text-black underline" to="/login">
+							<Link className="text-black underline ml-5" to="/login">
 								Created an account? Login here.
 							</Link>
                 		</div>
