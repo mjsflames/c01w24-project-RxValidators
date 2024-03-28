@@ -6,7 +6,7 @@ import { UserContext } from "../App";
 
 const AdminLogs = () => {
   const [data, setData] = useState(null);
-  const [myItem, setItem] = useState(null);
+  const [shownData, setShownData] = useState(null);
   const { user } = useContext(UserContext);
   const [userData, setUserData] = useState();
   const [searchInput, setSearchInput] = useState("");
@@ -38,6 +38,7 @@ const AdminLogs = () => {
     ];
 
     setData(sampleData)
+    setShownData(shownData)
   }, []);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const AdminLogs = () => {
 
         if (pData) {
           setData(pData);
+          setShownData(shownData)
         }
       } catch (error) {
         console.error('No fetch:', error);
@@ -65,65 +67,71 @@ const AdminLogs = () => {
   }, []);
 
   useEffect(() => {
-		if (user) setUserData(user);
-	  }, []);
+    if (user) setUserData(user);
+  }, []);
 
-  const itemClick = (item) => {
-    if (myItem !== item) {
-      setItem(item);
-    }
-    else {
-      setItem(null);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const filteredData = await filterData(data, searchInput);
+      setShownData(filteredData);
+    };
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearchInput(e.target.value);
-  };
+    fetchData();
+  }, [data, searchInput]);
+
+  async function filterData(data, filterString) {
+    if (!filterString) return data;
+
+    // Only Date and Status
+    return data.filter(item => (item.date + item.status).toLowerCase().includes(filterString));
+
+    // All fields
+    // return data.filter(item => JSON.stringify(item).toLowerCase().includes(filterString));
+  }
+
 
   return (
     <>
-        <PageHeader
-            title="All Prescriptions"
-            desc="Check the status of all provider and patient prescription logs here."
-        />
-        <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
+      <PageHeader
+        title="All Prescriptions"
+        desc="Check the status of all provider and patient prescription logs here."
+      />
+      <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{ backgroundImage: `url(${pic})` }}>
 
-            <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
-            <div className="flex flex-col mx-auto mb-12 text-center">
+        <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+          <div className="flex flex-col mx-auto mb-12 text-center">
             {userData ? (
-                <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">{userData.firstName} {userData.lastName}'s Logged Prescriptions</h1>
+              <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">{userData.firstName} {userData.lastName}'s Logged Prescriptions</h1>
             ) : null}
             <p className="font-semibold">Prescription status are sorted by the date and initials of the patient.</p>
             <p className="font-semibold">Change the status to "Complete with Discovery Pass" if requirements are met.</p>
-            </div>
-            <input type="search" placeholder="Search by Date or Status" onChange={handleChange} value={searchInput} className="flex w-1/4 py-2"/>
-            <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
-                <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
-                <tr>
-                    <th scope="col" className="px-2 py-3">Date</th>
-                    <th scope="col" className="px-2 py-3">Patient Initials</th>
-                    <th scope="col" className="px-2 py-3">Provider Code</th>
-                    <th scope="col" className="px-2 py-3">Discovery Pass Prescribed?</th>
-                    <th scope="col" className="px-2 py-3">Prescription Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                {data && data.map((item) => (
-                    <>
-                    <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:">
-                        <td className="px-2 py-3 w-1/8">{item.date}</td>
-                        <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
-                        <td className="px-2 py-3">{item.status}</td>
-                        <td className="px-2 py-3 w-1/8"><input type="checkbox" checked={item.discovery} /></td>
-                        <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
-                    </tr>
-                    </>
-                ))}
-                </tbody>
-            </table>
-            </div>
+          </div>
+          <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())} value={searchInput} className="flex w-1/4 p-2" />
+          <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
+            <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
+              <tr>
+                <th scope="col" className="px-2 py-3">Date</th>
+                <th scope="col" className="px-2 py-3">Patient Initials</th>
+                <th scope="col" className="px-2 py-3">Provider Code</th>
+                <th scope="col" className="px-2 py-3">Discovery Pass Prescribed?</th>
+                <th scope="col" className="px-2 py-3">Prescription Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {shownData && shownData.map((item) => (
+                <>
+                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:">
+                    <td className="px-2 py-3 w-1/8">{item.date}</td>
+                    <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
+                    <td className="px-2 py-3">{item.status}</td>
+                    <td className="px-2 py-3 w-1/8"><input type="checkbox" checked={item.discovery} /></td>
+                    <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
+                  </tr>
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
