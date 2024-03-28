@@ -11,9 +11,9 @@ const AdminHome = () => {
         desc="Welcome to the Administrator Parks Prescriptions Account."
       />
 
-      <div className="w-full h-[650px] bg-white flex">
-        <div className="grid grid-cols-2 gap-y-0 w-1/3 items-center" >
-          <div className="col-span-2 ml-5 font-bold">
+      <div className="w-full h-[650px] lg:bg-white flex ">
+        <div className="grid grid-cols-2 gap-y-0 lg:w-full xl:w-2/3 2xl:w-1/3 items-center lg:mx-4" >
+          <div className="col-span-2 ml-5 font-bold text-center lg:text-left">
             <h1>See all accounts in one place. <br /> Verify providers,</h1>
             <h2 className="text-green-700">in one click.</h2>
           </div>
@@ -31,9 +31,10 @@ const AdminHome = () => {
             <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Patients</button>
           </Link>
         </div>
-        <div className="w-2/3">
-          <img src={nature} className="h-[650px] w-full ml-auto" />
-        </div>
+        <div className="absolute -z-10 lg:z-0 lg:relative w-full h-full bg-white blur-sm lg:blur-0">
+            <img src={nature} className="h-full w-full object-cover absolute opacity-50 lg:opacity-100" />
+            <div className="opacity-0 lg:opacity-100 w-full h-full bg-gradient-to-r from-white via-white/20 via-%50 lg:via-50% xl:via-30% to-transparent absolute"></div>
+          </div>
       </div>
     </>
   );
