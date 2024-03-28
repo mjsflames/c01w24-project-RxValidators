@@ -110,10 +110,11 @@ def health_check(): # ? API Gateway health check
 
 ##############################################
 
-@app.route('/generatePdf', methods=['POST'])
+@app.route('/api/generatePdf', methods=['POST'])
 def generate_pdf():
     code = request.json.get('code')
-    output_path = request.json.get('output_path')
+    # output_path = request.json.get('output_path')
+    output_path = "./"    
 
     if not code or not output_path:
         return jsonify({'error': 'Invalid code or output path'}), 400
@@ -126,7 +127,7 @@ def generate_pdf():
 
 
 # API endpoint to export the csv file with the new data
-@app.route('/export/csv/<id>', methods=['POST'])
+@app.route('/api/export/csv/<id>', methods=['POST'])
 def export_csv(id):    
     
     status = scraper_handler.check_status(id)
@@ -137,11 +138,28 @@ def export_csv(id):
     modify_csv_with_new_data(buffer, status)
     buffer.seek(0)
     result = status.to_dict(orient='records') 
-    db_func.insert_data(collection, result)
     
     return {"json": status.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
 
-            
+# Retrieve the prescriber codes
+@app.route('/api/prescriber-codes', methods=['GET'])
+def get_prescriber_codes():
+    codes = get_prescriber_codes_from_db()
+    # Keep only code and status
+    return_data = [] 
+    for code in list(codes):
+        return_data.append({str(k): str(v) for k, v in code.items() if k in ["code", "status", "firstName", "lastName", "_id"]})
+    return jsonify(return_data)
+
+@app.route("/api/prescriber-codes/<code>", methods=["POST"])
+def update_prescriber_code(code):
+    status = request.json.get('status')
+    if not status:
+        return jsonify({'error': 'Invalid status'}), 400
+
+    num_updates = update_prescriber_code_status(code, status)
+    return jsonify({'message': 'Updated status', 'count': str(num_updates.modified_count)}), 200
+
 # # API endpoint to generate prescriber codes
 # @app.route('/generate/code/export', methods=['POST'])
 # def generate_prescriber_codes():    

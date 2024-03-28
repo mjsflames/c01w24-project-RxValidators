@@ -5,6 +5,8 @@ from scrapers.verify import verify
 import threading
 import asyncio
 from io import StringIO, BytesIO
+from code_pdf_server import add_codes_to_df, save_to_db
+
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.width', None)
@@ -54,6 +56,9 @@ def _process_request(file_data, id):
     if validate_file(file_data) == False:
         return "Invalid file format, please upload a CSV file with the correct headers"
 
+    # Check if status column exists
+    has_status = "Status" in df.columns
+
     # Iterate over each row and update the "Scraped Status" column accordingly
     pbar = tqdm(total=len(df), desc="Scraping in Progress", position=0)
     for index, row in df.iterrows():
@@ -70,7 +75,7 @@ def _process_request(file_data, id):
                 first_name=row['First Name'],
                 license_no=row['Licence #'],
                 province=row['Province']
-            )
+            ) or "Error"
 
         except Exception as e:
             print(row['Last Name'], row['First Name'],
@@ -82,17 +87,41 @@ def _process_request(file_data, id):
             return "Request cancelled"
         
         # Update pass/fail
-        if df.at[index, 'Scraped Status'] == df.at[index, 'Status']:
-            passed_count += 1
+        if has_status:
+            if df.at[index, 'Scraped Status'] == df.at[index, 'Status']:
+                passed_count += 1
+            else:
+                failed_count += 1
         else:
-            failed_count += 1
-
+            if df.at[index, 'Scraped Status'] != "Error":
+                passed_count += 1
+            else:
+                failed_count += 1
         processing[id] = {"passed": passed_count,
                           "failed": failed_count, "total": len(df)}
         pbar.set_description(
             f"Scraping in Progress: Passed - {passed_count}, Failed - {failed_count}")
         pbar.update(1)
 
+    # Apply codes
+    processing[id] = {
+        **processing[id],
+        "status": "Applying codes..."
+    }
+    print("Applying Codes...")
+    
+    df = add_codes_to_df(df)
+    print("Codes applied")
+
+    # Save to DB
+    processing[id] = {
+        **processing[id],
+        "status": "Saving to database..."
+    }
+    print("Saving to database...")
+    save_to_db(df)
+    print("Saved to database")
+    
     processing[id] = df
 
 
