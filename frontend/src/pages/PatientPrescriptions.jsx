@@ -88,7 +88,7 @@ const PatientPrescriptions = () => {
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
             {userData ? (
-              <h1 className="text-3xl underline font-bold !text-gray-900 mb-5">{userData.firstName} {userData.lastName}'s' Logged Prescriptions</h1>
+              <h1 className="text-3xl underline font-bold !text-gray-900 mb-5">{userData.firstName} {userData.lastName}'s Logged Prescriptions</h1>
             ) : null}
             <p className="font-semibold">Click on Show More to access more details about your prescription. Prescription status will automatically change once both parties log the prescription.</p>
             <p className="font-semibold">If you are prescribed a Discovery Pass, it will be mailed to the address on file.</p>
