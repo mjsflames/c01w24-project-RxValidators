@@ -23,7 +23,7 @@ const Header = () => {
 					<Navbar />
 					<div className="border-black border-l-2 px-12 ">
 						{userData ? (
-							<p className="mb-3 font-bold text-">Hello, {userData.firstName.toUpperCase()}!</p>
+							<p className="mb-3 font-bold text-">Hello, {userData && userData.firstName ? userData.firstName.toUpperCase() : "Guest"}!</p>
 						) : null}
 						<Link to={"/logout"} className="text-black">
 							<div className="border-2 border-black h-full py-2 px-8 rounded-md">
