@@ -9,7 +9,7 @@ import requests as requestsLib
 import uuid
 
 app = Flask(__name__)
-client = MongoClient('mongodb://127.0.0.1:27017/')  # Connect to your MongoDB
+client = MongoClient('mongodb://localhost:27017/')  # Connect to your MongoDB
 db_name = "test_db"
 db = client[db_name]
 collection_name = "prescription" #add a component called prescription
@@ -176,7 +176,7 @@ def register_service(service_name, service_url):
 
 
 print("Starting Prescription Service on port", app.config["PORT"])
-register_service("prescription-service", f"http://127.0.0.1:{app.config['PORT']}")
+register_service("prescription-service", f"http://localhost:{app.config['PORT']}")
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT) #Tested manually using Postman

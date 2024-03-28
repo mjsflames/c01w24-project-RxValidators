@@ -9,7 +9,7 @@ const ScrapedData = (websiteURL) => {
     const { websiteUrl } = JSON.parse(JSON.stringify(websiteURL));
     console.log("WEBBBB:", websiteUrl);
     
-    const get_api = `http://127.0.0.1:5002/call-python-function?websiteURL=${websiteUrl}`;
+    const get_api = `http://localhost:5002/call-python-function?websiteURL=${websiteUrl}`;
 
     useEffect(() => {
         const fetchData = async () => {

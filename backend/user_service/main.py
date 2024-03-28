@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 import uuid
 from bson.json_util import dumps, loads
 
-client = MongoClient('mongodb://127.0.0.1:27017/')  # Connect to your MongoDB
+client = MongoClient('mongodb://localhost:27017/')  # Connect to your MongoDB
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -154,7 +154,7 @@ def register_service(service_name, service_url):
 
 
 print("Starting User Service on port", app.config["PORT"])
-register_service("user-service", f"http://127.0.0.1:{app.config['PORT']}")
+register_service("user-service", f"http://localhost:{app.config['PORT']}")
 
 if __name__ == "__main__":
     app.run(port=PORT, debug=True)

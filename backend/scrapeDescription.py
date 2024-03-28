@@ -39,7 +39,7 @@ def register_service(service_name, service_url):
     return requestsLib.post("http://localhost:3130/service-registry/register", json={"serviceName": service_name, "serviceUrl": service_url})
 
 print("Starting Green Resources Service on port", app.config["PORT"])
-register_service("green-res-service", f"http://127.0.0.1:{app.config['PORT']}")
+register_service("green-res-service", f"http://localhost:{app.config['PORT']}")
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT) #Tested manually using Postman

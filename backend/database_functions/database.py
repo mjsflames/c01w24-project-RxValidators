@@ -18,7 +18,7 @@ website_dictionary = \
     "Collège des médecins du Québec": "https://www.cmq.org/fr/bottin"
 }
 
-server_IP = "127.0.0.1:27017"
+server_IP = "localhost:27017"
 client = MongoClient(f"mongodb://{server_IP}")
 db_name = "test_db"
 collection_name = "test_collection"
