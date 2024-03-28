@@ -80,8 +80,8 @@ const PrescriptionCodeList = ({ className }) => {
 	}, [filter, data]);
 
 	return (
-		<div className={`flex flex-col ${className}`}>
-			<h1 className="text-lg	font-semibold upper">Prescriber Codes</h1>
+		<div className={`flex flex-col mb-10 ${className}`}>
+			<h1 className="text-lg font-semibold upper">Prescriber Codes</h1>
 			<p>All of the prescriber codes recorded in the system.</p>
 			<br className="mt-4" />
 			{/* Filter */}
@@ -109,7 +109,7 @@ const PrescriptionCodeList = ({ className }) => {
 
 					return (<li
 						key={"pc" + code+firstName}
-						className={`bg-gray-300 py-4 px-4 rounded-sm border-l-8 flex justify-between ${statusColors[status]} relative`}
+						className={`bg-gray-300 even:bg-gray-300/50  py-4 px-4 rounded-sm border-l-8 flex justify-between ${statusColors[status]} relative`}
 					>
 						<p>{code}</p>
 						<p>{firstName} {lastName} </p>

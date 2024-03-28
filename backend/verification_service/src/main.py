@@ -151,6 +151,24 @@ def get_prescriber_codes():
         return_data.append({str(k): str(v) for k, v in code.items() if k in ["code", "status", "firstName", "lastName", "_id"]})
     return jsonify(return_data)
 
+@app.route('/api/prescriber-codes/active/<code>', methods=['GET'])
+def get_prescriber_code(code):
+    license = request.args.get('license')
+    # status = request.args.get('status')
+    if not license or not code: return jsonify({'error': 'Invalid license or code'}), 400
+    
+    query = {"code": str(code), "license": str(license), "status": "VERIFIED", "unassigned": True}
+    # if status: query["status"] = str(status)
+
+    code = get_prescriber_codes_from_db(query)
+    # Get num responses
+    count = len(list(code.clone()))
+    if not code or count == 0: return jsonify({'error': 'Code not found'}), 404
+
+    code = {str(k): str(v) for k, v in code[0].items()}
+    code.pop("_id")
+    return jsonify(code)
+
 @app.route("/api/prescriber-codes/<code>", methods=["POST"])
 def update_prescriber_code(code):
     status = request.json.get('status')

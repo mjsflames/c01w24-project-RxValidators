@@ -50,6 +50,10 @@ def save_to_db(df):
         "Scraped Status": "status",
         "Code": "code",
         })
+    
+    # Create a new column "UNASSIGNED"
+    df["unassigned"] = True
+    
     # Save the dataframe to the database
     db_func.insert_data(collection, df.to_dict(orient='records'))
 
@@ -104,8 +108,8 @@ def add_codes_to_df(df):
 #     return df
 
 # Get the prescriber codes
-def get_prescriber_codes_from_db():
-    codes = collection.find({})
+def get_prescriber_codes_from_db(filter={}):
+    codes = collection.find(filter)
     return codes
 
 # Update the status of a prescriber code
