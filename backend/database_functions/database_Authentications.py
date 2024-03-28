@@ -24,7 +24,7 @@ app.config['PORT'] = PORT
 required_authentication_fields = [
     "username",
     "password",
-    # "role"
+    "role",
 ]
 
 connections = []
