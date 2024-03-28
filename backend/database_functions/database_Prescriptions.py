@@ -21,7 +21,7 @@ app.config["CORS_HEADERS"] = "Content-Type"
 app.config["DEBUG"] = True
 app.config["PORT"] = PORT
 
-required_prescription_fields = [
+prescription_fields = [
     "date",
     "patient_initials",
     "prescriber_code",
@@ -32,8 +32,11 @@ required_prescription_fields = [
     "prescriber_status",
     "pdf_link",
     "discoveryPass",
+    "loggedUser"
 ]
 
+PATIENT = 0
+PRESCRIBER = 1
 required_PAT_prescription_fields = [
     "date",
     "patient_initials",
@@ -82,33 +85,34 @@ def submit_form():
                 400,
             )
 
-    def exists(data):
-        existing_prescription = collection.find_one(
-            {"date": date, "prescriber_code": prescriber_code}
-        )
-        if existing_prescription:
-            # If a prescription exists, return an error
+    def alreadyLogged(data):
+        query = {"date": data.date, "prescriber_code": data.prescriber_code}
+        logged = collection.find_one(query)
+
+        if logged and logged.get("loggedUser")[PATIENT] == True == data["user"]:
             return (
-                jsonify(
-                    {
-                        "error": "A prescription with the given date and prescriber code already exists"
-                    }
-                ),
-                409,
+                jsonify({"error": "User role exists for the same date and code"}),
+                400,
             )
 
     if "user" in data and data["user"] == "patient":
         if error := validateFields(data, required_PAT_prescription_fields):
             return error
+    if "user" in data and data["user"] == "prescriber":
+        if error := validateFields(data, required_PR_prescription_fields):
+            return error
 
-    # Extract the 'date' and 'prescriber_code' from the request data
     date = data.get("date")
     prescriber_code = data.get("prescriber_code")
-    data["patient_status"] = "Pr not logged yet"
+    filter_fields = {"date": date, "prescriber_code": prescriber_code}
+    result = collection.update_one(filter_fields, {"$set": data}, upsert=True)
 
-    # Validate and process data as needed
-    collection.insert_one(data)
-    return jsonify({"message": "Data saved successfully"}), 200
+    if result.modified_count == 1:
+        jsonify({"message": "Data saved successfully"}), 200
+    elif result.upserted_id is not None:
+        jsonify({"message": "Data saved successfully"}), 200
+    else:
+        jsonify({"message": "Data saved successfully"}), 200
 
 
 @app.route("/list-prescriptions", methods=["GET"])
@@ -159,8 +163,8 @@ def update_prescription():
 
     # Check if the fields to be updated are within the allowed fields, excluding 'date' and 'prescriber_code'
     update_fields = set(data.keys()) - {"date", "prescriber_code"}
-    if not update_fields.issubset(required_prescription_fields):
-        invalid_fields = update_fields - set(required_prescription_fields)
+    if not update_fields.issubset(prescription_fields):
+        invalid_fields = update_fields - set(prescription_fields)
         return (
             jsonify(
                 {
