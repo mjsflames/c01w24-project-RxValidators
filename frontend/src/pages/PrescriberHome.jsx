@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
-import PageFooter from "../components/PageFooter";
 import nature from "../assets/nature.jpg";
+import { UserContext } from "../App";
 
 const PrescriberHome = () => {
+	const [userData, setData] = useState();
+  	const { user } = useContext(UserContext);
+
+	useEffect(() => {
+		if (user) setData(user);
+	  }, []);
+
 	return (
 		<>
 			<PageHeader
@@ -16,9 +23,11 @@ const PrescriberHome = () => {
 						<div className="col-span-2 ml-5 mt-10 font-bold">
 							<h1>Connect to the evidence. <br /> Connect nature.</h1>
 							<h2 className="text-green-700">Prescribe nature.</h2>
-							<p className="font-bold"><br />
-								Your PaRx Code: {}
-							</p>
+							{userData ? (
+								<p className="font-bold"><br />
+									Your PaRx Code: {userData.providerCode}
+								</p>
+							) : null}
 						</div>
 						<div className="col-span-2 mt-32 text-center mb-8">
 							<h2 className="font-bold mb-2">Get Started</h2>

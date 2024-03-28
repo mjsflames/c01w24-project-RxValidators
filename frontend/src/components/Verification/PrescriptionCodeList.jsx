@@ -31,13 +31,23 @@ const PrescriptionCodeList = ({ className }) => {
 	useEffect(fetchData, []);
 	useEffect(fetchData, [needsUpdate]);
 
+	const deleteHandler = async () => {
+        try {
+            const res = await api.delete(`/auth/removeUser/${code}`)
+            console.log(res.data)
+        } catch (err) {
+            setError(err.response);
+            console.log(err.res)
+        }
+    }
+
 	const items = [
 		[
 			{ value: "Verified", callback: (code) => {updateStatus(code, "VERIFIED")} },
 			{ value: "Inactive", callback: (code) => {updateStatus(code, "INACTIVE")} },
 			{ value: "Expired", callback: (code) => {updateStatus(code, "DISABLED")} },
 		],
-		[{ value: "Remove", callback: (code) => {}, className: "bg-red-300 hover:bg-red-500", icon: faTrash }],
+		[{ value: "Remove", callback: () => {deleteHandler}, className: "bg-red-300 hover:bg-red-500", icon: faTrash }],
 	];
 	
 	const statusColors = {
@@ -81,7 +91,7 @@ const PrescriptionCodeList = ({ className }) => {
 
 	return (
 		<div className={`flex flex-col mb-10 ${className}`}>
-			<h1 className="text-lg font-semibold upper">Prescriber Codes</h1>
+			<h1 className="text-lg	font-semibold upper">Prescriber Codes</h1>
 			<p>All of the prescriber codes recorded in the system.</p>
 			<br className="mt-4" />
 			{/* Filter */}
