@@ -47,11 +47,11 @@ const Navbar = () => {
 
 
 	return (
-		<div className="mr-4 flex gap-4">
+		<div className="mr-4 flex gap-4 flex-col lg:flex-row items-center mb-4">
 			{myLinks.map((link, index) => (
 				<NavLink key={index} to={link.to} style={{ color: 'darkgreen' }}className={({ isActive }) =>
 				[
-				  	isActive ? "active" : "font-bold", 
+				  	isActive ? "active" : "font-bold",
 				].join(" ")
 			  	}>
 					{link.text}
