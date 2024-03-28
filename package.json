@@ -14,7 +14,7 @@
 		"postinstall": "cross-os setup",
 		"setup": {
 			"win32": "cd ./backend/api_gateway && npm install cd ../auth_service && npm install && cd ../user_service && python -m venv env && source env/bin/active && pip install -r requirements.txt && cd ../database_functions && python -m venv env && source env/bin/active && pip install -r requirements.txt && cd ../../frontend && npm install --force ",
-			"linux": "(cd ./backend/api_gateway && npm install); (cd ./backend/auth_service && npm install); (cd ./backend/user_service && python -m venv .venv && pip install -r requirements.txt); (cd ./backend/database_functions && python -m venv .venv && pip install -r requirements.txt); (cd ./frontend && npm install)"
+			"linux": "npm run linux-apigateway; npm run linux-authservice; npm run linux-userservice; npm run linux-databasefunctions; npm run linux-frontend; npm run linux-verification"
 		},
 		"dev": "cross-os dev-os",
 		"dev-os": {
@@ -23,6 +23,12 @@
 		},
 		"windows": ".dev-setup/startup.bat",
 		"linux": "bash ./.dev-setup/startup.sh",
+		"linux-apigateway": "cd ./backend/api_gateway && npm install",
+		"linux-authservice": "cd ./backend/auth_service && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		"linux-userservice": "cd ./backend/user_service && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		"linux-databasefunctions": "cd ./backend/database_functions && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		"linux-frontend": "cd ./frontend && npm install",
+		"linux-verification": "cd ./backend/verification_service && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",

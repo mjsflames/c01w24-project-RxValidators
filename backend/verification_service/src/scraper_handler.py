@@ -2,8 +2,6 @@ import pandas as pd
 from tqdm import tqdm
 # from scrapers.integration import *
 from scrapers.verify import verify
-import threading
-import asyncio
 from io import StringIO, BytesIO
 from code_pdf_server import add_codes_to_df, save_to_db
 
