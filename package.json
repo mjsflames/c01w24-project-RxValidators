@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"cross-os": "^1.5.0",
 		"flowbite": "^2.3.0",
 		"react-hook-form": "^7.51.1"
 	},
@@ -10,9 +11,18 @@
 		"test": "tests"
 	},
 	"scripts": {
-		"postinstall": "cd ./backend/api_gateway && npm install cd ../auth_service && npm install && cd ../../frontend && npm install --force && cd ../user_service && pip install -r requirements.txt && cd ../database_functions && pip install -r requirements.txt",
-		"windows": "startup.bat",
-		"linux": "bash ./startup.sh",
+		"postinstall": "cross-os setup",
+		"setup": {
+			"win32": "cd ./backend/api_gateway && npm install cd ../auth_service && npm install && cd ../user_service && python -m venv env && source env/bin/active && pip install -r requirements.txt && cd ../database_functions && python -m venv env && source env/bin/active && pip install -r requirements.txt && cd ../../frontend && npm install --force ",
+			"linux": "(cd ./backend/api_gateway && npm install); (cd ./backend/auth_service && npm install); (cd ./backend/user_service && python -m venv .venv && pip install -r requirements.txt); (cd ./backend/database_functions && python -m venv .venv && pip install -r requirements.txt); (cd ./frontend && npm install)"
+		},
+		"dev": "cross-os dev-os",
+		"dev-os": {
+			"win32": ".dev-setup/startup.bat",
+			"linux": "bash ./.dev-setup/startup.sh"
+		},
+		"windows": ".dev-setup/startup.bat",
+		"linux": "bash ./.dev-setup/startup.sh",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",

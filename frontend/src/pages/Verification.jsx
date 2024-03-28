@@ -79,7 +79,12 @@ const Verification = () => {
 
 	const cancelJob = async () => {
 		if (!id) return;
-		api.post(`/verification/cancel/${id}`).catch((res) => console.log(res)).finally(() => {setId(null); setStatus(null);});
+		api.post(`/verification/cancel/${id}`)
+			.catch((res) => console.log(res))
+			.finally(() => {
+				setId(null);
+				setStatus(null);
+			});
 	};
 
 	var progress = <ProgressBar amount={percent} />;
