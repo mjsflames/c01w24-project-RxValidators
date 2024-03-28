@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import Prescription from "../components/Prescription";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import pic from "../assets/prescribertable.jpg";
-import { UserContext } from "../App";
+import api from "../axiosConfig";
 
 const AdminLogs = () => {
   const [data, setData] = useState(null);
   const [shownData, setShownData] = useState(null);
-  const { user } = useContext(UserContext);
-  const [userData, setUserData] = useState();
   const [searchInput, setSearchInput] = useState("");
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const sampleData = [
@@ -17,23 +15,27 @@ const AdminLogs = () => {
         "date": "2024-03-12",
         "patient_initials": "AB",
         "prescriber_code": "001",
-        "status": "Pending",
+        "status": "Pa Logged",
         "comments": "Details for item 1",
         "discovery": true,
+        "user_type": "Patient",
       },
       {
         "date": "2024-03-12",
-        "patient_initials": "CD",
+        "patient_initials": "AB",
         "prescriber_code": "001",
-        "status": "Completed",
-        "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal"
+        "status": "Pr Logged",
+        "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal",
+        "discovery": true,
+        "user_type": "Prescriber"
       },
       {
         "date": "2024-03-12",
         "patient_initials": "EF",
         "prescriber_code": "001",
-        "status": "Pending",
-        "comments": "Details for item 3"
+        "status": "Pr not logged yet",
+        "comments": "Details for item 3",
+        "user_type": "Prescriber"
       }
     ];
 
@@ -67,10 +69,6 @@ const AdminLogs = () => {
   }, []);
 
   useEffect(() => {
-    if (user) setUserData(user);
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       const filteredData = await filterData(data, searchInput);
       setShownData(filteredData);
@@ -83,11 +81,20 @@ const AdminLogs = () => {
     if (!filterString) return data;
 
     // Only Date and Status
-    return data.filter(item => (item.date + item.status).toLowerCase().includes(filterString));
+    // return data.filter(item => (item.date + item.status).toLowerCase().includes(filterString));
 
     // All fields
-    // return data.filter(item => JSON.stringify(item).toLowerCase().includes(filterString));
+    return data.filter(item => JSON.stringify(item).toLowerCase().includes(filterString));
   }
+
+  const updateLogStatus = async () => {
+		try {
+			const response = await api.post(`http://localhost:5001/api/update-prescription/`);
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 
   return (
@@ -100,10 +107,8 @@ const AdminLogs = () => {
 
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
-            {userData ? (
-              <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">{userData.firstName} {userData.lastName}'s Logged Prescriptions</h1>
-            ) : null}
-            <p className="font-semibold">Prescription status are sorted by the date and initials of the patient.</p>
+            <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">Administrator: All Logged Prescriptions</h1>
+            <p className="font-semibold">Prescription status are able to be searched by the date and status.</p>
             <p className="font-semibold">Change the status to "Complete with Discovery Pass" if requirements are met.</p>
           </div>
           <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())} value={searchInput} className="flex w-1/4 p-2" />
@@ -113,7 +118,8 @@ const AdminLogs = () => {
                 <th scope="col" className="px-2 py-3">Date</th>
                 <th scope="col" className="px-2 py-3">Patient Initials</th>
                 <th scope="col" className="px-2 py-3">Provider Code</th>
-                <th scope="col" className="px-2 py-3">Discovery Pass Prescribed?</th>
+                <th scope="col" className="px-2 py-3">Discovery Pass?</th>
+                <th scope="col" className="px-2 py-3">User Type</th>
                 <th scope="col" className="px-2 py-3">Prescription Status</th>
               </tr>
             </thead>
@@ -123,9 +129,13 @@ const AdminLogs = () => {
                   <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:">
                     <td className="px-2 py-3 w-1/8">{item.date}</td>
                     <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
-                    <td className="px-2 py-3">{item.status}</td>
-                    <td className="px-2 py-3 w-1/8"><input type="checkbox" checked={item.discovery} /></td>
-                    <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
+                    <td className="px-2 py-3">{item.prescriber_code}</td>
+                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discovery}/></td>
+                    <td className="px-2 py-3">{item.user_type}</td>
+                    <select className="py-2 w-3/4 truncate max-w-md text-black">
+                      <option selected value={item.status} defaultValue={item.status}>{item.status}</option>
+                      <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
+                    </select>
                   </tr>
                 </>
               ))}
