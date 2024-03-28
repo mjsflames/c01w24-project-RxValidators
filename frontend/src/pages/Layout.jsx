@@ -6,11 +6,13 @@ import PageFooter from "../components/PageFooter";
 
 const Layout = () => {
 	return (
-		<>
+		<div className="flex flex-col min-h-screen">
 			<Header />
-			<Outlet />
+			<div className="flex-1">
+				<Outlet />
+			</div>
 			<PageFooter />
-		</>
+		</div>
 	);
 };
 

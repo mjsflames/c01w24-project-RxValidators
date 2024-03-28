@@ -127,19 +127,29 @@ def generate_pdf():
 
 
 # API endpoint to export the csv file with the new data
-@app.route('/api/export/csv/<id>', methods=['POST'])
-def export_csv(id):    
+@app.route('/export/<id>', methods=['GET'])
+def export_file(id):
+    file_type = request.args.get('file_type', 'csv')
+    if file_type not in ['csv', 'xlsx']:
+        return {"message": "Invalid file type. Please specify 'csv' or 'xlsx'."}, 400, {"Content-Type": "application/json"}
     
     status = scraper_handler.check_status(id)
     if type(status) is not DataFrame:
         return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
     
+    # Set content_type to a default value
     buffer = StringIO()
-    modify_csv_with_new_data(buffer, status)
+    if file_type == 'csv':
+        new_data_to_csv(buffer, status)
+        content_type = "text/csv"
+    else:
+        new_data_to_csv(buffer, status)
+        content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    
     buffer.seek(0)
     result = status.to_dict(orient='records') 
     
-    return {"json": status.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
+    return {"json": status.to_json(orient='records'), "file": buffer.read()}, 200, {"Content-Type": content_type}
 
 # Retrieve the prescriber codes
 @app.route('/api/prescriber-codes', methods=['GET'])
