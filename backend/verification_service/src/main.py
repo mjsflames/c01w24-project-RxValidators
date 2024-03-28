@@ -148,11 +148,46 @@ def export_file(id):
     
     buffer.seek(0)
     result = status.to_dict(orient='records') 
-    db_func.insert_data(collection, result)
     
     return {"json": status.to_json(orient='records'), "file": buffer.read()}, 200, {"Content-Type": content_type}
 
-            
+# Retrieve the prescriber codes
+@app.route('/api/prescriber-codes', methods=['GET'])
+def get_prescriber_codes():
+    codes = get_prescriber_codes_from_db()
+    # Keep only code and status
+    return_data = [] 
+    for code in list(codes):
+        return_data.append({str(k): str(v) for k, v in code.items() if k in ["code", "status", "firstName", "lastName", "_id"]})
+    return jsonify(return_data)
+
+@app.route('/api/prescriber-codes/active/<code>', methods=['GET'])
+def get_prescriber_code(code):
+    license = request.args.get('license')
+    # status = request.args.get('status')
+    if not license or not code: return jsonify({'error': 'Invalid license or code'}), 400
+    
+    query = {"code": str(code), "license": str(license), "status": "VERIFIED", "unassigned": True}
+    # if status: query["status"] = str(status)
+
+    code = get_prescriber_codes_from_db(query)
+    # Get num responses
+    count = len(list(code.clone()))
+    if not code or count == 0: return jsonify({'error': 'Code not found'}), 404
+
+    code = {str(k): str(v) for k, v in code[0].items()}
+    code.pop("_id")
+    return jsonify(code)
+
+@app.route("/api/prescriber-codes/<code>", methods=["POST"])
+def update_prescriber_code(code):
+    status = request.json.get('status')
+    if not status:
+        return jsonify({'error': 'Invalid status'}), 400
+
+    num_updates = update_prescriber_code_status(code, status)
+    return jsonify({'message': 'Updated status', 'count': str(num_updates.modified_count)}), 200
+
 # # API endpoint to generate prescriber codes
 # @app.route('/generate/code/export', methods=['POST'])
 # def generate_prescriber_codes():    

@@ -1,0 +1,12 @@
+flask
+flask_cors
+pandas
+tqdm
+scrapy
+selenium
+bs4
+asyncio
+scrapyscript
+reportlab
+pymongo
+openpyxl

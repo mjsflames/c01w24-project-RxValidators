@@ -9,8 +9,7 @@ import database as db_func
 
 #########################################################
 # Collection of database is used for PDF and Code generation
-def collection():
-    return db_func.get_collection("prescribers")
+collection = db_func.get_collection("prescribers")
 # Clear out database 
 # db_func.delete_all(collection) # TEMP
 #########################################################
@@ -32,6 +31,31 @@ def code_generator(firstname, last_name, province, index):
 def get_index(counter):
     number = str(counter).zfill(3)
     return number
+
+def save_to_db(df):
+    # Remove "status" if exists
+    if "Status" in df.columns:
+        df = df.drop(columns=["Status"])
+    
+    if "Initials" in df.columns:
+        df = df.drop(columns=["Initials"])
+
+    # Rename the columns to match the database
+    df = df.rename(columns={
+        "First Name": "firstName", 
+        "Last Name": "lastName", 
+        "Province": "province",
+        "Licence #": "license", 
+        "Licensing College": "college",
+        "Scraped Status": "status",
+        "Code": "code",
+        })
+    
+    # Create a new column "UNASSIGNED"
+    df["unassigned"] = True
+    
+    # Save the dataframe to the database
+    db_func.insert_data(collection, df.to_dict(orient='records'))
 
 def add_codes_to_df(df):
     df['Initials'] = df['First Name'].str[0] + df['Last Name'].str[0]
@@ -59,7 +83,7 @@ def add_codes_to_df(df):
                 
                 last = list(last)
                 
-                if len(last) == 0: last = [[{"Code": f"000"}]]
+                if len(last) == 0: last = [{"Code": f"000"}]
                 last = last[0]['Code'][-3:]
                 # Convert last to integer
                 last = int(last)
@@ -82,6 +106,16 @@ def add_codes_to_df(df):
 #     if license == license_number:
 #         df = df[df['License #'] != license_number]
 #     return df
+
+# Get the prescriber codes
+def get_prescriber_codes_from_db(filter={}):
+    codes = collection.find(filter)
+    return codes
+
+# Update the status of a prescriber code
+def update_prescriber_code_status(code, status):
+    updates = collection.update_one({"code": code}, {"$set": {"status": status}})
+    return updates
 
 # This function generates a pdf file for the verified prescribers
 def generate_verified_pdfs(df):

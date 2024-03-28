@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Prescription from "../components/Prescription";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import pic from "../assets/prescribertable.jpg";
+import { UserContext } from "../App";
 
 const PrescriberPrescriptions = () => {
   const [data, setData] = useState(null);
   const [myItem, setItem] = useState(null);
+  const { user } = useContext(UserContext);
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     const sampleData = [
@@ -61,6 +64,9 @@ const PrescriberPrescriptions = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+		if (user) setUserData(user);
+	  }, []);
 
   const itemClick = (item) => {
     if (myItem !== item) {
@@ -70,7 +76,6 @@ const PrescriberPrescriptions = () => {
       setItem(null);
     }
   };
-
 
   return (
     <>
@@ -82,7 +87,9 @@ const PrescriberPrescriptions = () => {
 
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
         <div className="flex flex-col mx-auto mb-12 text-center">
-          <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">First/Last Name's Logged Prescriptions</h1>
+          {userData ? (
+            <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">{userData.firstName} {userData.lastName}'s Logged Prescriptions</h1>
+          ) : null}
           <p className="font-semibold">Click on Show More to access more details about your prescription. Prescription status will automatically change once both parties log the prescription.</p>
           <p className="font-semibold">Prescribed Discovery Passes will be mailed to the patient.</p>
         </div>

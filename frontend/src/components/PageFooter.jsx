@@ -53,7 +53,7 @@ const testFooter = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Extras</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="https://bcparksfoundation.ca/privacy-policy/" target="_blank" rel="noopener noreferrer" className="hover:underline">Contact Form</a>
+                                        <a href="https://www.parkprescriptions.ca/en/contact" target="_blank" rel="noopener noreferrer" className="hover:underline">Contact Form</a>
                                     </li>
                                     <li className="mb-4">
                                         <a href="https://www.parkprescriptions.ca/en/about#Acknowledgments" target="_blank" rel="noopener noreferrer" className="hover:underline">Acknowledgements</a>
