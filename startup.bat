@@ -11,6 +11,7 @@ IF "%type%" EQU "" (
 )
 
 start cmd /k "cd backend/api_gateway && %command% && exit"
+timeout /t 2
 @REM start cmd /k "cd backend/auth_service && %command% && exit"
 @REM start cmd /k "cd backend/verification_service && python -m flask --app ./src/main run && exit"
 start cmd /k "cd backend/verification_service && python ./src/main.py && exit"

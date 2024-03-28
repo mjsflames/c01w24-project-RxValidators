@@ -110,10 +110,11 @@ def health_check(): # ? API Gateway health check
 
 ##############################################
 
-@app.route('/generatePdf', methods=['POST'])
+@app.route('/api/generatePdf', methods=['POST'])
 def generate_pdf():
     code = request.json.get('code')
-    output_path = request.json.get('output_path')
+    # output_path = request.json.get('output_path')
+    output_path = "./"    
 
     if not code or not output_path:
         return jsonify({'error': 'Invalid code or output path'}), 400

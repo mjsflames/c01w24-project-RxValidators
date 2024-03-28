@@ -26,7 +26,11 @@ const PrescriberHome = () => {
 								<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Log a Patient Prescription</button>
 							</Link>
 						</div>
-							<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Download your Prescription PDF</button>
+							<Link to="/pdfPage">
+								<button
+									className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-3 mr-8 h-12 w-64 text-center">Download your Prescription PDF
+								</button>
+							</Link>
 						<Link to="/prescriberPrescriptions">
 							<button href="#" className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Your Prescriptions</button>
 						</Link>
