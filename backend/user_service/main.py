@@ -59,11 +59,16 @@ def get_prescriber_codes():
 
     if code: filter_dict["code"] = code
     
-    match (status):
-        case "unassigned":
-            filter_dict["status"] = "NOT REGISTERED"
-        case "assigned":
-            filter_dict["status"] = "ACTIVE"
+    if status == "unassigned":
+        filter_dict["status"] = "NOT REGISTERED"
+    elif status == "assigned":
+        filter_dict["status"] = "ACTIVE"
+        
+    # match (status):
+    #     case "unassigned":
+    #         filter_dict["status"] = "NOT REGISTERED"
+    #     case "assigned":
+    #         filter_dict["status"] = "ACTIVE"
     
     codes = prescriber_collection.find(filter_dict)
     return {"codes": format_codes(codes)}, 200, {"Content-Type": "application/json"}
