@@ -131,7 +131,7 @@ function App() {
 						<Route path="patientacc" element={<PatientAccount />} />
 						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
-            <Route path="pdfPage" element={<Pdf />} />
+            <Route path="PDF" element={<Pdf />} />
 							<Route
 								index
 								element={
