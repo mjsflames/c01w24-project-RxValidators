@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ContentContainer from "../components/ContentContainer";
+import React, { useContext, useState, useEffect } from "react";
 import PageHeader from "../components/PageHeader";
 import log from "../assets/prescriberlog.jpg";
 import api from "../axiosConfig";
+import { UserContext } from "../App";
+
 
 const LogPresPrescription = () => {
   const [data, setData] = useState({});
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    setData(prevState => ({ ...prevState, user: "prescriber"}));
+    setData(prevState => ({ ...prevState, user: "prescriber", username: user.username}));
   }, []);
 
   function handleClick() {
