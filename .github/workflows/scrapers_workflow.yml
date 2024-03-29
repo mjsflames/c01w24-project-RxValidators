@@ -27,4 +27,6 @@ jobs:
           pip install pytest scrapy scrapyscript beautifulsoup4 selenium
 
       - name: Test the web scraping and physician verification
-        run: pytest tests/test_scrapers.py
+        run: |
+          cd backend/verification_service/src/
+          pytest tests/test_scrapers.py
