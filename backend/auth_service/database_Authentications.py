@@ -24,8 +24,10 @@ app.config['PORT'] = PORT
 required_authentication_fields = [
     "username",
     "password",
-    # "role"
+    "role",
 ]
+
+prescribers_collection = db["prescribers"]
 
 connections = []
 
@@ -82,6 +84,8 @@ def create_user_account():
                                                                     {"role": "readWriteAnyDatabase", "db": "admin"}])
         elif(role == "prescriber"):
             db.command("createUser", str(username), pwd=str(password), roles=[{"role": "readWrite", "db": "test_db"}])
+            # Remove prescriber from prescribers collection
+            prescribers_collection.delete_one({"code": username, "unassigned": True, "status": "VERIFIED"})
         elif(role == "patient"):
             db.command("createUser", str(username), pwd=str(password), roles=[{"role": "read", "db": "test_db"}])
         else:
@@ -125,6 +129,9 @@ def authenticate_user():
 
         # Strip password
         user.pop("password")
+        # Stringify id
+        user["_id"] = str(user["_id"])
+
         # Store token as cookie
         token = generate_id()
         res = make_response(jsonify({"message": "Authentication Success", "data": dumps(user)}), 200)
@@ -198,19 +205,47 @@ def get_role(username):
     user = collection.find_one({"username": username})
     return user["role"]
 
+@app.route('/updateUser/<username>', methods=['PATCH'])
+@cross_origin()
+def update_user(username):
+
+    try:
+        if get_role(username) == "admin":
+            return jsonify({"message": "Unauthorized: cannot change admin accounts"}), 401
+
+        data = request.get_json()
+        if '_id' in data:
+            del data['_id']
+
+        update_query = {"$set": data}
+
+        update_result = collection.update_one({"username": username}, update_query)
+
+        if update_result.modified_count > 0:
+            return jsonify({"message": "User updated successfully"}), 200
+        else:
+            return jsonify({"message": "No user found"}), 404
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/removeUser/<username>', methods=['DELETE'])
 @cross_origin()
 def remove_user(username):
     # This function should only be accessible by admins
     try:
         if(get_role(username) == "admin"):
-            return jsonify({"message": f"Unauthorized: cannot delete admin accounts"}), 401
+            return jsonify({"message": "Unauthorized: cannot delete admin accounts"}), 401
 
         result = collection.delete_one({"username": username})
 
         if result.deleted_count == 0:
-            abort(404, description="User not found")
+            return jsonify({"message": "User does not exist"}), 404
 
+        # This command removes the user from the mongodb user list
+        db.command("dropUser", username)
+        
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
 
     except Exception as e:

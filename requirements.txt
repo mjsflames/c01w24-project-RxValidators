@@ -9,3 +9,8 @@ flask_cors
 tqdm
 asyncio
 pymongo
+requests
+bcrypt
+uuid
+reportlab
+openpyxl

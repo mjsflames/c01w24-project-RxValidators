@@ -29,7 +29,7 @@ import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import Home from "./pages/Home.jsx";
-
+import Pdf from "./pages/PdfViewer.jsx";
 import Logout from "./pages/Logout.jsx";
 import api from "./axiosConfig.js";
 
@@ -37,6 +37,7 @@ const UserContext = createContext({
   user: null,
   handleLogin: (username, password) => { },
   handleLogout: () => { },
+  getNotifications: async (includeRead=false) => { },
 });
 
 function App() {
@@ -106,6 +107,20 @@ function App() {
     });
   };
 
+  const getNotifications = async (includeRead=false) => {
+    if (!user) {
+      console.error("No user to get notifications for");
+      return [];
+    }
+    return await api.get(`/notifications/${user._id}${includeRead ? "?fetchAll=true" : ""}`).then((res) => {
+      console.log("Notifications", res.data);
+      return res.data;
+    }).catch((err) => {
+      console.error("Failed to get notifications", err);
+      return [];
+    });
+  };
+
 	useEffect(() => {
 		console.log("User is", user);
 		// Save to local storage
@@ -123,7 +138,7 @@ function App() {
       {/* <Alert /> */}
 
 			<ServiceRegistryInfo />
-			<UserContext.Provider value={{ user, handleLogin, handleLogout }}>
+			<UserContext.Provider value={{ user, handleLogin, handleLogout, getNotifications }}>
 				<BrowserRouter>
 					<Routes>
 						<Route path="logout" element={<Logout />} />
@@ -132,6 +147,7 @@ function App() {
 						<Route path="patientacc" element={<PatientAccount />} />
 						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
+            <Route path="PDF" element={<Pdf />} />
 							<Route
 								index
 								element={

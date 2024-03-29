@@ -178,7 +178,6 @@ def submit_form():
     collection.update_one(filter_fields, update)
     return (jsonify({"message": "Data posted successfully"}), 200)
 
-
 @app.route("/list-prescriptions", methods=["GET"])
 def list_prescriptions():
     # Fetch all documents in the collection
@@ -213,6 +212,7 @@ def search_prescriptions():
     return Response(dumps(results), mimetype="application/json"), 200
 
 
+
 @app.route("/api/update-prescription/<oid>", methods=["POST"])
 def update_prescription(oid):
     data = request.json  # Assuming the data is sent as JSON
@@ -221,14 +221,17 @@ def update_prescription(oid):
     # date = data.get("date")
     # prescriber_code = data.get("prescriber_code")
 
+
     # # Ensure the necessary fields are provided
     # if not date or not prescriber_code:
     #     return jsonify({"error": "Missing date or prescriber_code in request"}), 400
 
     # Check if the fields to be updated are within the allowed fields, excluding 'date' and 'prescriber_code'
+
     update_fields = set(data.keys()) #- {"date", "prescriber_code"}
     if not update_fields.issubset(template_PR):
         invalid_fields = update_fields - set(template_PR)
+
         return (
             jsonify(
                 {
