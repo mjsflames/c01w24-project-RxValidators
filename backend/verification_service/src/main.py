@@ -6,7 +6,7 @@ import scraper_handler
 import threading
 from pandas import DataFrame
 # from prescriber_code import *
-from io import StringIO
+from io import StringIO, BytesIO
 
 # import ..database_functions.database as db_func
 import database as db_func
@@ -128,15 +128,23 @@ def generate_pdf():
 # API endpoint to export/save all PDFs for the verified prescribers
 @app.route('/api/exportPdfs/<id>', methods=['POST'])
 def generateAllPdfs(id):
+    full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
+    expected_data = [
+                ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
+                ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", "BABAB"],
+                ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
+            ] 
+    df = pd.DataFrame(expected_data, columns=full_columns)
+            
     
-    status = scraper_handler.check_status(id)
-    if type(status) is not DataFrame:
-        return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
-    
+    # status = scraper_handler.check_status(id)
+    # if type(status) is not DataFrame:
+    #     return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
+    status = df
     response = generate_verified_pdfs(status, "./")
-    # return buffer from response
-    return response, 200, {"Content-Type": "arraybuffer"}
     
+    # return buffer from response
+    return response, 200, {"Content-Type": "application/zip"}    
 
 
 
@@ -144,21 +152,23 @@ def generateAllPdfs(id):
 @app.route('/api/export/<id>', methods=['GET'])
 def export_file(id):
     # file = request.json.get('file')
-    file_type = request.args.get('file_type', 'csv')
+    file_type = request.args.get('file_type') or 'csv'
     if file_type not in ['csv', 'xlsx']:
         return {"message": "Invalid file type. Please specify 'csv' or 'xlsx'."}, 400, {"Content-Type": "application/json"}
-    
+
+    # call the function generate_verified_pdfs(df, output_path) to generate the PDFs
+    print(generate_verified_pdfs(df, ""))
     status = scraper_handler.check_status(id)
     if type(status) is not DataFrame:
         return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
-    
     # Set content_type to a default value
     buffer = StringIO()
     if file_type == 'csv':
         new_data_to_csv(buffer, status)
         content_type = "text/csv"
     else:
-        new_data_to_csv(buffer, status)
+        buffer = BytesIO()
+        new_data_to_xlsx(buffer, status)
         content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     
     buffer.seek(0)

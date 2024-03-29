@@ -8,7 +8,7 @@ import api from "../axiosConfig";
 import PrescriptionCodeList from "../components/Verification/PrescriptionCodeList.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCancel, faDownload } from "@fortawesome/free-solid-svg-icons";
-import axios from 'axios';
+import axios from "axios";
 
 const Verification = () => {
   const [file, setFile] = useState(null);
@@ -28,7 +28,9 @@ const Verification = () => {
 
   const downloadToCsv = async () => {
     if (!data) return;
-    const response = await api.get(`/verification/export/${id}`, { params: {'file_type': 'csv'} });
+    const response = await api.get(`/verification/export/${id}`, {
+      params: { file_type: "csv" },
+    });
     const blob = new Blob([response.data], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -40,7 +42,10 @@ const Verification = () => {
 
   const downloadToXlsx = async () => {
     if (!data) return;
-    const response = await api.get(`/verification/export/${id}`, { params: {'file_type': 'xlsx'} });
+    const response = await api.get(`/verification/export/${id}`, {
+      params: { file_type: "xlsx" },
+      responseType: "arraybuffer",
+    });
     const blob = new Blob([response.data], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
@@ -55,16 +60,18 @@ const Verification = () => {
   const downloadPdfs = async () => {
     if (!data) return;
 
-    const response = await api.post(`/verification/exportPdfs/${id}`);
-    const blob = new Blob([response.data], { type: "application/zip"});
-    const a = document.createElement("a");
+    const blob = await api
+      .post(`/verification/exportPdfs/${id}`, {
+        responseType: "arraybuffer",
+      })
+      .then((res) => new Blob([res.data], { type: "application/zip" }));
+    // const blob = new Blob([response.data]);
     const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
     a.href = url;
     a.download = "verification_results.zip";
-    document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
   };
 
   // Check status every 5 seconds

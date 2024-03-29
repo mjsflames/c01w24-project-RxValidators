@@ -130,7 +130,8 @@ def new_data_to_xlsx(file_name, df):
     
 # This function creates a pdf file (formatted the way the company wants it) based on the prescriber's code
 def create_pdf(code, output_path):
-    page = canvas.Canvas(os.path.join(output_path, f"PaRx-{code}.pdf"), pagesize=letter)
+    # page = canvas.Canvas(os.path.join(output_path, f"PaRx-{code}.pdf"), pagesize=letter)
+    page = canvas.Canvas(output_path, pagesize=letter)
     page.setTitle(f"PaRx-{code}")
     page.setFont("Helvetica", 12)
     page.drawString(80, 700, "Name _______________________________________")
@@ -155,16 +156,18 @@ def create_pdf(code, output_path):
 
 def generate_verified_pdfs(df, output_path):
     zip_buffer = io.BytesIO()
-    with zipfile.ZipFile(zip_buffer, "w") as zipf:
+    with zipfile.ZipFile(zip_buffer, "w", compression=zipfile.ZIP_DEFLATED) as zipf:
         # Create the PDFs
         for i in df.index:
-            if df['Status'][i] == "VERIFIED":
-                pdf = create_pdf(df['Code'][i], output_path)
-                pdf.save()
-                pdf_file_path = os.path.join(output_path, f"PaRx-{df['Code'][i]}.pdf")
-                zipf.write(pdf_file_path, arcname=f"PaRx-{df['Code'][i]}.pdf")
-                os.remove(pdf_file_path)
-                
+            if not df['Status'][i] == "VERIFIED": continue
+            
+            
+            pdf_buffer = io.BytesIO()
+            pdf = create_pdf(df['Code'][i], pdf_buffer)
+            # Store the PDF in the zip file
+            pdf.save()
+            zipf.writestr(f"PaRx-{df['Code'][i]}.pdf", pdf_buffer.getvalue())
+            
     # return zip file
     zip_buffer.seek(0)
     return zip_buffer.getvalue()
