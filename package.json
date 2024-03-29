@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"cross-os": "^1.5.0",
 		"flowbite": "^2.3.0",
 		"react-hook-form": "^7.51.1"
 	},
@@ -10,9 +11,36 @@
 		"test": "tests"
 	},
 	"scripts": {
-		"postinstall": "cd ./backend/api_gateway && npm install cd ../auth_service && npm install && cd ../../frontend && npm install --force",
-		"windows": "startup.bat",
-		"linux": "bash ./startup.sh",
+		"postinstall": "cross-os setup",
+		"setup": {
+			"win32": "npm run win32-apigateway && npm run win32-authservice && npm run win32-userservice && npm run win32-databasefunctions && npm run win32-frontend && npm run win32-verification",
+			"linux": "npm run linux-apigateway; npm run linux-authservice; npm run linux-userservice; npm run linux-databasefunctions; npm run linux-frontend; npm run linux-verification"
+		},
+
+		"dev": "cross-os dev-os",
+		"dev-os": {
+			"win32": "call .dev-setup/startup",
+			"linux": "bash ./.dev-setup/startup.sh"
+		},
+
+		"windows": ".dev-setup/startup.bat",
+		"win32-apigateway": "cd ./backend/api_gateway && npm install",
+		"win32-authservice": "cd ./backend/auth_service && python -m venv ./.venv && cd .venv/Scripts && activate && cd ../.. && pip install -r requirements.txt\"",
+		"win32-userservice": "cd ./backend/user_service && python -m venv ./.venv && cd .venv/Scripts && activate && cd ../.. && pip install -r requirements.txt",
+		"win32-databasefunctions": "cd ./backend/database_functions && python -m venv ./.venv && cd .venv/Scripts && activate && cd ../.. && pip install -r requirements.txt",
+		"win32-frontend": "cd ./frontend && npm install",
+		"win32-verification": "cd ./backend/verification_service && python -m venv ./.venv && cd .venv/Scripts && activate && cd ../.. && pip install -r requirements.txt",
+
+		
+		"linux": "bash ./.dev-setup/startup.sh",
+		"linux-apigateway": "cd ./backend/api_gateway && npm install",
+		"linux-authservice": "cd ./backend/auth_service && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		"linux-userservice": "cd ./backend/user_service && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		"linux-databasefunctions": "cd ./backend/database_functions && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		"linux-frontend": "cd ./frontend && npm install",
+		"linux-verification": "cd ./backend/verification_service && python -m venv .venv && bash -c 'source ./.venv/bin/activate && pip install -r requirements.txt' && bash -c 'source deactivate'",
+		
+		
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
