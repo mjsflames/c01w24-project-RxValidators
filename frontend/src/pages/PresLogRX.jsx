@@ -9,8 +9,8 @@ const LogPresPrescription = () => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    setData(prevState => ({ ...prevState, user: "prescriber"}));
+  }, []);
 
   function handleClick() {
     async function postData() {

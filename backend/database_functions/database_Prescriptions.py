@@ -7,6 +7,7 @@ import database as dbfunc
 from flask_cors import CORS, cross_origin
 import requests as requestsLib
 import uuid
+import copy
 
 app = Flask(__name__)
 client = MongoClient("mongodb://127.0.0.1:27017/")  # Connect to your MongoDB
@@ -21,34 +22,28 @@ app.config["CORS_HEADERS"] = "Content-Type"
 app.config["DEBUG"] = True
 app.config["PORT"] = PORT
 
-prescription_fields = [
-    "date",
-    "patient_initials",
-    "prescriber_code",
-    "comments",
-    "parks_canada_checkbox",
-    "status",
-    "patient_status",
-    "prescriber_status",
-    "pdf_link",
-    "discoveryPass",
-    "loggedUser",
-]
+# prescription_fields = [
+#     "date",
+#     "patient_initials",
+#     "prescriber_code",
+#     "comments",
+#     "parks_canada_checkbox",
+#     "status",
+#     "patient_status",
+#     "prescriber_status",
+#     "pdf_link",
+#     "discoveryPass",
+#     "loggedUser",
+# ]
 
 template_PR = {
-    "admin": {
-        "date": None,
-        "patient_initials": None,
-        "prescriber_code": None,
-        "comments": None,
-        "parks_canada_checkbox": None,
-        "status": None,
-        "patient_status": None,
-        "prescriber_status": None,
-        "pdf_link": None,
-        "discoveryPass": None,
-        "loggedUser": None,
-    },
+    "date": None,
+    "patient_initials": None,
+    "prescriber_code": None,
+    "comments": None,
+    "status": None,
+    "pdf_link": None,
+    "discoveryPass": None,
     "patient": {
         "date": None,
         "patient_initials": None,
@@ -63,28 +58,34 @@ template_PR = {
     },
 }
 
-NOT_LOGGED = "Pr not logged yet"
+PR_NOT_LOGGED = "Pr not logged yet"
+PA_NOT_LOGGED = "Pa not logged yet"
 COMPLETE = "Complete"
-LOGGED = "Pr Logged"
+PR_LOGGED = "Pr Logged"
+PA_LOGGED = "Pa Logged"
 COMPLETE_WITH_DP = "Complete with Discovery Pass"
 
-required_PAT_prescription_fields = [
-    "date",
-    "patient_initials",
-    "prescriber_code",
-    "discoveryPass",
-    "user",
-]
-required_PR_prescription_fields = [
-    "date",
-    "patient_initials",
-    "prescriber_code",
-    "discoveryPass",
-    "user",
-]
+# required_PAT_prescription_fields = [
+#     "date",
+#     "patient_initials",
+#     "prescriber_code",
+#     "discoveryPass",
+#     "user",
+# ]
+# required_PR_prescription_fields = [
+#     "date",
+#     "patient_initials",
+#     "prescriber_code",
+#     "discoveryPass",
+#     "user",
+# ]
 
 
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
+
+
+def newPR():
+    return copy.deepcopy(template_PR)
 
 
 def generate_id():
@@ -104,11 +105,12 @@ def getPrescriptions(username):
 def submit_form():
 
     data = request.json  # Assuming the data is sent as JSON
-    print(data)
+    print(data)  ###
 
     def validateFields(data, req_fields):
         if not all(field in data for field in req_fields):
             missing_fields = [field for field in req_fields if field not in data]
+            print(missing_fields)
             return (
                 jsonify(
                     {"error": "Missing required fields", "missing": missing_fields}
@@ -117,35 +119,63 @@ def submit_form():
             )
 
     if "user" in data and data["user"] == "patient":
-        if error := validateFields(data, required_PAT_prescription_fields):
+        if error := validateFields(data, template_PR["patient"]):
             return error
-        data["user"] = [True, False]
     elif "user" in data and data["user"] == "prescriber":
-        if error := validateFields(data, required_PR_prescription_fields):
+        if error := validateFields(data, template_PR["prescriber"]):
             return error
-        data["user"] = [False, True]
     else:
         return (
             jsonify({"error": "Missing user type"}),
-            400,
+            403,
         )
+
+    prescription = newPR()
 
     date = data.get("date")
     prescriber_code = data.get("prescriber_code")
     filter_fields = {"date": date, "prescriber_code": prescriber_code}
     result = collection.find_one(filter_fields)
 
+    for key, value in data.items():
+        prescription[data["user"]][key] = value
+
     if result is None:
-        data["status"] = NOT_LOGGED
-        collection.insert_one(data)
+        if data["user"] == "patient":
+            prescription["status"] = PR_NOT_LOGGED
+            prescription["patient"]["status"] = PR_NOT_LOGGED
+        elif data["user"] == "prescriber":
+            prescription["status"] = PA_NOT_LOGGED
+            prescription["patient"]["status"] = PA_NOT_LOGGED
+        collection.insert_one(prescription)
         return (jsonify({"message": "Data posted successfully"}), 200)
 
-    if data["discoveryPass"] == True:
-        data["status"] = LOGGED
-    else:
-        data["status"] = COMPLETE
+    if result["user"] == data["user"]:
+        return (
+            jsonify({"error": "Prescription exists"}),
+            401,
+        )
 
-    update = {"$set": data}
+    for key in data:
+        prescription[key] = (
+            prescription["prescriber"]
+            if prescription["patient"] == prescription["prescriber"]
+            else None
+        )
+
+    if data["discoveryPass"] == "Yes" == result["discoveryPass"]:
+        prescription["status"] = COMPLETE
+
+    elif data["user"] == "patient":
+        prescription["status"] = PR_LOGGED
+        prescription["prescriber"] = result["prescriber"]
+    else:
+        prescription["status"] = PA_LOGGED
+        prescription["patient"] = result["patient"]
+
+    prescription["discoveryPass"] = False
+
+    update = {"$set": prescription}
     collection.update_one(filter_fields, update)
     return (jsonify({"message": "Data posted successfully"}), 200)
 
@@ -198,8 +228,8 @@ def update_prescription():
 
     # Check if the fields to be updated are within the allowed fields, excluding 'date' and 'prescriber_code'
     update_fields = set(data.keys()) - {"date", "prescriber_code"}
-    if not update_fields.issubset(prescription_fields):
-        invalid_fields = update_fields - set(prescription_fields)
+    if not update_fields.issubset(template_PR["admin"]):
+        invalid_fields = update_fields - set(template_PR["admin"])
         return (
             jsonify(
                 {

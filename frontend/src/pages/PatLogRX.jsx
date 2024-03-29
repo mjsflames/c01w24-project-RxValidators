@@ -9,8 +9,8 @@ const LogPatPrescription = () => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    setData(prevState => ({ ...prevState, user: "patient"}));
+  }, []);
 
   function handleClick() {
     async function postData() {
