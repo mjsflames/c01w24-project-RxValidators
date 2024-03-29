@@ -18,16 +18,16 @@ const AdminHome = () => {
             <h2 className="text-green-700">in one click.</h2>
           </div>
 
-          <Link to="/addPrescriber">
+          <Link to="/verify">
             <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-5 mr-8 h-12 w-64 text-center">Verify New Prescribers</button>
           </Link>
-          <Link to="/addPatient">
+          <Link to="/green-resources">
             <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Green Resources</button>
           </Link>
-          <Link to="/accessPrescribers">
+          <Link to="/adminPrescriberProfile">
             <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm ml-5 mr-8 h-12 w-64 text-center">Access Prescribers</button>
           </Link>
-          <Link to="/accessPatients">
+          <Link to="/adminPatientProfile">
             <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm mr-3 h-12 w-64 text-center align-middle">Access Patients</button>
           </Link>
         </div>

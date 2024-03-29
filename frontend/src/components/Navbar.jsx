@@ -14,7 +14,6 @@ const Navbar = () => {
 			{ to: "/green-resources", text: "Green Resources" },
 		],
 		assistant: [
-			{ to: "/temp-links", text: "ADMIN - Assistant" },
 			{ to: "/", text: "Home" },
 			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
 			{ to: "/verify", text: "Verification Platform" },
@@ -22,15 +21,15 @@ const Navbar = () => {
 		],
 		prescriber: [
 			{ to: "/", text: "Home" },
-			{ to: "/prescriberPrescriptions", text: "My Prescriptions" },
 			{ to: "/PrescriberLogRX", text: "Log PaRx" },
+			{ to: "/prescriberPrescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
 			{ to: "/prescriberSettings", text: "My Account" },
 		],
 		patient: [
 			{ to: "/", text: "Home" },
-			{ to: "/patientPrescriptions", text: "My Prescriptions" },
 			{ to: "/PatientLogRX", text: "Log PaRx" },
+			{ to: "/patientPrescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
 			{ to: "/patientSettings", text: "My Account" },
 		],

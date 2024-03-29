@@ -118,7 +118,7 @@ const PatCreateAccount = () => {
 						</div>
 						<div className="w-full">
 							<label htmlFor="license" className="block mb-2 text-sm font-medium text-gray-900">License Number</label>
-							<input value={license} onChange={(e) => setLicense(e.target.value)}  name="license" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="License Number"/>
+							<input value={license} onChange={(e) => setLicense(e.target.value)}  name="license" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="License Number" required/>
 						</div>
 						<div className="w-full">
 						<label htmlFor="college" className="block mb-2 text-sm font-medium text-gray-900">Licensing College Province</label>
@@ -145,15 +145,15 @@ const PatCreateAccount = () => {
                     <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
 						<div className="w-full">
 							<label htmlFor="pres_first_name" className="block mb-2 text-sm font-medium text-gray-900">First Name</label>
-							<input value={firstName} onChange={(e) => setFirstName(e.target.value)} name="pres_first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="First Name"/>
+							<input value={firstName} onChange={(e) => setFirstName(e.target.value)} name="pres_first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="First Name" required/>
 						</div>
 						<div className="w-full">
 							<label htmlFor="pres_last_name" className="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
-							<input value={lastName} onChange={(e) => setLastName(e.target.value)}  type="text" id="pres_last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Last Name"/>
+							<input value={lastName} onChange={(e) => setLastName(e.target.value)}  type="text" id="pres_last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Last Name" required/>
 						</div>
 						<div className="w-full">
 							<label htmlFor="profession" className="block mb-2 text-sm font-medium text-gray-900">Profession</label>
-							<input value={profession} onChange={(e) => setProfession(e.target.value)}  type="text" id="profession" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Profession"/>
+							<input value={profession} onChange={(e) => setProfession(e.target.value)}  type="text" id="profession" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Profession" required/>
 						</div>
 					</div>
 					<div className="mb-5">
