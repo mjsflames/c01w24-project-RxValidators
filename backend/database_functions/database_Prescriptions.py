@@ -32,11 +32,42 @@ prescription_fields = [
     "prescriber_status",
     "pdf_link",
     "discoveryPass",
-    "loggedUser"
+    "loggedUser",
 ]
 
-PATIENT = 0
-PRESCRIBER = 1
+template_PR = {
+    "admin": {
+        "date": None,
+        "patient_initials": None,
+        "prescriber_code": None,
+        "comments": None,
+        "parks_canada_checkbox": None,
+        "status": None,
+        "patient_status": None,
+        "prescriber_status": None,
+        "pdf_link": None,
+        "discoveryPass": None,
+        "loggedUser": None,
+    },
+    "patient": {
+        "date": None,
+        "patient_initials": None,
+        "prescriber_code": None,
+        "discoveryPass": None,
+    },
+    "prescriber": {
+        "date": None,
+        "patient_initials": None,
+        "prescriber_code": None,
+        "discoveryPass": None,
+    },
+}
+
+NOT_LOGGED = "Pr not logged yet"
+COMPLETE = "Complete"
+LOGGED = "Pr Logged"
+COMPLETE_WITH_DP = "Complete with Discovery Pass"
+
 required_PAT_prescription_fields = [
     "date",
     "patient_initials",
@@ -85,34 +116,38 @@ def submit_form():
                 400,
             )
 
-    def alreadyLogged(data):
-        query = {"date": data.date, "prescriber_code": data.prescriber_code}
-        logged = collection.find_one(query)
-
-        if logged and logged.get("loggedUser")[PATIENT] == True == data["user"]:
-            return (
-                jsonify({"error": "User role exists for the same date and code"}),
-                400,
-            )
-
     if "user" in data and data["user"] == "patient":
         if error := validateFields(data, required_PAT_prescription_fields):
             return error
-    if "user" in data and data["user"] == "prescriber":
+        data["user"] = [True, False]
+    elif "user" in data and data["user"] == "prescriber":
         if error := validateFields(data, required_PR_prescription_fields):
             return error
+        data["user"] = [False, True]
+    else:
+        return (
+            jsonify({"error": "Missing user type"}),
+            400,
+        )
 
     date = data.get("date")
     prescriber_code = data.get("prescriber_code")
     filter_fields = {"date": date, "prescriber_code": prescriber_code}
-    result = collection.update_one(filter_fields, {"$set": data}, upsert=True)
+    result = collection.find_one(filter_fields)
 
-    if result.modified_count == 1:
-        jsonify({"message": "Data saved successfully"}), 200
-    elif result.upserted_id is not None:
-        jsonify({"message": "Data saved successfully"}), 200
+    if result is None:
+        data["status"] = NOT_LOGGED
+        collection.insert_one(data)
+        return (jsonify({"message": "Data posted successfully"}), 200)
+
+    if data["discoveryPass"] == True:
+        data["status"] = LOGGED
     else:
-        jsonify({"message": "Data saved successfully"}), 200
+        data["status"] = COMPLETE
+
+    update = {"$set": data}
+    collection.update_one(filter_fields, update)
+    return (jsonify({"message": "Data posted successfully"}), 200)
 
 
 @app.route("/list-prescriptions", methods=["GET"])
