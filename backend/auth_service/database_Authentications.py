@@ -24,7 +24,7 @@ app.config['PORT'] = PORT
 required_authentication_fields = [
     "username",
     "password",
-    # "role"
+    "role",
 ]
 
 prescribers_collection = db["prescribers"]
@@ -129,6 +129,9 @@ def authenticate_user():
 
         # Strip password
         user.pop("password")
+        # Stringify id
+        user["_id"] = str(user["_id"])
+        
         # Store token as cookie
         token = generate_id()
         res = make_response(jsonify({"message": "Authentication Success", "data": dumps(user)}), 200)
@@ -208,13 +211,16 @@ def remove_user(username):
     # This function should only be accessible by admins
     try:
         if(get_role(username) == "admin"):
-            return jsonify({"message": f"Unauthorized: cannot delete admin accounts"}), 401
+            return jsonify({"message": "Unauthorized: cannot delete admin accounts"}), 401
 
         result = collection.delete_one({"username": username})
 
         if result.deleted_count == 0:
-            abort(404, description="User not found")
+            return jsonify({"message": "User does not exist"}), 404
 
+        # This command removes the user from the mongodb user list
+        db.command("dropUser", username)
+        
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
 
     except Exception as e:

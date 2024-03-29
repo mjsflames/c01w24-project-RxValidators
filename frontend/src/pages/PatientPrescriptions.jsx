@@ -4,13 +4,14 @@ import Prescription from "../components/Prescription";
 import ContentContainer from "../components/ContentContainer";
 import pic from "../assets/prescribertable.jpg";
 import { UserContext } from "../App";
+import NotificationCard from "../components/NotificationCard";
 
 const PatientPrescriptions = () => {
   const [data, setData] = useState(null);
   const [myItem, setItem] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, getNotifications } = useContext(UserContext);
   const [userData, setUserData] = useState();
-
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     const sampleData = [
       {
@@ -59,13 +60,17 @@ const PatientPrescriptions = () => {
       } catch (error) {
         console.error('No fetch:', error);
       }
-
     }
     fetchData();
   }, []);
 
   useEffect(() => {
 		if (user) setUserData(user);
+    getNotifications().then((data) => {
+      setNotifications(data);
+    }).catch((error) => {
+      console.error("Failed to get notifications", error);
+    });
 	  }, []);
 
   const itemClick = (item) => {
@@ -83,6 +88,11 @@ const PatientPrescriptions = () => {
         title="My Prescriptions"
         desc="Check the statuses of your prescriptions and find out if you are eligible for a Discovery Pass."
       />
+      <ul>
+        {
+          notifications.map((notification) => <NotificationCard notification={notification} />)
+        }
+      </ul>
       <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
         
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
@@ -98,9 +108,9 @@ const PatientPrescriptions = () => {
                 <tr>
                   <th className="text-left p-2 w-1/8">Date</th>
                   <th className="text-left w-1/8">Prescriber Code</th>
-                  <th className="text-left w-1/8">Status</th>
-                  <th className="text-left w-1/8">Discovery Pass</th>
-                  <th className="w-1/2 text-left px-2">Details</th>
+                  <th className="text-left w-1/8 text-nowrap">Prescription Status</th>
+                  <th className="text-left w-1/8 text-nowrap">Discovery Pass?</th>
+                  <th className="w-1/2 text-left px-2">Prescriber Comments</th>
                   <th className="w-1/2 text-left px-2"></th>
                 </tr>
               </thead>
@@ -111,7 +121,7 @@ const PatientPrescriptions = () => {
                       <td className="p-2 w-1/8">{item.date}</td>
                       <td className="w-1/8">{item.prescriber_code}</td>
                       <td className="w-1/8">{item.status}</td>
-                      <td className="w-1/8"><input type="checkbox" checked={item.discovery} disabled /></td>
+                      <td className="w-1/8 pointer-events-none"><input type="checkbox" checked={item.discovery} /></td>
                       <td className="px-2 w-1/2 truncate max-w-md text-wrap">{item.comments}</td>
                       <button onClick={() => itemClick(item)} className="p-2 w-1/8">
                           <p className="font-bold text-nowrap underline">Show More</p>

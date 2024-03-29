@@ -7,7 +7,7 @@ VERIFIED, INACTIVE, NOT_FOUND = "VERIFIED", "INACTIVE", "NOT FOUND"
     # British Columbia
     ("Keen", "Anthony", "", "BC", NOT_FOUND),
     ("Gill", "Amanpreet", "", "BC", VERIFIED),
-    ("Aalto", "Anu", "", "BC", INACTIVE),
+    ("Johnson", "Amy Elizabeth", "", "BC", INACTIVE),
     ("Gill", "Jasdeep", "", "BC", VERIFIED), # Multiple search results - active
     ("Zhou", "Jian", "", "BC", INACTIVE), # Multiple search results - inactive
     
