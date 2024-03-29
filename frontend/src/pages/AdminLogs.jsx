@@ -9,6 +9,9 @@ const AdminLogs = () => {
   const [searchInput, setSearchInput] = useState("");
   const [update, setUpdate] = useState(false);
 
+  // Other states and useEffects...
+  const [updatedItemDisplay, setUpdatedItemDisplay] = useState({});
+
   useEffect(() => {
     const sampleData = [
       {
@@ -43,30 +46,30 @@ const AdminLogs = () => {
     setShownData(shownData)
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const username = "testUser";
-  //     try {
-  //       const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
-  //         method: "GET",
-  //       });
-  //       if (!res.ok) {
-  //         throw new Error('No response');
-  //       }
-  //       const pData = await res.json();
-  //       console.log(pData);
+  useEffect(() => {
+    async function fetchData() {
+      const username = "testUser";
+      try {
+        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error('No response');
+        }
+        const pData = await res.json();
+        console.log(pData);
 
-  //       if (pData) {
-  //         setData(pData);
-  //         setShownData(shownData)
-  //       }
-  //     } catch (error) {
-  //       console.error('No fetch:', error);
-  //     }
+        if (pData) {
+          setData(pData);
+          setShownData(shownData)
+        }
+      } catch (error) {
+        console.error('No fetch:', error);
+      }
 
-  //   }
-  //   fetchData();
-  // }, []);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,14 +90,51 @@ const AdminLogs = () => {
     return data.filter(item => JSON.stringify(item).toLowerCase().includes(filterString));
   }
 
-  const updateLogStatus = async () => {
+  const updateLogStatus = async (updatedItem) => {
+    const payload = {
+      date: updatedItem.date,
+      patient_initials: updatedItem.patient_initials,
+      prescriber_code: updatedItem.parx_code,
+    };
+    // Assuming this function does something with updatedItem, like sending it to an API
+    console.log("Updating item with the following details:", updatedItem);
+
+    // Update the state to display the updated item data
+    setUpdatedItemDisplay(payload);
+
 		try {
-			const response = await api.post(`http://localhost:5001/api/update-prescription/`);
+			const response = await api.post(`http://localhost:5001/api/update-prescription`, payload);
 			console.log(response.data);
 		} catch (error) {
 			console.error(error);
 		}
 	};
+
+  // const updateLogStatus = async (itemToUpdate) => {
+  //   // Construct the payload from the updated item data
+  //   // const payload = {
+  //   //     date: itemToUpdate.date,
+  //   //     patient_initials: itemToUpdate.patient_initials,
+  //   //     prescriber_code: itemToUpdate.prescriber_code,
+  //   //     status: itemToUpdate.status,
+  //   //     discovery: itemToUpdate.discovery,
+  //   //     user_type: itemToUpdate.user_type,
+  //   // };
+
+  //   const payload = {
+  //     date: "2024-03-14",
+  //     patient_initials: "KW",
+  //     prescriber_code: "RX123456",
+  // };
+
+  //   try {
+  //       const response = await api.post(`http://localhost:5001/api/update-prescription/`, payload);
+  //       console.log(response.data);
+  //       // Optional: Update local state to reflect the change or fetch updated data
+  //   } catch (error) {
+  //       console.error(error);
+  //   }
+  // };
 
 
   return (
@@ -126,13 +166,13 @@ const AdminLogs = () => {
             <tbody>
               {shownData && shownData.map((item) => (
                 <>
-                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:"> 
-                    <td><input type="date" id="date" placeholder={item.date}></input>{item.date}</td>
-                    <td><input type="text" id="patient_initials" className="px-2 py-3 w-1/4" placeholder={item.patient_initials}></input></td>
-                    <td><input type="text" id="parx_code" className="px-2 py-3" placeholder={item.prescriber_code}></input></td>
+                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: "> 
+                    <td><input data-key="date" type="text" id="date" className="px-2 py-3 text-white" placeholder={item.date}></input></td>
+                    <td><input data-key="patient_initials" type="text" id="patient_initials" className="px-2 py-3 text-white" placeholder={item.patient_initials}></input></td>
+                    <td><input data-key="parx_code" type="text" id="parx_code" className="px-2 py-3 text-white" placeholder={item.prescriber_code}></input></td>
                     <td className="px-2 py-3 w-1/8"><input type="checkbox" checked={item.discovery}/></td>
-                    <td><input type="text" id="user" className="px-2 py-3" placeholder={item.user_type}></input></td>
-                    <select className="py-3 w-3/4 truncate max-w-md text-black">
+                    <td><input type="text" id="user" className="px-2 py-3 text-white" placeholder={item.user_type}></input></td>
+                    <select className="py-3 w-full truncate max-w-md text-white">
                       <option selected value={item.status} defaultValue={item.status} disabled>{item.status}</option>
                       <option value="Pa Not Logged">Pa Not Logged</option>
                       <option value="Pa Logged">Pa Logged</option>
@@ -141,7 +181,29 @@ const AdminLogs = () => {
                       <option value="Complete">Complete</option>
                       <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
                     </select>
+                    <td>
+                      <button className="w-20 rounded"
+                        onClick={() => {
+                          // Create an updated item object based on input values
+                          const updatedItem = {
+                            date: document.querySelector(`[id="date"][data-key="date"]`).value,
+                            patient_initials: document.querySelector(`[id="patient_initials"][data-key="patient_initials"]`).value,
+                            parx_code: document.querySelector(`[id="parx_code"][data-key="parx_code"]`).value,
+                          };
+                          updateLogStatus(updatedItem); // Call your function with the updated item
+                        }}>
+                        Edit up
+                      </button>
+                    </td>
                   </tr>
+                  {/* Display the updated item data */}
+                  <div className="updated-item-display">
+                    <h3>Updated Item:</h3>
+                    <p>Date: {updatedItemDisplay.date}</p>
+                    <p>Patient Initials: {updatedItemDisplay.patient_initials}</p>
+                    <p>Prescriber Code: {updatedItemDisplay.prescriber_code}</p>
+                    {/* Display other fields as needed */}
+                  </div>
                 </>
               ))}
             </tbody>

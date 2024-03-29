@@ -102,7 +102,8 @@ def search_prescriptions():
     return Response(dumps(results), mimetype='application/json'), 200
 
 
-@app.route('/update-prescription', methods=['POST'])
+@app.route('/api/update-prescription', methods=['POST'])
+@cross_origin()
 def update_prescription():
     data = request.json  # Assuming the data is sent as JSON
 
