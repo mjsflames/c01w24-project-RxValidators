@@ -108,9 +108,9 @@ const PatientPrescriptions = () => {
                 <tr>
                   <th className="text-left p-2 w-1/8">Date</th>
                   <th className="text-left w-1/8">Prescriber Code</th>
-                  <th className="text-left w-1/8">Status</th>
-                  <th className="text-left w-1/8">Discovery Pass</th>
-                  <th className="w-1/2 text-left px-2">Details</th>
+                  <th className="text-left w-1/8 text-nowrap">Prescription Status</th>
+                  <th className="text-left w-1/8 text-nowrap">Discovery Pass?</th>
+                  <th className="w-1/2 text-left px-2">Prescriber Comments</th>
                   <th className="w-1/2 text-left px-2"></th>
                 </tr>
               </thead>
@@ -121,7 +121,7 @@ const PatientPrescriptions = () => {
                       <td className="p-2 w-1/8">{item.date}</td>
                       <td className="w-1/8">{item.prescriber_code}</td>
                       <td className="w-1/8">{item.status}</td>
-                      <td className="w-1/8"><input type="checkbox" checked={item.discovery} disabled /></td>
+                      <td className="w-1/8 pointer-events-none"><input type="checkbox" checked={item.discovery} /></td>
                       <td className="px-2 w-1/2 truncate max-w-md text-wrap">{item.comments}</td>
                       <button onClick={() => itemClick(item)} className="p-2 w-1/8">
                           <p className="font-bold text-nowrap underline">Show More</p>
