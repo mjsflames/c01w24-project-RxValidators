@@ -51,6 +51,10 @@ const LogPresPrescription = () => {
               <input id="parx_code" onChange={(e) => setData(prevState => ({ ...prevState, prescriber_code: e.target.value }))} maxLength="8" oninput="this.value = this.value.toUpperCase()" className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-800 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" required />
               <label for="parx_code" className="absolute font-semibold text-l text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prescriber's Provider Code (ie. AB-AL001)</label>
             </div>
+            <div className="relative z-0 w-full mb-8 group">
+              <input id="comments" onChange={(e) => setData(prevState => ({ ...prevState, comments: e.target.value }))} className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-800 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" />
+              <label for="comments" className="absolute font-semibold text-l text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prescription Comments (Optional)</label>
+            </div>
             <label for="discovery" className="block mb-3 text-l font-semibold text-gray-900 dark:text-white">Is there a Discovery Pass with this prescription?</label>
             <select onChange={(e) => setData(prevState => ({ ...prevState, discoveryPass: e.target.value }))} required="required" name="discovery" id="discovery" className="bg-gray-50 border border-gray-300 text-gray-900 text-l rounded-lg block p-2.5">
               <option disabled selected value="" defaultValue="">Choose an option </option>
@@ -60,6 +64,7 @@ const LogPresPrescription = () => {
             <br />
             <div className="text-right mb-5">
               <button type="submit" className="text-white bg-[#5C6528] font-medium rounded-lg text-sm px-5 py-2.5">Submit</button>
+
             </div>
           </div>
         </form>

@@ -236,13 +236,16 @@ def remove_user(username):
     # This function should only be accessible by admins
     try:
         if(get_role(username) == "admin"):
-            return jsonify({"message": f"Unauthorized: cannot delete admin accounts"}), 401
+            return jsonify({"message": "Unauthorized: cannot delete admin accounts"}), 401
 
         result = collection.delete_one({"username": username})
 
         if result.deleted_count == 0:
-            abort(404, description="User not found")
+            return jsonify({"message": "User does not exist"}), 404
 
+        # This command removes the user from the mongodb user list
+        db.command("dropUser", username)
+        
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
 
     except Exception as e:

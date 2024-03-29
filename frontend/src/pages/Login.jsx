@@ -96,6 +96,8 @@ const UserLogin = () => {
 							</button>
 						)}
 					</div>
+					<p className="flex mt-20 font-semibold">For any issues, please contact us</p>
+					<Link to="https://www.parkprescriptions.ca/en/contact" target="_blank" rel="noopener noreferrer" className="font-bold hover:">HERE</Link> 
 				</form>
 			</div>
 		</div>
