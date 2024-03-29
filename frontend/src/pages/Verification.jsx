@@ -25,6 +25,15 @@ const Verification = () => {
 		setId(data.id);
 	};
 
+	useEffect(() => {
+		// Try to retrieve last job
+		api.get("/verification/jobs/last").then((response) => {
+			if (response.status !== 200) return;
+			const data = response.data;
+			setId(data.id);
+		});
+	}, [])
+
 	// Check status every 5 seconds
 	useEffect(() => {
 		if (data || !id) return;
@@ -87,8 +96,46 @@ const Verification = () => {
 			});
 	};
 
-	var progress = <ProgressBar amount={percent} />;
+	const progress = <ProgressBar amount={percent} />;
 
+	const processing = (<>
+			<h1>Currently processing...</h1>
+			<h1 className="text-2xl font-semibold upper">
+				Job ID:
+			</h1>
+			<p>{id}</p>
+		</>);
+
+	const uploadState = (
+		<div>
+			<h1 className="text-lg font-semibold upper">
+				{file
+					? `File "${file.name}" Loaded`
+					: "Upload a file to verify"}
+			</h1>
+			<Dropzone setFile={setFile} file={file} />
+			<hr className="mt-2" />
+			<button
+				className="w-full py-4 bg-PaRxDBlue text-white font-bold lg:px-4 lg:rounded"
+				onClick={beginRequest}
+			>
+				Verify
+			</button>
+		</div>)
+	
+	const cancelButton = (
+		<button
+			className="bg-red-500 text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded ml-auto mr-auto mt-8"
+			onClick={cancelJob}
+		>
+			<FontAwesomeIcon
+				icon={faCancel}
+				className="mr-2"
+			/>
+			Cancel
+		</button>
+	)
+	
 	return (
 		<>
 			<PageHeader
@@ -97,49 +144,11 @@ const Verification = () => {
 			/>
 			<ContentContainer className="flex w-2/3 flex-col !ml-auto !mr-auto justify-center min-h-[50vh] w gap-16 lg:flex-row lg:gap-32">
 				<div className="lg:w-1/2 flex flex-col">
-					{!data && (
+					{!data ? (
 						<div className="w-full">
-							{id ? (
-								<>
-									<h1>Currently processing...</h1>
-									<h1 className="text-2xl font-semibold upper">
-										Job ID:
-									</h1>
-									<p>{id}</p>
-								</>
-							) : (
-								<div>
-									<h1 className="text-lg font-semibold upper">
-										{file
-											? `File "${file.name}" Loaded`
-											: "Upload a file to verify"}
-									</h1>
-									<Dropzone setFile={setFile} file={file} />
-									<hr className="mt-2" />
-									<button
-										className="w-full py-4 bg-PaRxDBlue text-white font-bold lg:px-4 lg:rounded"
-										onClick={beginRequest}
-									>
-										Verify
-									</button>
-								</div>
-							)}
-							{id && progress}
-							{id && (
-								<button
-									className="bg-red-500 text-white w-full lg:w-1/3 font-bold py-4 px-4 lg:rounded ml-auto mr-auto mt-8"
-									onClick={cancelJob}
-								>
-									<FontAwesomeIcon
-										icon={faCancel}
-										className="mr-2"
-									/>
-									Cancel
-								</button>
-							)}
+							{!id ? uploadState : ( <>{processing} {progress} {cancelButton} </>)}
 						</div>
-					)}
-					{data && (
+					) : (
 						<>
 							<VerificationList
 								data={data}
