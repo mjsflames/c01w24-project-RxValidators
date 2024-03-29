@@ -6,12 +6,7 @@ import { UserContext } from "../App";
 
 
 const LogPresPrescription = () => {
-  const [data, setData] = useState({});
-  const { user } = useContext(UserContext);
-
-  useEffect(() => {
-    setData(prevState => ({ ...prevState, user: "prescriber", username: user.username}));
-  }, []);
+  const [data, setData] = useState({"user": "prescriber"});
 
   function handleClick() {
     async function postData() {

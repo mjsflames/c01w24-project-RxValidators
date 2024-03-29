@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ContentContainer from "../components/ContentContainer";
+import React, { useState, useEffect, useContext } from "react";
 import PageHeader from "../components/PageHeader";
 import log from "../assets/patientlog.jpg";
 import api from "../axiosConfig";
+import { UserContext } from "../App";
 
 const LogPatPrescription = () => {
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    setData(prevState => ({ ...prevState, user: "patient"}));
-  }, []);
+  const { user } = useContext(UserContext);
+  const [data, setData] = useState({"user": "patient", "patient_email": user.email});
 
   function handleClick() {
     async function postData() {
@@ -24,7 +20,6 @@ const LogPatPrescription = () => {
       } catch (error) {
         console.error('Failed to fetch patients:', error);
       }
-
     }
     postData();
   }
