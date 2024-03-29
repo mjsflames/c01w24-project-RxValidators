@@ -11,6 +11,7 @@ const AdminLogs = () => {
 
   // Other states and useEffects...
   const [updatedItemDisplay, setUpdatedItemDisplay] = useState({});
+  const [checkboxStates, setCheckboxStates] = useState({});
 
   useEffect(() => {
     const sampleData = [
@@ -90,12 +91,36 @@ const AdminLogs = () => {
     return data.filter(item => JSON.stringify(item).toLowerCase().includes(filterString));
   }
 
+  useEffect(() => {
+    if (!shownData) return; // Ensure shownData is initialized
+
+    const initialCheckboxStates = {};
+    shownData.forEach((item, index) => {
+      initialCheckboxStates[index] = item.discoveryPass;
+    });
+    setCheckboxStates(initialCheckboxStates);
+  }, [shownData]);
+
+  const handleCheckboxChange = (index, checked) => {
+    setCheckboxStates(prev => ({
+      ...prev,
+      [index]: checked,
+    }));
+  };
+
   const updateLogStatus = async (updatedItem) => {
     const payload = {
       date: updatedItem.date,
       patient_initials: updatedItem.patient_initials,
       prescriber_code: updatedItem.parx_code,
+      discoveryPass: updatedItem.discoveryPass,
     };
+
+    // Filter out attributes with empty string values
+    const filteredPayload = Object.fromEntries(
+      Object.entries(payload).filter(([key, value]) => value !== '')
+    );
+
     // Assuming this function does something with updatedItem, like sending it to an API
     console.log("Updating item with the following details:", updatedItem);
 
@@ -103,7 +128,7 @@ const AdminLogs = () => {
     setUpdatedItemDisplay(payload);
 
 		try {
-			const response = await api.post(`http://localhost:5001/api/update-prescription`, payload);
+			const response = await api.post(`http://localhost:5001/api/update-prescription/${updatedItem.oid}`, filteredPayload);
 			console.log(response.data);
 		} catch (error) {
 			console.error(error);
@@ -136,7 +161,7 @@ const AdminLogs = () => {
   //   }
   // };
 
-
+  
   return (
     <>
       <PageHeader
@@ -164,20 +189,24 @@ const AdminLogs = () => {
               </tr>
             </thead>
             <tbody>
-              {shownData && shownData.map((item) => (
+              {shownData && shownData.map((item, index) => (
                 <>
                   <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: "> 
-                    <td><input data-key="date" type="text" id="date" className="px-2 py-3 text-white" placeholder={item.date}></input></td>
-                    <td><input data-key="patient_initials" type="text" id="patient_initials" className="px-2 py-3 text-white" placeholder={item.patient_initials}></input></td>
-                    <td><input data-key="parx_code" type="text" id="parx_code" className="px-2 py-3 text-white" placeholder={item.prescriber_code}></input></td>
-                    <td className="px-2 py-3 w-1/8"><input type="checkbox" checked={item.discovery}/></td>
+                    <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 text-white" placeholder={item.date}></input></td>
+                    <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 text-white" placeholder={item.patient_initials}></input></td>
+                    <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 text-white" placeholder={item.prescriber_code}></input></td>
+                    <td className="px-2 py-3 w-1/8">
+                      <input
+                        type="checkbox"
+                        checked={checkboxStates[index] || false}
+                        onChange={(e) => handleCheckboxChange(index, e.target.checked)}
+                      />
+                    </td>
                     <td><input type="text" id="user" className="px-2 py-3 text-white" placeholder={item.user_type}></input></td>
                     <select className="py-3 w-full truncate max-w-md text-white">
                       <option selected value={item.status} defaultValue={item.status} disabled>{item.status}</option>
                       <option value="Pa Not Logged">Pa Not Logged</option>
-                      <option value="Pa Logged">Pa Logged</option>
                       <option value="Pr Not Logged">Pr Not Logged</option>
-                      <option value="Pr Logged">Pr Logged</option>
                       <option value="Complete">Complete</option>
                       <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
                     </select>
@@ -186,9 +215,11 @@ const AdminLogs = () => {
                         onClick={() => {
                           // Create an updated item object based on input values
                           const updatedItem = {
-                            date: document.querySelector(`[id="date"][data-key="date"]`).value,
-                            patient_initials: document.querySelector(`[id="patient_initials"][data-key="patient_initials"]`).value,
-                            parx_code: document.querySelector(`[id="parx_code"][data-key="parx_code"]`).value,
+                            oid: item._id,
+                            date: document.querySelector(`#date-${index}`).value,
+                            patient_initials: document.querySelector(`#patient_initials-${index}`).value,
+                            parx_code: document.querySelector(`#parx_code-${index}`).value,
+                            discoveryPass: checkboxStates[index] || false
                           };
                           updateLogStatus(updatedItem); // Call your function with the updated item
                         }}>
@@ -197,13 +228,6 @@ const AdminLogs = () => {
                     </td>
                   </tr>
                   {/* Display the updated item data */}
-                  <div className="updated-item-display">
-                    <h3>Updated Item:</h3>
-                    <p>Date: {updatedItemDisplay.date}</p>
-                    <p>Patient Initials: {updatedItemDisplay.patient_initials}</p>
-                    <p>Prescriber Code: {updatedItemDisplay.prescriber_code}</p>
-                    {/* Display other fields as needed */}
-                  </div>
                 </>
               ))}
             </tbody>
