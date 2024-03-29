@@ -4,13 +4,14 @@ import Prescription from "../components/Prescription";
 import ContentContainer from "../components/ContentContainer";
 import pic from "../assets/prescribertable.jpg";
 import { UserContext } from "../App";
+import NotificationCard from "../components/NotificationCard";
 
 const PatientPrescriptions = () => {
   const [data, setData] = useState(null);
   const [myItem, setItem] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, getNotifications } = useContext(UserContext);
   const [userData, setUserData] = useState();
-
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     const sampleData = [
       {
@@ -59,13 +60,17 @@ const PatientPrescriptions = () => {
       } catch (error) {
         console.error('No fetch:', error);
       }
-
     }
     fetchData();
   }, []);
 
   useEffect(() => {
 		if (user) setUserData(user);
+    getNotifications().then((data) => {
+      setNotifications(data);
+    }).catch((error) => {
+      console.error("Failed to get notifications", error);
+    });
 	  }, []);
 
   const itemClick = (item) => {
@@ -83,6 +88,11 @@ const PatientPrescriptions = () => {
         title="My Prescriptions"
         desc="Check the statuses of your prescriptions and find out if you are eligible for a Discovery Pass."
       />
+      <ul>
+        {
+          notifications.map((notification) => <NotificationCard notification={notification} />)
+        }
+      </ul>
       <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
         
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">

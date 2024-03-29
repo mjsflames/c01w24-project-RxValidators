@@ -41,6 +41,9 @@ app.get("/ping", (req, res) => {
 import serviceRegistryRoutes from "./routes/service_registry.js";
 app.use("/service-registry", serviceRegistryRoutes);
 
+import notificationHandlerRoutes from "./routes/notification_handler.js";
+app.use("/api/notifications", notificationHandlerRoutes);
+
 import verificationServiceRoutes from "./routes/verification_service.js";
 app.use("/api/verification", verificationServiceRoutes);
 
