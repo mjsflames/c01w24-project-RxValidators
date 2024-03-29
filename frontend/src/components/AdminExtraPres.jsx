@@ -30,7 +30,7 @@ const AdminExtraPres = ({ item }) => {
   };
 
   function updateData() {
-    api.patch(`/auth/updateUser/${data.username}`, newItem).then((res) => {
+    api.patch(`/auth/updateUser/${data._id}`, newItem).then((res) => {
       console.log(res.data);
       setData(newItem);
     }).catch((err) => {
