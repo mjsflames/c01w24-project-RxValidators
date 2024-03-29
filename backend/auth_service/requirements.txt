@@ -3,3 +3,4 @@ pymongo
 flask_cors
 requests
 bcrypt
+app
