@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
+import api from "../axiosConfig";
 
 const AdminPatientProfile = () => {
   const [data, setData] = useState([
@@ -24,23 +24,16 @@ const AdminPatientProfile = () => {
       address: "789 Oak St"
     }
   ]);
-  const [myItem, setItem] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`http://localhost:5005/api/listPatients`, {
-          method: "GET",
-        });
-        if (!res.ok) {
-          throw new Error('No response');
+        const res = await api.get("/auth/listPatients");
+        console.log("Fetch response", res.data);
+        if (res.status !== 200) {
+          console.log("Fetch failed");
         }
-        const pData = await res.json();
-        console.log(pData);
-
-        if (pData) {
-          setData(pData);
-        }
+        setData(res.data);
       } catch (error) {
         console.error('Failed to fetch patients:', error);
       }
