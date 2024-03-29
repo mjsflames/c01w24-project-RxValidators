@@ -7,6 +7,7 @@ from reportlab.lib.pagesizes import letter
 import zipfile
 
 import database as db_func
+from bson.objectid import ObjectId
 
 #########################################################
 # Collection of database is used for PDF and Code generation
@@ -110,6 +111,11 @@ def get_prescriber_codes_from_db(filter={}):
 def update_prescriber_code_status(code, status):
     updates = collection.update_one({"code": code}, {"$set": {"status": status}})
     return updates
+
+# Delete a prescriber code
+def delete_prescriber_code_inner(id):
+    deletes = collection.delete_one({"_id": ObjectId(id)})
+    return deletes
 
 # This function generates a pdf file for the verified prescribers
 # def generate_verified_pdfs(df, output_path):

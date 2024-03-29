@@ -120,6 +120,13 @@ def _process_request(file_data, id):
     save_to_db(df)
     print("Saved to database")
     
+    # Drop status
+    if has_status:
+        df.drop(columns=['Status'], inplace=True)
+    
+    # Rename Scraped status to status
+    df.rename(columns={'Scraped Status': 'Status'}, inplace=True)
+
     processing[id] = df
 
 

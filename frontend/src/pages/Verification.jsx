@@ -73,7 +73,7 @@ const Verification = () => {
     a.click();
     window.URL.revokeObjectURL(url);
   };
-
+  
   // Check status every 5 seconds
   useEffect(() => {
     if (data || !id) return;

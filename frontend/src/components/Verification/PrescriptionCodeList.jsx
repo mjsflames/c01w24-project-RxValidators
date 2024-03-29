@@ -12,6 +12,7 @@ const PrescriptionCodeList = ({ className }) => {
 	const [filteredData, setFilteredData] = useState(data);
 	const [editObject, setEditObject] = useState("");
 	const [needsUpdate, setNeedsUpdate] = useState(false);
+	const [error, setError] = useState(null);
 
 	function fetchData() {
 		// fetch data
@@ -31,23 +32,25 @@ const PrescriptionCodeList = ({ className }) => {
 	useEffect(fetchData, []);
 	useEffect(fetchData, [needsUpdate]);
 
-	const deleteHandler = async () => {
+	const deleteHandler = async (id, code) => {
         try {
-            const res = await api.delete(`/auth/removeUser/${code}`)
-            console.log(res.data)
+            const res = await api.delete(`/verification/prescriber-codes/${id}`);
+            console.log(res.data);
+			alert("Prescriber code deleted")
+			setNeedsUpdate(true);
         } catch (err) {
             setError(err.response);
-            console.log(err.res)
-        }
+			console.error(err);
+		}
     }
 
 	const items = [
 		[
-			{ value: "Verified", callback: (code) => {updateStatus(code, "VERIFIED")} },
-			{ value: "Inactive", callback: (code) => {updateStatus(code, "INACTIVE")} },
-			{ value: "Expired", callback: (code) => {updateStatus(code, "DISABLED")} },
+			{ value: "Verified", callback: (id, code) => {updateStatus(code, "VERIFIED")} },
+			{ value: "Inactive", callback: (id, code) => {updateStatus(code, "INACTIVE")} },
+			{ value: "Expired", callback: (id, code) => {updateStatus(code, "DISABLED")} },
 		],
-		[{ value: "Remove", callback: () => {deleteHandler}, className: "bg-red-300 hover:bg-red-500", icon: faTrash }],
+		[{ value: "Remove", callback: (id, code) => {deleteHandler(id, code)}, className: "bg-red-300 hover:bg-red-500", icon: faTrash }],
 	];
 	
 	const statusColors = {
@@ -92,7 +95,7 @@ const PrescriptionCodeList = ({ className }) => {
 	return (
 		<div className={`flex flex-col mb-10 ${className}`}>
 			<h1 className="text-lg	font-semibold upper">Prescriber Codes</h1>
-			<p>All of the prescriber codes recorded in the system.</p>
+			<p>All of the unregistered prescriber codes recorded in the system.</p>
 			<br className="mt-4" />
 			{/* Filter */}
 			<div className="w-full border-2 border-gray-300 bg-gray-300 rounded-md overflow-clip flex gap-2">
@@ -110,10 +113,10 @@ const PrescriptionCodeList = ({ className }) => {
 			<br className="mt-4" />
 			<p>Results ({filteredData.length | 0})</p>
 			<ul className="flex flex-col gap-1 max-w-full overflow-y-scroll flex-1">
-				{filteredData.map(({ code, status, firstName, lastName }) => {
+				{filteredData.map(({ _id, code, status, firstName, lastName }) => {
 					const selected = status == "VERIFIED" ? "Verified" : status == "INACTIVE" ? "Inactive" : "Expired";
 					const overload_callback = async (e, callback) => {
-						await callback(code)
+						await callback(_id, code)
 						setNeedsUpdate(true);
 					};
 

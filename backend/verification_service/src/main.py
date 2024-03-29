@@ -213,6 +213,11 @@ def update_prescriber_code(code):
     num_updates = update_prescriber_code_status(code, status)
     return jsonify({'message': 'Updated status', 'count': str(num_updates.modified_count)}), 200
 
+@app.route("/api/prescriber-codes/<id>", methods=["DELETE"])
+def delete_prescriber_code(id):
+    num_deletes = delete_prescriber_code_inner(id)
+    return jsonify({'message': 'Deleted code', 'count': str(num_deletes.deleted_count)}), 200
+    
 # # API endpoint to generate prescriber codes
 # @app.route('/generate/code/export', methods=['POST'])
 # def generate_prescriber_codes():    
