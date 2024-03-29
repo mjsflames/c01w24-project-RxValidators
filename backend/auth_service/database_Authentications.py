@@ -65,7 +65,7 @@ def create_user_account():
         username = data.get("username")
         password = data.get("password")
         role = data.get("role")
-        
+
         # Additional Fields
         print(data)
 
@@ -131,7 +131,7 @@ def authenticate_user():
         user.pop("password")
         # Stringify id
         user["_id"] = str(user["_id"])
-        
+
         # Store token as cookie
         token = generate_id()
         res = make_response(jsonify({"message": "Authentication Success", "data": dumps(user)}), 200)
@@ -204,6 +204,31 @@ def get_role(username):
         return ""
     user = collection.find_one({"username": username})
     return user["role"]
+
+@app.route('/updateUser/<username>', methods=['PATCH'])
+@cross_origin()
+def update_user(username):
+
+    try:
+        if get_role(username) == "admin":
+            return jsonify({"message": "Unauthorized: cannot change admin accounts"}), 401
+
+        data = request.get_json()
+        if '_id' in data:
+            del data['_id']
+
+        update_query = {"$set": data}
+
+        update_result = collection.update_one({"username": username}, update_query)
+
+        if update_result.modified_count > 0:
+            return jsonify({"message": "User updated successfully"}), 200
+        else:
+            return jsonify({"message": "No user found"}), 404
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/removeUser/<username>', methods=['DELETE'])
 @cross_origin()
