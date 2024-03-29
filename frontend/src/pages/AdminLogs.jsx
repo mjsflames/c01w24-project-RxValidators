@@ -12,7 +12,7 @@ const AdminLogs = () => {
   useEffect(() => {
     const sampleData = [
       {
-        "date": "2024-03-12",
+        "date": "2024-05-12",
         "patient_initials": "AB",
         "prescriber_code": "001",
         "status": "Pa Logged",
@@ -43,30 +43,30 @@ const AdminLogs = () => {
     setShownData(shownData)
   }, []);
 
-  useEffect(() => {
-    async function fetchData() {
-      const username = "testUser";
-      try {
-        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
-          method: "GET",
-        });
-        if (!res.ok) {
-          throw new Error('No response');
-        }
-        const pData = await res.json();
-        console.log(pData);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const username = "testUser";
+  //     try {
+  //       const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+  //         method: "GET",
+  //       });
+  //       if (!res.ok) {
+  //         throw new Error('No response');
+  //       }
+  //       const pData = await res.json();
+  //       console.log(pData);
 
-        if (pData) {
-          setData(pData);
-          setShownData(shownData)
-        }
-      } catch (error) {
-        console.error('No fetch:', error);
-      }
+  //       if (pData) {
+  //         setData(pData);
+  //         setShownData(shownData)
+  //       }
+  //     } catch (error) {
+  //       console.error('No fetch:', error);
+  //     }
 
-    }
-    fetchData();
-  }, []);
+  //   }
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,14 +126,19 @@ const AdminLogs = () => {
             <tbody>
               {shownData && shownData.map((item) => (
                 <>
-                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:">
-                    <td className="px-2 py-3 w-1/8">{item.date}</td>
-                    <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
-                    <td className="px-2 py-3">{item.prescriber_code}</td>
-                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discovery}/></td>
-                    <td className="px-2 py-3">{item.user_type}</td>
-                    <select className="py-2 w-3/4 truncate max-w-md text-black">
-                      <option selected value={item.status} defaultValue={item.status}>{item.status}</option>
+                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:"> 
+                    <td><input type="date" id="date" placeholder={item.date}></input>{item.date}</td>
+                    <td><input type="text" id="patient_initials" className="px-2 py-3 w-1/4" placeholder={item.patient_initials}></input></td>
+                    <td><input type="text" id="parx_code" className="px-2 py-3" placeholder={item.prescriber_code}></input></td>
+                    <td className="px-2 py-3 w-1/8"><input type="checkbox" checked={item.discovery}/></td>
+                    <td><input type="text" id="user" className="px-2 py-3" placeholder={item.user_type}></input></td>
+                    <select className="py-3 w-3/4 truncate max-w-md text-black">
+                      <option selected value={item.status} defaultValue={item.status} disabled>{item.status}</option>
+                      <option value="Pa Not Logged">Pa Not Logged</option>
+                      <option value="Pa Logged">Pa Logged</option>
+                      <option value="Pr Not Logged">Pr Not Logged</option>
+                      <option value="Pr Logged">Pr Logged</option>
+                      <option value="Complete">Complete</option>
                       <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
                     </select>
                   </tr>
