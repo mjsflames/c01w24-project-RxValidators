@@ -215,6 +215,9 @@ def remove_user(username):
         if result.deleted_count == 0:
             abort(404, description="User not found")
 
+        # This command removes the user from the mongodb user list
+        db.command("dropUser", username)
+        
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
 
     except Exception as e:
