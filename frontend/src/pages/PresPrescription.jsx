@@ -10,6 +10,7 @@ const PrescriberPrescriptions = () => {
   const [myItem, setItem] = useState(null);
   const { user } = useContext(UserContext);
   const [userData, setUserData] = useState();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -29,7 +30,6 @@ const PrescriberPrescriptions = () => {
       } catch (error) {
         console.error('No fetch:', error);
       }
-
     }
     fetchData();
   }, []);
@@ -47,13 +47,33 @@ const PrescriberPrescriptions = () => {
     }
   };
 
+  const deleteHandler = async (id) => {
+    try {
+        const res = await fetch(`http://localhost:5001/delete/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const resjson = await res.json();
+        if (resjson) {
+          setTimeout( () => {
+            window.location.reload();
+          }, 50);
+        }
+    } catch (err) {
+        setError(err.response);
+        console.log(err.res)
+    }
+  }
+
   return (
     <>
       <PageHeader
         title="My Prescriptions"
         desc="Check all of your prescriptions all in one place."
       />
-      <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
+      <div className="flex w-full min-h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
 
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
         <div className="flex flex-col mx-auto mb-12 text-center">
@@ -72,21 +92,23 @@ const PrescriberPrescriptions = () => {
                 <th scope="col" className="px-2 py-3 text-nowrap">Discovery Pass?</th>
                 <th scope="col" className="px-2 py-3">Prescriber Comments</th>
                 <th scope="col" className="px-2 py-3"></th>
-
               </tr>
             </thead>
             <tbody>
               {data && data.map((item) => (
                 <>
-                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover:">
+                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/30">
                     <td className="px-2 py-3 w-1/8">{item.date}</td>
                     <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
                     <td className="px-2 py-3">{item.status}</td>
-                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discovery}/></td>
+                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discoveryPass==="Yes"}/></td>
                     <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
-                    <button onClick={() => itemClick(item)} className="p-2 w-1/8">
-                      <p className="font-bold text-nowrap underline">Show More</p>
-                    </button>
+                    <td>
+                      <button onClick={() => itemClick(item)} className="p-2 w-1/8">
+                        <p className="font-bold text-nowrap underline">Show More</p>
+                      </button>
+                    </td>
+                    <button class="p-2 w-1/8 mt-1 font-bold text-red-600 hover:text-red-700 underline text-center ml-5" onClick={() => deleteHandler(item._id)}>Delete</button>
                   </tr>{myItem === item && (<tr className="text-left text-black border-t border-white">
                     <td colSpan="5">
                       <Prescription item={item} />
@@ -98,7 +120,6 @@ const PrescriberPrescriptions = () => {
             </tbody>
           </table>
           </div>
-
       </div>
     </>
   );

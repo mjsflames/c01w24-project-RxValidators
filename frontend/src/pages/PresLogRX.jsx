@@ -12,6 +12,7 @@ const LogPresPrescription = () => {
     async function postData() {
       try {
         const res = await api.post("/prescription/submit-form", data);
+        alert('Prescriber Prescription Logged!');
         console.log("Fetch response", res.data);
         if (res.status !== 200) {
           console.log("Fetch failed");

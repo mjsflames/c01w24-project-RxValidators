@@ -136,7 +136,7 @@ const PrescriberSettings = () => {
               </div>
               <div className="flex flex-cols w-full sm:space-x-4 sm:space-y-0">
                 <div className="col-span-2">
-                  <label for="license#" className="block mb-2 text-sm font-medium text-indigo-900">License #</label>
+                  <label for="license#" className="block mb-2 text-sm font-medium text-indigo-900 text-nowrap">License #</label>
                   <div type="text" id="license#" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
                     {userData ? userData.license : ""}
                   </div>

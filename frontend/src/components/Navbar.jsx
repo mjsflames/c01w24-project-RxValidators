@@ -10,6 +10,7 @@ const Navbar = () => {
 			{ to: "/", text: "Home" },
 			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
 			{ to: "/adminPatientProfile", text: "Patient Profiles" },
+			{ to: "/adminLogs", text: "Prescription Logs" },
 			{ to: "/verify", text: "Verification Platform" },
 			{ to: "/green-resources", text: "Green Resources" },
 		],
