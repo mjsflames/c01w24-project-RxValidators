@@ -129,6 +129,9 @@ def authenticate_user():
 
         # Strip password
         user.pop("password")
+        # Stringify id
+        user["_id"] = str(user["_id"])
+        
         # Store token as cookie
         token = generate_id()
         res = make_response(jsonify({"message": "Authentication Success", "data": dumps(user)}), 200)
