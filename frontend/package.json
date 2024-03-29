@@ -15,18 +15,16 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/x-data-grid": "^7.1.0",
     "axios": "^1.6.7",
     "esri-loader": "^2.14",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "flowbite": "^2.3.0",
-		"flowbite-react": "^0.7.3",
-
-		"react-dnd": "^16.0.1",
-
-		"react-dnd-html5-backend": "^16.0.1",
-
-		"react-table": "^7.8.0"
+    "flowbite-react": "^0.7.3",
+    "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "react-table": "^7.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

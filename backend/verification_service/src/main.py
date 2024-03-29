@@ -1,5 +1,5 @@
 import requests as requestsLib
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 import uuid
 import scraper_handler
@@ -125,10 +125,25 @@ def generate_pdf():
 
     return pdf, 200, {"Content-Type": "application/pdf"}
 
+# API endpoint to export/save all PDFs for the verified prescribers
+@app.route('/api/exportPdfs/<id>', methods=['POST'])
+def generateAllPdfs(id):
+    
+    status = scraper_handler.check_status(id)
+    if type(status) is not DataFrame:
+        return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
+    
+    response = generate_verified_pdfs(status, "./")
+    # return buffer from response
+    return response, 200, {"Content-Type": "arraybuffer"}
+    
+
+
 
 # API endpoint to export the csv file with the new data
-@app.route('/export/<id>', methods=['GET'])
+@app.route('/api/export/<id>', methods=['GET'])
 def export_file(id):
+    # file = request.json.get('file')
     file_type = request.args.get('file_type', 'csv')
     if file_type not in ['csv', 'xlsx']:
         return {"message": "Invalid file type. Please specify 'csv' or 'xlsx'."}, 400, {"Content-Type": "application/json"}
@@ -148,8 +163,8 @@ def export_file(id):
     
     buffer.seek(0)
     result = status.to_dict(orient='records') 
-    
-    return {"json": status.to_json(orient='records'), "file": buffer.read()}, 200, {"Content-Type": content_type}
+    # return Response(buffer.getvalue(), mimetype=content_type, headers={"Content-Disposition": f"attachment;filename=verification_results.{file_type}"})
+    return buffer.read(), 200, {"Content-Type": content_type}
 
 # Retrieve the prescriber codes
 @app.route('/api/prescriber-codes', methods=['GET'])

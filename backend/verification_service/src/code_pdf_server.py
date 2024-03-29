@@ -1,4 +1,4 @@
-import os
+import os, io
 import pandas as pd
 
 #  ? PDF Generator Dependencies
@@ -154,9 +154,8 @@ def create_pdf(code, output_path):
 
 
 def generate_verified_pdfs(df, output_path):
-    
-    # Create a zip file to store the PDFs
-    with zipfile.ZipFile(os.path.join(output_path, "pdfs.zip"), "w") as zipf:
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, "w") as zipf:
         # Create the PDFs
         for i in df.index:
             if df['Status'][i] == "VERIFIED":
@@ -165,18 +164,20 @@ def generate_verified_pdfs(df, output_path):
                 pdf_file_path = os.path.join(output_path, f"PaRx-{df['Code'][i]}.pdf")
                 zipf.write(pdf_file_path, arcname=f"PaRx-{df['Code'][i]}.pdf")
                 os.remove(pdf_file_path)
-
-    return "PDFs generated successfully and saved in pdfs.zip"
+                
+    # return zip file
+    zip_buffer.seek(0)
+    return zip_buffer.getvalue()
                 
 # DELETE THIS LATER
 
-full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
-expected_data = [
-            ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
-            ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", None],
-            ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
-        ] 
-df = pd.DataFrame(expected_data, columns=full_columns)
+# full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
+# expected_data = [
+#             ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
+#             ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", None],
+#             ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
+#         ] 
+# df = pd.DataFrame(expected_data, columns=full_columns)
         
-# call the function generate_verified_pdfs(df, output_path) to generate the PDFs
-print(generate_verified_pdfs(df, ""))
+# # call the function generate_verified_pdfs(df, output_path) to generate the PDFs
+# print(generate_verified_pdfs(df, ""))
