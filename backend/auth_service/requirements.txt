@@ -3,5 +3,3 @@ pymongo
 flask_cors
 requests
 bcrypt
-uuid
-pandas

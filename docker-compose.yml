@@ -7,9 +7,7 @@ services:
       - "27017:27017"
 
   rxvalidator:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: renathossain/rxvalidator:latest
     ports:
       - "4173:4173"
       - "3130:3130"

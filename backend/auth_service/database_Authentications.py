@@ -27,6 +27,8 @@ required_authentication_fields = [
     "role",
 ]
 
+prescribers_collection = db["prescribers"]
+
 connections = []
 
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
@@ -63,7 +65,7 @@ def create_user_account():
         username = data.get("username")
         password = data.get("password")
         role = data.get("role")
-
+        
         # Additional Fields
         print(data)
 
@@ -82,6 +84,8 @@ def create_user_account():
                                                                     {"role": "readWriteAnyDatabase", "db": "admin"}])
         elif(role == "prescriber"):
             db.command("createUser", str(username), pwd=str(password), roles=[{"role": "readWrite", "db": "test_db"}])
+            # Remove prescriber from prescribers collection
+            prescribers_collection.delete_one({"code": username, "unassigned": True, "status": "VERIFIED"})
         elif(role == "patient"):
             db.command("createUser", str(username), pwd=str(password), roles=[{"role": "read", "db": "test_db"}])
         else:

@@ -28,7 +28,7 @@ import Landing from "./pages/Landing.jsx";
 import Alert from "./components/Alert.jsx";
 import TempLinks from "./pages/Placeholders/TempLinks.jsx";
 import Home from "./pages/Home.jsx";
-
+import Pdf from "./pages/PdfViewer.jsx";
 import Logout from "./pages/Logout.jsx";
 import api from "./axiosConfig.js";
 
@@ -131,6 +131,7 @@ function App() {
 						<Route path="patientacc" element={<PatientAccount />} />
 						<Route path="prescriberacc" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
+            <Route path="pdfPage" element={<Pdf />} />
 							<Route
 								index
 								element={

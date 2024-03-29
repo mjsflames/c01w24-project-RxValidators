@@ -42,7 +42,7 @@ const PatientSettings = () => {
       />
       <ContentContainer>
         <div className="mr-auto ml-auto w-1/2 flex flex-cols-2 mb-8 text-lg font-semibold text-gray-600">
-          <div class="w-1/2 font-semibold space-y-3.5 text-gray-600 mt-2">Account Details
+          <div class="w-1/2 mr-auto font-semibold space-y-3.5 text-gray-600 mt-2">Account Details
             {userData ? (
               <>
                 <div className="flex flex-col items-center mb-2 mt-3 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
