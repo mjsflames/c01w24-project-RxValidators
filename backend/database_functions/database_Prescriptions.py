@@ -139,6 +139,7 @@ def submit_form():
 
     for key, value in data.items():
         prescription[data["user"]][key] = value
+        prescription[key] = value
 
     if result is None:
         if data["user"] == "patient":
@@ -146,7 +147,7 @@ def submit_form():
             prescription["patient"]["status"] = PR_NOT_LOGGED
         elif data["user"] == "prescriber":
             prescription["status"] = PA_NOT_LOGGED
-            prescription["patient"]["status"] = PA_NOT_LOGGED
+            prescription["prescriber"]["status"] = PA_NOT_LOGGED
         collection.insert_one(prescription)
         return (jsonify({"message": "Data posted successfully"}), 200)
 
@@ -156,26 +157,24 @@ def submit_form():
             401,
         )
 
-    for key in data:
-        prescription[key] = (
-            prescription["prescriber"]
-            if prescription["patient"] == prescription["prescriber"]
-            else None
-        )
+    for key, value in data.items():
+        result[data["user"]][key] = value
+        result[key] = value
 
     if data["discoveryPass"] == "Yes" == result["discoveryPass"]:
-        prescription["status"] = COMPLETE
+        result["status"] = COMPLETE
 
     elif data["user"] == "patient":
-        prescription["status"] = PR_LOGGED
-        prescription["prescriber"] = result["prescriber"]
+        result["status"] = PR_LOGGED
+        result["prescriber"] = result["prescriber"]
     else:
-        prescription["status"] = PA_LOGGED
-        prescription["patient"] = result["patient"]
+        result["status"] = PA_LOGGED
+        result["patient"] = result["patient"]
 
-    prescription["discoveryPass"] = False
+    result["discoveryPass"] = False
 
-    update = {"$set": prescription}
+
+    update = {"$set": result}
     collection.update_one(filter_fields, update)
     return (jsonify({"message": "Data posted successfully"}), 200)
 
