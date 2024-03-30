@@ -18,7 +18,7 @@ const PrescriberHome = () => {
             </h1>
             <h2 className="text-green-700">naturally.</h2>
           </div>
-          <div className="col-span-2 mt-20 text-center">
+          <div className="col-span-2 mt-10 lg:mt-20 text-center">
             <h2 className="font-bold mb-2">Get Started</h2>
             <button
               onClick={() =>
@@ -29,7 +29,7 @@ const PrescriberHome = () => {
               Learn More About PaRx
             </button>
 
-            <div className="flex flex-col lg:flex-row gap-6 pt-6">
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 pt-2 lg:pt-6">
               <Link to="/PatientLogRX">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
                   Log Prescriptions
