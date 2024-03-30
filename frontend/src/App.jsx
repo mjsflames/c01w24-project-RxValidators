@@ -15,6 +15,7 @@ import AdminHome from "./pages/AdminHome.jsx";
 import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
 import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
 import Verification from "./pages/Verification.jsx";
+import AdminLogs from "./pages/AdminLogs.jsx";
 import PrescriberHome from "./pages/PrescriberHome.jsx";
 import PrescriberPrescriptions from "./pages/PresPrescription.jsx";
 import PrescriberSettings from "./pages/PrescriberSettings.jsx";
@@ -63,8 +64,20 @@ function App() {
       console.log("Logged in as prescriber");
       setUser({
         id: "2",
-        name: "prescriber",
+        name: "patient",
         role: "prescriber",
+        address: "123 Main St",
+        city: "Anytown",
+        college: "University of Anywhere",
+        email: "example@example.com",
+        firstName: "John",
+        lastName: "Doe",
+        language: "English",
+        license: "123456",
+        profession: "Pat",
+        prescriber_code: "7890",
+        province: "Anyprovince",
+        username: "johndoe123"
       });
       return true;
     }
@@ -84,7 +97,7 @@ function App() {
         language: "English",
         license: "123456",
         profession: "Pat",
-        providerCode: "7890",
+        prescriber_code: "7890",
         province: "Anyprovince",
         username: "johndoe123"
       });
@@ -183,7 +196,7 @@ function App() {
               {/* Admin Route*/}
               <Route path="adminPatientProfile" element={<AdminPatientProfile />} />
               <Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
-
+              <Route path="adminLogs" element={<AdminLogs />} />
               <Route path="green-resources" element={<GreenResources />} />
 
               <Route path="prescriberPrescriptions" element={<PrescriberPrescriptions />} />
