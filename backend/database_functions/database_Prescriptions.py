@@ -36,12 +36,14 @@ template_PR = {
         "patient_initials": None,
         "prescriber_code": None,
         "discoveryPass": None,
+        "patient_email": None,
     },
     "prescriber": {
         "date": None,
         "patient_initials": None,
         "prescriber_code": None,
         "discoveryPass": None,
+        "patient_email": None,
     },
 }
 

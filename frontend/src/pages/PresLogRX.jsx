@@ -6,7 +6,12 @@ import { UserContext } from "../App";
 
 
 const LogPresPrescription = () => {
-  const [data, setData] = useState({"user": "prescriber"});
+  const {user} = useContext(UserContext);
+  const [data, setData] = useState({"user": "prescriber", "prescriber_code": user["prescriber_code"]});
+
+  useEffect(() => {
+    console.log("hey",user);
+  }, []);
 
   function handleClick() {
     async function postData() {
@@ -45,8 +50,8 @@ const LogPresPrescription = () => {
               <label for="patient_initials" className="absolute font-semibold text-l text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Patient Initials</label>
             </div>
             <div className="relative z-0 w-full mb-8 group">
-              <input id="parx_code" onChange={(e) => setData(prevState => ({ ...prevState, prescriber_code: e.target.value }))} maxLength="8" oninput="this.value = this.value.toUpperCase()" className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-800 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" required />
-              <label for="parx_code" className="absolute font-semibold text-l text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prescriber's Provider Code (ie. AB-AL001)</label>
+              <input id="parx_code" onChange={(e) => setData(prevState => ({ ...prevState, patient_email: e.target.value }))} oninput="this.value = this.value.toUpperCase()" className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-800 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" required />
+              <label for="parx_code" className="absolute font-semibold text-l text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Patient's Email</label>
             </div>
             <div className="relative z-0 w-full mb-8 group">
               <input id="comments" onChange={(e) => setData(prevState => ({ ...prevState, comments: e.target.value }))} className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-800 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" />
