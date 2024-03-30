@@ -78,7 +78,8 @@ const PatientPrescriptions = () => {
   const itemClick = (item) => {
     if (myItem !== item) {
       setItem(item);
-    } else {
+    }
+    else {
       setItem(null);
     }
   };
@@ -90,9 +91,7 @@ const PatientPrescriptions = () => {
         desc="Check the statuses of your prescriptions and find out if you are eligible for a Discovery Pass."
       />
       <ul>
-        {notifications.map((notification) => (
-          <NotificationCard notification={notification} />
-        ))}
+        {notifications.map((notification) => (<NotificationCard notification={notification} />))}
       </ul>
       <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
         <div className="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
@@ -112,19 +111,19 @@ const PatientPrescriptions = () => {
               address on file.
             </p>
           </div>
-          <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
-            <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
-              <tr>
-                <th className="text-left p-2 w-1/8">Date</th>
-                <th className="text-left w-1/8">Prescriber Code</th>
-                <th className="text-left w-1/8 text-nowrap">Prescription Status</th>
-                <th className="text-left w-1/8 text-nowrap">Discovery Pass?</th>
-                <th className="w-1/2 text-left px-2">Prescriber Comments</th>
-                <th className="w-1/2 text-left px-2"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {data && data.map((item) => (
+            <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
+              <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
+                <tr>
+                  <th className="text-left p-2 w-1/8">Date</th>
+                  <th className="text-left w-1/8">Prescriber Code</th>
+                  <th className="text-left w-1/8 text-nowrap">Prescription Status</th>
+                  <th className="text-left w-1/8 text-nowrap">Discovery Pass?</th>
+                  <th className="w-1/2 text-left px-2">Prescriber Comments</th>
+                  <th className="w-1/2 text-left px-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {data && data.map((item) => (
                   <>
                     <tr className="text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/50">
                       <td className="p-2 w-1/8">{item.date}</td>
@@ -140,10 +139,10 @@ const PatientPrescriptions = () => {
                         <p className="font-bold text-nowrap underline">Show More</p>
                       </button>
                     </tr>{myItem === item && (<tr className="text-left text-black border-t border-white">
-                        <td colSpan="5">
-                          <Prescription item={item} />
-                        </td>
-                      </tr>
+                      <td colSpan="5">
+                        <Prescription item={item} />
+                      </td>
+                    </tr>
                     )}
                   </>
                 ))}
