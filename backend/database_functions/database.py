@@ -62,8 +62,8 @@ def print_all(collection):
     for document in documents:
         print(document)
 
-""" 
-O(1) time complexity database operation to raise pymongo.errors.OperationFailure 
+"""
+O(1) time complexity database operation to raise pymongo.errors.OperationFailure
 if the username or password is incorrect during user authentication.
 """
 def dummy_database_operation(collection):
@@ -94,7 +94,7 @@ def get_collection(name):
 # New Authentication Backend Functions for MongoDB (tested)
 def create_admin_account(username, password):
     db = client[db_name]
-    db.command("createUser", str(username), pwd=str(password), roles=[{"role": "userAdminAnyDatabase", "db": "admin"}, 
+    db.command("createUser", str(username), pwd=str(password), roles=[{"role": "userAdminAnyDatabase", "db": "admin"},
                                                                       {"role": "readWriteAnyDatabase", "db": "admin"}])
 
 def create_prescriber_account(username, password):
@@ -127,20 +127,7 @@ def remove_all_users(database_name):
     db.command("dropAllUsersFromDatabase")
     print(f"All users removed from the database: {database_name}")
 
-################################
-# Prescription Backend
 
-def getAllPrescriptions(username):
-  preScriptColl = get_collection("prescription")
-  prescriptions = preScriptColl.find({})#({'PatientId': username})
-  res = []
-  for p in prescriptions:
-      p['_id'] = str(p['_id'])
-      res.append(p)
-  return res
-
-
-###############################
 def list_all_users():
     admin_client = MongoClient(f"mongodb://{server_IP}/admin")
     admin_db = admin_client["admin"]
@@ -176,4 +163,3 @@ if __name__ == "__main__":
     authenticate_user("test prescriber", "fail")
     authenticate_user("test patient", 3333)
     authenticate_user("", "")
-    
