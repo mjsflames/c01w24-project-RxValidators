@@ -118,11 +118,11 @@ def update_prescriber_code_status(code, status):
     return updates
 
 # This function generates a pdf file for the verified prescribers
-# def generate_verified_pdfs(df, output_path):
-#     # Create the PDFs
-#     for i in df.index:
-#         if df['Status'][i] == "VERIFIED":
-#             create_pdf(df['Code'][i], output_path)
+def generate_verified_pdfs(df, output_path):
+    # Create the PDFs
+    for i in df.index:
+        if df['Status'][i] == "VERIFIED":
+            create_pdf(df['Code'][i], output_path)
             
 # This function creates a CSV file to have the new data (statuses and prescriber codes)
 def new_data_to_csv(file_name, df):
@@ -150,7 +150,7 @@ def create_pdf(code, output_path):
     page.drawString(80, 185, "Health Professional's Signature")
 
     page.restoreState() 
-    page.drawString(80, 130, f"Prescription #: {code}   --  ___________________  --  ___________________")
+    page.drawString(80, 130, f"Prescription #: {code}   —  ___________________  —  ___________________")
     
     page.setFont("Helvetica", 9)
     page.drawString(280, 115, "(YYMMDD)")
@@ -159,7 +159,7 @@ def create_pdf(code, output_path):
     # page.save()
     return page
 
-
+# This function generates pdf files for the verified prescribers, and saves them in a zip folder (through a buffer)
 def generate_verified_pdfs(df, output_path):
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, "w", compression=zipfile.ZIP_DEFLATED) as zipf:
@@ -177,16 +177,3 @@ def generate_verified_pdfs(df, output_path):
     # return zip file
     zip_buffer.seek(0)
     return zip_buffer.getvalue()
-                
-# DELETE THIS LATER
-
-# full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
-# expected_data = [
-#             ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
-#             ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", None],
-#             ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
-#         ] 
-# df = pd.DataFrame(expected_data, columns=full_columns)
-        
-# # call the function generate_verified_pdfs(df, output_path) to generate the PDFs
-# print(generate_verified_pdfs(df, ""))
