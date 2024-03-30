@@ -24,16 +24,13 @@ const changeItem = (key, newValue) => {
   setNewItem(newItem);
 };
 
-async function updateData() {
-  await api.patch(`/auth/updateUser/${data.username}`, newItem).then((res) => {
+function updateData() {
+  api.patch(`/auth/updateUser/${data._id}`, newItem).then((res) => {
     console.log(res.data);
-    if (res.status === 200) {
-      setData(newItem);
-    }
+    setData(newItem);
   }).catch((err) => {
     console.log(err.response)
   })
-  console.log(data);
 }
 
   return (

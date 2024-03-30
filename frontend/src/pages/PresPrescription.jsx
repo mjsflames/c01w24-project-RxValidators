@@ -12,40 +12,10 @@ const PrescriberPrescriptions = () => {
   const [userData, setUserData] = useState();
   const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   const sampleData = [
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "AB",
-  //       "prescriber_code": "001",
-  //       "status": "Pending",
-  //       "comments": "Details for item 1",
-  //       "discovery": true,
-  //     },
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "CD",
-  //       "prescriber_code": "001",
-  //       "status": "Completed",
-  //       "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal"
-  //     },
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "EF",
-  //       "prescriber_code": "001",
-  //       "status": "Pending",
-  //       "comments": "Details for item 3"
-  //     }
-  //   ];
-
-  //   setData(sampleData)
-  // }, []);
-
   useEffect(() => {
     async function fetchData() {
-      const username = "testUser";
       try {
-        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+        const res = await fetch(`http://localhost:5001/api/getPresPrescriptions/${user.prescriber_code}`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -131,7 +101,7 @@ const PrescriberPrescriptions = () => {
                     <td className="px-2 py-3 w-1/8">{item.date}</td>
                     <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
                     <td className="px-2 py-3">{item.status}</td>
-                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discoveryPass==="Yes"}/></td>
+                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discoveryPass === "Yes"}/></td>
                     <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
                     <td>
                       <button onClick={() => itemClick(item)} className="p-2 w-1/8">

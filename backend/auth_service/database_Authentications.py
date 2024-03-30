@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 import requests as requestsLib
 import uuid
 import bcrypt
+from bson.objectid import ObjectId
 
 
 server_IP = "127.0.0.1:27017"
@@ -24,7 +25,7 @@ app.config['PORT'] = PORT
 required_authentication_fields = [
     "username",
     "password",
-    "role",
+    #"role",
 ]
 
 prescribers_collection = db["prescribers"]
@@ -177,6 +178,7 @@ def list_patients():
         all_users = collection.find({"role": "patient"})
 
         user_list = list(all_users)
+        for user in user_list: user["_id"] = str(user["_id"])
         users_json = dumps(user_list)
 
         return users_json, 200, {'Content-Type': 'application/json'}
@@ -192,6 +194,7 @@ def list_prescribers():
         all_users = collection.find({"role": "prescriber"})
 
         user_list = list(all_users)
+        for user in user_list: user["_id"] = str(user["_id"])
         users_json = dumps(user_list)
 
         return users_json, 200, {'Content-Type': 'application/json'}
@@ -219,7 +222,8 @@ def update_user(username):
 
         update_query = {"$set": data}
 
-        update_result = collection.update_one({"username": username}, update_query)
+        update_result = collection.update_one({"_id": ObjectId(username)}, update_query)
+
 
         if update_result.modified_count > 0:
             return jsonify({"message": "User updated successfully"}), 200
@@ -245,7 +249,7 @@ def remove_user(username):
 
         # This command removes the user from the mongodb user list
         db.command("dropUser", username)
-        
+
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
 
     except Exception as e:
