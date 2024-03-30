@@ -58,5 +58,5 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
 - Changed the backend to implement new matching keys instead of only having the date and prescriber codes.
 
 # Renat:
-- "Assigned:" Admin frontend (pulling logs/profiles, allowing admin to overwrite all data) since sprint 2 (did not do it in the end)
+- **Assigned: Admin frontend (pulling logs/profiles, allowing admin to overwrite all data) since sprint 2 (did not do it in the end)**
 - Attempted docker/deployment but didn’t work
