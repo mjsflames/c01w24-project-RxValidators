@@ -14,7 +14,7 @@ const PrescriberPrescriptions = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`http://localhost:5001/api/getPresPrescriptions/${user.providerCode}`, {
+        const res = await fetch(`http://localhost:5001/api/getPresPrescriptions/${user.prescriber_code}`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -82,7 +82,7 @@ const PrescriberPrescriptions = () => {
                     <td className="px-2 py-3 w-1/8">{item.date}</td>
                     <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
                     <td className="px-2 py-3">{item.status}</td>
-                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discovery}/></td>
+                    <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discoveryPass === "Yes"}/></td>
                     <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
                     <button onClick={() => itemClick(item)} className="p-2 w-1/8">
                       <p className="font-bold text-nowrap underline">Show More</p>
