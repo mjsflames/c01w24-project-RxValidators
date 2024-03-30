@@ -22,8 +22,8 @@ const PdfViewer = () => {
     }
 
     useEffect(() => {
-        if (user.providerCode)
-            downloadPDF(user.providerCode);
+        if (user.prescriber_code)
+            downloadPDF(user.prescriber_code);
         else
             setErrorMessage("You don't have a prescriber code");
     }, []);

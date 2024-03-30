@@ -14,44 +14,10 @@ const AdminLogs = () => {
   const [checkboxStates, setCheckboxStates] = useState({});
 
   useEffect(() => {
-    const sampleData = [
-      {
-        "date": "2024-05-12",
-        "patient_initials": "AB",
-        "prescriber_code": "001",
-        "status": "Pa Logged",
-        "comments": "Details for item 1",
-        "discoveryPass": true,
-        "user_type": "Patient",
-      },
-      {
-        "date": "2024-03-12",
-        "patient_initials": "AB",
-        "prescriber_code": "001",
-        "status": "Pr Logged",
-        "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal",
-        "discoveryPass": true,
-        "user_type": "Prescriber"
-      },
-      {
-        "date": "2024-03-12",
-        "patient_initials": "EF",
-        "prescriber_code": "001",
-        "status": "Pr not logged yet",
-        "comments": "Details for item 3",
-        "user_type": "Prescriber"
-      }
-    ];
-
-    setData(sampleData)
-    setShownData(shownData)
-  }, []);
-
-  useEffect(() => {
     async function fetchData() {
       const username = "testUser";
       try {
-        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+        const res = await fetch(`http://localhost:5001/list-prescriptions`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -96,7 +62,7 @@ const AdminLogs = () => {
 
     const initialCheckboxStates = {};
     shownData.forEach((item, index) => {
-      initialCheckboxStates[index] = item.discoveryPass;
+      initialCheckboxStates[index] = item.discoveryPass === "Yes";
     });
     setCheckboxStates(initialCheckboxStates);
   }, [shownData]);
@@ -127,13 +93,13 @@ const AdminLogs = () => {
     // Update the state to display the updated item data
     setUpdatedItemDisplay(payload);
 
-		try {
-			const response = await api.post(`http://localhost:5001/api/update-prescription/${updatedItem.oid}`, filteredPayload);
-			console.log(response.data);
-		} catch (error) {
-			console.error(error);
-		}
-	};
+    try {
+      const response = await api.post(`http://localhost:5001/api/update-prescription/${updatedItem.oid.$oid}`, filteredPayload);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // const updateLogStatus = async (itemToUpdate) => {
   //   // Construct the payload from the updated item data
@@ -170,14 +136,15 @@ const AdminLogs = () => {
       />
       <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{ backgroundImage: `url(${pic})` }}>
 
-        <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+        <div class="rounded-xl w-4/5 bg-gray-200 bg-opacity-70 p-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
             <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">Administrator: All Logged Prescriptions</h1>
             <p className="font-semibold">Prescription status are able to be searched by the date and status.</p>
             <p className="font-semibold">Change the status to "Complete with Discovery Pass" if requirements are met.</p>
           </div>
-          <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())} value={searchInput} className="rounded-md border-black border placeholder:text-slate-800 flex w-1/4 p-2 bg-opacity-10 bg-slate-600" />
-          <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
+          <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
+            value={searchInput} className="flex w-1/4 p-2 placeholder:text-slate-800 bg-slate-100 border border-black rounded-md" />
+          <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500 rounded-lg">
             <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
               <tr>
                 <th scope="col" className="px-2 py-3">Date</th>
@@ -185,15 +152,18 @@ const AdminLogs = () => {
                 <th scope="col" className="px-2 py-3">Provider Code</th>
                 <th scope="col" className="px-2 py-3">Discovery Pass?</th>
                 <th scope="col" className="px-2 py-3">Prescription Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {shownData && shownData.map((item, index) => (
                 <>
                   <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: ">
+
                     <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 bg-transparent placeholder:text-current" placeholder={item.date}></input></td>
                     <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 placeholder:text-current bg-transparent" placeholder={item.patient_initials}></input></td>
                     <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 placeholder:text-current bg-transparent" placeholder={item.prescriber_code}></input></td>
+
                     <td className="px-2 py-3 w-1/8">
                       <input
                         type="checkbox"
@@ -211,7 +181,7 @@ const AdminLogs = () => {
                       )}
                     </select>
                     <td>
-                      <button className="w-20 rounded"
+                      <button className="w-20 rounded hover:bg-slate-300 p-2 border border-opacity-30 border-black"
                         onClick={() => {
                           // Create an updated item object based on input values
                           const updatedItem = {
