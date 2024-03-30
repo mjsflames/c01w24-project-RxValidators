@@ -15,27 +15,26 @@ const PatientPrescriptions = () => {
   useEffect(() => {
     const sampleData = [
       {
-        date: "2024-03-12",
-        patient_initials: "AB",
-        prescriber_code: "001",
-        status: "Pending",
-        comments: "Details for item 1",
-        discovery: true,
+        "date": "2024-03-12",
+        "patient_initials": "AB",
+        "prescriber_code": "001",
+        "status": "Pending",
+        "comments": "Details for item 1",
+        "discovery": true,
       },
       {
-        date: "2024-03-12",
-        patient_initials: "CD",
-        prescriber_code: "002",
-        status: "Completed",
-        comments:
-          "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal",
+        "date": "2024-03-12",
+        "patient_initials": "CD",
+        "prescriber_code": "002",
+        "status": "Completed",
+        "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal",
       },
       {
-        date: "2024-03-12",
-        patient_initials: "EF",
-        prescriber_code: "003",
-        status: "Pending",
-        comments: "Details for item 3",
+        "date": "2024-03-12",
+        "patient_initials": "EF",
+        "prescriber_code": "003",
+        "status": "Pending",
+        "comments": "Details for item 3",
       },
     ];
 
@@ -46,12 +45,9 @@ const PatientPrescriptions = () => {
     async function fetchData() {
       const username = "testUser";
       try {
-        const res = await fetch(
-          `http://localhost:5001/api/getPrescriptions/${username}`,
-          {
-            method: "GET",
-          }
-        );
+        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+          method: "GET",
+        });
         if (!res.ok) {
           throw new Error("No response");
         }
@@ -98,10 +94,7 @@ const PatientPrescriptions = () => {
           <NotificationCard notification={notification} />
         ))}
       </ul>
-      <div
-        className="flex w-full h-[650px] items-center justify-center bg-cover"
-        style={{ backgroundImage: `url(${pic})` }}
-      >
+      <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
         <div className="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
             {userData ? (
@@ -124,17 +117,14 @@ const PatientPrescriptions = () => {
               <tr>
                 <th className="text-left p-2 w-1/8">Date</th>
                 <th className="text-left w-1/8">Prescriber Code</th>
-                <th className="text-left w-1/8 text-nowrap">
-                  Prescription Status
-                </th>
+                <th className="text-left w-1/8 text-nowrap">Prescription Status</th>
                 <th className="text-left w-1/8 text-nowrap">Discovery Pass?</th>
                 <th className="w-1/2 text-left px-2">Prescriber Comments</th>
                 <th className="w-1/2 text-left px-2"></th>
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((item) => (
+              {data && data.map((item) => (
                   <>
                     <tr className="text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/50">
                       <td className="p-2 w-1/8">{item.date}</td>
@@ -146,17 +136,10 @@ const PatientPrescriptions = () => {
                       <td className="px-2 w-1/2 truncate max-w-md text-wrap">
                         {item.comments}
                       </td>
-                      <button
-                        onClick={() => itemClick(item)}
-                        className="p-2 w-1/8"
-                      >
-                        <p className="font-bold text-nowrap underline">
-                          Show More
-                        </p>
+                      <button onClick={() => itemClick(item)} className="p-2 w-1/8">
+                        <p className="font-bold text-nowrap underline">Show More</p>
                       </button>
-                    </tr>
-                    {myItem === item && (
-                      <tr className="text-left text-black border-t border-white">
+                    </tr>{myItem === item && (<tr className="text-left text-black border-t border-white">
                         <td colSpan="5">
                           <Prescription item={item} />
                         </td>
