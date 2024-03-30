@@ -1,3 +1,4 @@
+# pylint: disable=all [for testers who installed pylint in their environment]
 from flask import Flask, request, jsonify, abort, make_response
 from bson.json_util import dumps, loads
 from pymongo import MongoClient
