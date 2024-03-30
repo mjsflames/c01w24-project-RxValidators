@@ -110,13 +110,6 @@ def health_check(): # ? API Gateway health check
 
 ##############################################
 
-# Get latest job
-@app.route("/api/jobs/last", methods=["GET"])
-def get_latest_job():
-    if processing:
-        return {"id": list(processing.keys())[-1]}, 200, {"Content-Type": "application/json"}
-    return {"message": "No jobs"}, 404, {"Content-Type": "application/json"}
-
 @app.route('/api/generatePdf', methods=['POST'])
 def generate_pdf():
     code = request.json.get('code')
