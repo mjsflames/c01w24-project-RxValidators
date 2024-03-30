@@ -191,9 +191,9 @@ const AdminLogs = () => {
               {shownData && shownData.map((item, index) => (
                 <>
                   <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: ">
-                    <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 text-white bg-transparent placeholder:text-gray-700" placeholder={item.date}></input></td>
-                    <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 bg-transparent placeholder:text-gray-700" placeholder={item.patient_initials}></input></td>
-                    <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 text-white bg-transparent placeholder:text-gray-700" placeholder={item.prescriber_code}></input></td>
+                    <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 bg-transparent placeholder:text-current" placeholder={item.date}></input></td>
+                    <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 placeholder:text-current bg-transparent" placeholder={item.patient_initials}></input></td>
+                    <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 placeholder:text-current bg-transparent" placeholder={item.prescriber_code}></input></td>
                     <td className="px-2 py-3 w-1/8">
                       <input
                         type="checkbox"
