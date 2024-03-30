@@ -21,7 +21,7 @@ const AdminLogs = () => {
         "prescriber_code": "001",
         "status": "Pa Logged",
         "comments": "Details for item 1",
-        "discovery": true,
+        "discoveryPass": true,
         "user_type": "Patient",
       },
       {
@@ -30,7 +30,7 @@ const AdminLogs = () => {
         "prescriber_code": "001",
         "status": "Pr Logged",
         "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal",
-        "discovery": true,
+        "discoveryPass": true,
         "user_type": "Prescriber"
       },
       {
@@ -161,7 +161,7 @@ const AdminLogs = () => {
   //   }
   // };
 
-  
+
   return (
     <>
       <PageHeader
@@ -176,7 +176,7 @@ const AdminLogs = () => {
             <p className="font-semibold">Prescription status are able to be searched by the date and status.</p>
             <p className="font-semibold">Change the status to "Complete with Discovery Pass" if requirements are met.</p>
           </div>
-          <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())} value={searchInput} className="flex w-1/4 p-2" />
+          <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())} value={searchInput} className="rounded-md border-black border placeholder:text-slate-800 flex w-1/4 p-2 bg-opacity-10 bg-slate-600" />
           <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
             <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
               <tr>
@@ -184,17 +184,16 @@ const AdminLogs = () => {
                 <th scope="col" className="px-2 py-3">Patient Initials</th>
                 <th scope="col" className="px-2 py-3">Provider Code</th>
                 <th scope="col" className="px-2 py-3">Discovery Pass?</th>
-                <th scope="col" className="px-2 py-3">User Type</th>
                 <th scope="col" className="px-2 py-3">Prescription Status</th>
               </tr>
             </thead>
             <tbody>
               {shownData && shownData.map((item, index) => (
                 <>
-                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: "> 
-                    <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 text-white" placeholder={item.date}></input></td>
-                    <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 text-white" placeholder={item.patient_initials}></input></td>
-                    <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 text-white" placeholder={item.prescriber_code}></input></td>
+                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: ">
+                    <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 text-white bg-transparent placeholder:text-gray-700" placeholder={item.date}></input></td>
+                    <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 bg-transparent placeholder:text-gray-700" placeholder={item.patient_initials}></input></td>
+                    <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 text-white bg-transparent placeholder:text-gray-700" placeholder={item.prescriber_code}></input></td>
                     <td className="px-2 py-3 w-1/8">
                       <input
                         type="checkbox"
@@ -202,13 +201,14 @@ const AdminLogs = () => {
                         onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                       />
                     </td>
-                    <td><input type="text" id="user" className="px-2 py-3 text-white" placeholder={item.user_type}></input></td>
-                    <select className="py-3 w-full truncate max-w-md text-white">
-                      <option selected value={item.status} defaultValue={item.status} disabled>{item.status}</option>
-                      <option value="Pa Not Logged">Pa Not Logged</option>
-                      <option value="Pr Not Logged">Pr Not Logged</option>
-                      <option value="Complete">Complete</option>
-                      <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
+                    <select className="py-3 w-full truncate max-w-md text-black bg-transparent placeholder:text-gray-700">
+                      <option selected value={item.status} disabled>{item.status}</option>
+                      {item.status === "Both Logged With Discovery Pass" && (
+                        <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
+                      )}
+                      {item.status === "Complete with Discovery Pass" && (
+                        <option value="Both Logged With Discovery Pass">Both Logged With Discovery Pass</option>
+                      )}
                     </select>
                     <td>
                       <button className="w-20 rounded"
