@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from database_Authentications import app, client, db, collection
+from database_Authentications import app
 
 class TestDatabaseAuthenticationService(unittest.TestCase):
     def setUp(self):
