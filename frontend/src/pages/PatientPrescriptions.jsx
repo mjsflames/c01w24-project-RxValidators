@@ -10,8 +10,10 @@ const PatientPrescriptions = () => {
   const [data, setData] = useState(null);
   const [myItem, setItem] = useState(null);
   const { user, getNotifications } = useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState();
   const [notifications, setNotifications] = useState([]);
+  const [error, setError] = useState("");
 
   // useEffect(() => {
   //   const sampleData = [
@@ -146,7 +148,30 @@ const PatientPrescriptions = () => {
                       <td>
                         <button onClick={() => itemClick(item)} className="p-2 w-1/8"><p className="font-bold text-nowrap underline">Show More</p></button>
                       </td>
-                        <td><button class="p-2 w-1/8 font-bold text-red-600 hover:text-red-700 underline text-center ml-5" onClick={() => deleteHandler(item._id)}>Delete</button> </td>
+                        <td><button id="deactivate" onClick={() => setShowModal(true)} className="p-2 w-1/8 font-bold text-red-600 hover:text-red-700 underline text-center ml-5">
+                            Delete   
+                        </button>
+                        {showModal ? (
+                            <>
+                                <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 bg-black bg-opacity-50">
+                                    <div className="relative w-auto mx-auto">
+                                        <div className="border-0 rounded-lg relative flex flex-col w-full bg-white outline-none px-10"> 
+                                            <div className="flex items-start justify-between p-5">
+                                                <h2 className="text-l font-bold mx-auto">Please Confirm Deletion</h2>
+                                                <button className="bg-transparent text-black absolute right-2 top-0" onClick={() => setShowModal(false)}>X</button>
+                                            </div>
+                                            <div className="relative text-center flex-auto mb-5">
+                                                <p>Are you sure you want to delete this prescription?</p>
+                                            </div>
+                                            <div className="flex flex-row justify-center mb-5">
+                                                <button id="deletelog" onClick={() => deleteHandler(item._id)} className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10">Yes, proceed</button>
+                                                <button className="bg-red-200 hover:bg-red-200/40 text-black border rounded-full p-2.5" onClick={() => setShowModal(false)}>No, cancel</button>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </>
+                        ) : null}</td>
                     </tr>{myItem === item && (<tr className="text-left text-black border-t border-white">
                       <td colSpan="5">
                         <Prescription item={item} />
