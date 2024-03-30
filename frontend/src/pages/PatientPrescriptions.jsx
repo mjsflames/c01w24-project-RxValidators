@@ -13,40 +13,11 @@ const PatientPrescriptions = () => {
   const [userData, setUserData] = useState();
   const [notifications, setNotifications] = useState([]);
 
-  // useEffect(() => {
-  //   const sampleData = [
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "AB",
-  //       "prescriber_code": "001",
-  //       "status": "Pending",
-  //       "comments": "Details for item 1",
-  //       "discovery": true,
-  //     },
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "CD",
-  //       "prescriber_code": "002",
-  //       "status": "Completed",
-  //       "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal"
-  //     },
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "EF",
-  //       "prescriber_code": "003",
-  //       "status": "Pending",
-  //       "comments": "Details for item 3"
-  //     }
-  //   ];
-
-  //   setData(sampleData)
-  // }, []);
-
   useEffect(() => {
+    console.log("Here we go",user);
     async function fetchData() {
-      const username = "testUser";
       try {
-        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+        const res = await fetch(`http://localhost:5001/api/getPatientPrescriptions/${user.username}`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -115,6 +86,7 @@ const PatientPrescriptions = () => {
         }
       </ul>
       <div className="flex w-full min-h-[650px] items-center justify-center bg-cover" style={{backgroundImage: `url(${pic})`}}>
+
         <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
             {userData ? (
@@ -158,7 +130,7 @@ const PatientPrescriptions = () => {
               </tbody>
             </table>
           </div>
-       
+
       </div>
     </>
   );

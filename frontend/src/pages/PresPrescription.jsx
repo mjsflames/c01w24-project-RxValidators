@@ -12,40 +12,10 @@ const PrescriberPrescriptions = () => {
   const [userData, setUserData] = useState();
   const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   const sampleData = [
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "AB",
-  //       "prescriber_code": "001",
-  //       "status": "Pending",
-  //       "comments": "Details for item 1",
-  //       "discovery": true,
-  //     },
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "CD",
-  //       "prescriber_code": "001",
-  //       "status": "Completed",
-  //       "comments": "Details for item 2 asjdfklajsdlfj alsdfjaslkdfjas lasdjfaslkdjf alsdkjfalskdjfaslkdfjalksdjf aslkdfjalsd fal"
-  //     },
-  //     {
-  //       "date": "2024-03-12",
-  //       "patient_initials": "EF",
-  //       "prescriber_code": "001",
-  //       "status": "Pending",
-  //       "comments": "Details for item 3"
-  //     }
-  //   ];
-
-  //   setData(sampleData)
-  // }, []);
-
   useEffect(() => {
     async function fetchData() {
-      const username = "testUser";
       try {
-        const res = await fetch(`http://localhost:5001/api/getPrescriptions/${username}`, {
+        const res = await fetch(`http://localhost:5001/api/getPresPrescriptions/${user.providerCode}`, {
           method: "GET",
         });
         if (!res.ok) {

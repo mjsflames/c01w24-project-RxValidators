@@ -25,7 +25,7 @@ app.config['PORT'] = PORT
 required_authentication_fields = [
     "username",
     "password",
-    "role",
+    #"role",
 ]
 
 prescribers_collection = db["prescribers"]
@@ -249,7 +249,7 @@ def remove_user(username):
 
         # This command removes the user from the mongodb user list
         db.command("dropUser", username)
-        
+
         return jsonify({"message": f"User:{username} deleted successfully"}), 200
 
     except Exception as e:
