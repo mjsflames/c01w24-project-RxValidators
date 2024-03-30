@@ -27,7 +27,7 @@ const PrescriberHome = () => {
 				<h2 className="text-green-700">Prescribe nature.</h2>
 				<p className="font-bold ">
 				  <br />
-				  Your PaRx Code: {userData?.providerCode}
+				  Your PaRx Code: {userData?.prescriber_code}
 				</p>
 			  </div>
 			  <div className="col-span-2 mt-10 lg:mt-20 text-center items-center justify-center">
