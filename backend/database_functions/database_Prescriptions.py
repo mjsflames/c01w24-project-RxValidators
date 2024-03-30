@@ -180,7 +180,6 @@ def submit_form():
     collection.update_one(filter_fields, update)
     return (jsonify({"message": "Data posted successfully"}), 200)
 
-
 @app.route("/list-prescriptions", methods=["GET"])
 def list_prescriptions():
     # Fetch all documents in the collection
@@ -215,22 +214,26 @@ def search_prescriptions():
     return Response(dumps(results), mimetype="application/json"), 200
 
 
-@app.route("/update-prescription", methods=["POST"])
-def update_prescription():
+
+@app.route("/api/update-prescription/<oid>", methods=["POST"])
+def update_prescription(oid):
     data = request.json  # Assuming the data is sent as JSON
 
-    # Extract query parameters
-    date = data.get("date")
-    prescriber_code = data.get("prescriber_code")
+    # # Extract query parameters
+    # date = data.get("date")
+    # prescriber_code = data.get("prescriber_code")
 
-    # Ensure the necessary fields are provided
-    if not date or not prescriber_code:
-        return jsonify({"error": "Missing date or prescriber_code in request"}), 400
+
+    # # Ensure the necessary fields are provided
+    # if not date or not prescriber_code:
+    #     return jsonify({"error": "Missing date or prescriber_code in request"}), 400
 
     # Check if the fields to be updated are within the allowed fields, excluding 'date' and 'prescriber_code'
-    update_fields = set(data.keys()) - {"date", "prescriber_code"}
-    if not update_fields.issubset(template_PR["admin"]):
-        invalid_fields = update_fields - set(template_PR["admin"])
+
+    update_fields = set(data.keys()) #- {"date", "prescriber_code"}
+    if not update_fields.issubset(template_PR):
+        invalid_fields = update_fields - set(template_PR)
+
         return (
             jsonify(
                 {
@@ -243,14 +246,14 @@ def update_prescription():
 
     # Build the update operation, excluding 'date' and 'prescriber_code' from the update
     update_data = {
-        k: v for k, v in data.items() if k not in ["date", "prescriber_code"]
+        k: v for k, v in data.items() #if k not in ["date", "prescriber_code"]
     }
     update_operation = {"$set": update_data}
 
     try:
         # Perform the update
         result = collection.find_one_and_update(
-            {"date": date, "prescriber_code": prescriber_code},  # Query
+            {"_id": ObjectId(oid)},  # Query
             update_operation,  # Update
             return_document=True,  # Return the updated document
         )

@@ -15,6 +15,7 @@ import AdminHome from "./pages/AdminHome.jsx";
 import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
 import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
 import Verification from "./pages/Verification.jsx";
+import AdminLogs from "./pages/AdminLogs.jsx";
 import PrescriberHome from "./pages/PrescriberHome.jsx";
 import PrescriberPrescriptions from "./pages/PresPrescription.jsx";
 import PrescriberSettings from "./pages/PrescriberSettings.jsx";
@@ -195,7 +196,7 @@ function App() {
               {/* Admin Route*/}
               <Route path="adminPatientProfile" element={<AdminPatientProfile />} />
               <Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
-
+              <Route path="adminLogs" element={<AdminLogs />} />
               <Route path="green-resources" element={<GreenResources />} />
 
               <Route path="prescriberPrescriptions" element={<PrescriberPrescriptions />} />
