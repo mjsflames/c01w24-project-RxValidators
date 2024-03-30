@@ -1,4 +1,4 @@
-from backend.verification_service.src.code_pdf_server import *
+from code_pdf_server import *
 import unittest
 import pandas as pd
 
@@ -16,7 +16,6 @@ class TestCases(unittest.TestCase):
         expected_data = []
         expected_df = pd.DataFrame(expected_data, columns=full_columns)
         test_df = pd.DataFrame(data, columns=columns)
-        
         result = add_codes_to_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)
@@ -34,7 +33,6 @@ class TestCases(unittest.TestCase):
         ] 
         expected_df = pd.DataFrame(expected_data, columns=full_columns)
         test_df = pd.DataFrame(data, columns=columns)
-        
         result = add_codes_to_df(test_df)
         diff = expected_df.equals(result)
         self.assertEqual(diff, True)

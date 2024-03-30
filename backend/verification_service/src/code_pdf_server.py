@@ -98,6 +98,12 @@ def add_codes_to_df(df):
                 counter += 1
             
             df.loc[i, 'Code'] = code
+            
+    # Drop the 'Initials' column
+    df = df.drop(columns=['Initials'])
+    # Resort the rows by indices
+    df = df.sort_index()
+    
     # print(df)
     return df
 
