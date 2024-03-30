@@ -44,7 +44,7 @@ function updateData() {
                 <tr key={key}>
                   <td className="w-2/3 px-2 align-top">{key}:</td>
                   <td className="w-1/3 px-2">
-                    <input onChange={(e) => changeItem(value, e.target.value)} placeholder={data[value]} className="font-normal bg-slate-400 bg-opacity-20 text-current p-1 rounded-md placeholder-current placeholder-opacity-70 w-full"></input>
+                    <input onChange={(e) => changeItem(value, e.target.value)} placeholder={data[value]} className="font-normal bg-slate-400 bg-opacity-30 text-current p-1 rounded-md placeholder-current w-full"></input>
                   </td>
                 </tr>
               ))}
@@ -53,7 +53,7 @@ function updateData() {
         )}
       </div>
       <div className="flex justify-end p-3">
-        <button onClick={() => updateData()} className="border border-black rounded-md font-semibold w-1/10 hover:font-bold">Update</button>
+        <button onClick={() => {updateData(); window.location.reload();}} className="border border-black border-2 rounded-md font-bold w-1/10 hover:bg-PaRxGreen">Update</button>
         </div>
     </>
   );
