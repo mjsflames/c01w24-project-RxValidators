@@ -157,7 +157,7 @@ def export_file(id):
         return {"message": "Invalid file type. Please specify 'csv' or 'xlsx'."}, 400, {"Content-Type": "application/json"}
 
     # call the function generate_verified_pdfs(df, output_path) to generate the PDFs
-    print(generate_verified_pdfs(df, ""))
+    # print(generate_verified_pdfs(df, ""))
     status = scraper_handler.check_status(id)
     if type(status) is not DataFrame:
         return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
