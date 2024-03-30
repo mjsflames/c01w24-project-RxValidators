@@ -18,14 +18,16 @@ const AdminHome = () => {
             <h2 className="text-green-700">in one click.</h2>
           </div>
 
-          <div className="flex flex-col gap-2 w-full">
-            <div className="flex flex-col lg:flex-row gap-2 w-full">
+          <div className="flex flex-col gap-2 lg:gap-6 w-full">
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 w-full">
               <Link to="/verify">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Verify New Prescribers</button>
               </Link>
               <Link to="/green-resources">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Green Resources</button>
               </Link>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 w-full">
               <Link to="/adminPrescriberProfile">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Access Prescribers</button>
               </Link>
