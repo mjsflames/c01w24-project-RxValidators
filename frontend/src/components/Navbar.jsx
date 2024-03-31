@@ -51,7 +51,7 @@ const Navbar = () => {
 			{myLinks.map((link, index) => (
 				<NavLink key={index} to={link.to} style={{ color: 'darkgreen' }}className={({ isActive }) =>
 				[
-				  	isActive ? "active" : "font-bold", 
+				  	!isActive ? "active" : "font-bold underline", 
 				].join(" ")
 			  	}>
 					{link.text}
