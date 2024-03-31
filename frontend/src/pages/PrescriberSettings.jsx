@@ -56,7 +56,7 @@ const PrescriberSettings = () => {
     <>
       <PageHeader
         title="Your Account"
-        desc="You can see all of your account details below."
+        desc="You can see all of your account details below. To change Mailing Address or Language, update the fields and click Update"
       />
       <ContentContainer>
         <div className="mr-auto ml-auto w-3/4 flex flex-cols-3 flex-rows-2 mb-2 text-lg font-semibold text-gray-600">
@@ -66,13 +66,13 @@ const PrescriberSettings = () => {
                 <div className="flex flex-col items-center w-full mb-2 mt-3 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <div className="w-full">
                     <label for="first_name" className="block mb-2 text-sm font-medium text-indigo-900">First Name</label>
-                    <div type="text" id="first_name" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                    <div type="text" id="first_name" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                       {userData.firstName}
                     </div>
                   </div>
                   <div className="w-full">
                     <label for="last_name" className="block mb-2 text-sm font-medium text-indigo-900">Last Name</label>
-                    <div type="text" id="last_name" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                    <div type="text" id="last_name" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                       {userData.lastName}
                     </div>
                   </div>
@@ -80,7 +80,7 @@ const PrescriberSettings = () => {
                 <div className="w-full space-x-0 mb-3 space-y-2 sm:space-x-4">
                   <div className="w-full">
                     <label for="profession" className="block mb-2 text-sm font-medium text-indigo-900">Profession</label>
-                    <div type="text" id="profession" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
+                    <div type="text" id="profession" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
                       {userData.profession}
                     </div>
                   </div>
@@ -88,7 +88,7 @@ const PrescriberSettings = () => {
                 <div className="w-full space-x-0 mb-3 space-y-2 sm:space-x-4">
                   <div className="w-full">
                     <label for="email" className="block mb-2 text-sm font-medium text-indigo-900">Email Address</label>
-                    <div type="text" id="email" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
+                    <div type="text" id="email" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
                       {userData.email}
                     </div>
                   </div>
@@ -97,13 +97,13 @@ const PrescriberSettings = () => {
                 <div className="flex flex-col items-center w-full mb-2 sm:flex-row sm:space-x-4">
                   <div className="w-full">
                     <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Account Type</label>
-                    <div id="accounttype" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                    <div id="accounttype" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                       {userData.role.toUpperCase()}
                     </div>
                   </div>
                   <div className="w-full">
                     <label for="status" className="block mb-2 text-sm font-medium text-indigo-900">Account Status</label>
-                    <div type="text" id="status" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                    <div type="text" id="status" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                       {userData.accStatus == null || userData.accStatus == true ? "ACTIVE" : "UNACTIVE"}
                     </div>
                   </div>
@@ -111,36 +111,12 @@ const PrescriberSettings = () => {
               </>
             ) : null}
           </div>
-          <div className="m-2 text-lg font-semibold text-indigo-900">Mailing Address
-            <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2 flex">
-              <div className="mb-3 w-full">
-                <label for="patProvince" className="block mb-2 text-sm font-medium text-indigo-900 w-full">Street Address</label>
-                <input onChange={(e) => changeItem("address", e.target.value)} placeholder={userData ? userData.address : ""} type="text" id="streetAddress" className="w-1/2 bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5"></input>
-              </div>
-              <div className="w-1/2"><br></br><button onClick={() => updateData()} className="hover:bg-black/15 text-center rounded-md border border-black p-1">Update</button></div>
-            </div>
-            <div className="flex flex-col w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
-              <div className="w-full">
-                <label for="patProvince" className="block mb-2 text-sm font-medium text-indigo-900">City</label>
-                <input onChange={(e) => changeItem("city", e.target.value)} placeholder={userData ? userData.city : ""} type="text" id="streetAddress"
-                  className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
-              </div>
-              <div className="w-full">
-                <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Province</label>
-                <input onChange={(e) => changeItem("province", e.target.value)} placeholder={userData ? userData.province : ""} type="text" id="streetAddress"
-                  className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
-              </div>
-              <div className="w-full">
-                <label for="status" className="block mb-2 text-sm text-nowrap font-medium text-indigo-900">Language</label>
-                <input onChange={(e) => changeItem("language", e.target.value)} placeholder={userData ? userData.language : ""} type="text" id="streetAddress"
-                  className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
-              </div>
-            </div>
-            <div>License Details
+          <div className="mr-auto ml-auto w-1/3 m-2 text-lg font-semibold text-indigo-900">License Details
+            <div>
               <div className="w-full space-x-0 mb-2 mt-2 sm:space-x-4 sm:space-y-0">
                 <div className="w-full">
                   <label for="college" className="block mb-2 text-sm font-medium text-indigo-900">Licensing College</label>
-                  <div type="text" id="college" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
+                  <div type="text" id="college" className="border border-black text-indigo-900 text-sm rounded-lg block p-2.5">
                     {userData ? userData.college : ""}
                   </div>
                 </div>
@@ -148,18 +124,60 @@ const PrescriberSettings = () => {
               <div className="flex flex-cols w-full sm:space-x-4 sm:space-y-0">
                 <div className="col-span-2">
                   <label for="license#" className="block mb-2 text-sm font-medium text-indigo-900 text-nowrap">License #</label>
-                  <div type="text" id="license#" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
+                  <div type="text" id="license#" className="border border-black text-indigo-900 text-sm rounded-lg block p-2.5">
                     {userData ? userData.license : ""}
                   </div>
                 </div>
                 <div className="w-full">
                   <label for="parx" className="block mb-2 text-sm font-medium text-indigo-900">PaRx Code</label>
-                  <div type="text" id="parx" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                  <div type="text" id="parx" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                     {userData ? userData.providerCode : ""}
                   </div>
                 </div>
               </div>
             </div>
+            <div className="mt-5 w-full">Mailing Address
+              <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2 flex">
+                <div className="mb-3 w-full">
+                  <label for="address" className="block mb-2 text-sm font-medium text-indigo-900 w-full">Street Address</label>
+                  <input onChange={(e) => changeItem("address", e.target.value)} placeholder={userData ? userData.address : ""} type="text" id="streetAddress" className="w-full bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5"></input>
+                </div>
+              </div>
+              <div className="flex flex-col w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
+                <div className="w-full">
+                  <label for="city" className="block mb-2 text-sm font-medium text-indigo-900">City</label>
+                  <input onChange={(e) => changeItem("city", e.target.value)} placeholder={userData ? userData.city : ""} type="text" id="streetAddress"
+                    className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
+                </div>
+                <div className="w-full">
+                  <label for="province" className="block mb-2 text-sm font-medium text-indigo-900">Province</label>
+                  <select onChange={(e) => changeItem("province", e.target.value)} placeholder={userData ? userData.province : ""} type="text" id="streetAddress"
+                    className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full">
+                      <option value={userData ? userData.province : ""} selected disabled>{userData ? userData.province : ""}</option>
+                      <option value="AB">AB</option>
+								      <option value="BC">BC</option>
+                      <option value="MB">MB</option>
+                      <option value="NB">NB</option>
+                      <option value="NL">NL</option>
+                      <option value="NS">NS</option>
+                      <option value="ON">ON</option>
+                      <option value="PEI">PEI</option>
+                      <option value="QC">QC</option>
+                      <option value="SK">SK</option>
+                    </select>
+                </div>
+                <div className="w-full">
+                  <label for="language" className="block mb-2 text-sm text-nowrap font-medium text-indigo-900">Language</label>
+                  <select onChange={(e) => changeItem("language", e.target.value)} type="text" id="streetAddress"
+                    className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full">
+                      <option value={userData ? userData.language : ""} defaultValue={userData ? userData.language : ""} selected disabled >{userData ? userData.language : ""}</option>
+                      <option value="english">English</option>
+                      <option value="french">French</option>
+                    </select>
+                </div>
+              </div>
+              <div className="w-full text-right"><br></br><button onClick={() => updateData()} className="hover:bg-black/15 text-center rounded-md border border-black p-1">Update</button></div>
+          </div>
           </div>
           <div className="ml-auto text-lg font-semibold text-gray-600">Contact Us
             <div className="max-w-md font-bold space-y-1 text-gray-600 mt-2">
