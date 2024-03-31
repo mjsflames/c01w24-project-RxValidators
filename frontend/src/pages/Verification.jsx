@@ -166,7 +166,7 @@ const Verification = () => {
                   <hr className="mt-2" />
                   <button
                     disabled={!file}
-                    className={`w-full py-4 bg-[#3b5998] hover:bg-PaRxDBlue text-white font-bold lg:px-4 lg:rounded ${!file && "!bg-gray-400 !hover:bg-inherit cursor-not-allowed"}`}
+                    className={`w-full py-4 bg-[#3b5998] hover:bg-gray-400 transition-all text-white font-bold lg:px-4 lg:rounded ${!file && "!bg-gray-400 !hover:bg-inherit cursor-not-allowed"}`}
                     onClick={beginRequest}
                   >
                     Verify
