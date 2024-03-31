@@ -45,16 +45,16 @@ const PrescriberHome = () => {
 				  <Link to="/PDF">
 					<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
 						<FontAwesomeIcon icon={faDownload} className="mr-2" />
-					  Download your Prescription PDF
+					  Download My Prescription PDF
 					</button>
 				  </Link>
-				  <Link to="/prescriberPrescriptions">
+				  <Link to="/prescriber-prescriptions">
 					<button
 					  href="#"
 					  className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center"
 					>
 						<FontAwesomeIcon icon={faFilePrescription} className="mr-2" />
-					  	Access Your Prescriptions
+					  	My Prescriptions
 					</button>
 				  </Link>
 				</div>

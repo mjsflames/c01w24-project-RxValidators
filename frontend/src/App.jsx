@@ -155,9 +155,9 @@ function App() {
 					<Routes>
 						<Route path="logout" element={<Logout />} />
 						<Route path="login" element={<Login />} />
-						<Route path="chooseuser" element={<UserType />} />
-						<Route path="patientacc" element={<PatientAccount />} />
-						<Route path="prescriberacc" element={<PrescriberAccount />} />
+						<Route path="choose-user" element={<UserType />} />
+						<Route path="patient-sign-up" element={<PatientAccount />} />
+						<Route path="prescriber-sign-up" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
             <Route path="PDF" element={<Pdf />} />
 							<Route
@@ -199,14 +199,33 @@ function App() {
               <Route path="adminLogs" element={<AdminLogs />} />
               <Route path="green-resources" element={<GreenResources />} />
 
-              <Route path="prescriberPrescriptions" element={<PrescriberPrescriptions />} />
-              <Route path="prescriberSettings" element={<PrescriberSettings />} />
+              <Route path="prescriber-prescriptions" element={<PrescriberPrescriptions />} />
               <Route path="PrescriberLogRX" element={<PrescriberLogRX />} />
               <Route path="PatientLogRX" element={<PatientLogRX />} />
-              <Route path="patientSettings" element={<PatientSettings />} />
               <Route path="patientPrescriptions" element={<PatientPrescriptions />} />
               <Route path="loginF" element={<LoginForm />} />
               <Route path="temp-links" element={<TempLinks />} />
+
+              <Route
+								path="my-account"
+								element={
+									user && user.role === "prescriber" ? (
+										<PrescriberSettings />
+									) : user && user.role === "patient" ? (
+										<PatientSettings />
+                  ) : null
+								}
+							/>
+              {/* <Route
+								path="my-prescriptions"
+								element={
+									user && user.role === "prescriber" ? (
+										<PrescriberPrescriptions />
+									) : user && user.role === "patient" ? (
+										<PatientPrescriptions />
+                  ) : null
+								}
+							/> */}
               {/* CATCH ALL */}
               <Route path="*" element={<NoPage />} />
             </Route>

@@ -18,10 +18,10 @@ const ChooseUserType = () => {
             <div className="w-screen lg:w-1/2 h-screen bg-white z-20 flex items-center absolute lg:relative justify-center flex-col">
                 <h1 className="text-4xl font-bold text-gray-900 mb-20">Sign-up as a:</h1>
                 <div className = "grid grid-cols-2 gap-x-6" >
-                    <Link to="/patientacc">
+                    <Link to="/patient-sign-up">
                         <button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto py-3 px-20 text-center">Patient</button>
                     </Link>
-                    <Link to="/prescriberacc">
+                    <Link to="/prescriber-sign-up">
                         <button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto py-3 px-20 text-center">Prescriber</button>
                     </Link>
                 </div>

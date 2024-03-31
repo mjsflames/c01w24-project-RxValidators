@@ -203,7 +203,7 @@ const PatCreateAccount = () => {
 						<button disabled={!validCode} className={`text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center ${!validCode && "!bg-gray-400 !hover:bg-inherit cursor-not-allowed"}`}>Create Provider Account</button>
 						}
 						<div className="mt-4">
-							<Link className="text-blue-700 hover:text-black underline" to="/login">
+							<Link className="text-blue-700 hover:text-black underline ml-5" to="/login">
 								Already have an account? Login here.
 							</Link>
                 		</div>

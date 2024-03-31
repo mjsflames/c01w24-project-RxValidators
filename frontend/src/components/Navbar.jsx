@@ -23,16 +23,16 @@ const Navbar = () => {
 		prescriber: [
 			{ to: "/", text: "Home" },
 			{ to: "/PrescriberLogRX", text: "Log Prescriptions" },
-			{ to: "/prescriberPrescriptions", text: "My Prescriptions" },
+			{ to: "/prescriber-prescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
-			{ to: "/prescriberSettings", text: "My Account" },
+			{ to: "/my-account", text: "My Account" },
 		],
 		patient: [
 			{ to: "/", text: "Home" },
 			{ to: "/PatientLogRX", text: "Log Prescriptions" },
 			{ to: "/patientPrescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
-			{ to: "/patientSettings", text: "My Account" },
+			{ to: "/my-account", text: "My Account" },
 		],
 		any: [
 			{ to: "/temp-links", text: "DEV" },
