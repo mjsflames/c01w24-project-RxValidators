@@ -25,7 +25,7 @@ const AssistantHome = () => {
               <Link to="/verify">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
                   <FontAwesomeIcon icon={faCheck} className="mr-2" />
-                  Verify New Prescribers</button>
+                  Verification Platform</button>
               </Link>
               <Link to="/green-resources">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
