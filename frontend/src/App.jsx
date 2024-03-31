@@ -193,14 +193,14 @@ function App() {
                 }
               />
               {/* Admin Route*/}
-              <Route path="adminPatientProfile" element={<AdminPatientProfile />} />
-              <Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
-              <Route path="adminLogs" element={<AdminLogs />} />
+              <Route path="patient-profiles" element={<AdminPatientProfile />} />
+              <Route path="prescriber-profiles" element={<AdminPrescriberProfile />} />
+              <Route path="prescription-logs" element={<AdminLogs />} />
               <Route path="green-resources" element={<GreenResources />} />
 
               {/* <Route path="prescriber-prescriptions" element={<PrescriberPrescriptions />} /> */}
-              <Route path="PrescriberLogRX" element={<PrescriberLogRX />} />
-              <Route path="PatientLogRX" element={<PatientLogRX />} />
+              {/* <Route path="PrescriberLogRX" element={<PrescriberLogRX />} /> */}
+              {/* <Route path="PatientLogRX" element={<PatientLogRX />} /> */}
               {/* <Route path="patientPrescriptions" element={<PatientPrescriptions />} /> */}
               <Route path="loginF" element={<LoginForm />} />
               <Route path="temp-links" element={<TempLinks />} />
@@ -222,6 +222,16 @@ function App() {
 										<PrescriberPrescriptions />
 									) : user && user.role === "patient" ? (
 										<PatientPrescriptions />
+                  ) : null
+								}
+							/>
+              <Route
+								path="log-prescriptions"
+								element={
+									user && user.role === "prescriber" ? (
+										<PrescriberLogRX />
+									) : user && user.role === "patient" ? (
+										<PatientLogRX />
                   ) : null
 								}
 							/>

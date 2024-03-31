@@ -34,12 +34,12 @@ const AdminHome = () => {
               </Link>
             </div>
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 w-full">
-              <Link to="/adminPrescriberProfile">
+              <Link to="/prescriber-profiles">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
                   <FontAwesomeIcon icon={faStethoscope} className="mr-2" />
                   Prescriber Profiles</button>
               </Link>
-              <Link to="/adminPatientProfile">
+              <Link to="/patient-profiles">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
                   <FontAwesomeIcon icon={faUser} className="mr-2" />
                   Patient Profiles</button>

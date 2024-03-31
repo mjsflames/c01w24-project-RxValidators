@@ -34,7 +34,7 @@ const PrescriberHome = () => {
 			  </div>
 			  <div className="col-span-2 mt-10 lg:mt-20 text-center items-center justify-center">
 				<h2 className="font-bold mb-2">Get Started</h2>
-				<Link to="/PrescriberLogRX">
+				<Link to="/log-prescriptions">
 				  <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
 				  	<FontAwesomeIcon icon={faPen} className="mr-2" />
 					Log a Patient Prescription
