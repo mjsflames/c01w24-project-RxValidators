@@ -10,7 +10,7 @@ const AdminHome = () => {
     <>
       <PageHeader
         title="Home"
-        desc="Welcome to the Administrator Parks Prescriptions Account."
+        desc="Welcome to the Coordinator Parks Prescriptions Account."
       />
 
       <div className="w-full h-[650px] bg-white flex items-center pl-16">
