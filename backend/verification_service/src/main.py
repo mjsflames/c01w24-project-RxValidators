@@ -8,7 +8,6 @@ from pandas import DataFrame
 # from prescriber_code import *
 from io import StringIO, BytesIO
 
-from utils import database as db_func
 from .code_pdf_server import *
 
 app = Flask(__name__)
@@ -251,5 +250,4 @@ print("Starting Verification Service on port", app.config["PORT"])
 register_service("verification-service", f"http://127.0.0.1:{app.config['PORT']}")
 
 
-if __name__ == "__main__":
-    app.run(port=PORT, debug=True)
+app.run(port=PORT, debug=True)
