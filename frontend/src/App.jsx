@@ -38,6 +38,7 @@ const UserContext = createContext({
   handleLogin: (username, password) => { },
   handleLogout: () => { },
   getNotifications: async (includeRead=false) => { },
+  updateUser: (user) => { },
 });
 
 function App() {
@@ -133,6 +134,17 @@ function App() {
     });
   };
 
+  const updateUser = async (updatedUser) => {
+    if (!user) {
+      console.error("No user to get notifications for");
+      return [];
+    }
+    setUser(updatedUser);
+    if (user !== null) {
+			localStorage.setItem("user", JSON.stringify(user));
+		}
+  };
+
 	useEffect(() => {
 		console.log("User is", user);
 		// Save to local storage
@@ -150,7 +162,7 @@ function App() {
       {/* <Alert /> */}
 
 			<ServiceRegistryInfo />
-			<UserContext.Provider value={{ user, handleLogin, handleLogout, getNotifications }}>
+			<UserContext.Provider value={{ user, handleLogin, handleLogout, getNotifications, updateUser }}>
 				<BrowserRouter>
 					<Routes>
 						<Route path="logout" element={<Logout />} />
