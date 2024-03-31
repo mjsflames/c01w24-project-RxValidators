@@ -25,6 +25,7 @@ const changeItem = (key, newValue) => {
 };
 
 function updateData() {
+  console.log(data._id);
   api.patch(`/auth/updateUser/${data._id}`, newItem).then((res) => {
     console.log(res.data);
     setData(newItem);
