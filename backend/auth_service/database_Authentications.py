@@ -78,7 +78,7 @@ def create_user_account():
         role = data.get("role")
 
         # Additional Fields
-        print(data)
+        # print(data)
 
         # Encrypting Password
         salt = bcrypt.gensalt()
@@ -180,7 +180,7 @@ def authenticate_user():
         cur_collection = cur_db[cur_collection_name]
         test_database_operation(cur_collection)
         connections.append(cur_client)
-        print(">>USER", user)
+        # print(">>USER", user)
 
         # Strip password
         user.pop("password")
