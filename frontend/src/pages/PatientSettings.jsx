@@ -10,6 +10,7 @@ import api from "../axiosConfig";
 
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
+
   const { user, updateUser } = useContext(UserContext);
   const [newItem, setNewItem] = useState(user);
 

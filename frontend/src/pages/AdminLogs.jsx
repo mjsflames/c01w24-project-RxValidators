@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import pic from "../assets/prescribertable.jpg";
-import api from "../axiosConfig";
+import AdminPrescription from "../components/AdminPrescription";
 
 const AdminLogs = () => {
   const [data, setData] = useState(null);
   const [shownData, setShownData] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+  const [notification, setNotification] = useState(null);
+  const [myItem, setItem] = useState(null);
 
   // Other states and useEffects...
   const [updatedItemDisplay, setUpdatedItemDisplay] = useState({});
@@ -46,6 +48,15 @@ const AdminLogs = () => {
     fetchData();
   }, [data, searchInput]);
 
+  const itemClick = (item) => {
+    if (myItem !== item) {
+      setItem(item);
+    }
+    else {
+      setItem(null);
+    }
+  };
+
   async function filterData(data, filterString) {
     if (!filterString) return data;
 
@@ -71,33 +82,6 @@ const AdminLogs = () => {
       ...prev,
       [index]: checked,
     }));
-  };
-
-  const updateLogStatus = async (updatedItem) => {
-    const payload = {
-      date: updatedItem.date,
-      patient_initials: updatedItem.patient_initials,
-      prescriber_code: updatedItem.parx_code,
-      discoveryPass: updatedItem.discoveryPass,
-    };
-
-    // Filter out attributes with empty string values
-    const filteredPayload = Object.fromEntries(
-      Object.entries(payload).filter(([key, value]) => value !== '')
-    );
-
-    // Assuming this function does something with updatedItem, like sending it to an API
-    console.log("Updating item with the following details:", updatedItem);
-
-    // Update the state to display the updated item data
-    setUpdatedItemDisplay(payload);
-
-    try {
-      const response = await api.post(`http://localhost:5001/api/update-prescription/${updatedItem.oid.$oid}`, filteredPayload);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
 
@@ -133,9 +117,9 @@ const AdminLogs = () => {
                 <>
                   <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: ">
 
-                    <td><input data-key="date" type="text" id={`date-${index}`} className="px-2 py-3 bg-transparent placeholder:text-current" placeholder={item.date}></input></td>
-                    <td><input data-key="patient_initials" type="text" id={`patient_initials-${index}`} className="px-2 py-3 placeholder:text-current bg-transparent" placeholder={item.patient_initials}></input></td>
-                    <td><input data-key="parx_code" type="text" id={`parx_code-${index}`} className="px-2 py-3 placeholder:text-current bg-transparent" placeholder={item.prescriber_code}></input></td>
+                    <td><div className="p-1">{item.date}</div></td>
+                    <td><div className="p-1">{item.patient_initials}</div></td>
+                    <td><div className="p-1">{item.prescriber_code}</div></td>
 
                     <td className="px-2 py-3 w-1/8">
                       <input
@@ -146,16 +130,16 @@ const AdminLogs = () => {
                     </td>
                     <select className="py-3 w-full truncate max-w-md text-current bg-transparent placeholder:text-gray-700">
                       <option selected value={item.status} disabled>{item.status}</option>
-                      {item.status === "Both Logged With Discovery Pass" && (
-                        <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
-                      )}
-                      {item.status === "Complete with Discovery Pass" && (
-                        <option value="Both Logged With Discovery Pass">Both Logged With Discovery Pass</option>
-                      )}
+
+                      <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
+
+
+                      <option value="Both Logged With Discovery Pass">Both Logged With Discovery Pass</option>
+
                     </select>
                     <td>
-                      <button className="w-20 rounded hover:bg-slate-300 p-2 border border-opacity-30 border-black"
-                        onClick={() => {
+                      <button className="rounded hover:bg-slate-300 p-2 border border-opacity-30 border-black" onClick={() => itemClick(item)}>
+                         {/* onClick={() => {
                           // Create an updated item object based on input values
                           const updatedItem = {
                             oid: item._id,
@@ -165,12 +149,19 @@ const AdminLogs = () => {
                             discoveryPass: checkboxStates[index] || false
                           };
                           updateLogStatus(updatedItem);
+
                         }}>
                         Update
+
                       </button>
                     </td>
                   </tr>
-                  {/* Display the updated item data */}
+                  {myItem === item && (<tr className="text-left text-black border-t border-white">
+                    <td colSpan="6">
+                      <AdminPrescription item={item} />
+                    </td>
+                  </tr>
+                  )}
                 </>
               ))}
             </tbody>

@@ -54,7 +54,7 @@ PA_NOT_LOGGED = "Pa not logged yet"
 COMPLETE = "Complete"
 PR_LOGGED = "Pr Logged"
 PA_LOGGED = "Pa Logged"
-BOTH_LOGGED = "Both logged with Discovery Pass"
+BOTH_LOGGED = "Both Logged with Discovery Pass"
 COMPLETE_WITH_DP = "Complete with Discovery Pass"
 
 # required_PAT_prescription_fields = [
@@ -236,57 +236,17 @@ def search_prescriptions():
 def update_prescription(oid):
     data = request.json
 
-    # Ensure incoming data fields are within the allowed list
-    if not set(data.keys()).issubset(template_PR):
-        invalid_fields = set(data.keys()) - set(template_PR)
-        return jsonify({"error": "Invalid fields in update request", "invalid_fields": list(invalid_fields)}), 400
-    elif "status" in data and data.get("status") != COMPLETE_WITH_DP:
-        return jsonify({"error": "Invalid status input in update request. Check if status input is automatically assigned only."}), 400
-
     try:
-        result = collection.find_one({"_id": ObjectId(oid)})
-        if not result:
-            return jsonify({"message": "No prescription found matching the criteria"}), 404
-        elif "status" in data and result.get("status") != BOTH_LOGGED:
-            return jsonify({"message": "Status assigned automatically cannot be changed"}), 400
-
-        update_data = {k: v for k, v in data.items() if k in result and k in template_PR}
-
-        if result.get("status") == BOTH_LOGGED and "prescriber" in result and "patient" in result:
-            update_data["prescriber"] = {k: v for k, v in data.items() if k in result["prescriber"]}
-            update_data["patient"] = {k: v for k, v in data.items() if k in result["patient"]}
-            if "discoveryPass" in data and data.get("discoveryPass") == "No":
-                update_data["status"] = COMPLETE
-                update_data["prescriber"]["status"] = COMPLETE
-                update_data["patient"]["status"] = COMPLETE
-
-        elif result.get("status") == COMPLETE and "prescriber" in result and "patient" in result:
-            update_data["prescriber"] = {k: v for k, v in data.items() if k in result["prescriber"]}
-            update_data["patient"] = {k: v for k, v in data.items() if k in result["patient"]}
-            if "discoveryPass" in data and data.get("discoveryPass") == "Yes":
-                update_data["status"] = BOTH_LOGGED
-                update_data["prescriber"]["status"] = PA_LOGGED
-                update_data["patient"]["status"] = PR_LOGGED
-
-        elif result.get("status") == PA_NOT_LOGGED and "prescriber" in result:
-            # Start with a copy of the existing 'prescriber' fields from the result
-            update_data["prescriber"] = result["prescriber"].copy()
-            # Update/overwrite with fields from 'data' that exist in the 'prescriber' structure
-            update_data["prescriber"].update((k, v) for k, v in data.items() if k in result["prescriber"])
-
-        elif result.get("status") == PR_NOT_LOGGED and "patient" in result:
-            # Start with a copy of the existing 'patient' fields from the result
-            update_data["patient"] = result["patient"].copy()
-            # Update/overwrite with fields from 'data' that exist in the 'patient' structure
-            update_data["patient"].update((k, v) for k, v in data.items() if k in result["patient"])
-
-        update_operation = {"$set": update_data}
-        updated_result = collection.find_one_and_update({"_id": ObjectId(oid)}, update_operation, return_document=True)
+        if "_id" in data:
+            del data["_id"]
+        update_operation = {"$set": data}
+        updated_result = collection.find_one_and_update({"_id": ObjectId(oid)}, update_operation)
 
         if updated_result:
             return jsonify({"message": "Prescription updated successfully"}), 200
 
     except Exception as e:
+        print("error", e)
         return jsonify({"error": str(e)}), 500
 
     return jsonify({"message": "An unexpected error occurred"}), 500
