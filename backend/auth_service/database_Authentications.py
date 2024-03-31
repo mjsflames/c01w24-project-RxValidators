@@ -335,6 +335,5 @@ def register_service(service_name, service_url):
 print("Starting Authentication Service on port", app.config["PORT"])
 register_service("authentication-service", f"http://127.0.0.1:{app.config['PORT']}")
 
-
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)

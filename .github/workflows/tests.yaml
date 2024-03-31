@@ -28,12 +28,12 @@ jobs:
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
 
-      - name: Start API gateway
+      - name: Test backend
         run: |
-          npm run dev
+          echo "Starting Servers"
+          node backend\api_gateway\src\index.js
+          sleep 5
 
-      - name: Test unique codes and pdf generation
-        run: |
           echo "Testing unique prescriber codes and pdf generation"
           python -m unittest backend/verification_service/test/code_pdf_tests.py
           
