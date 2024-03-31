@@ -23,7 +23,7 @@ do
     sleep 1
 done
 # gnome-terminal --tab --title="Auth Service" --working-directory=$PWD/backend/auth_service -- /bin/bash -c "$command; exec bash" &
-gnome-terminal --tab --title="Verification Service" --working-directory=$PWD/backend/verification_service -- /bin/bash -c "python src/main.py; exec bash" &
+gnome-terminal --tab --title="Verification Service" --working-directory=$PWD/backend/verification_service -- /bin/bash -c "python -m src.main.py; exec bash" &
 gnome-terminal --tab --title="ScrapeDescription Service" --working-directory=$PWD/backend -- /bin/bash -c "source .venv/bin/activate; python scrapeDescription.py; exec bash" &
 # gnome-terminal --tab --title="User Service" --working-directory=$PWD/backend/user_service -- /bin/bash -c "source .venv/bin/activate; python main.py; exec bash" &
 gnome-terminal --tab --title="Prescriber Service" --working-directory=$PWD/backend/database_functions -- /bin/bash -c "source .venv/bin/activate; python database_Prescriptions.py; exec bash" &
