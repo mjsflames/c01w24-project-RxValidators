@@ -16,28 +16,10 @@ const PrescriberSettings = () => {
   const [newItem, setNewItem] = useState(user);
 
   useEffect(() => {
-    const sampleData = {
-      id: "2",
-      name: "prescriber",
-      role: "prescriber",
-      address: "123 Main St",
-      city: "Anytown",
-      college: "University of Anywhere",
-      email: "example@example.com",
-      firstName: "John",
-      lastName: "Doe",
-      language: "English",
-      license: "123456",
-      profession: "Doc",
-      providerCode: "7890",
-      province: "Anyprovince",
-      username: "johndoe123"
+    if (user) {
+      setData(user);
+      setNewItem(user);
     }
-    setData(sampleData);
-  }, []);
-
-  useEffect(() => {
-    if (user) setData(user);
   }, []);
 
   const changeItem = (key, newValue) => {
