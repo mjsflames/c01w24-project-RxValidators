@@ -35,7 +35,6 @@ const PrescriberHome = () => {
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 pt-2 lg:pt-6">
               <Link to="/log-prescriptions">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
-                <i className="fas fa-prescription-bottle-alt mr-2"></i>
                   <FontAwesomeIcon icon={faPen} className="mr-2" />
                   Log Prescriptions
                 </button>

@@ -15,6 +15,7 @@ const ServiceRegistryInfo = () => {
 		x: 0,
 		y: 0,
 	});
+	const [visible, setVisible] = React.useState(false);
 
 	const [services, setServices] = React.useState([]);
 	useEffect(() => {
@@ -46,6 +47,11 @@ const ServiceRegistryInfo = () => {
 			JSON.stringify(position)
 		);
 	}, [position]);
+
+	// Make the service registry visibility modifiable through global var
+	window.toggleServiceRegistryVisibility = () => {
+		setVisible(!visible);
+	}
 
 	React.useEffect(() => {
 		if (isDragging) {
