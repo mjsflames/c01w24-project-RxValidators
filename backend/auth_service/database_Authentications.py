@@ -212,6 +212,19 @@ def close_client_connection(mongoClient):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/getUserID/<username>", methods=["GET"])
+@cross_origin()
+def getPatientPrescriptions(username):
+
+    try:
+        user = collection.find_one({"email": username})
+
+        return user, 200, {"Content-Type": "application/json"}
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 @app.route("/listUsers", methods=["GET"])
 @cross_origin()
