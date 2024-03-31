@@ -5,6 +5,7 @@ import logo from "../assets/logo.svg";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const UserLogin = () => {
 	const [username, setUsername] = useState("");
@@ -82,7 +83,7 @@ const UserLogin = () => {
 					</div>
 					{error && <p className="text-red-500">{error}</p>}
 					<div className="flex flex-row justify-between gap-8 mt-16">
-						<Link className="text-black underline" to="/chooseuser">
+						<Link className="text-blue-700 hover:text-black underline" to="/chooseuser">
 							New User? Sign up here.
 						</Link>
 						{loading ? (
@@ -96,8 +97,11 @@ const UserLogin = () => {
 							</button>
 						)}
 					</div>
-					<p className="flex mt-20 font-semibold">For any issues, please contact us</p>
-					<Link to="https://www.parkprescriptions.ca/en/contact" target="_blank" rel="noopener noreferrer" className="font-bold hover:">HERE</Link> 
+					<p className="flex mt-20 font-semibold">For any issues, please contact us:&ensp;
+					<Link to="https://www.parkprescriptions.ca/en/contact" target="_blank" className="flex text-blue-700 font-bold hover:underline hover:text-black items-center">
+						HERE
+						<FaExternalLinkAlt className="ml-1 text-sm" />
+					</Link> </p>
 				</form>
 			</div>
 		</div>
