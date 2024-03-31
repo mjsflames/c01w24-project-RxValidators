@@ -75,7 +75,7 @@ function App() {
         language: "English",
         license: "123456",
         profession: "Pat",
-        prescriber_code: "7890",
+        prescriber_code: "ON-JD001",
         province: "Anyprovince",
         username: "johndoe123"
       });
@@ -97,7 +97,7 @@ function App() {
         language: "English",
         license: "123456",
         profession: "Pat",
-        prescriber_code: "7890",
+        prescriber_code: "ON-JD001",
         province: "Anyprovince",
         username: "johndoe123"
       });

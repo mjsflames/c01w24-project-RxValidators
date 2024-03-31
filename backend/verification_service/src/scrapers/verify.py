@@ -10,11 +10,65 @@ from .spiders.cpsnb_spider import CPSNBSpider
 from .spiders.cpsa_spider import CPSASpider, cpsa_helper
 from .spiders.cpsnl_spider import CPSNLSpider
 from .spiders.cpss_spider import CPSSSpider
+from twisted.internet import reactor
+
+from billiard import Process  # fork of multiprocessing that works with celery
+import collections
+from scrapy.crawler import CrawlerRunner
+import os 
+
+# Subclass of scrapyscript Processor.
+# The following modifications are:
+# 1. Added twisted reactor mods to make signals work outside of main thread.
+class ProcessorHook(Processor):
+    def _crawl(self, req):
+        """
+        Parameters:
+            requests (Request) - One or more Jobs. All will
+                                 be loaded into a single invocation of the reactor.
+        """
+        self.crawler = CrawlerRunner(self.settings)
+
+        def store():
+            self.results.put(self.items)
+        # crawl can be called multiple times to queue several requests
+        deferred = self.crawler.crawl(req.spider, *req.args, **req.kwargs)
+        deferred.addBoth(lambda _: reactor.stop())
+        deferred.addCallback(store)
+        reactor.run(0)
+        self.crawler.start()
+        self.crawler.stop()
+        self.results.put(self.items)
+        
+    def run(self, jobs):
+        """Start the Scrapy engine, and execute all jobs.  Return consolidated results
+        in a single list.
+
+        Parms:
+          jobs ([Job]) - one or more Job objects to be processed.
+
+        Returns:
+          List of objects yielded by the spiders after all jobs have run.
+        """
+
+        self.validate(jobs)
+
+        p = Process(target=self._crawl, args=[jobs])
+        p.start()
+        results = self.results.get()
+        p.join()
+        p.terminate()
+        results = self.results.get()
+
+        return results
 
 processor = Processor(settings={"LOG_ENABLED": False})
-
+if os.name == "nt": 
+    print("Running on Windows")
+    processor = ProcessorHook(settings={"LOG_ENABLED": True})
 
 def verify(last_name="", first_name="", license_no="", province=""):
+
     if province == "BC":
         job = Job(CPSBCSpider, last_name, first_name)
         return processor.run(job)[0]["status"]
