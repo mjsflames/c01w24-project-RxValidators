@@ -2,8 +2,21 @@ import { expect, jest, test } from "@jest/globals";
 const SERVER_URL = "http://localhost:3130";
 const { MongoClient } = require("mongodb");
 
-beforeAll(async () => {});
-afterAll(async () => {});
+let connection;
+let db;
+
+beforeAll(async () => {
+	connection = await MongoClient.connect("mongodb://localhost:27017");
+	db = connection.db();
+});
+
+afterAll(async () => {
+	await connection.close();
+});
+
+beforeEach(async () => {
+	await db.collection("services").deleteMany({});
+});
 
 describe("ping", () => {
 	let connection;

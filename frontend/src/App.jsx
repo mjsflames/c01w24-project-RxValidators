@@ -12,6 +12,7 @@ import UserType from "./pages/ChooseUser.jsx";
 import PatientAccount from "./pages/PatSignUp.jsx";
 import PrescriberAccount from "./pages/PresSignUp.jsx";
 import AdminHome from "./pages/AdminHome.jsx";
+import AssistantHome from "./pages/AssistantHome.jsx";
 import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
 import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
 import Verification from "./pages/Verification.jsx";
@@ -57,6 +58,20 @@ function App() {
         id: "1",
         name: "admin",
         role: "admin",
+        firstName: "Coordinator",
+        username: "Coordinator"
+      });
+      return true;
+    }
+
+    if (username === "assistant" && password === "assistant") {
+      console.log("Logged in as assistant");
+      setUser({
+        id: "4",
+        name: "assistant",
+        role: "assistant",
+        firstName: "Assistant",
+        username: "Assistant"
       });
       return true;
     }
@@ -182,7 +197,7 @@ function App() {
 									) : user && user.role === "patient" ? (
 										<PatientHome />
 									) : (
-										<Home	 />
+										<AssistantHome	 />
 									)
 								}
 							/>
@@ -190,7 +205,7 @@ function App() {
               <Route
                 path="verify"
                 element={
-                  <ProtectedRoute redirectTo={"/login"} permitted={["admin"]}>
+                  <ProtectedRoute redirectTo={"/login"} permitted={["admin", "assistant"]}>
                     <Verification />
                   </ProtectedRoute>
                 }

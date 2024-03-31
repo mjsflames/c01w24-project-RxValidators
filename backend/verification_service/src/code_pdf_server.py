@@ -6,13 +6,13 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import zipfile
 
+from bson.objectid import ObjectId
 from .utils import database as db_func
 
 #########################################################
 # Collection of database is used for PDF and Code generation
 collection = db_func.get_collection("prescribers")
-# Clear out database 
-# db_func.delete_all(collection) # TEMP
+collection.create_index("license", unique=True, dropDups=True)
 #########################################################
 
 # Create a dataframe from a CSV file.
@@ -52,11 +52,25 @@ def save_to_db(df):
         "Code": "code",
         })
     
+    initial_amount = len(df.index)
+
     # Create a new column "UNASSIGNED"
     df["unassigned"] = True
+        
+    # Remove duplicate documents
+    df = df.drop_duplicates(subset=["license"], keep="first")
+
+    # Remove rows that have an existing document in the database
+    # ? This implementation becomes slow when the database has a lot of documents
+    existing_licenses = collection.distinct("license")
+    df = df[~df['license'].isin(existing_licenses)]
+    
+    dropped = initial_amount - len(df.index)    
+    print(f"Dropped {dropped} duplicate licenses")
     
     # Save the dataframe to the database
-    db_func.insert_data(collection, df.to_dict(orient='records'))
+    try: db_func.insert_data(collection, df.to_dict(orient='records'))
+    except Exception as e: print(e)
 
 def add_codes_to_df(df):
     df['Initials'] = df['First Name'].str[0] + df['Last Name'].str[0]
@@ -79,8 +93,6 @@ def add_codes_to_df(df):
                 # query using mongodb regex (province-initials) to get the last code and increment it by 1
                 last = collection.find({"Code": {"$regex": f"{last_prefix}[0-9]{{3}}"}}).sort("Code", -1).limit(1)
                 # print(list(collection.find()))
-
-                # last = last
                 
                 last = list(last)
                 
@@ -103,7 +115,7 @@ def add_codes_to_df(df):
     df = df.drop(columns=['Initials'])
     # Resort the rows by indices
     df = df.sort_index()
-    
+
     # print(df)
     return df
 
@@ -116,6 +128,11 @@ def get_prescriber_codes_from_db(filter={}):
 def update_prescriber_code_status(code, status):
     updates = collection.update_one({"code": code}, {"$set": {"status": status}})
     return updates
+
+# Delete a prescriber code
+def delete_prescriber_code_inner(id):
+    deletes = collection.delete_one({"_id": ObjectId(id)})
+    return deletes
 
 # This function generates a pdf file for the verified prescribers
 def generate_verified_pdfs(df, output_path):

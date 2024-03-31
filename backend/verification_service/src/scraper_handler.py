@@ -55,6 +55,9 @@ def _process_request(file_data, id):
     if validate_file(file_data) == False:
         return "Invalid file format, please upload a CSV file with the correct headers"
 
+    # Stringify all data
+    df = df.applymap(str)
+    
     # Check if status column exists
     has_status = "Status" in df.columns
 
@@ -128,6 +131,13 @@ def _process_request(file_data, id):
     save_to_db(df)
     print("Saved to database")
     
+    # Drop status
+    if has_status:
+        df.drop(columns=['Status'], inplace=True)
+    
+    # Rename Scraped status to status
+    df.rename(columns={'Scraped Status': 'Status'}, inplace=True)
+
     processing[id] = df
 
 

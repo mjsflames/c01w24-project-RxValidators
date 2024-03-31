@@ -28,7 +28,7 @@ const Modal = () => {
 
     return (
         <>
-            <button id="deactivate" onClick={() => setShowModal(true)} className="bg-red-600 text-white hover:bg-red-200 text-sm rounded-2xl p-2.5">
+            <button id="deactivate" onClick={() => setShowModal(true)} className="bg-red-600 text-white ml-5 hover:bg-red-200 text-sm rounded-2xl p-2.5">
                 DELETE ACCOUNT    
             </button>
             {showModal ? (

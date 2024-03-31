@@ -91,11 +91,11 @@ const AdminLogs = () => {
         title="Administrator: Logged Prescriptions"
         desc="Check the status of all provider and patient prescription logs here."
       />
-      <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{ backgroundImage: `url(${pic})` }}>
+      <div className="flex w-full min-h-[650px] items-center justify-center bg-cover" style={{ backgroundImage: `url(${pic})` }}>
 
-        <div class="rounded-xl w-4/5 bg-gray-200 bg-opacity-70 p-10 shadow-lg backdrop-blur-md max-sm:px-8">
+        <div class="rounded-xl w-4/5 bg-gray-200 bg-opacity-80 p-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
-            <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">Administrator: All Logged Prescriptions</h1>
+            <h1 className="text-3xl underline font-bold !text-gray-900  mb-5">All Logged Prescriptions</h1>
             <p className="font-semibold">Prescription status are able to be searched by the date and status.</p>
             <p className="font-semibold">Change the status to "Complete with Discovery Pass" if requirements are met.</p>
           </div>
@@ -149,8 +149,10 @@ const AdminLogs = () => {
                             discoveryPass: checkboxStates[index] || false
                           };
                           updateLogStatus(updatedItem);
-                        }}> */}
-                        Show More
+
+                        }}>
+                        Update
+
                       </button>
                     </td>
                   </tr>

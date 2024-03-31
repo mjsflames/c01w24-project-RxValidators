@@ -22,10 +22,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install reportlab pymongo openpyxl pandas bs4 selenium
+          npm i cross-os
+          pip install -r requirements.txt
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
 
-      - name: Test unique codes and pdf generation
-        run: python -m unittest backend/verification_service/test/code_pdf_tests.py
+      - name: Test backend
+        run: |
+          echo "Starting Servers"
+          node backend\api_gateway\src\index.js
+          sleep 5
+
+          echo "Testing unique prescriber codes and pdf generation"
+          python -m unittest backend/verification_service/test/code_pdf_tests.py
+          
+          echo "Testing authentication service"
+          python backend/auth_service/tests.py

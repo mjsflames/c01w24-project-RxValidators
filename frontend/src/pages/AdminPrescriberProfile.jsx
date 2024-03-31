@@ -93,7 +93,7 @@ const AdminPrescriberProfile = () => {
             <tbody>
               {shownData && shownData.map((item) => (
                 <>
-                <tr className="w-full text-left text-black border-t border-black odd:bg-white even:text-white even:bg-[#191970]/70">
+                <tr className="w-full text-left text-black border-t border-black odd:bg-white even:text-black even:bg-[#f5deb3]">
                   <td colSpan="5"><table className="w-full">
                       <td className="px-2 py-3 w-1/6">{item.firstName}</td>
                       <td className="px-2 py-3 w-1/6">{item.lastName}</td>

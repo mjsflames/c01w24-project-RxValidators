@@ -78,7 +78,7 @@ def create_user_account():
         role = data.get("role")
 
         # Additional Fields
-        print(data)
+        # print(data)
 
         # Encrypting Password
         salt = bcrypt.gensalt()
@@ -180,7 +180,7 @@ def authenticate_user():
         cur_collection = cur_db[cur_collection_name]
         test_database_operation(cur_collection)
         connections.append(cur_client)
-        print(">>USER", user)
+        # print(">>USER", user)
 
         # Strip password
         user.pop("password")
@@ -294,6 +294,7 @@ def update_user(oid):
             del data["_id"]
 
         update_query = {"$set": data}
+        print(data)
 
         result = collection.update_one({"_id": ObjectId(oid)}, update_query)
 
@@ -350,4 +351,4 @@ print("Starting Authentication Service on port", app.config["PORT"])
 register_service("authentication-service", f"http://127.0.0.1:{app.config['PORT']}")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=PORT)  # Tested manually using Postman
+    app.run(debug=True, port=PORT)

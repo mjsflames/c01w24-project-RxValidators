@@ -1,6 +1,7 @@
 /** @type {import('jest').Config} */
 const config = {
 	verbose: true,
+	testMatch: ["**/*.test.cjs"],
 };
 
-module.exports = config;
+export default config;
