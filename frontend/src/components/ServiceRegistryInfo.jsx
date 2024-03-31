@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { sysInstance } from "../axiosConfig";
 
 const ServiceRegistryInfo = () => {
+	const [visible, setVisible] = React.useState(true);
 	// Allow the user to drag the service registry info
 	const [position, setPosition] = React.useState(
 		JSON.parse(
@@ -35,6 +36,9 @@ const ServiceRegistryInfo = () => {
 			});
 	}, []);
 
+	// Make setVisible a global variable
+	window.setSRIVisible = setVisible;
+	
 	// Save position to localstorage
 	React.useEffect(() => {
 		localStorage.setItem(
@@ -86,7 +90,7 @@ const ServiceRegistryInfo = () => {
 					y: event.clientY - position.y,
 				});
 			}}
-			style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+			style={{ transform: `translate(${position.x}px, ${position.y}px)`, visibility: visible ? "visible" : "hidden"}}
 			className="absolute bg-white px-8 rounded-lg py-8 shadow-md z-[100]"
 		>
 			<h1 className="text-sm select-none">Service Registry Monitor</h1>

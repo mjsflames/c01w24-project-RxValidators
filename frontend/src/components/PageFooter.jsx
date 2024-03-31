@@ -17,7 +17,7 @@ const testFooter = () => {
                                 <img src={logo} className="h-32 w-32" alt="PaRx"/>
                             </a>
                             <p className="text-sm font-semibold">RxValidators <br />
-                                <Link to="https://bcparksfoundation.ca/">© BC Parks Foundation, All rights reserved.</Link> 
+                                <Link to="https://bcparksfoundation.ca/" target="_blank"className="text-[#0000EE] hover:underline">© BC Parks Foundation, All rights reserved.</Link> 
                             </p>
                         </div> 
                         <div className="grid grid-cols-2 gap-4 px-4 py-6 lg:py-8 md:grid-cols-4 mr-0">
@@ -25,13 +25,13 @@ const testFooter = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Park Prescriptions</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/" target="_blank" rel="noopener noreferrer" className="hover:underline">PaRx Website</a>
+                                        <a href="https://www.parkprescriptions.ca/" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">PaRx Website</a>
                                     </li>
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/about" target="_blank" rel="noopener noreferrer" className="hover:underline">About Us</a>
+                                        <a href="https://www.parkprescriptions.ca/en/about" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">About Us</a>
                                     </li>
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/about" target="_blank" rel="noopener noreferrer" className="hover:underline">FAQs</a>
+                                        <a href="https://www.parkprescriptions.ca/en/about" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">FAQs</a>
                                     </li>
                                 </ul>
                             </div>
@@ -39,13 +39,13 @@ const testFooter = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/news-and-blog#PaRx-Blog" target="_blank" rel="noopener noreferrer" className="hover:underline">News & Blog</a>
+                                        <a href="https://www.parkprescriptions.ca/en/news-and-blog#PaRx-Blog" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">News & Blog</a>
                                     </li>
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/whynature" target="_blank" rel="noopener noreferrer" className="hover:underline">Why Nature?</a>
+                                        <a href="https://www.parkprescriptions.ca/en/whynature" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">Why Nature?</a>
                                     </li>
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/prescribers#Evidence-Based-Patient-Resources" target="_blank" rel="noopener noreferrer" className="hover:underline">Patient Resources</a>
+                                        <a href="https://www.parkprescriptions.ca/en/prescribers#Evidence-Based-Patient-Resources" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">Patient Resources</a>
                                     </li>
                                 </ul>
                             </div>
@@ -53,10 +53,10 @@ const testFooter = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Extras</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/contact" target="_blank" rel="noopener noreferrer" className="hover:underline">Contact Form</a>
+                                        <a href="https://www.parkprescriptions.ca/en/contact" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">Contact Form</a>
                                     </li>
                                     <li className="mb-4">
-                                        <a href="https://www.parkprescriptions.ca/en/about#Acknowledgments" target="_blank" rel="noopener noreferrer" className="hover:underline">Acknowledgements</a>
+                                        <a href="https://www.parkprescriptions.ca/en/about#Acknowledgments" target="_blank" rel="noopener noreferrer" className="text-[#0000EE] hover:underline">Acknowledgements</a>
                                     </li>
                                 </ul>
                             </div>
