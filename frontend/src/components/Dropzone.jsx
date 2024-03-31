@@ -53,12 +53,12 @@ const Dropzone = ({ file, setFile, className = "" }) => {
 	return (
 		<div
 			ref={drop}
-			className={`flex items-center justify-center w-full ${className}`}
+			className={`flex items-center justify-center w-full pt-2 ${className}`}
 		>
 			<label
 				htmlFor="dropzone-file"
 				className={`flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed 
-				rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 ${
+				rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-[#dcdedd8c] ${
 					isActive && "!bg-gray-300 scale-110"
 				} transition-all`}
 			>
@@ -79,7 +79,7 @@ const Dropzone = ({ file, setFile, className = "" }) => {
 						/>
 					</svg>
 					<p className="mb-2 text-sm text-gray-500 ">
-						<span className="font-semibold">
+						<span className="font-semibold text-lg">
 							Click to upload or drag and drop
 						</span>
 					</p>
@@ -87,7 +87,7 @@ const Dropzone = ({ file, setFile, className = "" }) => {
 						XLSX, CSV (MAX. 1mb)
 					</p>
 				</div>
-				<p className="text-xs text-gray-500 ">
+				<p className={`text-m ${file ? 'text-green-600' : 'text-red-600'}`}>
 					FILE: {file ? file.name : "NONE"}
 				</p>
 				<input

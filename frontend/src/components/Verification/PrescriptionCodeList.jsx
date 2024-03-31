@@ -91,11 +91,11 @@ const PrescriptionCodeList = ({ className }) => {
 
 	return (
 		<div className={`flex flex-col mb-10 ${className}`}>
-			<h1 className="text-lg	font-semibold upper">Prescriber Codes</h1>
-			<p>All of the prescriber codes recorded in the system.</p>
+			<h1 className="text-lg font-semibold upper">Prescriber Codes</h1>
+			<p className="text-m">All of the prescriber codes recorded in the system.</p>
 			<br className="mt-4" />
 			{/* Filter */}
-			<div className="w-full border-2 border-gray-300 bg-gray-300 rounded-md overflow-clip flex gap-2">
+			<div className="w-full border-2 border-gray-300 bg-white rounded-md overflow-clip flex gap-2 hover:bg-gray-200">
 				<div className="bg-PaRxDBlue p-2 flex items-center text-white px-4">
 					<FontAwesomeIcon icon={faSearch} />
 				</div>

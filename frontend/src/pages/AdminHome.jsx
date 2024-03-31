@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import nature from "../assets/adminNature.jpg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTree, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const AdminHome = () => {
   return (
@@ -21,18 +23,26 @@ const AdminHome = () => {
           <div className="flex flex-col gap-2 lg:gap-6 w-full">
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 w-full">
               <Link to="/verify">
-                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Verify New Prescribers</button>
+                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+                  {/* <FontAwesomeIcon icon={faCheck} className="mr-2" /> */}
+                  Verify New Prescribers</button>
               </Link>
               <Link to="/green-resources">
-                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Green Resources</button>
+                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+                  {/* <FontAwesomeIcon icon={faTree} className="mr-2" /> */}
+                  Green Resources</button>
               </Link>
             </div>
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 w-full">
               <Link to="/adminPrescriberProfile">
-                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Access Prescribers</button>
+                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+                  {/* <FontAwesomeIcon icon={faUser} className="mr-2" /> */}
+                  Prescriber Profiles</button>
               </Link>
               <Link to="/adminPatientProfile">
-                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">Access Patients</button>
+                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+                  {/* <FontAwesomeIcon icon={faUser} className="mr-2" /> */}
+                  Patient Profiles</button>
               </Link>
               </div>
             </div>

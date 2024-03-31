@@ -8,7 +8,6 @@ import api from "../axiosConfig";
 import PrescriptionCodeList from "../components/Verification/PrescriptionCodeList.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCancel, faDownload } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 
 const Verification = () => {
   const [file, setFile] = useState(null);
@@ -166,7 +165,8 @@ const Verification = () => {
                   <Dropzone setFile={setFile} file={file} />
                   <hr className="mt-2" />
                   <button
-                    className="w-full py-4 bg-PaRxDBlue text-white font-bold lg:px-4 lg:rounded"
+                    disabled={!file}
+                    className={`w-full py-4 bg-[#3b5998] hover:bg-PaRxDBlue text-white font-bold lg:px-4 lg:rounded ${!file && "!bg-gray-400 !hover:bg-inherit cursor-not-allowed"}`}
                     onClick={beginRequest}
                   >
                     Verify
