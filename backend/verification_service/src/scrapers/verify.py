@@ -15,6 +15,7 @@ from twisted.internet import reactor
 from billiard import Process  # fork of multiprocessing that works with celery
 import collections
 from scrapy.crawler import CrawlerRunner
+import os 
 
 # Subclass of scrapyscript Processor.
 # The following modifications are:
@@ -57,8 +58,10 @@ class ProcessorHook(Processor):
 
         return results
 
-# processor = Processor(settings={"LOG_ENABLED": True})
-processor = ProcessorHook()
+processor = Processor(settings={"LOG_ENABLED": False})
+if os.name == "nt": 
+    print("Running on Windows")
+    processor = ProcessorHook()
 
 def verify(last_name="", first_name="", license_no="", province=""):
 
