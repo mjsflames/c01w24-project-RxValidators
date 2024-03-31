@@ -109,6 +109,13 @@ def _process_request(file_data, id):
     }
     print("Applying Codes...")
     
+    # Drop status
+    if has_status:
+        df.drop(columns=['Status'], inplace=True)
+
+    # Rename Scraped status to status
+    df.rename(columns={'Scraped Status': 'Status'}, inplace=True)
+    
     df = add_codes_to_df(df)
     print("Codes applied")
 
