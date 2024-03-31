@@ -42,7 +42,7 @@ const PrescriberSettings = () => {
     <>
       <PageHeader
         title="Your Account"
-        desc="You can see all of your account details below. To change Mailing Address or Language, update the fields and click Update"
+        desc="You can see all of your account details below. To change Mailing Address or Language, update the fields and save your changes"
       />
       <ContentContainer>
         <div className="mr-auto ml-auto w-3/4 flex flex-cols-3 flex-rows-2 mb-2 text-lg font-semibold text-gray-600">
@@ -122,9 +122,7 @@ const PrescriberSettings = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-5 w-full">Mailing Address
-              <button onClick={() => updateData()} className="ml-3 font-bold text-center rounded-md w-10 h-10"
-                 ><FontAwesomeIcon icon={faPen} /></button>
+            <div className="mt-5 w-full">Mailing Address <FontAwesomeIcon icon={faPen} className="ml-2" />
               <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2 flex">
                 <div className="mb-3 w-full">
                   <label for="address" className="block mb-2 text-sm font-medium text-indigo-900 w-full">Street Address</label>
@@ -164,7 +162,7 @@ const PrescriberSettings = () => {
                     </select>
                 </div>
               </div>
-              <div className="w-full text-right"><br></br><button onClick={() => updateData()} className="hover:bg-black/15 text-center rounded-md border border-black p-1">Update</button></div>
+              
           </div>
           </div>
           <div className="ml-auto text-lg font-semibold text-gray-600">Contact Us
@@ -190,7 +188,8 @@ const PrescriberSettings = () => {
                 </div>
               </div>
               <div className="w-full">
-                <div className="my-24">
+                <div className="my-24 flex flex-row">
+                  <button onClick={() => updateData()} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
                   <Modal />
                 </div>
               </div>

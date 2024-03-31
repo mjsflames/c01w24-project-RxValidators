@@ -5,6 +5,7 @@ import Modal from "../components/modal";
 import { UserContext } from "../App";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import api from "../axiosConfig";
 
 const PatientSettings = () => {
@@ -46,7 +47,7 @@ const PatientSettings = () => {
     <>
       <PageHeader
         title="Your Account"
-        desc="You can see all of your account details below."
+        desc="You can see all of your account details below. To change Mailing Address or Language, update the fields and save your changes"
       />
       <ContentContainer>
         <div className="mr-auto ml-auto w-3/4 flex flex-cols-3 mb-8 text-lg font-semibold text-gray-600">
@@ -98,7 +99,7 @@ const PatientSettings = () => {
               </>
             ) : null}
           </div>
-          <div className="w-1/3 mr-auto ml-auto">Mailing Address
+          <div className="w-1/3 mr-auto ml-auto">Mailing Address <FontAwesomeIcon icon={faPen} className="ml-2" />
               <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2 flex">
                 <div className="mb-3 w-full">
                   <label for="address" className="block mb-2 text-sm font-medium text-indigo-900 w-full">Street Address</label>
@@ -138,7 +139,7 @@ const PatientSettings = () => {
                     </select>
                 </div>
               </div>
-              <div className="w-1/2"><br></br><button onClick={() => updateData()} className="hover:bg-black/15 text-center rounded-md border border-black p-1">Update</button></div>
+              
           </div>
           <div className="ml-10 text-lg font-semibold text-gray-600">Contact Us
             <div class="max-w-md font-bold space-y-1 text-gray-600 mt-2">
@@ -148,7 +149,7 @@ const PatientSettings = () => {
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                 <div className="w-full">
                   <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Email</label>
-                  <div id="accounttype" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                  <div id="accounttype" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                     parx@bcparksfoundation.ca
                   </div>
                 </div>
@@ -163,7 +164,8 @@ const PatientSettings = () => {
                 </div>
               </div>
               <div className="w-full">
-                <div className="mt-40">
+                <div className="mt-40 flex flex-row">
+                <button onClick={() => updateData()} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
                   <Modal />
                 </div>
               </div>
