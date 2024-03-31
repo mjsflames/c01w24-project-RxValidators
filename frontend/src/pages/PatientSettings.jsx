@@ -4,32 +4,10 @@ import PageHeader from "../components/PageHeader";
 import Modal from "../components/modal";
 import { UserContext } from "../App";
 import api from "../axiosConfig";
-import PatientEdit from "../components/PatientEdit";
 
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
   const { user } = useContext(UserContext);
-
-  // useEffect(() => {
-  //   const sampleData = {
-  //     id: "3",
-  //     name: "patient",
-  //     role: "patient",
-  //     address: "123 Main St",
-  //     city: "Anytown",
-  //     college: "University of Anywhere",
-  //     email: "example@example.com",
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     language: "English",
-  //     license: "123456",
-  //     profession: "Pat",
-  //     providerCode: "7890",
-  //     province: "Anyprovince",
-  //     username: "johndoe123"
-  //   }
-  //   setData(sampleData);
-  // }, []);
 
   useEffect(() => {
     if (user) setData(user);
@@ -37,7 +15,7 @@ const PatientSettings = () => {
 
 
   const [newItem, setNewItem] = useState(user);
-  
+
   const dataKeys = [
     { key: "Address", value: "address" },
     { key: "City", value: "city" },
@@ -114,7 +92,7 @@ const PatientSettings = () => {
                     </div>
                   </div>
                 </div>
-                </>
+              </>
             ) : null}
           </div>
           <div className="ml-auto mr-auto items-center w-1/4 mb-2 sm:flex-row sm:space-x-4">

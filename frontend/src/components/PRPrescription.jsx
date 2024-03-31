@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-const Prescription = ({ item }) => {
+const PRPrescription = ({ item }) => {
   const [data, setData] = useState(item);
 
   useEffect(() => {
     setData(item);
   }, []);
 
-  const patientFields = [
+  const fields = [
     { field: "Date", key: "date" },
     { field: "Patient Initials", key: "patient_initials" },
-    { field: "Prescriber Code", key: "prescriber_code" },
+    { field: "Prescriber Code", key: "patient_email" },
     { field: "Status", key: "status" },
     { field: "Comments", key: "comments" }
   ];
@@ -22,10 +22,10 @@ const Prescription = ({ item }) => {
         {data && (
           <table id="patientPrescriptionTable" className="rounded-lg font-bold w-full">
             <tbody>
-              {patientFields.map(({ field, key }) => (
+              {fields.map(({ field, key }) => (
                 <tr key={key}>
                   <td className="w-1/2 px-2 align-top">{field}:</td>
-                  <td className="w-1/2 px-2">{data[key]}</td>
+                  <td className="w-1/2 px-2">{data.prescriber[key] ? data.prescriber[key] : data[key]}</td>
                 </tr>
               ))}
             </tbody>
@@ -36,4 +36,4 @@ const Prescription = ({ item }) => {
   );
 };
 
-export default Prescription;
+export default PRPrescription;
