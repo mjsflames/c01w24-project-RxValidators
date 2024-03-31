@@ -89,7 +89,7 @@ const PatientPrescriptions = () => {
       </ul>
       <div className="flex w-full min-h-[650px] items-center justify-center bg-cover" style={{ backgroundImage: `url(${pic})` }}>
 
-        <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+        <div class="rounded-xl w-3/4 bg-gray-200 bg-opacity-90 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="flex flex-col mx-auto mb-12 text-center">
             {userData ? (
               <h1 className="text-3xl underline font-bold !text-gray-900 mb-5">

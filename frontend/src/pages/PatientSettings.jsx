@@ -11,6 +11,7 @@ import api from "../axiosConfig";
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
   const { user, updateUser } = useContext(UserContext);
+  const [newItem, setNewItem] = useState(user);
 
   useEffect(() => {
     if (user) {
@@ -33,7 +34,7 @@ const PatientSettings = () => {
     setNewItem(newItem);
   };
 
-  async function updateData() {
+   async function updateData() {
     console.log(userData._id);
     console.log(newItem);
     api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
@@ -166,7 +167,7 @@ const PatientSettings = () => {
               </div>
               <div className="w-full">
                 <div className="mt-40 flex flex-row">
-                <button onClick={() => updateData()} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
+                <button onClick={() => {updateData(); window.location.reload();}} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
                   <Modal />
                 </div>
               </div>
