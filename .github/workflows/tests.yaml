@@ -27,11 +27,9 @@ jobs:
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
 
-      - name: Start Authentication Service
+      - name: Start API geteway
         run: |
-          echo "Starting Authentication Service on port 5005"
-          python backend/auth_service/database_Authentications.py
-          sleep 5
+          npm run dev
 
       - name: Test unique codes and pdf generation
         run: |
