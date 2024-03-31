@@ -1,8 +1,8 @@
-from code_pdf_server import *
 import unittest
 import pandas as pd
 import os
 import zipfile
+from src.code_pdf_server import *
 
 columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status"]
 full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]

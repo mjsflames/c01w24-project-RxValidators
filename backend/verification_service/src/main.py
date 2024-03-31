@@ -2,15 +2,14 @@ import requests as requestsLib
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 import uuid
-import scraper_handler
+from . import scraper_handler
 import threading
 from pandas import DataFrame
 # from prescriber_code import *
 from io import StringIO, BytesIO
 
-# import ..database_functions.database as db_func
-import database as db_func
-from code_pdf_server import *
+from utils import database as db_func
+from .code_pdf_server import *
 
 app = Flask(__name__)
 cors = CORS(app)

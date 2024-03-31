@@ -6,7 +6,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import zipfile
 
-import database as db_func
+from utils import database as db_func
 
 #########################################################
 # Collection of database is used for PDF and Code generation
