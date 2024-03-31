@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import nature from "../assets/wallf.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpRightFromSquare, faFileLines, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare, faFilePrescription, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const PrescriberHome = () => {
   return (
@@ -42,7 +42,7 @@ const PrescriberHome = () => {
               </Link>
               <Link to="/patientPrescriptions">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center align-middle">
-                  <FontAwesomeIcon icon={faFileLines} className="mr-2" />
+                  <FontAwesomeIcon icon={faFilePrescription} className="mr-2" />
                   My Prescriptions
                 </button>
               </Link>

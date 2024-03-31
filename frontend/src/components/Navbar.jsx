@@ -22,7 +22,7 @@ const Navbar = () => {
 		],
 		prescriber: [
 			{ to: "/", text: "Home" },
-			{ to: "/PrescriberLogRX", text: "Log PaRx" },
+			{ to: "/PrescriberLogRX", text: "Log Prescriptions" },
 			{ to: "/prescriberPrescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
 			{ to: "/prescriberSettings", text: "My Account" },
