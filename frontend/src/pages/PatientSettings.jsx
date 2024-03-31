@@ -9,7 +9,6 @@ import PatientEdit from "../components/PatientEdit";
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
   const { user } = useContext(UserContext);
-  const [newItem, setNewItem] = useState(null);
 
   // useEffect(() => {
   //   const sampleData = {
@@ -36,6 +35,9 @@ const PatientSettings = () => {
     if (user) setData(user);
   }, []);
 
+
+  const [newItem, setNewItem] = useState(user);
+  
   const dataKeys = [
     { key: "Address", value: "address" },
     { key: "City", value: "city" },
@@ -44,15 +46,16 @@ const PatientSettings = () => {
   ];
 
   const changeItem = (key, newValue) => {
-    userData[key] = newValue;
-    setData(userData);
+    newItem[key] = newValue;
+    setNewItem(newItem);
   };
 
   function updateData() {
     console.log(userData._id);
-    api.patch(`/auth/updateUser/${userData._id}`).then((res) => {
+    console.log(newItem);
+    api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
       console.log(res.userData);
-      setData(userData);
+      setData(newItem);
     }).catch((err) => {
       console.log(err.response)
     })
