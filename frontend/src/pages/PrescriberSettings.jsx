@@ -5,8 +5,10 @@ import Modal from "../components/modal";
 import PageHeader from "../components/PageHeader";
 import { UserContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import api from "../axiosConfig";
+import update from "../assets/update.png";
 
 const PrescriberSettings = () => {
   const [userData, setData] = useState(null);
@@ -139,6 +141,8 @@ const PrescriberSettings = () => {
               </div>
             </div>
             <div className="mt-5 w-full">Mailing Address
+              <button onClick={() => updateData()} className="ml-3 font-bold text-center rounded-md w-10 h-10"
+                 ><FontAwesomeIcon icon={faPen} /></button>
               <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2 flex">
                 <div className="mb-3 w-full">
                   <label for="address" className="block mb-2 text-sm font-medium text-indigo-900 w-full">Street Address</label>
@@ -189,7 +193,7 @@ const PrescriberSettings = () => {
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                 <div className="w-full">
                   <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Email</label>
-                  <div id="accounttype" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
+                  <div id="accounttype" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
                     parx@bcparksfoundation.ca
                   </div>
                 </div>
