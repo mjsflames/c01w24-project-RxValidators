@@ -26,6 +26,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
   - Cancelling prescriptions
   - Deleting prescriber and patient profiles in the admin
   - Deleting prescriptions in the admin
+  - Users able to update mailing address and language in their account settings
   - Any misc integration for home page, etc
 - Complete all frontend pages
 - Edit user-logged prescriptions and fields in prescriber logging
@@ -37,6 +38,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
   - Displaying all prescription logs for patient/prescriber
   - Admin patient/prescriber profiles
   - Account details
+  - Users able to update mailing address and language in their account settings
 - Fix endpoints for updating user profiles
 - Added updating to admin pages such as user profiles and prescriptions
 - Created a search function for admin to navigate through the prescriptions and user profiles and dropdowns for additional details
@@ -53,6 +55,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
 # Kenny:
 - Integrate:
   - Admin prescription logs
+  - Helped bug fix patients being able to update their address and language
 - Fix backend functionalities to be consistent with logging prescriptions and displaying prescriptions
 - Edited and added new endpoints to be able to update prescription logs
 - Changed the backend to implement new matching keys instead of only having the date and prescriber codes.
