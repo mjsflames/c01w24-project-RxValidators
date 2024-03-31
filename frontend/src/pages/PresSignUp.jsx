@@ -175,7 +175,7 @@ const PatCreateAccount = () => {
 						</div>
 						<div className="w-full">
 							<label htmlFor="province" className="block mb-2 text-sm font-medium text-gray-900">Province</label>
-							<select value={province} onChange={(e) => setProvince(e.target.value)}  required id="province" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+							<select value={province} onChange={(e) => setProvince(e.target.value)}  required id="province" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5">
 								<option disabled selected value="" defaultValue="">Province</option>
 								<option value="AB">Alberta</option>
 								<option value="BC">British Columbia</option>
@@ -204,7 +204,7 @@ const PatCreateAccount = () => {
 						}
 						<div className="mt-4">
 							<Link className="text-blue-700 hover:text-black underline" to="/login">
-								Created an account? Login here.
+								Already have an account? Login here.
 							</Link>
                 		</div>
 					</div>
