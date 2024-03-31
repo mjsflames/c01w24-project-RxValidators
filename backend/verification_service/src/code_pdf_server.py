@@ -150,11 +150,12 @@ def create_pdf(code, output_path):
     page.drawString(80, 185, "Health Professional's Signature")
 
     page.restoreState() 
-    page.drawString(80, 130, f"Prescription #: {code}   —  ___________________  —  ___________________")
+    em_dash = '\u2013'
+    page.drawString(80, 130, f"Prescription #: {code}   {em_dash}    ___________________   {em_dash}   ___________________")
     
     page.setFont("Helvetica", 9)
-    page.drawString(280, 115, "(YYMMDD)")
-    page.drawString(415, 115, "(Patient's Initials)")
+    page.drawString(250, 115, "(YYMMDD)")
+    page.drawString(395, 115, "(Patient's Initials)")
 
     # page.save()
     return page
