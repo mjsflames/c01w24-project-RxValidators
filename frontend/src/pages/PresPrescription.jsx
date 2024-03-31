@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Prescription from "../components/Prescription";
+import PRPrescription from "../components/PRPrescription";
 import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import pic from "../assets/prescribertable.jpg";
@@ -87,8 +87,8 @@ const PrescriberPrescriptions = () => {
           <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500">
             <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
               <tr>
-                <th scope="col" className="px-2 py-3">Date</th>
-                <th scope="col" className="px-2 py-3">Patient Initials</th>
+                <th scope="col" className="px-2 py-3 w-1/8">Date</th>
+                <th scope="col" className="px-2 py-3 w-1/8">Patient Initials</th>
                 <th scope="col" className="px-2 py-3 text-nowrap">Prescription Status</th>
                 <th scope="col" className="px-2 py-3 text-nowrap">Discovery Pass?</th>
                 <th scope="col" className="px-2 py-3">Prescriber Comments</th>
@@ -101,7 +101,7 @@ const PrescriberPrescriptions = () => {
                   <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/30">
                     <td className="px-2 py-3 w-1/8">{item.date}</td>
                     <td className="px-2 py-3 w-1/8">{item.patient_initials}</td>
-                    <td className="px-2 py-3">{item.status}</td>
+                    <td className="px-2 py-3">{item.prescriber.status}</td>
                     <td className="px-2 py-3 w-1/8 pointer-events-none"><input type="checkbox" checked={item.discoveryPass === "Yes"}/></td>
                     <td className="px-2 py-3 w-1/2 truncate max-w-md">{item.comments}</td>
                     <td>
@@ -114,7 +114,7 @@ const PrescriberPrescriptions = () => {
                           <>
                               <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 bg-black bg-opacity-50">
                                   <div className="relative w-auto mx-auto">
-                                      <div className="border-0 rounded-lg relative flex flex-col w-full bg-white outline-none px-10"> 
+                                      <div className="border-0 rounded-lg relative flex flex-col w-full bg-white outline-none px-10">
                                           <div className="flex items-start justify-between p-5">
                                               <h2 className="text-l font-bold mx-auto">Please Confirm Deletion</h2>
                                               <button className="bg-transparent text-black absolute right-2 top-0" onClick={() => setShowModal(false)}>X</button>
@@ -126,14 +126,14 @@ const PrescriberPrescriptions = () => {
                                               <button id="deletelog" onClick={() => deleteHandler(item._id)} className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10">Yes, proceed</button>
                                               <button className="bg-red-200 hover:bg-red-200/40 text-black border rounded-full p-2.5" onClick={() => setShowModal(false)}>No, cancel</button>
                                           </div>
-                                      </div>  
+                                      </div>
                                   </div>
                               </div>
                           </>
                       ) : null}
                   </tr>{myItem === item && (<tr className="text-left text-black border-t border-white">
                     <td colSpan="5">
-                      <Prescription item={item} />
+                      <PRPrescription item={item} />
                     </td>
                   </tr>
                   )}
