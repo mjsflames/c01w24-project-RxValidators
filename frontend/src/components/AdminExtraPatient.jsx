@@ -25,6 +25,8 @@ const changeItem = (key, newValue) => {
 };
 
 function updateData() {
+  console.log(data._id);
+  console.log(newItem);
   api.patch(`/auth/updateUser/${data._id}`, newItem).then((res) => {
     console.log(res.data);
     setData(newItem);
@@ -53,7 +55,7 @@ function updateData() {
         )}
       </div>
       <div className="flex justify-end p-3">
-        <button onClick={() => {updateData(); window.location.reload();}} className="border border-black border-2 rounded-md font-bold w-1/10 hover:bg-PaRxGreen">Update</button>
+        <button onClick={() => {updateData();}} className="border border-black border-2 rounded-md font-bold w-1/10 hover:bg-PaRxGreen">Update</button>
         </div>
     </>
   );
