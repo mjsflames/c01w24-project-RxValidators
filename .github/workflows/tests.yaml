@@ -31,7 +31,7 @@ jobs:
       - name: Test backend
         run: |
           echo "Starting Servers"
-          node backend\api_gateway\src\index.js
+          node backend/api_gateway/src/index.js
           sleep 5
 
           echo "Testing unique prescriber codes and pdf generation"
