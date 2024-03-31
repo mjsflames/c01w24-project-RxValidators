@@ -15,6 +15,15 @@ const Verification = () => {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(null);
 
+  // Get latest job if available
+  useEffect(() => {
+    api.get("/verification/jobs/latest").then((response) => {
+      if (response.status !== 200) return;
+      const { id, status } = response.data;
+      setId(id);
+    }).catch((err) => console.log(err));
+  }, []);
+
   const beginRequest = async () => {
     if (!file) return;
     const formData = new FormData();
@@ -190,13 +199,13 @@ const Verification = () => {
               <VerificationList data={data} visible={data && id} />
               <div className="flex mt-8 items-center gap-4 justify-end w-full">
                 <p className="font-bold">Download</p>
-                <button
+                {/* <button // Optional feature for downloading PDFs
                   onClick={downloadPdfs}
                   className="bg-PaRxDGrenn text-white font-bold py-4 px-4 lg:rounded"
                 >
                   <FontAwesomeIcon icon={faDownload} className="mr-2" />
                   PDFs
-                </button>
+                </button> */}
                 <button
                   onClick={downloadToCsv}
                   className="bg-PaRxDGrenn text-white font-bold py-4 px-4 lg:rounded"

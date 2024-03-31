@@ -49,6 +49,13 @@ def verify():
 
     return {"id": id}, 200, {"Content-Type": "application/json"}
 
+# Return latest job
+@app.route("/api/jobs/latest", methods=["GET"])
+@cross_origin()
+def latest_job():
+    if len(processing) == 0:
+        return {"message": "No jobs in progress"}, 400, {"Content-Type": "application/json"}
+    return {"id": list(processing.keys())[-1]}, 200
 
 @app.route("/api/status/<id>", methods=["GET"])
 @cross_origin()
@@ -94,11 +101,7 @@ def cancel(id):
     except Exception as e:
         print(e)
         return {"message": "Error cancelling request"}, 400, {"Content-Type": "application/json"}
-    
-@app.route("/health")
-@cross_origin()
-def health_check(): # ? API Gateway health check
-    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
+
 
 #############################################
 # Prescriptions
@@ -218,11 +221,16 @@ def delete_prescriber_code(id):
     num_deletes = delete_prescriber_code_inner(id)
     return jsonify({'message': 'Deleted code', 'count': str(num_deletes.deleted_count)}), 200
 
+@app.route("/health")
+@cross_origin()
+def health_check(): # ? API Gateway health check
+    return {"message": "OK"}, 200, {"Content-Type": "application/json"}
+
 def register_service(service_name, service_url):
     print(f"Sending register request | {service_name} at {service_url}")
     return requestsLib.post("http://localhost:3130/service-registry/register", json={"serviceName": service_name, "serviceUrl": service_url})
 
-
+    
 
 print("Starting Verification Service on port", app.config["PORT"])
 register_service("verification-service", f"http://127.0.0.1:{app.config['PORT']}")
