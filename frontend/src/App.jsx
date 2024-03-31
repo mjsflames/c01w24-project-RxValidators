@@ -186,9 +186,8 @@ function App() {
 
               {/* PATIENT RESTRICTED */}
               <Route
-                path="patientPrescriptions"
                 element={
-                  <ProtectedRoute redirectTo={"/patientPrescriptions"} permitted={["patient"]}>
+                  <ProtectedRoute redirectTo={"/my-prescriptions"} permitted={["patient"]}>
                     <PatientPrescriptions />
                   </ProtectedRoute>
                 }
@@ -199,10 +198,10 @@ function App() {
               <Route path="adminLogs" element={<AdminLogs />} />
               <Route path="green-resources" element={<GreenResources />} />
 
-              <Route path="prescriber-prescriptions" element={<PrescriberPrescriptions />} />
+              {/* <Route path="prescriber-prescriptions" element={<PrescriberPrescriptions />} /> */}
               <Route path="PrescriberLogRX" element={<PrescriberLogRX />} />
               <Route path="PatientLogRX" element={<PatientLogRX />} />
-              <Route path="patientPrescriptions" element={<PatientPrescriptions />} />
+              {/* <Route path="patientPrescriptions" element={<PatientPrescriptions />} /> */}
               <Route path="loginF" element={<LoginForm />} />
               <Route path="temp-links" element={<TempLinks />} />
 
@@ -216,7 +215,7 @@ function App() {
                   ) : null
 								}
 							/>
-              {/* <Route
+              <Route
 								path="my-prescriptions"
 								element={
 									user && user.role === "prescriber" ? (
@@ -225,7 +224,7 @@ function App() {
 										<PatientPrescriptions />
                   ) : null
 								}
-							/> */}
+							/>
               {/* CATCH ALL */}
               <Route path="*" element={<NoPage />} />
             </Route>

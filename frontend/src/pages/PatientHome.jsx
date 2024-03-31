@@ -40,7 +40,7 @@ const PrescriberHome = () => {
                   Log Prescriptions
                 </button>
               </Link>
-              <Link to="/patientPrescriptions">
+              <Link to="/my-prescriptions">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center align-middle">
                   <FontAwesomeIcon icon={faFilePrescription} className="mr-2" />
                   My Prescriptions

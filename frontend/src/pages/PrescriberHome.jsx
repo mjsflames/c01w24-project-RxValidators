@@ -48,7 +48,7 @@ const PrescriberHome = () => {
 					  Download My Prescription PDF
 					</button>
 				  </Link>
-				  <Link to="/prescriber-prescriptions">
+				  <Link to="/my-prescriptions">
 					<button
 					  href="#"
 					  className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center"
