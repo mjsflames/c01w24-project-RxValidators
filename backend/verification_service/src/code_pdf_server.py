@@ -133,7 +133,7 @@ def new_data_to_xlsx(file_name, df):
     # Convert the dataframe to CSV
     df.to_excel(file_name, index=False)
     
-    
+
 # This function creates a pdf file (formatted the way the company wants it) based on the prescriber's code
 def create_pdf(code, output_path):
     # page = canvas.Canvas(os.path.join(output_path, f"PaRx-{code}.pdf"), pagesize=letter)
@@ -154,11 +154,12 @@ def create_pdf(code, output_path):
     page.drawString(80, 130, f"Prescription #: {code}   {em_dash}    ___________________   {em_dash}   ___________________")
     
     page.setFont("Helvetica", 9)
-    page.drawString(250, 115, "(YYMMDD)")
-    page.drawString(395, 115, "(Patient's Initials)")
+    page.drawString(280, 115, "(YYMMDD)")
+    page.drawString(420, 115, "(Patient's Initials)")
 
     # page.save()
     return page
+
 
 # This function generates pdf files for the verified prescribers, and saves them in a zip folder (through a buffer)
 def generate_verified_pdfs(df, output_path):
