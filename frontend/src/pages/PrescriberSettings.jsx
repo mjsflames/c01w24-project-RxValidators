@@ -4,13 +4,14 @@ import ContentContainer from "../components/ContentContainer";
 import Modal from "../components/modal";
 import PageHeader from "../components/PageHeader";
 import { UserContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import api from "../axiosConfig";
 
 const PrescriberSettings = () => {
-
-  const [isOpen, setIsOpen] = useState(false);
-
   const [userData, setData] = useState(null);
   const { user } = useContext(UserContext);
+  const [newItem, setNewItem] = useState(user);
 
   useEffect(() => {
     const sampleData = {
@@ -37,6 +38,22 @@ const PrescriberSettings = () => {
     if (user) setData(user);
   }, []);
 
+  const changeItem = (key, newValue) => {
+    newItem[key] = newValue;
+    setNewItem(newItem);
+  };
+
+  function updateData() {
+    console.log(userData._id);
+    console.log(newItem);
+    api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
+      console.log(res.userData);
+      setData(newItem);
+    }).catch((err) => {
+      console.log(err.response)
+    })
+  }
+
   return (
     <>
       <PageHeader
@@ -58,7 +75,7 @@ const PrescriberSettings = () => {
                   <div className="w-full">
                     <label for="last_name" className="block mb-2 text-sm font-medium text-indigo-900">Last Name</label>
                     <div type="text" id="last_name" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                    {userData.lastName}
+                      {userData.lastName}
                     </div>
                   </div>
                 </div>
@@ -66,7 +83,7 @@ const PrescriberSettings = () => {
                   <div className="w-full">
                     <label for="profession" className="block mb-2 text-sm font-medium text-indigo-900">Profession</label>
                     <div type="text" id="profession" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
-                    {userData.profession}
+                      {userData.profession}
                     </div>
                   </div>
                 </div>
@@ -74,7 +91,7 @@ const PrescriberSettings = () => {
                   <div className="w-full">
                     <label for="email" className="block mb-2 text-sm font-medium text-indigo-900">Email Address</label>
                     <div type="text" id="email" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5 ">
-                    {userData.email}
+                      {userData.email}
                     </div>
                   </div>
                 </div>
@@ -83,46 +100,42 @@ const PrescriberSettings = () => {
                   <div className="w-full">
                     <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Account Type</label>
                     <div id="accounttype" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                    {userData.role.toUpperCase()}
+                      {userData.role.toUpperCase()}
                     </div>
                   </div>
                   <div className="w-full">
                     <label for="status" className="block mb-2 text-sm font-medium text-indigo-900">Account Status</label>
                     <div type="text" id="status" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                    {userData.accStatus == null || userData.accStatus == true ? "ACTIVE" : "UNACTIVE"}
+                      {userData.accStatus == null || userData.accStatus == true ? "ACTIVE" : "UNACTIVE"}
                     </div>
                   </div>
                 </div>
               </>
             ) : null}
           </div>
-          <div className="ml-auto mr-auto mb-2 mt-2 text-lg font-semibold text-gray-600">Mailing Address
-            <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2">
-              <div className="w-full mb-3">
-                <label for="patProvince" className="block mb-2 text-sm font-medium text-indigo-900">Street Address</label>
-                <div type="text" id="patProvince" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block p-2.5">
-                  {userData ? userData.address : ""}
-                </div>
+          <div className="m-2 text-lg font-semibold text-indigo-900">Mailing Address
+            <div className="w-full space-x-0 space-y-2 sm:space-x-4 sm:space-y-0 mt-2 flex">
+              <div className="mb-3 w-full">
+                <label for="patProvince" className="block mb-2 text-sm font-medium text-indigo-900 w-full">Street Address</label>
+                <input onChange={(e) => changeItem("address", e.target.value)} placeholder={userData ? userData.address : ""} type="text" id="streetAddress" className="w-1/2 bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5"></input>
               </div>
+              <div className="w-1/2"><br></br><button onClick={() => updateData()} className="hover:bg-black/15 text-center rounded-md border border-black p-1">Update</button></div>
             </div>
             <div className="flex flex-col w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
               <div className="w-full">
                 <label for="patProvince" className="block mb-2 text-sm font-medium text-indigo-900">City</label>
-                <div type="text" id="patProvince" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                  {userData ? userData.city : ""}
-                </div>
+                <input onChange={(e) => changeItem("city", e.target.value)} placeholder={userData ? userData.city : ""} type="text" id="streetAddress"
+                  className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
               </div>
               <div className="w-full">
                 <label for="accounttype" className="block mb-2 text-sm font-medium text-indigo-900">Province</label>
-                <div id="accounttype" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                  {userData ? userData.province : ""}
-                </div>
+                <input onChange={(e) => changeItem("province", e.target.value)} placeholder={userData ? userData.province : ""} type="text" id="streetAddress"
+                  className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
               </div>
               <div className="w-full">
                 <label for="status" className="block mb-2 text-sm text-nowrap font-medium text-indigo-900">Language</label>
-                <div type="text" id="status" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                  {userData ? userData.language : ""}
-                </div>
+                <input onChange={(e) => changeItem("language", e.target.value)} placeholder={userData ? userData.language : ""} type="text" id="streetAddress"
+                  className="bg-indigo-50 placeholder:text-indigo-900/80 text-sm rounded-lg block p-2.5 w-full"></input>
               </div>
             </div>
             <div>License Details
@@ -144,7 +157,7 @@ const PrescriberSettings = () => {
                 <div className="w-full">
                   <label for="parx" className="block mb-2 text-sm font-medium text-indigo-900">PaRx Code</label>
                   <div type="text" id="parx" className="bg-indigo-50 text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                    {userData ? userData.providerCode : ""}
+                    {userData ? userData.prescriber_code : ""}
                   </div>
                 </div>
               </div>
@@ -152,7 +165,7 @@ const PrescriberSettings = () => {
           </div>
           <div className="ml-auto text-lg font-semibold text-gray-600">Contact Us
             <div className="max-w-md font-bold space-y-1 text-gray-600 mt-2">
-              <div className="block mb-2 text-sm font-medium text-indigo-900 mb-4">
+              <div className="block text-sm font-medium text-indigo-900 mb-4">
                 For any questions or to request a change to your account, <br /> please contact us using one of the following methods:
               </div>
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -166,13 +179,14 @@ const PrescriberSettings = () => {
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                 <div className="w-full mt-4">
                   <label for="status" className="block mb-2 text-sm font-medium text-indigo-900">Form</label>
-                  <button onClick={() => window.open("https://www.parkprescriptions.ca/en/contact", "_blank")} id="status" className="bg-indigo-200 text-indigo-900 hover:bg-indigo-50/90 text-sm rounded-full p-2.5">
+                  <button onClick={() => window.open("https://www.parkprescriptions.ca/en/contact", "_blank")} id="status" className="bg-indigo-200 text-indigo-900 hover:bg-indigo-50/90 text-sm rounded-2xl p-2.5">
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="mr-2" />
                     CONTACT FORM
                   </button>
                 </div>
               </div>
               <div className="w-full">
-                <div className="mt-56">
+                <div className="my-24">
                   <Modal />
                 </div>
               </div>

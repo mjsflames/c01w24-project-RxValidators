@@ -8,30 +8,31 @@ const Navbar = () => {
 	const assignedLinks = {
 		admin: [
 			{ to: "/", text: "Home" },
-			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
-			{ to: "/adminPatientProfile", text: "Patient Profiles" },
+			{ to: "/prescriber-profiles", text: "Prescriber Profiles" },
+			{ to: "/patient-profiles", text: "Patient Profiles" },
+			{ to: "/prescription-logs", text: "Prescription Logs" },
 			{ to: "/verify", text: "Verification Platform" },
 			{ to: "/green-resources", text: "Green Resources" },
 		],
 		assistant: [
 			{ to: "/", text: "Home" },
-			{ to: "/adminPrescriberProfile", text: "Prescriber Profiles" },
+			{ to: "/prescriber-profiles", text: "Prescriber Profiles" },
 			{ to: "/verify", text: "Verification Platform" },
 			{ to: "/green-resources", text: "Green Resources" },
 		],
 		prescriber: [
 			{ to: "/", text: "Home" },
-			{ to: "/PrescriberLogRX", text: "Log PaRx" },
-			{ to: "/prescriberPrescriptions", text: "My Prescriptions" },
+			{ to: "/log-prescriptions", text: "Log Prescriptions" },
+			{ to: "/my-prescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
-			{ to: "/prescriberSettings", text: "My Account" },
+			{ to: "/my-account", text: "My Account" },
 		],
 		patient: [
 			{ to: "/", text: "Home" },
-			{ to: "/PatientLogRX", text: "Log PaRx" },
-			{ to: "/patientPrescriptions", text: "My Prescriptions" },
+			{ to: "/log-prescriptions", text: "Log Prescriptions" },
+			{ to: "/my-prescriptions", text: "My Prescriptions" },
 			{ to: "/green-resources", text: "Green Resources" },
-			{ to: "/patientSettings", text: "My Account" },
+			{ to: "/my-account", text: "My Account" },
 		],
 		any: [
 			{ to: "/temp-links", text: "DEV" },
@@ -50,7 +51,7 @@ const Navbar = () => {
 			{myLinks.map((link, index) => (
 				<NavLink key={index} to={link.to} style={{ color: 'darkgreen' }}className={({ isActive }) =>
 				[
-				  	isActive ? "active" : "font-bold", 
+				  	!isActive ? "active" : "font-bold underline", 
 				].join(" ")
 			  	}>
 					{link.text}

@@ -2,15 +2,14 @@ import requests as requestsLib
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 import uuid
-import scraper_handler
+from . import scraper_handler
 import threading
 from pandas import DataFrame
 # from prescriber_code import *
 from io import StringIO, BytesIO
+from multiprocessing import Process
 
-# import ..database_functions.database as db_func
-import database as db_func
-from code_pdf_server import *
+from .code_pdf_server import *
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -42,9 +41,14 @@ def verify():
     id = generate_id()
     processing[id] = {'file': file_data, 'status': 'pending', 'result': None}
 
+    # process = Process(target=scraper_handler.handle, args=(file_data.read(), id))
+    # process.start()
+
     thread = threading.Thread(
-        target=scraper_handler.handle, args=(file_data.read(), id))
+        target=scraper_handler.handle, args=(file_data.read(), id),
+        daemon=True)
     thread.start()
+
 
     return {"id": id}, 200, {"Content-Type": "application/json"}
 
@@ -157,7 +161,7 @@ def export_file(id):
         return {"message": "Invalid file type. Please specify 'csv' or 'xlsx'."}, 400, {"Content-Type": "application/json"}
 
     # call the function generate_verified_pdfs(df, output_path) to generate the PDFs
-    print(generate_verified_pdfs(df, ""))
+    # print(generate_verified_pdfs(df, ""))
     status = scraper_handler.check_status(id)
     if type(status) is not DataFrame:
         return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
@@ -257,5 +261,4 @@ print("Starting Verification Service on port", app.config["PORT"])
 register_service("verification-service", f"http://127.0.0.1:{app.config['PORT']}")
 
 
-if __name__ == "__main__":
-    app.run(port=PORT, debug=True)
+app.run(port=PORT, debug=True)

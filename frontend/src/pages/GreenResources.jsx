@@ -34,17 +34,17 @@ const GreenResources = () => {
   const categories = {
     "Free Parks": "leisure.playground,leisure.park",
     "National Parks": "national_park",
-    Beaches: "beach",
+    "Beaches": "beach",
     "Bicycle Rentals": "rental.bicycle",
     "Bicycle Parking": "parking.bicycles",
     "Car Parking": "parking.cars",
-    Museums: "entertainment.museum",
-    Zoos: "entertainment.zoo",
+    "Museums": "entertainment.museum",
+    "Zoos": "entertainment.zoo",
     "Theme Parks": "entertainment.theme_park",
-    Forests: "natural.forest",
+    "Forests": "natural.forest",
     "Conservation Areas": "natural.protected_area",
     "Community Centres": "activity.community_center",
-    Washrooms: "amenity.toilet",
+    "Washrooms": "amenity.toilet",
     "Public Transport": "public_transport",
   };
 
@@ -65,12 +65,13 @@ const GreenResources = () => {
     <>
       <PageHeader
         title="Green Resources"
-        desc="To look at resources near you, please enter an address or a city to start your search, or allow this site to access your current location."
+        desc="To look at green spaces near you, enter an address or allow this site to access your current location, then select a category."
       />
       <ContentContainer>
 
         {/* List the categories */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="my-2 flex flex-wrap gap-2">
+        <h2 className="font-semibold text-lg">Categories:</h2>
           {Object.keys(categories).map((key) => (
             <button
               key={key}
@@ -87,7 +88,7 @@ const GreenResources = () => {
           ))}
         </div>
 
-      <div className="flex h-[50vh] mt-4 gap-6 relative">
+      <div className="flex h-[50vh] mt-4 gap-6 relative mb-8">
           <ArcGISMap
             className={"w-2/3 h-full flex"} 
             categoryState={categoryState}

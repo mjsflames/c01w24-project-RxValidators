@@ -98,7 +98,7 @@ const PrescriptionCodeList = ({ className }) => {
 			<p>All of the unregistered prescriber codes recorded in the system.</p>
 			<br className="mt-4" />
 			{/* Filter */}
-			<div className="w-full border-2 border-gray-300 bg-gray-300 rounded-md overflow-clip flex gap-2">
+			<div className="w-full border-2 border-gray-300 bg-white rounded-md overflow-clip flex gap-2 hover:border-gray-400">
 				<div className="bg-PaRxDBlue p-2 flex items-center text-white px-4">
 					<FontAwesomeIcon icon={faSearch} />
 				</div>

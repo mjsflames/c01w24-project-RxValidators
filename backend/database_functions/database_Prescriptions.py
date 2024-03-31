@@ -22,20 +22,6 @@ app.config["CORS_HEADERS"] = "Content-Type"
 app.config["DEBUG"] = True
 app.config["PORT"] = PORT
 
-# prescription_fields = [
-#     "date",
-#     "patient_initials",
-#     "prescriber_code",
-#     "comments",
-#     "parks_canada_checkbox",
-#     "status",
-#     "patient_status",
-#     "prescriber_status",
-#     "pdf_link",
-#     "discoveryPass",
-#     "loggedUser",
-# ]
-
 template_PR = {
     "date": None,
     "patient_initials": None,
@@ -44,17 +30,22 @@ template_PR = {
     "status": None,
     "pdf_link": None,
     "discoveryPass": None,
+    "patient_email": None,
     "patient": {
         "date": None,
         "patient_initials": None,
         "prescriber_code": None,
         "discoveryPass": None,
+        "patient_email": None,
+        "status": None,
     },
     "prescriber": {
         "date": None,
         "patient_initials": None,
         "prescriber_code": None,
         "discoveryPass": None,
+        "patient_email": None,
+        "status": None,
     },
 }
 
@@ -63,6 +54,7 @@ PA_NOT_LOGGED = "Pa not logged yet"
 COMPLETE = "Complete"
 PR_LOGGED = "Pr Logged"
 PA_LOGGED = "Pa Logged"
+BOTH_LOGGED = "Both logged with Discovery Pass"
 COMPLETE_WITH_DP = "Complete with Discovery Pass"
 
 # required_PAT_prescription_fields = [
@@ -91,15 +83,24 @@ def newPR():
 def generate_id():
     return str(uuid.uuid4())
 
+def getFromCursor(cursor):
+    res = []
+    for p in cursor:
+      p['_id'] = str(p['_id'])
+      res.append(p)
+    return res
 
-@app.route("/api/getPrescriptions/<username>", methods=["GET"])
+@app.route("/api/getPatientPrescriptions/<username>", methods=["GET"])
 @cross_origin()
-def getPrescriptions(username):
-    prescriptions = dbfunc.getAllPrescriptions(username)
-    print("sending...")
-    print(prescriptions)
-    return prescriptions
+def getPatientPrescriptions(username):
+    prescriptions = collection.find({"patient_email": username})
+    return getFromCursor(prescriptions)
 
+@app.route("/api/getPresPrescriptions/<username>", methods=["GET"])
+@cross_origin()
+def getPresPrescriptions(username):
+    prescriptions = collection.find({"prescriber_code": username})
+    return getFromCursor(prescriptions)
 
 @app.route("/api/submit-form", methods=["POST"])
 def submit_form():
@@ -108,8 +109,11 @@ def submit_form():
     print(data)  ###
 
     def validateFields(data, req_fields):
-        if not all(field in data for field in req_fields):
-            missing_fields = [field for field in req_fields if field not in data]
+
+        filtered_fields = [field for field in req_fields if field != "status"]
+
+        if not all(field in data for field in filtered_fields):
+            missing_fields = [field for field in filtered_fields if field not in data]
             print(missing_fields)
             return (
                 jsonify(
@@ -121,6 +125,8 @@ def submit_form():
     if "user" in data and data["user"] == "patient":
         if error := validateFields(data, template_PR["patient"]):
             return error
+        if "comments" in data:
+            return (jsonify({"error": "patient cant assign comments"}),400,)
     elif "user" in data and data["user"] == "prescriber":
         if error := validateFields(data, template_PR["prescriber"]):
             return error
@@ -134,12 +140,21 @@ def submit_form():
 
     date = data.get("date")
     prescriber_code = data.get("prescriber_code")
-    filter_fields = {"date": date, "prescriber_code": prescriber_code}
+    patient_initials = data.get("patient_initials")
+    patient_email = data.get("patient_email")
+    discoveryPass = data.get("discoveryPass")
+    filter_fields = {"date": date,
+                     "prescriber_code": prescriber_code,
+                     "patient_initials": patient_initials,
+                     "discoveryPass": discoveryPass,
+                     "patient_email": patient_email}
     result = collection.find_one(filter_fields)
 
     for key, value in data.items():
-        prescription[data["user"]][key] = value
-        prescription[key] = value
+        if key != "user":
+            prescription[key] = value
+            if key in template_PR[data["user"]]:
+                prescription[data["user"]][key] = value
 
     if result is None:
         if data["user"] == "patient":
@@ -151,28 +166,31 @@ def submit_form():
         collection.insert_one(prescription)
         return (jsonify({"message": "Data posted successfully"}), 200)
 
-    if result["user"] == data["user"]:
+    if (result["status"] == PR_NOT_LOGGED and data["user"] == "patient") or (result["status"] == PA_NOT_LOGGED and data["user"] == "prescriber") or result["status"] == BOTH_LOGGED or result["status"] == COMPLETE:
         return (
             jsonify({"error": "Prescription exists"}),
             401,
         )
 
     for key, value in data.items():
-        result[data["user"]][key] = value
-        result[key] = value
+        if key != "user" and key in template_PR[data["user"]]:
+            result[data["user"]][key] = value #Append to the Existing Prescription
 
-    if data["discoveryPass"] == "Yes" == result["discoveryPass"]:
+    if data["discoveryPass"] == "No":
         result["status"] = COMPLETE
+        result["prescriber"]["status"] = COMPLETE
+        result["patient"]["status"] = COMPLETE
 
-    elif data["user"] == "patient":
-        result["status"] = PR_LOGGED
-        result["prescriber"] = result["prescriber"]
+    elif data["discoveryPass"] == "Yes":
+        result["status"] = BOTH_LOGGED
+        result["prescriber"]["status"] = PA_LOGGED
+        result["patient"]["status"] = PR_LOGGED
+
     else:
-        result["status"] = PA_LOGGED
-        result["patient"] = result["patient"]
-
-    result["discoveryPass"] = False
-
+        return (
+            jsonify({"error": "Invalid Discovery Pass input, please choose Yes/No."}),
+            400,
+        )
 
     update = {"$set": result}
     collection.update_one(filter_fields, update)
@@ -212,57 +230,66 @@ def search_prescriptions():
 
     return Response(dumps(results), mimetype="application/json"), 200
 
+# DONT USE IT TO DELETE A PRESCRIPTION
+# Updates to status are allowed for status not auto-generated
+@app.route("/api/update-prescription/<oid>", methods=["POST"])
+def update_prescription(oid):
+    data = request.json
 
-@app.route("/update-prescription", methods=["POST"])
-def update_prescription():
-    data = request.json  # Assuming the data is sent as JSON
-
-    # Extract query parameters
-    date = data.get("date")
-    prescriber_code = data.get("prescriber_code")
-
-    # Ensure the necessary fields are provided
-    if not date or not prescriber_code:
-        return jsonify({"error": "Missing date or prescriber_code in request"}), 400
-
-    # Check if the fields to be updated are within the allowed fields, excluding 'date' and 'prescriber_code'
-    update_fields = set(data.keys()) - {"date", "prescriber_code"}
-    if not update_fields.issubset(template_PR["admin"]):
-        invalid_fields = update_fields - set(template_PR["admin"])
-        return (
-            jsonify(
-                {
-                    "error": "Invalid fields in update request",
-                    "invalid_fields": list(invalid_fields),
-                }
-            ),
-            400,
-        )
-
-    # Build the update operation, excluding 'date' and 'prescriber_code' from the update
-    update_data = {
-        k: v for k, v in data.items() if k not in ["date", "prescriber_code"]
-    }
-    update_operation = {"$set": update_data}
+    # Ensure incoming data fields are within the allowed list
+    if not set(data.keys()).issubset(template_PR):
+        invalid_fields = set(data.keys()) - set(template_PR)
+        return jsonify({"error": "Invalid fields in update request", "invalid_fields": list(invalid_fields)}), 400
+    elif "status" in data and data.get("status") != COMPLETE_WITH_DP:
+        return jsonify({"error": "Invalid status input in update request. Check if status input is automatically assigned only."}), 400
 
     try:
-        # Perform the update
-        result = collection.find_one_and_update(
-            {"date": date, "prescriber_code": prescriber_code},  # Query
-            update_operation,  # Update
-            return_document=True,  # Return the updated document
-        )
+        result = collection.find_one({"_id": ObjectId(oid)})
+        if not result:
+            return jsonify({"message": "No prescription found matching the criteria"}), 404
+        elif "status" in data and result.get("status") != BOTH_LOGGED:
+            return jsonify({"message": "Status assigned automatically cannot be changed"}), 400
 
-        if result:
+        update_data = {k: v for k, v in data.items() if k in result and k in template_PR}
+
+        if result.get("status") == BOTH_LOGGED and "prescriber" in result and "patient" in result:
+            update_data["prescriber"] = {k: v for k, v in data.items() if k in result["prescriber"]}
+            update_data["patient"] = {k: v for k, v in data.items() if k in result["patient"]}
+            if "discoveryPass" in data and data.get("discoveryPass") == "No":
+                update_data["status"] = COMPLETE
+                update_data["prescriber"]["status"] = COMPLETE
+                update_data["patient"]["status"] = COMPLETE
+
+        elif result.get("status") == COMPLETE and "prescriber" in result and "patient" in result:
+            update_data["prescriber"] = {k: v for k, v in data.items() if k in result["prescriber"]}
+            update_data["patient"] = {k: v for k, v in data.items() if k in result["patient"]}
+            if "discoveryPass" in data and data.get("discoveryPass") == "Yes":
+                update_data["status"] = BOTH_LOGGED
+                update_data["prescriber"]["status"] = PA_LOGGED
+                update_data["patient"]["status"] = PR_LOGGED
+
+        elif result.get("status") == PA_NOT_LOGGED and "prescriber" in result:
+            # Start with a copy of the existing 'prescriber' fields from the result
+            update_data["prescriber"] = result["prescriber"].copy()
+            # Update/overwrite with fields from 'data' that exist in the 'prescriber' structure
+            update_data["prescriber"].update((k, v) for k, v in data.items() if k in result["prescriber"])
+
+        elif result.get("status") == PR_NOT_LOGGED and "patient" in result:
+            # Start with a copy of the existing 'patient' fields from the result
+            update_data["patient"] = result["patient"].copy()
+            # Update/overwrite with fields from 'data' that exist in the 'patient' structure
+            update_data["patient"].update((k, v) for k, v in data.items() if k in result["patient"])
+
+        update_operation = {"$set": update_data}
+        updated_result = collection.find_one_and_update({"_id": ObjectId(oid)}, update_operation, return_document=True)
+
+        if updated_result:
             return jsonify({"message": "Prescription updated successfully"}), 200
-        else:
-            return (
-                jsonify({"message": "No prescription found matching the criteria"}),
-                404,
-            )
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+    return jsonify({"message": "An unexpected error occurred"}), 500
 
 
 @app.route("/delete/<oid>", methods=["DELETE"])

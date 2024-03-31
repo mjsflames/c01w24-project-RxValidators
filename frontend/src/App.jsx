@@ -15,6 +15,7 @@ import AdminHome from "./pages/AdminHome.jsx";
 import AdminPrescriberProfile from "./pages/AdminPrescriberProfile.jsx";
 import AdminPatientProfile from "./pages/AdminPatientProfile.jsx";
 import Verification from "./pages/Verification.jsx";
+import AdminLogs from "./pages/AdminLogs.jsx";
 import PrescriberHome from "./pages/PrescriberHome.jsx";
 import PrescriberPrescriptions from "./pages/PresPrescription.jsx";
 import PrescriberSettings from "./pages/PrescriberSettings.jsx";
@@ -63,8 +64,20 @@ function App() {
       console.log("Logged in as prescriber");
       setUser({
         id: "2",
-        name: "prescriber",
+        name: "patient",
         role: "prescriber",
+        address: "123 Main St",
+        city: "Anytown",
+        college: "University of Anywhere",
+        email: "example@example.com",
+        firstName: "John",
+        lastName: "Doe",
+        language: "English",
+        license: "123456",
+        profession: "Pat",
+        prescriber_code: "ON-JD001",
+        province: "Anyprovince",
+        username: "johndoe123"
       });
       return true;
     }
@@ -84,7 +97,7 @@ function App() {
         language: "English",
         license: "123456",
         profession: "Pat",
-        providerCode: "7890",
+        prescriber_code: "ON-JD001",
         province: "Anyprovince",
         username: "johndoe123"
       });
@@ -142,9 +155,9 @@ function App() {
 					<Routes>
 						<Route path="logout" element={<Logout />} />
 						<Route path="login" element={<Login />} />
-						<Route path="chooseuser" element={<UserType />} />
-						<Route path="patientacc" element={<PatientAccount />} />
-						<Route path="prescriberacc" element={<PrescriberAccount />} />
+						<Route path="choose-user" element={<UserType />} />
+						<Route path="patient-sign-up" element={<PatientAccount />} />
+						<Route path="prescriber-sign-up" element={<PrescriberAccount />} />
 						<Route path="/" element={<Layout />}>
             <Route path="PDF" element={<Pdf />} />
 							<Route
@@ -173,27 +186,55 @@ function App() {
 
               {/* PATIENT RESTRICTED */}
               <Route
-                path="patientPrescriptions"
                 element={
-                  <ProtectedRoute redirectTo={"/patientPrescriptions"} permitted={["patient"]}>
+                  <ProtectedRoute redirectTo={"/my-prescriptions"} permitted={["patient"]}>
                     <PatientPrescriptions />
                   </ProtectedRoute>
                 }
               />
               {/* Admin Route*/}
-              <Route path="adminPatientProfile" element={<AdminPatientProfile />} />
-              <Route path="adminPrescriberProfile" element={<AdminPrescriberProfile />} />
-
+              <Route path="patient-profiles" element={<AdminPatientProfile />} />
+              <Route path="prescriber-profiles" element={<AdminPrescriberProfile />} />
+              <Route path="prescription-logs" element={<AdminLogs />} />
               <Route path="green-resources" element={<GreenResources />} />
 
-              <Route path="prescriberPrescriptions" element={<PrescriberPrescriptions />} />
-              <Route path="prescriberSettings" element={<PrescriberSettings />} />
-              <Route path="PrescriberLogRX" element={<PrescriberLogRX />} />
-              <Route path="PatientLogRX" element={<PatientLogRX />} />
-              <Route path="patientSettings" element={<PatientSettings />} />
-              <Route path="patientPrescriptions" element={<PatientPrescriptions />} />
+              {/* <Route path="prescriber-prescriptions" element={<PrescriberPrescriptions />} /> */}
+              {/* <Route path="PrescriberLogRX" element={<PrescriberLogRX />} /> */}
+              {/* <Route path="PatientLogRX" element={<PatientLogRX />} /> */}
+              {/* <Route path="patientPrescriptions" element={<PatientPrescriptions />} /> */}
               <Route path="loginF" element={<LoginForm />} />
               <Route path="temp-links" element={<TempLinks />} />
+
+              <Route
+								path="my-account"
+								element={
+									user && user.role === "prescriber" ? (
+										<PrescriberSettings />
+									) : user && user.role === "patient" ? (
+										<PatientSettings />
+                  ) : null
+								}
+							/>
+              <Route
+								path="my-prescriptions"
+								element={
+									user && user.role === "prescriber" ? (
+										<PrescriberPrescriptions />
+									) : user && user.role === "patient" ? (
+										<PatientPrescriptions />
+                  ) : null
+								}
+							/>
+              <Route
+								path="log-prescriptions"
+								element={
+									user && user.role === "prescriber" ? (
+										<PrescriberLogRX />
+									) : user && user.role === "patient" ? (
+										<PatientLogRX />
+                  ) : null
+								}
+							/>
               {/* CATCH ALL */}
               <Route path="*" element={<NoPage />} />
             </Route>
