@@ -8,13 +8,16 @@ import api from "../axiosConfig";
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
   const { user } = useContext(UserContext);
+  const [newItem, setNewItem] = useState(null);
 
   useEffect(() => {
-    if (user) setData(user);
+    if (user) {
+      setData(user);
+      setNewItem(user);
+    }
   }, []);
 
 
-  const [newItem, setNewItem] = useState(user);
 
   const dataKeys = [
     { key: "Address", value: "address" },
@@ -29,10 +32,8 @@ const PatientSettings = () => {
   };
 
   function updateData() {
-    console.log(userData._id);
     console.log(newItem);
     api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
-      console.log(res.userData);
       setData(newItem);
     }).catch((err) => {
       console.log(err.response)

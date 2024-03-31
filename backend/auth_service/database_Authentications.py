@@ -281,6 +281,7 @@ def update_user(oid):
             del data["_id"]
 
         update_query = {"$set": data}
+        print(data)
 
         result = collection.update_one({"_id": ObjectId(oid)}, update_query)
 
