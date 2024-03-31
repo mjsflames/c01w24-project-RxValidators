@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import nature from "../assets/adminNature.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faStethoscope, faTree, faUser, faUserDoctor } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faStethoscope, faTree, faUser, faIdCard } from "@fortawesome/free-solid-svg-icons";
 
 const AssistantHome = () => {
   return (
@@ -38,6 +38,11 @@ const AssistantHome = () => {
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
                   <FontAwesomeIcon icon={faStethoscope} className="mr-2" />
                   Prescriber Profiles</button>
+              </Link>
+              <Link to="/prescription-logs">
+                <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+                  <FontAwesomeIcon icon={faIdCard} className="mr-2" />
+                  Prescription Logs</button>
               </Link>
               </div>
             </div>

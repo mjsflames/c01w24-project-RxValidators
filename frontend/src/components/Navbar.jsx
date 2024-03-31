@@ -17,6 +17,7 @@ const Navbar = () => {
 		assistant: [
 			{ to: "/", text: "Home" },
 			{ to: "/prescriber-profiles", text: "Prescriber Profiles" },
+			{ to: "/prescription-logs", text: "Prescription Logs" },
 			{ to: "/verify", text: "Verification Platform" },
 			{ to: "/green-resources", text: "Green Resources" },
 		],
