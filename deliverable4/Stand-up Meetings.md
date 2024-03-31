@@ -225,7 +225,8 @@ Danny:
 
 # March 28th, 2024
 Team:
-- started integrating missing requirements (admin over-riding all data, notification on status changes, cancelling prescription logs)
+- Everyone present
+- Started integrating missing requirements (admin over-riding all data, notification on status changes, cancelling prescription logs)
 - Wrote test cases for backend
 - Attempted to deploy docker, broke the API gateway and decided to not deploy
 
