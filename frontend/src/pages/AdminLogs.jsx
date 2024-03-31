@@ -131,7 +131,7 @@ const AdminLogs = () => {
   return (
     <>
       <PageHeader
-        title="All Prescriptions"
+        title="Administrator: Logged Prescriptions"
         desc="Check the status of all provider and patient prescription logs here."
       />
       <div className="flex w-full h-[650px] items-center justify-center bg-cover" style={{ backgroundImage: `url(${pic})` }}>
@@ -191,7 +191,7 @@ const AdminLogs = () => {
                             parx_code: document.querySelector(`#parx_code-${index}`).value,
                             discoveryPass: checkboxStates[index] || false
                           };
-                          updateLogStatus(updatedItem); // Call your function with the updated item
+                          updateLogStatus(updatedItem);
                         }}>
                         Edit up
                       </button>

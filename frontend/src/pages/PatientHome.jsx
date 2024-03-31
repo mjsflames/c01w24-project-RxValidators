@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import nature from "../assets/wallf.jpg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpRightFromSquare, faFilePrescription, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const PrescriberHome = () => {
   return (
@@ -26,18 +28,22 @@ const PrescriberHome = () => {
               }
               className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center"
             >
+              <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="mr-2" />
               Learn More About PaRx
             </button>
 
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 pt-2 lg:pt-6">
-              <Link to="/PatientLogRX">
+              <Link to="/log-prescriptions">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+                <i className="fas fa-prescription-bottle-alt mr-2"></i>
+                  <FontAwesomeIcon icon={faPen} className="mr-2" />
                   Log Prescriptions
                 </button>
               </Link>
-              <Link to="/patientPrescriptions">
+              <Link to="/my-prescriptions">
                 <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center align-middle">
-                  Access Your Prescriptions
+                  <FontAwesomeIcon icon={faFilePrescription} className="mr-2" />
+                  My Prescriptions
                 </button>
               </Link>
             </div>

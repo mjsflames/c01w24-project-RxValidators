@@ -74,15 +74,15 @@ const PatCreateAccount = () => {
 
 					</div>
 					<div className="mb-5">
-						<label className="block mb-2 text-sm font-medium text-gray-600 ">Email Address</label>
+						<label className="block mb-2 text-sm font-medium text-gray-900 ">Email Address</label>
 						<input value={email} onChange={(e) => setEmail(e.target.value)}  id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Email" required/>
 					</div>
                     <div className="mb-5">
-						<label className="block mb-2 text-sm font-medium text-gray-600 ">Create a Password</label>
+						<label className="block mb-2 text-sm font-medium text-gray-900 ">Create a Password</label>
 						<input value={password} onChange={(e) => setPassword(e.target.value)}  type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Password" required/>
 					</div>
                     <div className="mb-5">
-						<label className="block mb-2 text-sm font-medium text-gray-600 ">Street Address</label>
+						<label className="block mb-2 text-sm font-medium text-gray-900 ">Street Address</label>
 						<input value={address} onChange={(e) => setAddress(e.target.value)}  id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Address" required/>
 					</div>
 					<div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -108,7 +108,7 @@ const PatCreateAccount = () => {
 						</div>
 						<div className="w-full">
 							<label htmlFor="language" className="block mb-2 text-sm font-medium text-gray-900">Preferred Language</label>
-							<select value={language} onChange={(e) => setLanguage(e.target.value)}  required id="language" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5">
+							<select value={language} onChange={(e) => setLanguage(e.target.value)}  required id="language" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
 								<option disabled selected value="" defaultValue="">Language</option>
 								<option value="english">English</option>
 								<option value="french">French</option>
@@ -117,11 +117,14 @@ const PatCreateAccount = () => {
 					</div>
                     <div className="flex mr-36 justify-between mt-12">
 						{loading ? <Spinner/> :
-						<button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center">Create Patient Account</button>
+						<button 
+							// disable if any fields are empty
+							disabled={!firstName || !lastName || !email || !password || !address || !city || !province || !language}
+							className={`text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center ${firstName && lastName && email && password && address && city && province && language || "!bg-gray-400 !hover:bg-inherit cursor-not-allowed"}`}>Create Patient Account</button>
 						}
 						<div className="mt-4">
-							<Link className="text-black underline ml-5" to="/login">
-								Created an account? Login here.
+							<Link className="text-blue-700 hover:text-black underline ml-5" to="/login">
+								Already have an account? Login here.
 							</Link>
                 		</div>
 					</div>

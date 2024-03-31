@@ -31,7 +31,7 @@ const PdfViewer = () => {
     return (
         <>
             <PageHeader
-				title="Your PDF"
+				title="Prescription PDF"
 				desc="Here is your Prescription PDF."
 			/>
             <div className="mx-4 my-4">
