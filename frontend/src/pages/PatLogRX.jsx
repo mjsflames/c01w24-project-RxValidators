@@ -36,7 +36,7 @@ const LogPatPrescription = () => {
           <div class="rounded-xl bg-gray-200 bg-opacity-60 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
             <h2 className="mb-8 font-bold underline">Patient Prescription Form</h2>
             <div className="relative z-0 w-full mb-8 group">
-              <input type="date" onChange={(e) => setData(prevState => ({ ...prevState, date: e.target.value }))} id="date" className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-800 appearance-none" placeholder="" required />
+              <input type="date" onChange={(e) => setData(prevState => ({ ...prevState, date: e.target.value }))} id="date" className="block py-2.5 w-full text-l text-gray-900 bg-transparent border-b-2 border-gray-800 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" required />
               <label for="rx_date" className="absolute font-semibold text-black -translate-y-6 top-1">Prescription Date</label>
             </div>
             <div className="relative z-0 w-full mb-8 group">
