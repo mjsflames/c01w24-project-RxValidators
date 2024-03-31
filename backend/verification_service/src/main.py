@@ -14,7 +14,7 @@ from .code_pdf_server import *
 app = Flask(__name__)
 cors = CORS(app)
 PORT = 5000
-# app.config["CORS_HEADERS"] = "Content-Type"
+
 app.config["DEBUG"] = True  # Restart on changes
 app.config["PORT"] = PORT
 processing = {}
@@ -40,9 +40,6 @@ def verify():
 
     id = generate_id()
     processing[id] = {'file': file_data, 'status': 'pending', 'result': None}
-
-    # process = Process(target=scraper_handler.handle, args=(file_data.read(), id))
-    # process.start()
 
     thread = threading.Thread(
         target=scraper_handler.handle, args=(file_data.read(), id),
@@ -130,27 +127,27 @@ def generate_pdf():
     return pdf, 200, {"Content-Type": "application/pdf"}
 
 # API endpoint to export/save all PDFs for the verified prescribers
-@app.route('/api/exportPdfs/<id>', methods=['POST'])
-def generateAllPdfs(id):
-    full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
-    expected_data = [
-                ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
-                ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", "BABAB"],
-                ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
-            ] 
-    df = pd.DataFrame(expected_data, columns=full_columns)
+# ? DISABLED: This is not needed for the current implementation
+
+# @app.route('/api/exportPdfs/<id>', methods=['POST'])
+# def generateAllPdfs(id):
+#     full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
+#     expected_data = [
+#                 ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
+#                 ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", "BABAB"],
+#                 ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
+#             ] 
+#     df = pd.DataFrame(expected_data, columns=full_columns)
             
     
-    # status = scraper_handler.check_status(id)
-    # if type(status) is not DataFrame:
-    #     return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
-    status = df
-    response = generate_verified_pdfs(status, "./")
+#     # status = scraper_handler.check_status(id)
+#     # if type(status) is not DataFrame:
+#     #     return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
+#     status = df
+#     response = generate_verified_pdfs(status, "./")
     
-    # return buffer from response
-    return response, 200, {"Content-Type": "application/zip"}    
-
-
+#     # return buffer from response
+#     return response, 200, {"Content-Type": "application/zip"}    
 
 # API endpoint to export the csv file with the new data
 @app.route('/api/export/<id>', methods=['GET'])
@@ -177,7 +174,6 @@ def export_file(id):
     
     buffer.seek(0)
     result = status.to_dict(orient='records') 
-    # return Response(buffer.getvalue(), mimetype=content_type, headers={"Content-Disposition": f"attachment;filename=verification_results.{file_type}"})
     return buffer.read(), 200, {"Content-Type": content_type}
 
 # Retrieve the prescriber codes
@@ -221,35 +217,6 @@ def update_prescriber_code(code):
 def delete_prescriber_code(id):
     num_deletes = delete_prescriber_code_inner(id)
     return jsonify({'message': 'Deleted code', 'count': str(num_deletes.deleted_count)}), 200
-    
-# # API endpoint to generate prescriber codes
-# @app.route('/generate/code/export', methods=['POST'])
-# def generate_prescriber_codes():    
-#     # data = request.json.get('data')
-#     # columns = request.json.get('columns')
-#     file_data = request.files
-#     if not file_data:
-#         return {"message": "No file uploaded"}, 400, {"Content-Type": "application/json"}
-
-#     file_data = file_data["file"]
-    
-#     # if not data or not columns:
-#     #     return jsonify({'error': 'Invalid data or columns'}), 400
-    
-#     df = dataframe_from_csv(file_data)
-#     # df = create_dataframe_from_list(data, columns)
-#     df = add_codes_to_df(df, collection())
-#     # generate_verified_pdfs(df)
-#     buffer = StringIO()
-    
-#     modify_csv_with_new_data(buffer, df)
-#     buffer.seek(0)
-    
-#     result = df.to_dict(orient='records') 
-#     db_func.insert_data(collection, result)
-    
-#     return {"json": df.to_json(orient='records'), "csv": buffer.read()}, 200, {"Content-Type": "application/json"}
-
 
 def register_service(service_name, service_url):
     print(f"Sending register request | {service_name} at {service_url}")
