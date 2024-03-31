@@ -7,7 +7,6 @@ const AdminLogs = () => {
   const [data, setData] = useState(null);
   const [shownData, setShownData] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  const [update, setUpdate] = useState(false);
 
   // Other states and useEffects...
   const [updatedItemDisplay, setUpdatedItemDisplay] = useState({});
@@ -101,32 +100,6 @@ const AdminLogs = () => {
     }
   };
 
-  // const updateLogStatus = async (itemToUpdate) => {
-  //   // Construct the payload from the updated item data
-  //   // const payload = {
-  //   //     date: itemToUpdate.date,
-  //   //     patient_initials: itemToUpdate.patient_initials,
-  //   //     prescriber_code: itemToUpdate.prescriber_code,
-  //   //     status: itemToUpdate.status,
-  //   //     discovery: itemToUpdate.discovery,
-  //   //     user_type: itemToUpdate.user_type,
-  //   // };
-
-  //   const payload = {
-  //     date: "2024-03-14",
-  //     patient_initials: "KW",
-  //     prescriber_code: "RX123456",
-  // };
-
-  //   try {
-  //       const response = await api.post(`http://localhost:5001/api/update-prescription/`, payload);
-  //       console.log(response.data);
-  //       // Optional: Update local state to reflect the change or fetch updated data
-  //   } catch (error) {
-  //       console.error(error);
-  //   }
-  // };
-
 
   return (
     <>
@@ -171,7 +144,7 @@ const AdminLogs = () => {
                         onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                       />
                     </td>
-                    <select className="py-3 w-full truncate max-w-md text-black bg-transparent placeholder:text-gray-700">
+                    <select className="py-3 w-full truncate max-w-md text-current bg-transparent placeholder:text-gray-700">
                       <option selected value={item.status} disabled>{item.status}</option>
                       {item.status === "Both Logged With Discovery Pass" && (
                         <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>

@@ -10,7 +10,7 @@ import api from "../axiosConfig";
 
 const PrescriberSettings = () => {
   const [userData, setData] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const [newItem, setNewItem] = useState(user);
 
   useEffect(() => {
@@ -48,6 +48,7 @@ const PrescriberSettings = () => {
     console.log(newItem);
     api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
       console.log(res.userData);
+      updateUser(newItem);
       setData(newItem);
     }).catch((err) => {
       console.log(err.response)

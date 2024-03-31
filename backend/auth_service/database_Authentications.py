@@ -284,6 +284,7 @@ def update_user(oid):
 
         result = collection.update_one({"_id": ObjectId(oid)}, update_query)
 
+
         if result.modified_count > 0:
             return jsonify({"message": "User updated successfully"}), 200
         else:

@@ -9,7 +9,7 @@ import api from "../axiosConfig";
 
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
     if (user) setData(user);
@@ -30,11 +30,11 @@ const PatientSettings = () => {
     setNewItem(newItem);
   };
 
-  function updateData() {
+  async function updateData() {
     console.log(userData._id);
     console.log(newItem);
     api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
-      console.log(res.userData);
+      updateUser(newItem);
       setData(newItem);
     }).catch((err) => {
       console.log(err.response)
