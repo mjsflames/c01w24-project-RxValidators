@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { sysInstance } from "../axiosConfig";
 
 const ServiceRegistryInfo = () => {
-	const [visible, setVisible] = React.useState(true);
 	// Allow the user to drag the service registry info
 	const [position, setPosition] = React.useState(
 		JSON.parse(
