@@ -5,6 +5,7 @@ from .scrapers.verify import verify
 from io import StringIO, BytesIO
 from .code_pdf_server import add_codes_to_df, save_to_db
 
+from twisted.internet import reactor
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.width', None)
@@ -153,6 +154,7 @@ def handle(file_data, id) -> pd.DataFrame:
 
     try:
         _process_request(file_data, id)
+        
         return "OK"
     except Exception as e:
         print(e)

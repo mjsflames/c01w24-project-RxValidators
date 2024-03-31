@@ -7,6 +7,7 @@ import threading
 from pandas import DataFrame
 # from prescriber_code import *
 from io import StringIO, BytesIO
+from multiprocessing import Process
 
 from .code_pdf_server import *
 
@@ -40,9 +41,14 @@ def verify():
     id = generate_id()
     processing[id] = {'file': file_data, 'status': 'pending', 'result': None}
 
+    # process = Process(target=scraper_handler.handle, args=(file_data.read(), id))
+    # process.start()
+
     thread = threading.Thread(
-        target=scraper_handler.handle, args=(file_data.read(), id))
+        target=scraper_handler.handle, args=(file_data.read(), id),
+        daemon=True)
     thread.start()
+
 
     return {"id": id}, 200, {"Content-Type": "application/json"}
 
