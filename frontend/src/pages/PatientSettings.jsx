@@ -4,6 +4,8 @@ import ContentContainer from "../components/ContentContainer";
 import PageHeader from "../components/PageHeader";
 import Modal from "../components/modal";
 import { UserContext } from "../App";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PatientSettings = () => {
   const [userData, setData] = useState(null);
@@ -134,13 +136,14 @@ const PatientSettings = () => {
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                 <div className="w-full mt-4">
                   <label for="status" className="block mb-2 text-sm font-medium text-indigo-900">Form</label>
-                  <button onClick={() => window.open("https://www.parkprescriptions.ca/en/contact", "_blank")} id="status" className="bg-indigo-200 text-indigo-900 hover:bg-indigo-50/90 text-sm rounded-full p-2.5">
+                  <button onClick={() => window.open("https://www.parkprescriptions.ca/en/contact", "_blank")} id="status" className="bg-indigo-200 text-indigo-900 hover:bg-indigo-50/90 text-sm rounded-2xl p-2.5">
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="mr-2" />
                     CONTACT FORM
                   </button>
                 </div>
               </div>
               <div className="w-full">
-                <div className="mt-44">
+                <div className="mt-40">
                   <Modal />
                 </div>
               </div>
