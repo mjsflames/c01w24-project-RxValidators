@@ -4,6 +4,8 @@ import ContentContainer from "../components/ContentContainer";
 import Modal from "../components/modal";
 import PageHeader from "../components/PageHeader";
 import { UserContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import api from "../axiosConfig";
 
 const PrescriberSettings = () => {
@@ -181,7 +183,7 @@ const PrescriberSettings = () => {
           </div>
           <div className="ml-auto text-lg font-semibold text-gray-600">Contact Us
             <div className="max-w-md font-bold space-y-1 text-gray-600 mt-2">
-              <div className="block mb-2 text-sm font-medium text-indigo-900 mb-4">
+              <div className="block text-sm font-medium text-indigo-900 mb-4">
                 For any questions or to request a change to your account, <br /> please contact us using one of the following methods:
               </div>
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -195,13 +197,14 @@ const PrescriberSettings = () => {
               <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                 <div className="w-full mt-4">
                   <label for="status" className="block mb-2 text-sm font-medium text-indigo-900">Form</label>
-                  <button onClick={() => window.open("https://www.parkprescriptions.ca/en/contact", "_blank")} id="status" className="bg-indigo-200 text-indigo-900 hover:bg-indigo-50/90 text-sm rounded-full p-2.5">
+                  <button onClick={() => window.open("https://www.parkprescriptions.ca/en/contact", "_blank")} id="status" className="bg-indigo-200 text-indigo-900 hover:bg-indigo-50/90 text-sm rounded-2xl p-2.5">
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="mr-2" />
                     CONTACT FORM
                   </button>
                 </div>
               </div>
               <div className="w-full">
-                <div className="mt-56">
+                <div className="my-24">
                   <Modal />
                 </div>
               </div>

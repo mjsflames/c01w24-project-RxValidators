@@ -49,7 +49,8 @@ Danny:
 Lance:
 - Found a demon hiding in my bathroom
 - Challenges: Hiring a priest last minute to exercise the demon
-- Emily:
+
+Emily:
 - Found a kangaroo in my backyard and challenged it to a dual
 - Challenge: the kangaroo couldn’t speak english, and it can’t write
  
@@ -90,6 +91,10 @@ Kenny:
 - Challenge: The setup program for Linux users is not working. I need to figure it out manually every time I setted up the environment before running the app.
 
 # March 23rd, 2024
+Team:
+- Renat absent with no notice
+- Worked on API endpoints, frontend and integration of authentication/prescriber tables
+
 Michelle:
 - Completed updating all prescriber pages (account details, logRX)
 - Completed all patient pages
@@ -129,6 +134,10 @@ Kenny:
 - frontend using Tailwind.
 
 # March 25th, 2024
+Team:
+- Renat absent without notifying the team
+- Discussed different methods for deployment
+
 Joe:
 - Tested user creation as part of the Authentication service
 - Created and tested user login/authentication, logout, list users, and remove user as part of the Authentication service
@@ -147,6 +156,7 @@ Danny:
 
 # March 26th, 2024
 Team:
+- Everyone present
 - Integrated some backend with frontend
 - Did some basic testing for login, docker, display tables
 - Tomorrow: complete all integration tasks and user stories
@@ -181,6 +191,11 @@ Danny:
 - Created pages to let admin see all users into two tables for each type of user
 
 # March 27th, 2024
+Team:
+- Renat & Kenny absent with no prior notice
+- Continued to refactor and integrate backend with frontend
+- Challenge: Admin work (pulling profiles and logs) was still not completed/integrated. Had to split up the work with the rest of the members
+
 Emily:
 - Refactored code and moved files around for PDF and code-generating services
 
@@ -209,6 +224,12 @@ Danny:
 - Matches up prescriptions from both patients and prescribers to automatically assign a status
 
 # March 28th, 2024
+Team:
+- Everyone present
+- Started integrating missing requirements (admin over-riding all data, notification on status changes, cancelling prescription logs)
+- Wrote test cases for backend
+- Attempted to deploy docker, broke the API gateway and decided to not deploy
+
 Joe:
 - Fixed bug where remove user only removes the user information document and not the actual MongoDB user
 - Removed unused database.py file in authentication service
@@ -226,8 +247,8 @@ Kenny:
 - Continuing integration of allowing admin to over-write logs
 - Edited backend to conform with updating logs
 - Challenge: 
-- Status and other fields are not properly getting updated from the endpoints
-- Logging a prescription and overwriting logs currently use different variables/templates
+ - Status and other fields are not properly getting updated from the endpoints
+ - Logging a prescription and overwriting logs currently use different variables/templates
 
 Emily:
 - Update PDF and code generating services and python functions so that prescribers can see their unique codes and their PDF
@@ -240,6 +261,11 @@ Danny:
 - Fixed not matching status given by both parties
 
 # March 29th, 2024
+Team:
+- Renat absent with no prior notice
+- Integrated admin being able to override all data
+- Challenge: due to the way backend was setup, all patient/prescriber logs are in one object - harder to change status
+
 Joe:
 - Completed test suite for the Authentication service: user creation/registration, user login/authentication, list users, list patients, list prescribers, and remove user
 
@@ -274,3 +300,16 @@ Lance:
 - Since there is an extension, I will find a way to better handle API + Scrapy. Works fine in Linux though.
 - Additionally, I will optimize the job handler to concurrently scrape the websites.
 - Challenges: “reverse engineering” scrapyscript to find the win32 related signal error when outside the main thread.
+
+# March 30th, 2024
+Team:
+- Renat absent with no prior notice
+- Worked on finalizing website integration
+
+Michelle/Kenny/Danny:
+- Worked on fixing up some bugs relating to admin's not being able to change the status of prescriptions
+- Added functionality for patients/prescribers to be able to update mailing addresses and language straight from their account settings
+
+Kenny:
+- Wrote test cases for testing unique codes and pdf generation in the backend
+

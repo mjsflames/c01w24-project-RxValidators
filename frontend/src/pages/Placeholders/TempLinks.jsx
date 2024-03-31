@@ -19,7 +19,7 @@ const TempLinks = () => {
 						<Link to="/green-resources">Green Resources</Link>
 					</li>
 					<li>
-						<Link to="/patientPrescriptions">Patient Prescriptions (Patient Access)</Link>
+						<Link to="/my-prescriptions">Patient Prescriptions (Patient Access)</Link>
 					</li>
 				</ul>
 			</ContentContainer>

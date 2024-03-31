@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import nature from "../assets/nature.jpg";
 import { UserContext } from "../App";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePrescription, faDownload, faPen } from '@fortawesome/free-solid-svg-icons';
 
 const PrescriberHome = () => {
 	const [userData, setData] = useState();
@@ -32,8 +34,9 @@ const PrescriberHome = () => {
 			  </div>
 			  <div className="col-span-2 mt-10 lg:mt-20 text-center items-center justify-center">
 				<h2 className="font-bold mb-2">Get Started</h2>
-				<Link to="/PrescriberLogRX">
+				<Link to="/log-prescriptions">
 				  <button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
+				  	<FontAwesomeIcon icon={faPen} className="mr-2" />
 					Log a Patient Prescription
 				  </button>
 				</Link>
@@ -41,15 +44,17 @@ const PrescriberHome = () => {
 				<div className="flex flex-col lg:flex-row gap-2 lg:gap-6 pt-2 lg:pt-6">
 				  <Link to="/PDF">
 					<button className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center">
-					  Download your Prescription PDF
+						<FontAwesomeIcon icon={faDownload} className="mr-2" />
+					  Download My Prescription PDF
 					</button>
 				  </Link>
-				  <Link to="/prescriberPrescriptions">
+				  <Link to="/my-prescriptions">
 					<button
 					  href="#"
 					  className="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 font-medium rounded-lg text-sm h-12 w-full lg:w-[12vw] text-center"
 					>
-					  Access Your Prescriptions
+						<FontAwesomeIcon icon={faFilePrescription} className="mr-2" />
+					  	My Prescriptions
 					</button>
 				  </Link>
 				</div>

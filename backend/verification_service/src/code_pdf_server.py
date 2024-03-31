@@ -6,7 +6,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import zipfile
 
-import database as db_func
+from .utils import database as db_func
 
 #########################################################
 # Collection of database is used for PDF and Code generation
@@ -98,6 +98,12 @@ def add_codes_to_df(df):
                 counter += 1
             
             df.loc[i, 'Code'] = code
+            
+    # Drop the 'Initials' column
+    df = df.drop(columns=['Initials'])
+    # Resort the rows by indices
+    df = df.sort_index()
+    
     # print(df)
     return df
 
@@ -112,11 +118,11 @@ def update_prescriber_code_status(code, status):
     return updates
 
 # This function generates a pdf file for the verified prescribers
-# def generate_verified_pdfs(df, output_path):
-#     # Create the PDFs
-#     for i in df.index:
-#         if df['Status'][i] == "VERIFIED":
-#             create_pdf(df['Code'][i], output_path)
+def generate_verified_pdfs(df, output_path):
+    # Create the PDFs
+    for i in df.index:
+        if df['Status'][i] == "VERIFIED":
+            create_pdf(df['Code'][i], output_path)
             
 # This function creates a CSV file to have the new data (statuses and prescriber codes)
 def new_data_to_csv(file_name, df):
@@ -127,7 +133,7 @@ def new_data_to_xlsx(file_name, df):
     # Convert the dataframe to CSV
     df.to_excel(file_name, index=False)
     
-    
+
 # This function creates a pdf file (formatted the way the company wants it) based on the prescriber's code
 def create_pdf(code, output_path):
     # page = canvas.Canvas(os.path.join(output_path, f"PaRx-{code}.pdf"), pagesize=letter)
@@ -144,16 +150,18 @@ def create_pdf(code, output_path):
     page.drawString(80, 185, "Health Professional's Signature")
 
     page.restoreState() 
-    page.drawString(80, 130, f"Prescription #: {code}   --  ___________________  --  ___________________")
+    em_dash = '\u2013'
+    page.drawString(80, 130, f"Prescription #: {code}   {em_dash}    ___________________   {em_dash}   ___________________")
     
     page.setFont("Helvetica", 9)
     page.drawString(280, 115, "(YYMMDD)")
-    page.drawString(415, 115, "(Patient's Initials)")
+    page.drawString(420, 115, "(Patient's Initials)")
 
     # page.save()
     return page
 
 
+# This function generates pdf files for the verified prescribers, and saves them in a zip folder (through a buffer)
 def generate_verified_pdfs(df, output_path):
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, "w", compression=zipfile.ZIP_DEFLATED) as zipf:
@@ -171,16 +179,3 @@ def generate_verified_pdfs(df, output_path):
     # return zip file
     zip_buffer.seek(0)
     return zip_buffer.getvalue()
-                
-# DELETE THIS LATER
-
-# full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
-# expected_data = [
-#             ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
-#             ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", None],
-#             ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
-#         ] 
-# df = pd.DataFrame(expected_data, columns=full_columns)
-        
-# # call the function generate_verified_pdfs(df, output_path) to generate the PDFs
-# print(generate_verified_pdfs(df, ""))

@@ -108,12 +108,12 @@ const PatCreateAccount = () => {
 				<form onSubmit={handleClick} className=":w-1/2 mx-auto z-50 ">
 					<div className="flex flex-col items-center [&>*]:text-gray-500 mb-12">
 						<h1 className="text-3xl font-bold !text-gray-900  mb-5">Create a Prescriber Account</h1>
-                        <p>Please fill out the htmlForm below with your inhtmlFormation and Provider code.</p>
-                        <p>If the Provider code is active, an account will be created.</p>
+                        <p>Please fill out the form below with your information and provider code.</p>
+                        <p>If the provider code is active, an account will be created.</p>
                     </div>
 					<div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
 						<div className="w-full">
-							<label className="block mb-2 text-sm font-medium text-gray-600 ">Provider Code</label>
+							<label className="block mb-2 text-sm font-medium text-gray-900">Provider Code</label>
 							<input value={providerCode} onChange={(e) => setProviderCode(e.target.value)}  id="parx_code" type="text" maxLength={8} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ie. BC-AA001" required/>
 						</div>
 						<div className="w-full">
@@ -121,14 +121,14 @@ const PatCreateAccount = () => {
 							<input value={license} onChange={(e) => setLicense(e.target.value)}  name="license" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="License Number" required/>
 						</div>
 						<div className="w-full">
-						<label htmlFor="college" className="block mb-2 text-sm font-medium text-gray-900">Licensing College Province</label>
-						<select required id="college" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5"
-							onChange={(e) => setCollege(e.target.value)}>
-							{/* <option disabled selected value="" defaultValue="">College</option> */}
-							{Object.keys(collegeOptions).map((key) => {
-								
-								return <option key={key} disabled={key=="..."} selected={college?college==key:key=="..."} value={key}>{collegeOptions[key]}</option>
-							})}
+							<label htmlFor="college" className="block mb-2 text-sm font-medium text-gray-900">Licensing College Province</label>
+							<select required id="college" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
+								onChange={(e) => setCollege(e.target.value)}>
+								{/* <option disabled selected value="" defaultValue="">College</option> */}
+								{Object.keys(collegeOptions).map((key) => {
+									
+									return <option key={key} disabled={key=="..."} selected={college?college==key:key=="..."} value={key}>{collegeOptions[key]}</option>
+								})}
 							{/* <option value="College of Physicians and Surgeons of Alberta">Alberta</option>
 							<option value="College of Physicians and Surgeons of British Columbia">British Columbia</option>
 							<option value="College of Physicians and Surgeons of Manitoba">Manitoba</option>
@@ -139,7 +139,7 @@ const PatCreateAccount = () => {
 							<option value="College of Physicians and Surgeons of Prince Edward Island">Prince Edward Island</option>
 							<option value="Collège des médecins du Québec">Quebec</option>
 							<option value="College of Physicians and Surgeons of Saskatchewan">Saskatchewan</option> */}
-						</select>
+							</select>
 						</div>
 					</div>
                     <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -157,15 +157,15 @@ const PatCreateAccount = () => {
 						</div>
 					</div>
 					<div className="mb-5">
-						<label className="block mb-2 text-sm font-medium text-gray-600 ">Email Address</label>
+						<label className="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
 						<input value={email} onChange={(e) => setEmail(e.target.value)}  id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Email" required/>
 					</div>
                     <div className="mb-5">
-						<label className="block mb-2 text-sm font-medium text-gray-600 ">Create a Password</label>
+						<label className="block mb-2 text-sm font-medium text-gray-900">Create a Password</label>
 						<input value={password} onChange={(e) => setPassword(e.target.value)}  type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Password" required/>
 					</div>
                     <div className="mb-5">
-						<label className="block mb-2 text-sm font-medium text-gray-600 ">Street Address</label>
+						<label className="block mb-2 text-sm font-medium text-gray-900 ">Street Address</label>
 						<input value={address} onChange={(e) => setAddress(e.target.value)}  id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Address" required/>
 					</div>
 					<div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -191,7 +191,7 @@ const PatCreateAccount = () => {
 						</div>
 						<div className="w-full">
 							<label htmlFor="language" className="block mb-2 text-sm font-medium text-gray-900">Preferred Language</label>
-							<select value={language} onChange={(e) => setLanguage(e.target.value)}  required id="language" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5">
+							<select value={language} onChange={(e) => setLanguage(e.target.value)}  required id="language" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
 								<option disabled selected value="" defaultValue="">Language</option>
 								<option value="english">English</option>
 								<option value="french">French</option>
@@ -203,8 +203,8 @@ const PatCreateAccount = () => {
 						<button disabled={!validCode} className={`text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-6 h-full py-2.5 text-center ${!validCode && "!bg-gray-400 !hover:bg-inherit cursor-not-allowed"}`}>Create Provider Account</button>
 						}
 						<div className="mt-4">
-							<Link className="text-black underline" to="/login">
-								Created an account? Login here.
+							<Link className="text-blue-700 hover:text-black underline ml-5" to="/login">
+								Already have an account? Login here.
 							</Link>
                 		</div>
 					</div>
