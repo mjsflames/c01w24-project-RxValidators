@@ -19,10 +19,9 @@ import os
 
 # Subclass of scrapyscript Processor.
 # The following modifications are:
-# 1. Stripped Process() wrapping self._crawl in run method.
-# 2. Added twisted reactor mods to make signals work outside of main thread.
+# 1. Added twisted reactor mods to make signals work outside of main thread.
 class ProcessorHook(Processor):
-    def _crawl(self, requests):
+    def _crawl(self, req):
         """
         Parameters:
             requests (Request) - One or more Jobs. All will
@@ -30,10 +29,12 @@ class ProcessorHook(Processor):
         """
         self.crawler = CrawlerRunner(self.settings)
 
+        def store():
+            self.results.put(self.items)
         # crawl can be called multiple times to queue several requests
-        for req in requests:
-            self.crawler.crawl(req.spider, *req.args, **req.kwargs)
-        self.crawler.addBoth(lambda _: reactor.stop())
+        deferred = self.crawler.crawl(req.spider, *req.args, **req.kwargs)
+        deferred.addBoth(lambda _: reactor.stop())
+        deferred.addCallback(store)
         reactor.run(0)
         self.crawler.start()
         self.crawler.stop()
@@ -49,11 +50,14 @@ class ProcessorHook(Processor):
         Returns:
           List of objects yielded by the spiders after all jobs have run.
         """
-        if not isinstance(jobs, collections.abc.Iterable):
-            jobs = [jobs]
+
         self.validate(jobs)
 
-        self._crawl(jobs)
+        p = Process(target=self._crawl, args=[jobs])
+        p.start()
+        results = self.results.get()
+        p.join()
+        p.terminate()
         results = self.results.get()
 
         return results
@@ -61,7 +65,7 @@ class ProcessorHook(Processor):
 processor = Processor(settings={"LOG_ENABLED": False})
 if os.name == "nt": 
     print("Running on Windows")
-    processor = ProcessorHook()
+    processor = ProcessorHook(settings={"LOG_ENABLED": True})
 
 def verify(last_name="", first_name="", license_no="", province=""):
 
