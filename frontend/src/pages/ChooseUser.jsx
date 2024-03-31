@@ -16,17 +16,17 @@ const ChooseUserType = () => {
 				className="blur-[2px] opacity-70 z-10 h-screen object-cover  md:w-1/2 pointer-events-none"
 			/>
             <div className="w-screen lg:w-1/2 h-screen bg-white z-20 flex items-center absolute lg:relative justify-center flex-col">
-                <h1 className="text-3xl font-bold text-gray-900 mb-16">Sign-up as a:</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-20">Sign-up as a:</h1>
                 <div className = "grid grid-cols-2 gap-x-6" >
                     <Link to="/patientacc">
-                        <button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-3 px-16 text-center">Patient</button>
+                        <button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto py-3 px-20 text-center">Patient</button>
                     </Link>
                     <Link to="/prescriberacc">
-                        <button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto px-12 py-3 px-16 text-center">Prescriber</button>
+                        <button className="text-white bg-[#5C6528] hover:bg-[#5C6528]/40 font-medium rounded-lg text-sm w-full sm:w-auto py-3 px-20 text-center">Prescriber</button>
                     </Link>
                 </div>
-                <div className="justify-between gap-8 mt-24">
-					<Link className="text-black underline" to="/login">
+                <div className="justify-between gap-8 mt-20">
+					<Link className="text-blue-700 hover:text-black underline text-lg" to="/login">
 						Already have an account? Login here.
 					</Link>
                 </div>
