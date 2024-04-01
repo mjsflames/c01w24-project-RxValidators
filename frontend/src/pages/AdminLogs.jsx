@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import pic from "../assets/prescribertable.jpg";
 import AdminPrescription from "../components/AdminPrescription";
+import api from "../axiosConfig";
 
 const AdminLogs = () => {
   const [data, setData] = useState(null);
@@ -18,13 +19,16 @@ const AdminLogs = () => {
     async function fetchData() {
       const username = "testUser";
       try {
-        const res = await fetch(`http://localhost:5001/list-prescriptions`, {
-          method: "GET",
-        });
-        if (!res.ok) {
-          throw new Error('No response');
-        }
-        const pData = await res.json();
+        // const res = await fetch(`http://localhost:3130/api/list-prescriptions`, {
+          // method: "GET",
+        // });
+        const res = await api.get(`/prescription/list-prescriptions`);
+
+        // if (!res.ok) {
+        //   throw new Error('No response');
+        // }
+
+        const pData = res.data; // await res.json();
         console.log(pData);
 
         if (pData) {
@@ -141,7 +145,7 @@ const AdminLogs = () => {
                   </tr>
                   {myItem === item && (<tr className="text-left text-black border-t border-white">
                     <td colSpan="6">
-                      <AdminPrescription item={item} />
+                      <AdminPrescription item={item} discoveryPassState={checkboxStates[index]||false} />
                     </td>
                   </tr>
                   )}

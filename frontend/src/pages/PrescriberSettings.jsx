@@ -34,6 +34,7 @@ const PrescriberSettings = () => {
       console.log(res.userData);
       updateUser(newItem);
       setData(newItem);
+      window.location.reload();
     }).catch((err) => {
       console.log(err.response)
     })
@@ -190,7 +191,7 @@ const PrescriberSettings = () => {
               </div>
               <div className="w-full">
                 <div className="my-24 flex flex-row">
-                  <button onClick={() => {updateData(); window.location.reload();}} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
+                  <button onClick={() => {updateData()}} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
                   <Modal />
                 </div>
               </div>

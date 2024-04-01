@@ -50,7 +50,7 @@ const PrescriberPrescriptions = () => {
 
   const deleteHandler = async (id) => {
     try {
-        const res = await fetch(`http://localhost:5001/delete/${id}`, {
+        const res = await fetch(`http://localhost:5001/api/delete/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

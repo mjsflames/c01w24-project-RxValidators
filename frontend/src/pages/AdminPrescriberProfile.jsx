@@ -85,7 +85,7 @@ const AdminPrescriberProfile = () => {
               <tr>
                 <th scope="col" className="px-2 py-3 w-1/6">First Name</th>
                 <th scope="col" className="px-2 py-3 w-1/6">Last Name</th>
-                <th scope="col" className="px-2 py-3 w-1/4">Provider Code</th>
+                <th scope="col" className="px-2 py-3 w-1/4">Prescriber Code</th>
                 <th scope="col" className="px-2 py-3 w-1/3">Address</th>  
                 <th className="w-1/2 text-left px-2"></th> 
               </tr>
@@ -97,7 +97,7 @@ const AdminPrescriberProfile = () => {
                   <td colSpan="5"><table className="w-full">
                       <td className="px-2 py-3 w-1/6">{item.firstName}</td>
                       <td className="px-2 py-3 w-1/6">{item.lastName}</td>
-                      <td className="px-2 py-3 w-1/4">{item.providerCode}</td>
+                      <td className="px-2 py-3 w-1/4">{item.prescriber_code}</td>
                       <td className="px-2 py-3 max-w-md truncate text-wrap">{item.address}</td>
                       <td className="p-2 w-1/8 text-right"><button onClick={() => itemClick(item)}><p className="font-bold text-nowrap underline">Update Profile</p></button>
                       <button id="deletelog" onClick={() => setShowModal(true)} className="font-bold text-red-600 hover:text-red-700 underline text-center ml-5">
@@ -116,7 +116,7 @@ const AdminPrescriberProfile = () => {
                                                 <p>Are you sure you want to delete this profile?</p>
                                             </div>
                                             <div className="flex flex-row justify-center mb-5">
-                                                <button id="deletelog" onClick={() => {deleteHandler(item.providerCode); window.location.reload();}} className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10">Yes, proceed</button>
+                                                <button id="deletelog" onClick={() => {deleteHandler(item.prescriber_code); window.location.reload();}} className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10">Yes, proceed</button>
                                                 <button className="bg-red-200 hover:bg-red-200/40 text-black border rounded-full p-2.5" onClick={() => setShowModal(false)}>No, cancel</button>
                                             </div>
                                         </div>  

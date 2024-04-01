@@ -18,7 +18,7 @@ const AdminExtraPres = ({ item }) => {
     { key: "Province", value: "province" },
     { key: "Email", value: "email" },
     { key: "Language", value: "language" },
-    { key: "Provider Code", value: "providerCode" },
+    { key: "Prescriber Code", value: "prescriber_code" },
     { key: "Licensing College", value: "college" },
     { key: "Profession", value: "profession" },
     { key: "License #", value: "license" }

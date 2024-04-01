@@ -14,7 +14,7 @@ const Modal = () => {
         try {
             let username = user.email;
             if (user.role === "prescriber") {
-                username = user["providerCode"]
+                username = user["prescriber_code"]
             }
 
             const res = await api.delete(`/auth/removeUser/${username}`)
