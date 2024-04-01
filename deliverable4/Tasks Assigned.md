@@ -54,6 +54,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
   - List users
   - Remove user
 - Create test cases for the backend authentication functions
+- Create test cases for the backend prescription functions: create, get, search, list, and delete prescriptions
 - Support integration of database-related functions
 - Fix any last minute bugs and make the code consistent
 
