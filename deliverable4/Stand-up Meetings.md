@@ -1,5 +1,7 @@
 Renat has not updated the stand-ups with any updates even after reminders
 
+* No challenge note means there have been no issues that day.
+
 # March 19th, 2024
 Team:
 - Demo’ed sprint 2 work
@@ -331,3 +333,7 @@ Michelle/Kenny/Danny:
 
 Kenny:
 - Wrote test cases for testing unique codes and pdf generation in the backend
+
+Lance:
+- Helped resolve last-minute bugs with sending requests.
+- Fixed verification platform UI bugs.
