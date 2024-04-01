@@ -118,7 +118,7 @@ const PrescriberSettings = () => {
                 <div className="w-full">
                   <label for="parx" className="block mb-2 text-sm font-medium text-indigo-900">PaRx Code</label>
                   <div type="text" id="parx" className="border border-black text-indigo-900 text-sm rounded-lg block w-full p-2.5">
-                    {userData ? userData.providerCode : ""}
+                    {userData ? userData.prescriber_code : ""}
                   </div>
                 </div>
               </div>
