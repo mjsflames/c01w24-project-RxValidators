@@ -306,6 +306,11 @@ Team:
 - Renat absent with no prior notice
 - Worked on finalizing website integration
 
+Joe:
+- Making test suite for database_Prescriptions.py: create, get, search, list, and delete functions for prescriptions
+- Challenge: some functions from auth_service folder needs to be used so the test file had to be relocated to the higher-level backend folder
+- Planning to finish by tomorrow
+
 Michelle/Kenny/Danny:
 - Worked on fixing up some bugs relating to admin's not being able to change the status of prescriptions
 - Added functionality for patients/prescribers to be able to update mailing addresses and language straight from their account settings
