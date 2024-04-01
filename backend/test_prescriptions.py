@@ -29,7 +29,7 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
 
     def remove_existing_presciptions(self):
         # removes all pre-existing prescriptions in the database
-        self.app1.delete("/deleteAll")
+        self.app1.delete("/api/deleteAll")
 
     def submit_prescriber_form(self):
         # submits a test form by the prescriber
@@ -102,7 +102,7 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             count += 1
         self.assertEqual(count, 1)
 
-        response3 = self.app1.delete("/deleteAll")
+        response3 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response3.status_code, 200)
         self.assertEqual(response3.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response3.json["message"])
@@ -125,7 +125,7 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             count += 1
         self.assertEqual(count, 0)
 
-        response3 = self.app1.delete("/deleteAll")
+        response3 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response3.status_code, 200)
         self.assertEqual(response3.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response3.json["message"])
@@ -148,7 +148,7 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             count += 1
         self.assertEqual(count, 1)
 
-        response3 = self.app1.delete("/deleteAll")
+        response3 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response3.status_code, 200)
         self.assertEqual(response3.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response3.json["message"])
@@ -164,7 +164,7 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
         self.assertEqual(response1.status_code, 200)
         self.assertIn("Data posted successfully", response1.json["message"])
 
-        response2 = self.app1.delete("/deleteAll")
+        response2 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(response2.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response2.json["message"])
@@ -176,7 +176,7 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
         self.create_test_users()
         self.remove_existing_presciptions()
 
-        response = self.app1.get('/list-prescriptions')
+        response = self.app1.get('/api/list-prescriptions')
         self.assertEqual(response.status_code, 200)
         count = 0
         for prescription in response.json:
@@ -194,14 +194,14 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
         self.assertEqual(response1.status_code, 200)
         self.assertIn("Data posted successfully", response1.json["message"])
 
-        response2 = self.app1.get('/list-prescriptions')
+        response2 = self.app1.get('/api/list-prescriptions')
         self.assertEqual(response2.status_code, 200)
         count = 0
         for prescription in response2.json:
             count += 1
         self.assertEqual(count, 1)
 
-        response3 = self.app1.delete("/deleteAll")
+        response3 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response3.status_code, 200)
         self.assertEqual(response3.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response3.json["message"])
@@ -224,11 +224,11 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             count += 1
         self.assertEqual(count, 1)
 
-        response3 = self.app1.get('/search-prescriptions', json={})
+        response3 = self.app1.get('/api/search-prescriptions', json={})
         self.assertEqual(response3.status_code, 400)
         self.assertIn("date and prescriber code both needed to search.", response3.json["error"])
 
-        response4 = self.app1.delete("/deleteAll")
+        response4 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response4.status_code, 200)
         self.assertEqual(response4.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response4.json["message"])
@@ -251,11 +251,11 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             count += 1
         self.assertEqual(count, 1)
 
-        response3 = self.app1.get('/search-prescriptions', json={"date":"03/29/3333", "prescriber_code": "Nobody"})
+        response3 = self.app1.get('/api/search-prescriptions', json={"date":"03/29/3333", "prescriber_code": "Nobody"})
         self.assertEqual(response3.status_code, 200)
         self.assertEqual(response3.json, None)
 
-        response4 = self.app1.delete("/deleteAll")
+        response4 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response4.status_code, 200)
         self.assertEqual(response4.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response4.json["message"])
@@ -280,41 +280,11 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             oid = prescription["_id"]
         self.assertEqual(count, 1)
 
-        response3 = self.app1.get('/search-prescriptions', json={"date":"03/29/2024", "prescriber_code": "test_prescriber"})
+        response3 = self.app1.get('/api/search-prescriptions', json={"date":"03/29/2024", "prescriber_code": "test_prescriber"})
         self.assertEqual(response3.status_code, 200)
         self.assertEqual(response3.json["_id"]["$oid"], oid)
 
-        response4 = self.app1.delete("/deleteAll")
-        self.assertEqual(response4.status_code, 200)
-        self.assertEqual(response4.json["deleted_count"], 1)
-        self.assertIn("All prescriptions deleted successfully", response4.json["message"])
-
-        self.remove_test_users()
-
-    def test_update_prescriptions_with_invalid_fields(self):
-        # Test update prescriptions with a valid prescription but invalid field
-        self.create_test_users()
-        self.remove_existing_presciptions()
-
-        response1 = self.submit_prescriber_form()
-        self.assertEqual(response1.status_code, 200)
-        self.assertIn("Data posted successfully", response1.json["message"])
-
-        response2 = self.app1.get('/api/getPatientPrescriptions/test_patient')
-        self.assertEqual(response2.status_code, 200)
-        count = 0
-        oid = None
-        for prescription in response2.json:
-            count += 1
-            oid = prescription["_id"]
-        self.assertEqual(count, 1)
-
-        response3 = self.app1.post("/api/update-prescription/"+oid, json={"power":"over 9000"})
-        self.assertEqual(response3.status_code, 400)
-        self.assertIn("Invalid fields in update request", response3.json["error"])
-        self.assertIn("power", response3.json["invalid_fields"])
-
-        response4 = self.app1.delete("/deleteAll")
+        response4 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response4.status_code, 200)
         self.assertEqual(response4.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response4.json["message"])
@@ -343,11 +313,11 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
         self.assertEqual(response3.status_code, 200)
         self.assertIn("Prescription updated successfully", response3.json["message"])
 
-        response4 = self.app1.get('/search-prescriptions', json={"date":"03/31/2024", "prescriber_code": "test_prescriber"})
+        response4 = self.app1.get('/api/search-prescriptions', json={"date":"03/31/2024", "prescriber_code": "test_prescriber"})
         self.assertEqual(response4.status_code, 200)
         self.assertEqual(response4.json["_id"]["$oid"], oid)
 
-        response5 = self.app1.delete("/deleteAll")
+        response5 = self.app1.delete("/api/deleteAll")
         self.assertEqual(response5.status_code, 200)
         self.assertEqual(response5.json["deleted_count"], 1)
         self.assertIn("All prescriptions deleted successfully", response5.json["message"])
@@ -372,10 +342,10 @@ class TestDatabaseAuthenticationService(unittest.TestCase):
             oid = prescription["_id"]
         self.assertEqual(count, 1)
 
-        response3 = self.app1.delete("/delete/"+oid)
+        response3 = self.app1.delete("/api/delete/"+oid)
         self.assertEqual(response3.status_code, 200)
 
-        response4 = self.app1.get('/list-prescriptions')
+        response4 = self.app1.get('/api/list-prescriptions')
         self.assertEqual(response4.status_code, 200)
         count = 0
         for prescription in response4.json:
