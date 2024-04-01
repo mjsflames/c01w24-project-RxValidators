@@ -8,6 +8,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
 - Edit frontend
 - Complete Green Resources to pull location images from an API
 - Refactor and redesign Green Resources in the frontend for better user experience
+- Record video/edit video
 
 # Lance:
 - Integrate:
@@ -18,6 +19,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
   - Creating users
 - Edit frontend
 - Create service registry and API gateway
+- Fix any last minute bugs and make the code consistent
 
 # Michelle:
 - Integrate:
@@ -31,6 +33,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
 - Complete all frontend pages
 - Edit user-logged prescriptions and fields in prescriber logging
 - Create a list of all implemented functions and company requirements for testing
+- Record video
 
 # Danny:
 - Integrate:
@@ -40,6 +43,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
   - Account details
   - Users able to update mailing address and language in their account settings
 - Fix endpoints for updating user profiles
+- Fix the admin logging for status changes
 - Added updating to admin pages such as user profiles and prescriptions
 - Created a search function for admin to navigate through the prescriptions and user profiles and dropdowns for additional details
 
@@ -51,6 +55,7 @@ Tasks are assigned based on/in Jira, below is what each person has worked on thr
   - Remove user
 - Create test cases for the backend authentication functions
 - Support integration of database-related functions
+- Fix any last minute bugs and make the code consistent
 
 # Kenny:
 - Integrate:
