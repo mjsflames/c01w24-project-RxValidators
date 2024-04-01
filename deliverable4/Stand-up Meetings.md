@@ -9,12 +9,13 @@ Team:
 
 Michelle:
 - Continued working on Frontend for Logging a Prescription Form in prescriber
-- Added a calendar so that the dates inputted for both patient and prescriber are consistent and would not vary 
+- Added a calendar so that the dates inputted for both patient and prescriber are consistent and would not vary
 - Tomorrow: complete all login/signup pages for the frontend
 
 Danny:
 - Worked on creating pages for patients and prescribers to see their prescriptions
-- Worked on creating responsive pages on click 
+- Worked on creating responsive pages on click
+- Tomorrow: Integrating endpoints
 
 Joe:
 - Created database function to list all MongoDB users
@@ -40,11 +41,13 @@ Michelle:
 Joe:
 - Created database function to remove all database users
 - Challenge: the Python function to drop all users from MongoDB does not work and db.command() was used as a workaround
-- Planning to integrate my backend database authentication functions to the frontend 
+- Planning to integrate my backend database authentication functions to the frontend
 
 Danny:
 - Created a new page to show additional details of prescriptions
 - Integrated endpoints into the page
+- Challenge: Getting divs to line up
+- Tomorrow: Finish integrating endpoints and figure out data needed for the tables
 
 Lance:
 - Found a demon hiding in my bathroom
@@ -53,7 +56,7 @@ Lance:
 Emily:
 - Found a kangaroo in my backyard and challenged it to a dual
 - Challenge: the kangaroo couldn’t speak english, and it can’t write
- 
+
 # March 21st, 2024
 Michelle:
 - Completed footer draft and prescriber home page
@@ -68,6 +71,7 @@ Emily:
 
 Danny:
 - Finished populating the patient tables and allowing the user to access information for individual prescriptions
+- Tomorrow: Work on prescriber tables and populating them with fields relevant to prescribers
 
 Kenny:
 - Researching on how to transform Figma design into frontend code.
@@ -109,7 +113,7 @@ Lance:
 
 Emily:
 - Worked on API endpoints using Flask to generate PDFs and prescriber codes for each verified prescriber
-- Worked on API endpoint using Flask to export the csv file with the new data of statuses and codes	
+- Worked on API endpoint using Flask to export the csv file with the new data of statuses and codes
 
 Danny:
 - Worked on creating the tables for the prescribers and populating those tables
@@ -128,9 +132,11 @@ Joe:
 
 Danny:
 - Solved the issue with the misalignment of the columns and decided on using a drop down instead of a new page
+- Challenge: Getting the drop down to align with the existing table
+- Tomorrow: Finish implementing the drop down and showing any additional information
 
 Kenny:
-- Created the draft of header, navigation bar, and context body for Admin in the 
+- Created the draft of header, navigation bar, and context body for Admin in the
 - frontend using Tailwind.
 
 # March 25th, 2024
@@ -151,8 +157,9 @@ Lance:
 - Challenges: debugging network errors
 
 Danny:
-- Worked on front end pages such as the home pages 
+- Worked on front end pages such as the home pages
 - Integrated some of the front end pages to work with endpoints
+- Tomorrow: Implementing more endpoints for patients and prescribers such as for profile pages
 
 # March 26th, 2024
 Team:
@@ -163,7 +170,7 @@ Team:
 
 Joe:
 - Encrypted passwords for authentication service in user creation, user login/authentication
-- Implemented SCRAM-SHA-256 MongoClient authentication mechanism 
+- Implemented SCRAM-SHA-256 MongoClient authentication mechanism
 - Supported Lance with integrating the authentication service linked to the API Gateway to the frontend
 
 Emily:
@@ -189,6 +196,7 @@ Danny:
 - Worked on populating user profile pages with information from the user
 - Integrated the endpoints for getting user information
 - Created pages to let admin see all users into two tables for each type of user
+- Tomorrow: Integrate logging prescriptions for users
 
 # March 27th, 2024
 Team:
@@ -222,6 +230,8 @@ Lance:
 Danny:
 - Integrated the endpoints to log prescriptions and connect to the backend
 - Matches up prescriptions from both patients and prescribers to automatically assign a status
+- Challenge: Ensuring that both patient and prescriber statuses show their respective status
+- Tomorrow: Adding search bars to admin pages for easier navigation
 
 # March 28th, 2024
 Team:
@@ -246,7 +256,7 @@ Michelle:
 Kenny:
 - Continuing integration of allowing admin to over-write logs
 - Edited backend to conform with updating logs
-- Challenge: 
+- Challenge:
  - Status and other fields are not properly getting updated from the endpoints
  - Logging a prescription and overwriting logs currently use different variables/templates
 
@@ -259,6 +269,8 @@ Danny:
 - Made some changes to the backend for logging prescriptions so that the correct status is given
 - Added a search bar to the prescriptions to allow admin to search prescriptions for key terms
 - Fixed not matching status given by both parties
+- Challenge: Making the search responsive and keep all existing data
+- Tomorrow: Allowing admin to override all information such as prescriptions and user info
 
 # March 29th, 2024
 Team:
@@ -274,6 +286,8 @@ Danny:
 - Fixed endpoints for updating user profiles
 - Changed prescription fields to only allow users to see their own prescriptions
 - Updated fields for logging prescriptions
+- Challenge: Learning to use input fields and ensuring they update properly
+- Tomorrow: Fixing bugs
 
 Kenny:
 - Edited backend to use the same template for logging prescriptions and displaying them
@@ -317,4 +331,3 @@ Michelle/Kenny/Danny:
 
 Kenny:
 - Wrote test cases for testing unique codes and pdf generation in the backend
-
