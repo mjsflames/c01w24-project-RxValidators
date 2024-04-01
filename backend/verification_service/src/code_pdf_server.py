@@ -48,7 +48,7 @@ def save_to_db(df):
         "Province": "province",
         "Licence #": "license", 
         "Licensing College": "college",
-        "Scraped Status": "status",
+        "Status": "status",
         "Code": "code",
         })
     

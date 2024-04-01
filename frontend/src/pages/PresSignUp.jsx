@@ -8,7 +8,7 @@ import Spinner from "../components/Spinner";
 const PatCreateAccount = () => {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [providerCode, setProviderCode] = useState("");
+	const [prescriberCode, setPrescriberCode] = useState("");
 	const [license, setLicense] = useState("");
 	const [profession, setProfession] = useState("");
 	const [college, setCollege] = useState(undefined);
@@ -31,7 +31,7 @@ const PatCreateAccount = () => {
 		const data = {
 			firstName: firstName,
 			lastName: lastName,
-			providerCode: providerCode,
+			prescriber_code: prescriberCode,
 			license: license,
 			profession: profession,
 			college: college,
@@ -58,15 +58,15 @@ const PatCreateAccount = () => {
 	useEffect(() => {
 		setValidCode(false);
 		// Check if provider code matches pattern [AB-CD001]
-		if (providerCode.length !== 8) return;
+		if (prescriberCode.length !== 8) return;
 		const pattern = new RegExp("^[A-Z]{2}-[A-Z]{2}[0-9]{3}$");
-		if (!pattern.test(providerCode)) return;
+		if (!pattern.test(prescriberCode)) return;
 
 		// Check if license number is non-empty
 		if (license.length < 4) return;
 
 		// Now we can check if the provider code is active
-		api.get(`/verification/prescriber-codes/active/${providerCode}?license=${license}`).then((res) => {
+		api.get(`/verification/prescriber-codes/active/${prescriberCode}?license=${license}`).then((res) => {
 			const {firstName, lastName, province, college} = res.data
 			if (firstName) setFirstName(firstName);
 			if (lastName) setLastName(lastName);
@@ -78,7 +78,7 @@ const PatCreateAccount = () => {
 		});
 
 
-	}, [providerCode, license])
+	}, [prescriberCode, license])
 
 	const collegeOptions = {
 		"...": "College",
@@ -114,7 +114,7 @@ const PatCreateAccount = () => {
 					<div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
 						<div className="w-full">
 							<label className="block mb-2 text-sm font-medium text-gray-900">Provider Code</label>
-							<input value={providerCode} onChange={(e) => setProviderCode(e.target.value)}  id="parx_code" type="text" maxLength={8} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ie. BC-AA001" required/>
+							<input value={prescriberCode} onChange={(e) => setPrescriberCode(e.target.value)}  id="parx_code" type="text" maxLength={8} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ie. BC-AA001" required/>
 						</div>
 						<div className="w-full">
 							<label htmlFor="license" className="block mb-2 text-sm font-medium text-gray-900">License Number</label>
