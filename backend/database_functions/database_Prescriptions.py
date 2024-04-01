@@ -197,7 +197,7 @@ def submit_form():
     return (jsonify({"message": "Data posted successfully"}), 200)
 
 
-@app.route("/list-prescriptions", methods=["GET"])
+@app.route("/api/list-prescriptions", methods=["GET"])
 def list_prescriptions():
     # Fetch all documents in the collection
     prescriptions_cursor = collection.find({})
@@ -212,7 +212,7 @@ def list_prescriptions():
     return prescriptions_json, 200, {"Content-Type": "application/json"}
 
 
-@app.route("/search-prescriptions", methods=["GET"])
+@app.route("/api/search-prescriptions", methods=["GET"])
 def search_prescriptions():
     data = request.json
     # Extract query parameters
@@ -252,7 +252,7 @@ def update_prescription(oid):
     return jsonify({"message": "An unexpected error occurred"}), 500
 
 
-@app.route("/delete/<oid>", methods=["DELETE"])
+@app.route("/api/delete/<oid>", methods=["DELETE"])
 def delete_prescription(oid):
     try:
         result = collection.delete_one({"_id": ObjectId(oid)})
@@ -267,7 +267,7 @@ def delete_prescription(oid):
         abort(400, description=str(e))
 
 
-@app.route("/deleteAll", methods=["DELETE"])
+@app.route("/api/deleteAll", methods=["DELETE"])
 def delete_all_prescriptions():
     result = collection.delete_many({})  # Empty filter matches all documents
 

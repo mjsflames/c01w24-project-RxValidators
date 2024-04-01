@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../axiosConfig";
 
-const AdminPrescription = ({ item }) => {
+const AdminPrescription = ({ item, discoveryPassState }) => {
   const [data, setData] = useState(item);
 
   const fields = [
@@ -23,8 +23,9 @@ const AdminPrescription = ({ item }) => {
   const updateLogStatus = async () => {
     console.log("Trying:", data._id.$oid);
     try {
-      const response = await api.post(`http://localhost:5001/api/update-prescription/${data._id.$oid}`, data);
+      const response = await api.post(`/prescription/update-prescription/${data._id.$oid}`, {...data, discoveryPass: discoveryPassState ? "Yes" : "No"});
       console.log(response.data);
+      window.location.reload();
 
       // const res = await fetch(`http://localhost:5001/`, {
       //   method: "POST",
@@ -74,7 +75,7 @@ const AdminPrescription = ({ item }) => {
           </table>
           
         )}
-        <div className="grid-cols-1 w-1/6 ml-5 mt-8"><button className="p-2 border-black border rounded-lg font-bold text-white hover:bg-[#3b5998]/70 bg-[#3b5998]" onClick={() => {updateLogStatus(item); window.location.reload();}}>Update</button></div>
+        <div className="grid-cols-1 w-1/6 ml-5 mt-8"><button className="p-2 border-black border rounded-lg font-bold text-white hover:bg-[#3b5998]/70 bg-[#3b5998]" onClick={() => {updateLogStatus(item)}}>Update</button></div>
       </div>
     </>
   );
