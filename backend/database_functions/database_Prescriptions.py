@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify, Response, abort
 from bson.json_util import dumps, loads
 from bson import ObjectId
 from pymongo import MongoClient
-import database as dbfunc
 from flask_cors import CORS, cross_origin
 import requests as requestsLib
 import uuid
