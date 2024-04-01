@@ -25,8 +25,7 @@ app.config["PORT"] = PORT
 
 required_authentication_fields = [
     "username",
-    "password",
-    # "role",
+    "password"
 ]
 
 prescribers_collection = db["prescribers"]
@@ -34,11 +33,6 @@ prescribers_collection = db["prescribers"]
 connections = []
 
 # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
-
-# Routes
-# /register - POST (username, password, role)
-# /login - GET (username, password, role)
-# /logout - GET (username, password)
 
 
 def generate_id():
@@ -64,7 +58,7 @@ def validate_inputs(func):
             )
         return func(*args, **kwargs)
 
-    wrapper.__name__ = func.__name__  # HOTFIX: Map overwriting fix
+    wrapper.__name__ = func.__name__ 
     return wrapper
 
 
@@ -77,9 +71,6 @@ def create_user_account():
         username = data.get("username")
         password = data.get("password")
         role = data.get("role")
-
-        # Additional Fields
-        # print(data)
 
         # Encrypting Password
         salt = bcrypt.gensalt()
@@ -150,8 +141,7 @@ def authenticate_user():
 
         username = data.get("username")
         password = data.get("password")
-        # role = data.get("role")
-        # user = collection.find_one({"username": username, "role": role})
+
         # username should be unique.
         user = collection.find_one({"username": username})
         if not user:
@@ -176,12 +166,10 @@ def authenticate_user():
             authSource=cur_db_name,
             authMechanism="SCRAM-SHA-256",
         )
-        # cur_client = MongoClient(f"mongodb://{username}:{password}@{server_IP}/{db_name}")
         cur_db = cur_client[cur_db_name]
         cur_collection = cur_db[cur_collection_name]
         test_database_operation(cur_collection)
         connections.append(cur_client)
-        # print(">>USER", user)
 
         # Strip password
         user.pop("password")

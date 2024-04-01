@@ -92,7 +92,6 @@ def add_codes_to_df(df):
                 last_prefix = prefix
                 # query using mongodb regex (province-initials) to get the last code and increment it by 1
                 last = collection.find({"Code": {"$regex": f"{last_prefix}[0-9]{{3}}"}}).sort("Code", -1).limit(1)
-                # print(list(collection.find()))
                 
                 last = list(last)
                 
@@ -102,7 +101,6 @@ def add_codes_to_df(df):
                 last = int(last)
             last = last + 1            
             
-            # num = get_index(counter)
             code = code_generator(first_name, last_name, province, last)
 
             has_dupes = df.loc[df['Code'] == code]
@@ -116,7 +114,6 @@ def add_codes_to_df(df):
     # Resort the rows by indices
     df = df.sort_index()
 
-    # print(df)
     return df
 
 # Get the prescriber codes

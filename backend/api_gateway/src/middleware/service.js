@@ -12,6 +12,4 @@ function getService(serviceName) {
 	};
 }
 
-// TODO: Implement middleware to validate service registration requests
-
 export default getService;
