@@ -186,7 +186,7 @@ def get_prescriber_codes():
     # Keep only code and status
     return_data = [] 
     for code in list(codes):
-        return_data.append({str(k): str(v) for k, v in code.items() if k in ["code", "status", "firstName", "lastName", "_id"]})
+        return_data.append({str(k): str(v) for k, v in code.items() if k in ["code", "status", "firstName", "lastName", "license", "_id"]})
     return jsonify(return_data)
 
 @app.route('/api/prescriber-codes/active/<code>', methods=['GET'])

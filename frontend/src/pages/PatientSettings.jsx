@@ -41,6 +41,7 @@ const PatientSettings = () => {
     api.patch(`/auth/updateUser/${userData._id}`, newItem).then((res) => {
       updateUser(newItem);
       setData(newItem);
+      window.location.reload();
     }).catch((err) => {
       console.log(err.response)
     })
@@ -168,7 +169,7 @@ const PatientSettings = () => {
               </div>
               <div className="w-full">
                 <div className="mt-40 flex flex-row">
-                <button onClick={() => {updateData(); window.location.reload();}} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
+                <button onClick={() => {updateData();}} className="bg-[#3b5998] hover:bg-[#3b5998]/30 text-white text-sm rounded-2xl p-2.5">SAVE CHANGES</button>
                   <Modal />
                 </div>
               </div>

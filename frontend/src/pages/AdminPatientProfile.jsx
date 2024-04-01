@@ -56,6 +56,7 @@ const AdminPatientProfile = () => {
 const deleteHandler = async (username) => {
   try {
       const res = await api.delete(`/auth/removeUser/${username}`);
+      window.location.reload();
   } catch (err) {
       setError(err.response);
       console.log(err.res)
@@ -118,7 +119,7 @@ const deleteHandler = async (username) => {
                                                 <p>Are you sure you want to delete this profile?</p>
                                             </div>
                                             <div className="flex flex-row justify-center mb-5">
-                                                <button id="deletelog" onClick={() => {deleteHandler(item.email); window.location.reload();}} className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10">Yes, proceed</button>
+                                                <button id="deletelog" onClick={() => {deleteHandler(item.email)}} className="bg-green-200 hover:bg-green-200/40 text-black border rounded-full p-2.5 mr-10">Yes, proceed</button>
                                                 <button className="bg-red-200 hover:bg-red-200/40 text-black border rounded-full p-2.5" onClick={() => setShowModal(false)}>No, cancel</button>
                                             </div>
                                         </div>  

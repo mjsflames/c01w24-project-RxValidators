@@ -38,6 +38,7 @@ const PrescriptionCodeList = ({ className }) => {
             console.log(res.data);
 			alert("Prescriber code deleted")
 			setNeedsUpdate(true);
+
         } catch (err) {
             setError(err.response);
 			console.error(err);
@@ -65,6 +66,7 @@ const PrescriptionCodeList = ({ className }) => {
 		try {
 			const response = await api.post(`/verification/prescriber-codes/${code}`, {status });
 			console.log(response.data);
+			window.location.reload();
 		} catch (error) {
 			console.error(error);
 		}
@@ -113,7 +115,7 @@ const PrescriptionCodeList = ({ className }) => {
 			<br className="mt-4" />
 			<p>Results ({filteredData.length | 0})</p>
 			<ul className="flex flex-col gap-1 max-w-full overflow-y-scroll flex-1">
-				{filteredData.map(({ _id, code, status, firstName, lastName }) => {
+				{filteredData.map(({ _id, code, status, firstName, lastName, license }) => {
 					const selected = status == "VERIFIED" ? "Verified" : status == "INACTIVE" ? "Inactive" : "Expired";
 					const overload_callback = async (e, callback) => {
 						await callback(_id, code)
@@ -121,7 +123,7 @@ const PrescriptionCodeList = ({ className }) => {
 					};
 
 					return (<li
-						key={"pc" + code+firstName}
+						key={"pc" + license}
 						className={`bg-gray-300 even:bg-gray-300/50  py-4 px-4 rounded-sm border-l-8 flex justify-between ${statusColors[status]} relative`}
 					>
 						<p>{code}</p>
@@ -133,11 +135,11 @@ const PrescriptionCodeList = ({ className }) => {
 								className="hover:text-gray-500 cursor-pointer"/>
 							<FontAwesomeIcon
 								icon={faEdit}
-								onClick={() => setEditObject(code)}
+								onClick={() => setEditObject(license)}
 								className="hover:text-gray-500 cursor-pointer"
 							/>
 						</div>
-						{editObject == code && (
+						{editObject == license && (
 							<Dropdown
 								close={() => {
 									setEditObject(null);
