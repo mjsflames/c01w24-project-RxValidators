@@ -1,9 +1,16 @@
 # c01w24-project-RxValidators
 ***By: Emily Ho, Lance Talban, Michelle Zhu, Danny Yang, Renat Hossain, Xing Yu Zhou, Kangjie Wu***
 
-To launch the Frontend, API Gateway, and Microservices in development mode:
 
-Windows: `./startup.bat dev`
+
+# Launch the Program
+
+**Supported for Linux and Win32.**
+
+Download all the dependencies for all projects in the monorepo by running the following at root folder: `npm i`
+
+To launch the Frontend, API Gateway, and Microservices in development mode: `npm run dev`
+
 
 # API Gateway | Service Registry
 
@@ -26,6 +33,8 @@ RESPONSE 200 OK
 # Verification Service
 
 If errors occur, either you are running OS specific lines or you are not running the lines within the `verification_service` directory
+
+**NOTE**: The verification service is unstable when running on a Windows operating system. Unexpected behaviour occurs since Scrapy (and consequently scrapyscript) relies on sending/receiving signals to handle tasks such as reading the data through the pipeline. We setup verification service API using Flask. Since Flask is a synchronous framework, we needed to run the scraping-related code in a separate thread in order for the API to return a response while it is processing the job. In Windows, Python is unable to send signals outside of the main thread: "*signal only works in main thread*". In turn, scrapy will successfully scrape the data but is unable to send a signal for the program to read the pipeline, resulting in multiple failures. With a limited time frame, we attempted to resolve the multiprocessing issue by using the FastAPI asynchronous framework and have scraping running as a background task — it was unsuccessful. However, in Linux, multiprocessing is handled through forking which allows the signals to be fired successfully. When deployed, this service would be running in a Linux OS and would hence mitigate this problem.
 
 ### Automatic
 
