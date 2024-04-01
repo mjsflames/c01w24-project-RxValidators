@@ -28,6 +28,16 @@ jobs:
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'v21.7.1'
+
+      - name: Install npm packages
+        run: |
+          cd backend/auth_service
+          npm install express
+
       - name: Test backend
         run: |
           echo "Starting Servers"
