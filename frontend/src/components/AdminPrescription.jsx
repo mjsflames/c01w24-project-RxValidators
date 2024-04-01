@@ -67,11 +67,14 @@ const AdminPrescription = ({ item }) => {
                   {item.status !== "Complete with Discovery Pass"? <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>:null}
                   {item.status !== "Both Logged With Discovery Pass"? <option value="Both Logged With Discovery Pass">Both Logged With Discovery Pass</option>:null}
                 </select>) : <div>{item.status}</div>} </td>
+              
               </tr>
             </tbody>
+            
           </table>
+          
         )}
-        <div className="grid-cols-1 w-1/6"><button className="p-2 border-black border" onClick={() => updateLogStatus(item)}>Update</button></div>
+        <div className="grid-cols-1 w-1/6 ml-5 mt-8"><button className="p-2 border-black border rounded-lg font-bold text-white hover:bg-[#3b5998]/70 bg-[#3b5998]" onClick={() => {updateLogStatus(item); window.location.reload();}}>Update</button></div>
       </div>
     </>
   );

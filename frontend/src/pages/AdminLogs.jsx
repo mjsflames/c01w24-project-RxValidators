@@ -99,7 +99,7 @@ const AdminLogs = () => {
             <p className="font-semibold">Prescription status are able to be searched by the date and status.</p>
             <p className="font-semibold">Change the status to "Complete with Discovery Pass" if requirements are met.</p>
           </div>
-          <input type="search" placeholder="Search by Date or Status" onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
+          <input type="search" placeholder="Search Here" onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
             value={searchInput} className="flex w-1/4 p-2 placeholder:text-slate-800 bg-slate-100 border border-black rounded-md" />
           <table className="w-full mt-10 mb-20 text-sm rtl:text-right text-gray-500 rounded-lg">
             <thead className="text-xs text-left text-black uppercase bg-[#f0fff0]">
@@ -115,7 +115,7 @@ const AdminLogs = () => {
             <tbody>
               {shownData && shownData.map((item, index) => (
                 <>
-                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:text-white even:bg-[#0a0e1a]/40 hover: ">
+                  <tr className="w-full text-left text-black border-t border-white odd:bg-white/60 even:bg-white">
 
                     <td><div className="p-1">{item.date}</div></td>
                     <td><div className="p-1">{item.patient_initials}</div></td>
@@ -130,29 +130,12 @@ const AdminLogs = () => {
                     </td>
                     <select className="py-3 w-full truncate max-w-md text-current bg-transparent placeholder:text-gray-700">
                       <option selected value={item.status} disabled>{item.status}</option>
-
                       <option value="Complete with Discovery Pass">Complete with Discovery Pass</option>
-
-
                       <option value="Both Logged With Discovery Pass">Both Logged With Discovery Pass</option>
-
                     </select>
                     <td>
-                      <button className="rounded hover:bg-slate-300 p-2 border border-opacity-30 border-black" onClick={() => itemClick(item)}>
-                         {/* onClick={() => {
-                          // Create an updated item object based on input values
-                          const updatedItem = {
-                            oid: item._id,
-                            date: document.querySelector(`#date-${index}`).value,
-                            patient_initials: document.querySelector(`#patient_initials-${index}`).value,
-                            parx_code: document.querySelector(`#parx_code-${index}`).value,
-                            discoveryPass: checkboxStates[index] || false
-                          };
-                          updateLogStatus(updatedItem);
-
-                        }}>
-                        Update
-
+                      <button className="rounded hover:bg-slate-300 font-bold underline p-2" onClick={() => itemClick(item)}> 
+                        Show More
                       </button>
                     </td>
                   </tr>
