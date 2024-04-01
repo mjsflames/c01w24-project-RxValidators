@@ -337,3 +337,11 @@ Kenny:
 Lance:
 - Helped resolve last-minute bugs with sending requests.
 - Fixed verification platform UI bugs.
+
+Emily/Michelle:
+- Recorded group video
+
+Emily:
+- Worked on Github actions workflows for testing unique codes and pdf generation
+- Edited group video
+- Challenge: Not able to merge auth code because it requires running servers in git actions and downloading for dependencies
