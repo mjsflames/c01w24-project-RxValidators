@@ -5,7 +5,6 @@ import uuid
 from . import scraper_handler
 import threading
 from pandas import DataFrame
-# from prescriber_code import *
 from io import StringIO, BytesIO
 from multiprocessing import Process
 
@@ -103,17 +102,6 @@ def cancel(id):
         return {"message": "Error cancelling request"}, 400, {"Content-Type": "application/json"}
 
 
-#############################################
-# Prescriptions
-
-# @app.route("/api/getPrescriptions/<username>", methods=["GET"])
-# @cross_origin()
-# def getPrescriptions(username):
-#   prescriptions = database.getAllPrescriptions(username)
-#   return prescriptions
-
-##############################################
-
 @app.route('/api/generatePdf', methods=['POST'])
 def generate_pdf():
     code = request.json.get('code')
@@ -129,28 +117,6 @@ def generate_pdf():
 
     return pdf, 200, {"Content-Type": "application/pdf"}
 
-# API endpoint to export/save all PDFs for the verified prescribers
-# ? DISABLED: This is not needed for the current implementation
-
-# @app.route('/api/exportPdfs/<id>', methods=['POST'])
-# def generateAllPdfs(id):
-#     full_columns = ["First Name", "Last Name", "Province", "Regulatory College", "License #", "Status", "Code"]
-#     expected_data = [
-#                 ["Emily","Ho","ON","Toronto Uni","232","VERIFIED", "ON-EH001"],
-#                 ["Morgan","Lao","BC","British Columbia Uni","23123","INACTIVE", "BABAB"],
-#                 ["Lance","Talban","SK","Saskatchewan Uni","12323","VERIFIED", "SK-LT001"],
-#             ] 
-#     df = pd.DataFrame(expected_data, columns=full_columns)
-            
-    
-#     # status = scraper_handler.check_status(id)
-#     # if type(status) is not DataFrame:
-#     #     return {"message": "Invalid data or columns"}, 400, {"Content-Type": "application/json"}
-#     status = df
-#     response = generate_verified_pdfs(status, "./")
-    
-#     # return buffer from response
-#     return response, 200, {"Content-Type": "application/zip"}    
 
 # API endpoint to export the csv file with the new data
 @app.route('/api/export/<id>', methods=['GET'])
