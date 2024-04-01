@@ -26,7 +26,7 @@ router.use(
       proxyReqBodyDecorator: function (bodyContent, srcReq) {
         console.log("Request body:", bodyContent);
         if (bodyContent.role === "prescriber") {
-          bodyContent.username = bodyContent.providerCode;
+          bodyContent.username = bodyContent.prescriber_code;
         }
         if (bodyContent.role === "patient") {
           bodyContent.username = bodyContent.email;

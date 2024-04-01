@@ -33,6 +33,7 @@ const AdminExtraPres = ({ item }) => {
     api.patch(`/auth/updateUser/${data._id}`, newItem).then((res) => {
       console.log(res.data);
       setData(newItem);
+      window.location.reload();
     }).catch((err) => {
       console.log(err.response)
     })
@@ -57,7 +58,7 @@ const AdminExtraPres = ({ item }) => {
         )}
       </div>
       <div className="flex justify-end p-3">
-        <button onClick={() => {updateData(); window.location.reload();}} className="border border-black border-2 rounded-md font-bold w-1/10 hover:bg-PaRxGreen">Update</button>
+        <button onClick={() => {updateData();}} className="border border-black border-2 rounded-md font-bold w-1/10 hover:bg-PaRxGreen">Update</button>
         </div>
     </>
   );
