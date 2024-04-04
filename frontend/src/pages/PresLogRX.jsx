@@ -13,7 +13,8 @@ const LogPresPrescription = () => {
     console.log("hey",user);
   }, []);
 
-  function handleClick() {
+  function handleClick(e) {
+    e.preventDefault();
     async function postData() {
       try {
         const res = await api.post("/prescription/submit-form", data);
