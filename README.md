@@ -1,7 +1,7 @@
 # c01w24-project-RxValidators
 ***By: Emily Ho, Lance Talban, Michelle Zhu, Danny Yang, Renat Hossain, Xing Yu Zhou, Kangjie Wu***
 
-
+[Click to view a DEMO of our project](https://youtu.be/i3gYOHE-1Qc)
 
 # Launch the Program
 
